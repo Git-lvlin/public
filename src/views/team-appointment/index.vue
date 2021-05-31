@@ -1,9 +1,9 @@
 <template>
   <div
-    class="user_appointment"
+    class="team_appointment"
   >
     <div class="flex_fix">
-      <NavBar title="单约专享" />
+      <NavBar title="团约专享" />
     </div>
     <img
       class="back_img flex_fix"
@@ -18,7 +18,7 @@
         @load="onLoad"
       >
         <div class="goods_list">
-          <GoodsItem />
+          <TeamItem />
         </div>
       </van-list>
     </div>
@@ -29,8 +29,9 @@
 import { Image, List } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import NavBar from '@/components/navbar';
-import GoodsItem from '@/components/goods-item';
+import TeamItem from '@/components/team-item';
 import SeparateLine from '@/components/separate-line';
+import teamApi from '@/apis/appointment';
 
 export default {
   data() {
@@ -41,14 +42,26 @@ export default {
   },
   components: {
     NavBar,
-    GoodsItem,
+    TeamItem,
     SeparateLine,
     [Image.name]: Image,
     [List.name]: List,
   },
+  mounted () {
+    // 不推荐在这里调用 fetchItem
+    console.log(234234234234234);
+    teamApi.getTeamList({
+      page: 1,
+      size: 10,
+    }).then((res) => {
+      console.log('sdfsd', res);
+    });
+  },
   methods: {
     getImgUrl,
-    onLoad() {},
+    onLoad() {
+      console.log(2344234234);
+    },
   },
 };
 </script>
@@ -62,12 +75,7 @@ export default {
     border-bottom-width: 0;
   }
 
-  .flex_fix {
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
-
-  .user_appointment {
+  .team_appointment {
     display: flex;
     flex-direction: column;
     min-height: 100vh;

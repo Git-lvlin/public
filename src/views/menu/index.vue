@@ -5,9 +5,13 @@
     <van-cell-group>
       <van-cell
         title="单约列表"
-        value=""
         is-link
         url="/user-appointment"
+      />
+      <van-cell
+        title="团约列表"
+        is-link
+        url="/team-appointment"
       />
     </van-cell-group>
   </div>

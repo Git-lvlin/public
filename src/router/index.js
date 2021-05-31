@@ -16,17 +16,33 @@ const routes = [
   {
     path: '/user-appointment',
     name: 'UserAppointment',
-    component: () => import(/* webpackChunkName: "search" */ '@/views/user-appointment'),
+    component: () => import('@/views/user-appointment'),
     meta: {
       title: '单约列表',
     },
   },
   {
+    path: '/team-appointment',
+    name: 'TeamAppointment',
+    component: () => import('@/views/team-appointment'),
+    meta: {
+      title: '团约列表',
+    },
+  },
+  {
+    path: '/team-detail',
+    name: 'TeamDetail',
+    component: () => import('@/views/team-detail'),
+    meta: {
+      title: '团约详情',
+    },
+  },
+  {
     path: '/menu',
     name: 'Menu',
-    component: () => import(/* webpackChunkName: "search" */ '@/views/menu'),
+    component: () => import('@/views/menu'),
     meta: {
-      title: '搜索',
+      title: 'H5 菜单页',
     },
   },
 ];

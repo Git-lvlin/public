@@ -1,0 +1,189 @@
+<template>
+  <div class="team_detail_panle">
+    <div class="flex_middle">
+      <div class="flex_fix img_warp">
+        <pic
+          width="140px"
+          height="140px"
+        />
+        <div class="sale_num">已团约1888件</div>
+      </div>
+      <div class="info_box">
+        <div class="flex_middle store">
+          <pic
+            width="16px"
+            height="16px"
+            round
+          />
+          <div class="store_name">满京华社区店-南山分店</div>
+        </div>
+        <div class="team_title text_two_line">
+          <span
+            class="label"
+            :style="{
+              'background-image': `url('${getImgUrl('publicMobile/common/team_label.png')}')`
+            }"
+          />
+          阿斯蒂芬库里静安寺打开链接阿斯蒂芬库里 阿斯顿联发科金克拉撒旦金克拉撒旦卡萨丁
+        </div>
+        <div class="team_desc">七天无理由退换丨全场包邮</div>
+        <div class="price_box">
+          <div class="flex_middle progress_box" >
+            <div class="flex_fix progress_back"><div class="progress">70%</div></div>
+            <div class="sale" >已约70000件</div>
+          </div>
+          <div class="price">
+            <span class="price_title">团购价</span>
+            <div class="price_text"><span class="min_size">¥</span>8.89</div>
+            <span class="market_price">¥8.89</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="join_btn">立即参与团约</div>
+  </div>
+</template>
+
+<script>
+import Image from '@/components/image';
+import { getImgUrl } from '@/utils/tools';
+
+export default {
+  components: {
+    pic: Image,
+  },
+  data() {
+    return {
+      time: 30 * 60 * 60 * 60,
+    };
+  },
+  methods: {
+    getImgUrl,
+  },
+};
+</script>
+
+<style>
+.team_detail_panle {
+  overflow: hidden;
+  padding: 12px;
+  margin: 0 12px 12px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+.img_warp {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.sale_num {
+  width: 140px;
+  height: 22px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+  background-color: #d7291d;
+}
+.info_box {
+  padding-left: 12px;
+  overflow: hidden;
+}
+.store {
+  margin-bottom: 6px;
+}
+.store_name {
+  color: #333333;
+  font-size: 14px;
+  line-height: 20px;
+  margin-left: 3px;
+}
+.label {
+  display: inline-block;
+  vertical-align: middle;
+  width: 32px;
+  height: 17px;
+  background-size: 100% auto;
+}
+.team_title {
+  max-width: 100%;
+  color: #333333;
+  font-size: 16px;
+  line-height: 22px;
+  padding-left: 3px;
+  margin-bottom: 2px;
+}
+.team_label {
+  vertical-align: middle;
+  width: 32px;
+  height: 17px;
+}
+.team_desc {
+  color: #999999;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 7px;
+}
+
+.progress_box{
+  flex-wrap: nowrap;
+}
+.progress_back {
+  width: 80px;
+  height: 16px;
+  background-color: #f8aeae;
+  border-radius: 16px;
+}
+.progress {
+  width: 60px;
+  height: 16px;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  background-image: linear-gradient(90deg, #fb5f2a 0%, #e5362f 100%);
+  border-radius: 16px;
+}
+.sale {
+  color: #b8b8b8;
+  font-size: 14px;
+  line-height: 20px;
+  margin-left: 6px;
+}
+.price {
+  display: flex;
+  margin-top: 12px;
+}
+.price_title {
+  color: #e7532c;
+  font-size: 14px;
+  line-height: 20px;
+}
+.price_text {
+  font-weight: 700;
+  color: #d7291d;
+  font-size: 16px;
+  line-height: 20px;
+  margin-left: 2px;
+}
+.market_price {
+  color: #b2b2b2;
+  font-size: 10px;
+  text-decoration: line-through;
+  line-height: 22px;
+  margin-left: 4px;
+}
+.min_size {
+  font-size: 10px;
+}
+.join_btn {
+  width: 327px;
+  height: 48px;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 48px;
+  text-align: center;
+  margin-top: 12px;
+  background-color: #d7291d;
+  border-radius: 48px;
+}
+</style>

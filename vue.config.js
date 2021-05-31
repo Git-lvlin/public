@@ -4,23 +4,13 @@ module.exports = {
   publicPath: '/',
   devServer: {
     proxy: {
-      '/h5': {
+      '/activity': {
         target: 'http://dev-yeahgo-activity.waiad.icu',
         ws: true,
         changeOrigin: true,
       },
-      '/orders': {
-        target: 'https://bingou.com.cn',
-        ws: true,
-        changeOrigin: true,
-      },
-      '/live/': {
-        target: 'https://hzntliveapi.qhhznt.com',
-        ws: true,
-        changeOrigin: true,
-      },
     },
-    https: true,
+    https: false,
   },
   css: {
     loaderOptions: {

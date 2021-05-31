@@ -17,6 +17,9 @@
       <template #title>
         <div class="nav_title">{{title}}</div>
       </template>
+      <template #right>
+        <img class="right_icon" :src="getImgUrl('publicMobile/common/share.png')" />
+      </template>
     </van-nav-bar>
   </div>
 </template>
@@ -59,5 +62,11 @@ export default {
     font-size: 20px;
     line-height: 20px;
     text-align: center;
+  }
+
+  .right_icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
   }
 </style>

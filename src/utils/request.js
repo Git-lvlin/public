@@ -95,7 +95,7 @@ const request = async ({
       platform: 'web_app',
     },
   }).then((res) => {
-    if (res.code !== 200 && showError) {
+    if (res.code !== 0 && showError) {
       setTimeout(() => {
         Toast({
           message: res.msg,

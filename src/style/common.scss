@@ -3,3 +3,54 @@
 body {
   background: #f4f4f4
 }
+
+image {
+  vertical-align: middle;
+}
+
+.flex_middle {
+  display: flex;
+  align-items: center;
+}
+
+.flex_center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex_fix {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+/*单行溢出省略*/
+.text_one_line {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+}
+
+/* 多行省略号 */
+.text_two_line {
+  word-break: break-all;
+  white-space: normal;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  overflow: hidden;
+}
+
+.last_arrow::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-left: 2px;
+  border-top: 2px solid #fff;
+  border-right: 2px solid #fff;
+  transform: rotate(45deg);
+}

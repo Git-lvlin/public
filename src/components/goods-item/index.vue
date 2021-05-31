@@ -1,27 +1,39 @@
 <template>
-  <div class="goods-item-wrap" :style="{'width': width}">
-    <div class="goods-item">
-      <div class="img-wrap">
-        <img src="https://hznt-mall.oss-cn-shenzhen.aliyuncs.com/home/store/goods/178/alioss_178_2020082217535991940.jpg" />
-      </div>
-      <div class="info-box">
-        <div class="title">宾购限量版</div>
-        <div class="price-box">
-          <div class="price-1">
-            <span>会员价</span>
+  <div class="goods-item">
+    <div class="flex_fix img-wrap">
+      <pic
+        width="100px"
+        height="100px"
+        src="https://12312313"
+      />
+      <div class="sale" >已约288件</div>
+    </div>
+    <div class="info_box">
+      <div class="title text_two_line">宁夏菠萝蜜500g装时令鲜水果 500g装时令鲜水果宁夏菠萝蜜500g装时令鲜水果 500g装时令鲜水果</div>
+      <div class="desc text_one_line">七天无理由退换丨全场包邮</div>
+      <div class="time_down"><CountDown :time="time" color="#e7512d" />后结束</div>
+      <div class="flex_middle footer">
+        <div class="price_box">
+          <div class="price_market">
+            <span>市场价：</span>
             <em>¥288</em>
           </div>
-          <div class="price-2">
-            <span>会员价</span>
-            <em>¥288</em>
+          <div class="price">
+            <span class="text_red">单约价 </span>
+            <span class="text_small">¥</span>
+            <span>288</span>
           </div>
         </div>
+        <div class="btn last_arrow">去单约</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Image from '@/components/image';
+import CountDown from '@/components/count-down';
+
 export default {
   props: {
     width: {
@@ -29,79 +41,98 @@ export default {
       default: '50%',
     },
   },
+  components: {
+    pic: Image,
+    CountDown,
+  },
+  data() {
+    return {
+      time: 30 * 60 * 60 * 60,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.goods-item-wrap {
-  width: 49%;
-}
 .goods-item {
-  width: 100%;
   display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background-color: #ffffff;
+  border-radius: 8px;
 }
 
 .img-wrap {
-  width: 100%;
-  padding-top: 100%;
-  position: relative;
+  width: 100px;
+  height: 122px;
   overflow: hidden;
-
-  img {
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
+  border-radius: 8px;
+}
+.sale {
+  width: 100px;
+  height: 22px;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 22px;
+  text-align: center;
+  background-color: #d7291d;
 }
 
-.info-box {
-  background: #fff;
-  padding: 0 5px 5px;
-  flex: 1;
+.info_box {
+  margin-left: 8px;
+}
+.title {
+  color: #333333;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 4px;
+}
+.desc {
+  color: #999999;
+  font-size: 14px;
+  line-height: 20px;
+}
+.time_down{
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  color: #e7512d;
+  font-size: 14px;
+  line-height: 14px;
+  margin: 6px 0;
+}
+.footer {
   justify-content: space-between;
 }
-
-.title {
+.price_market {
+  color: #b2b2b2;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  text-decoration: line-through;
+  line-height: 14px;
+  margin-bottom: 4px;
+}
+.price {
+  font-weight: 700;
+  color: #d7291d;
   font-size: 14px;
-  color: #333;
-  margin-top: 5px;
+  line-height: 15px;
 }
-
-.price-box {
-  > div {
-    margin-top: 5px;
-  }
-  span {
-    display: inline-block;
-    margin-right: 10px;
-    padding: 0 5px;
-  }
+.text_red {
+  color: #e7532c;
 }
-
-.price-1 {
-  font-size: 12px;
-  span {
-    background-color: #fae8b2;
-    color: #6a4c31;
-    border-radius: 2px;
-  }
-
-  em {
-    color: #f50c0c;
-  }
+.text_small {
+  font-size: 10px;
 }
-
-.price-2 {
-  font-size: 12px;
-  color: #b1b1b1;
-
-  em {
-    text-decoration: line-through;
-  }
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 32px;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 20px;
+  background-color: #d7291d;
+  border-radius: 4px;
 }
 </style>
