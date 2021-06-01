@@ -14,12 +14,19 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
+        finished-text="没有更多商品"
+        @load="onBottomReach"
       >
         <div class="goods_list">
-          <GoodsItem />
+          <GoodsItem
+            v-for="item in goodList"
+            :key="item.id"
+            :good="item"
+          />
         </div>
+        <template #finished>
+          <SeparateLine title="没有更多商品" />
+        </template>
       </van-list>
     </div>
   </div>
@@ -31,12 +38,17 @@ import { getImgUrl } from '@/utils/tools';
 import NavBar from '@/components/navbar';
 import GoodsItem from '@/components/goods-item';
 import SeparateLine from '@/components/separate-line';
+import teamApi from '@/apis/appointment';
 
 export default {
   data() {
     return {
       loading: false,
       finished: true,
+      page: 1,
+      size: 10,
+      totalPage: 1,
+      goodList: [],
     };
   },
   components: {
@@ -46,9 +58,47 @@ export default {
     [Image.name]: Image,
     [List.name]: List,
   },
+  mounted () {
+    // 不推荐在这里调用 fetchItem
+    this.getUserList();
+  },
   methods: {
     getImgUrl,
-    onLoad() {},
+    getUserList() {
+      const {
+        page,
+        size,
+      } = this;
+      this.loading = true;
+      teamApi.getUserList({
+        page,
+        size,
+      }).then((res) => {
+        const {
+          data,
+        } = res;
+        if (data && data.records) {
+          this.totalPage = data.totalPage;
+          if (page < 2) {
+            this.goodList = data.records;
+          } else {
+            this.goodList = this.goodList.concat(data.records);
+          }
+          if (data.records.length < this.size) {
+            this.finished = true;
+          }
+        }
+        this.loading = false;
+      }).catch(() => {
+        this.loading = false;
+      });
+    },
+    onBottomReach() {
+      if (this.totalPage > this.page) {
+        this.page += 1;
+        this.getUserList();
+      }
+    },
   },
 };
 </script>
@@ -87,7 +137,7 @@ export default {
     position: relative;
     z-index: 1;
     flex: 1;
-    overflow: hidden;
+    overflow-y: auto;
   }
   .goods_list {
     padding: 0 12px;

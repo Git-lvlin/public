@@ -4,6 +4,7 @@
   >
     <!-- <router-view :style="{flex:1, overflow: 'auto'}" />
     <tabbar /> -->
+    干的漂亮
   </div>
 </template>
 

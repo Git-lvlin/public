@@ -4,24 +4,24 @@
       <pic
         width="100px"
         height="100px"
-        src="https://12312313"
+        :src="good.imageUrl"
       />
-      <div class="sale" >已约288件</div>
+      <div class="sale" >已约{{good.activitySaleNum}}件</div>
     </div>
     <div class="info_box">
-      <div class="title text_two_line">宁夏菠萝蜜500g装时令鲜水果 500g装时令鲜水果宁夏菠萝蜜500g装时令鲜水果 500g装时令鲜水果</div>
-      <div class="desc text_one_line">七天无理由退换丨全场包邮</div>
-      <div class="time_down"><CountDown :time="time" color="#e7512d" />后结束</div>
+      <div class="title text_two_line">{{good.goodsName}}</div>
+      <div class="desc text_one_line">{{good.goodsDesc}}</div>
+      <div class="time_down"><CountDown :time="good.endTime" color="#e7512d" />后结束</div>
       <div class="flex_middle footer">
         <div class="price_box">
           <div class="price_market">
             <span>市场价：</span>
-            <em>¥288</em>
+            <em>¥{{good.marketPrice | price}}</em>
           </div>
           <div class="price">
             <span class="text_red">单约价 </span>
             <span class="text_small">¥</span>
-            <span>288</span>
+            <span>{{good.activityPrice | price}}</span>
           </div>
         </div>
         <div class="btn last_arrow">去单约</div>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import Big from 'big.js';
 import Image from '@/components/image';
 import CountDown from '@/components/count-down';
 
@@ -39,6 +40,10 @@ export default {
     width: {
       type: String,
       default: '50%',
+    },
+    good: {
+      type: Object,
+      default: () => {},
     },
   },
   components: {
@@ -49,6 +54,11 @@ export default {
     return {
       time: 30 * 60 * 60 * 60,
     };
+  },
+  filters: {
+    price(value) {
+      return new Big(value).div(new Big(100));
+    },
   },
 };
 </script>
@@ -79,9 +89,11 @@ export default {
 }
 
 .info_box {
+  flex: 1;
   margin-left: 8px;
 }
 .title {
+  height: 40px;
   color: #333333;
   font-size: 14px;
   line-height: 20px;

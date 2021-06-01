@@ -13,9 +13,9 @@
       <div class="team_detail_title">戴尔笔记本团约 今日疯抢中</div>
       <div class="flex_center end_time">
         <div class="end_time_text">距结束</div>
-        <CountDown :time=100000000 block />
+        <CountDown :time="good.endTime" block />
       </div>
-      <Panle />
+      <Panle :good="good" />
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ import { Image, List } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import NavBar from '@/components/navbar';
 import CountDown from '@/components/count-down';
+import teamApi from '@/apis/appointment';
 import Panle from './components/panle';
 
 export default {
@@ -32,6 +33,7 @@ export default {
     return {
       loading: false,
       finished: true,
+      good: {},
     };
   },
   components: {
@@ -41,9 +43,19 @@ export default {
     [Image.name]: Image,
     [List.name]: List,
   },
+  mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    teamApi.getTeamDetail(query).then((res) => {
+      console.log('res', res);
+      if (res.code === 0) {
+        this.good = res.data.curGoods;
+      }
+    });
+  },
   methods: {
     getImgUrl,
-    onLoad() {},
   },
 };
 </script>

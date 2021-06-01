@@ -4,6 +4,7 @@
       <pic
         width="351px"
         height="195px"
+        :src="good.imageUrl"
       />
     </div>
     <div class="info_box">
@@ -11,30 +12,37 @@
         <div class="flex_fix">
           <pic
             width="32px"
-            height="14px"
+            height="17px"
             :src="getImgUrl('publicMobile/common/team_label.png')"
           />
         </div>
-        <div class="title_text text_one_line">阿斯蒂芬库里静安寺打开链接阿斯蒂芬库里 阿斯顿联发科金克拉撒旦金克拉撒旦卡萨丁</div>
+        <div class="title_text text_one_line">{{good.goodsName}}</div>
       </div>
-      <div class="team_desc">七天无理由退换丨全场包邮</div>
+      <div class="team_desc">{{good.goodsDesc}}</div>
       <div class="footer">
         <div class="price_box">
           <div class="flex_middle" >
-            <div class="progress_back"><div class="progress">70%</div></div>
-            <div class="sale" >已约700件</div>
+            <div class="progress_back">
+              <div class="progress" :style="{'width': good.joinPercent}">
+                {{good.joinPercent}}
+              </div>
+            </div>
+            <div class="sale" >已约{{good.joinGroupNum}}件</div>
           </div>
           <div class="price">
             <span class="price_title">团购价</span>
-            <div class="price_text"><span class="min_size">¥</span>8.89</div>
-            <span class="market_price">¥8.89</span>
+            <div class="price_text">
+              <span class="min_size">¥</span>
+              {{good.salePrice | price}}
+            </div>
+            <span class="market_price">¥{{good.marketPrice | price}}</span>
           </div>
         </div>
         <div class="control">
           <div class="flex_middle timer">
-            <CountTime :time="time" color="#e7512d" />后结束
+            <CountTime :time="good.endTime" color="#e7512d" />后结束
           </div>
-          <div class="btn last_arrow">去单约</div>
+          <div class="btn last_arrow" v-on:click="onToDetail">去单约</div>
         </div>
       </div>
     </div>
@@ -43,10 +51,19 @@
 
 <script>
 import Image from '@/components/image';
+import Big from 'big.js';
 import CountTime from '@/components/count-down';
 import { getImgUrl } from '@/utils/tools';
 
+Big.DP = 2;
+
 export default {
+  props: {
+    good: {
+      type: Object,
+      default: () => {},
+    },
+  },
   components: {
     pic: Image,
     CountTime,
@@ -58,6 +75,22 @@ export default {
   },
   methods: {
     getImgUrl,
+    onToDetail() {
+      console.log(this.good);
+      const {
+        activityId,
+        spuId,
+        skuId,
+      } = this.good;
+      this.$router.push({
+        path: '/team-detail',
+        query: {
+          activityId,
+          spuId,
+          skuId,
+        },
+      });
+    },
   },
 };
 </script>
@@ -67,6 +100,9 @@ export default {
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 12px;
+}
+.img_warp{
+  background-color: #fff;
 }
 .info_box {
   padding: 12px;

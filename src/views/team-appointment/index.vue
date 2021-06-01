@@ -14,12 +14,21 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
+        offset=0
+        :immediate-check="false"
+        finished-text="没有更多商品"
+        @load="onBottomReach"
       >
         <div class="goods_list">
-          <TeamItem />
+          <TeamItem
+            v-for="item in teamList"
+            :key="item.skuId"
+            :good="item"
+          />
         </div>
+        <template #finished>
+          <SeparateLine title="没有更多商品" />
+        </template>
       </van-list>
     </div>
   </div>
@@ -37,7 +46,11 @@ export default {
   data() {
     return {
       loading: false,
-      finished: true,
+      finished: false,
+      page: 1,
+      size: 2,
+      totalPage: 1,
+      teamList: [],
     };
   },
   components: {
@@ -49,18 +62,44 @@ export default {
   },
   mounted () {
     // 不推荐在这里调用 fetchItem
-    console.log(234234234234234);
-    teamApi.getTeamList({
-      page: 1,
-      size: 10,
-    }).then((res) => {
-      console.log('sdfsd', res);
-    });
+    this.getTeamList();
   },
   methods: {
     getImgUrl,
-    onLoad() {
-      console.log(2344234234);
+    getTeamList() {
+      const {
+        page,
+        size,
+      } = this;
+      this.loading = true;
+      teamApi.getTeamList({
+        page,
+        size,
+      }).then((res) => {
+        const {
+          data,
+        } = res;
+        if (data && data.records) {
+          this.totalPage = data.totalPage;
+          if (page < 2) {
+            this.teamList = data.records;
+          } else {
+            this.teamList = this.teamList.concat(data.records);
+          }
+          if (data.records.length < this.size) {
+            this.finished = true;
+          }
+        }
+        this.loading = false;
+      }).catch(() => {
+        this.loading = false;
+      });
+    },
+    onBottomReach() {
+      if (this.totalPage > this.page) {
+        this.page += 1;
+        this.getTeamList();
+      }
     },
   },
 };
@@ -78,7 +117,7 @@ export default {
   .team_appointment {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #CE1E27;
   }
 
@@ -95,7 +134,7 @@ export default {
     position: relative;
     z-index: 1;
     flex: 1;
-    overflow: hidden;
+    overflow-y: auto;
   }
   .goods_list {
     padding: 0 12px;

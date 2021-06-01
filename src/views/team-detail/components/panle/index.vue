@@ -6,7 +6,7 @@
           width="140px"
           height="140px"
         />
-        <div class="sale_num">已团约1888件</div>
+        <div class="sale_num">已团约{{good.saleNum}}件</div>
       </div>
       <div class="info_box">
         <div class="flex_middle store">
@@ -24,13 +24,13 @@
               'background-image': `url('${getImgUrl('publicMobile/common/team_label.png')}')`
             }"
           />
-          阿斯蒂芬库里静安寺打开链接阿斯蒂芬库里 阿斯顿联发科金克拉撒旦金克拉撒旦卡萨丁
+          {{good.goodsName}}
         </div>
-        <div class="team_desc">七天无理由退换丨全场包邮</div>
+        <div class="team_desc">{{good.goodsDesc}}</div>
         <div class="price_box">
           <div class="flex_middle progress_box" >
             <div class="flex_fix progress_back"><div class="progress">70%</div></div>
-            <div class="sale" >已约70000件</div>
+            <div class="sale" >已约{{good.saleNum}}件</div>
           </div>
           <div class="price">
             <span class="price_title">团购价</span>
@@ -49,6 +49,12 @@ import Image from '@/components/image';
 import { getImgUrl } from '@/utils/tools';
 
 export default {
+  props: {
+    good: {
+      type: Object,
+      default: () => {},
+    },
+  },
   components: {
     pic: Image,
   },
