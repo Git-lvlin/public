@@ -10,7 +10,7 @@ const routes = [
     path: '/',
     name: 'Index',
     component: Index,
-    redirect: '/user-appointment',
+    redirect: '/menu',
     children: [],
   },
   {

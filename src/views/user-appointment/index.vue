@@ -61,6 +61,7 @@ export default {
   mounted () {
     // 不推荐在这里调用 fetchItem
     this.getUserList();
+    console.log('windows', window);
   },
   methods: {
     getImgUrl,

@@ -4,7 +4,7 @@
   >
     <van-nav-bar
       left-arrow
-      safe-area-inset-top
+      :safe-area-inset-top="true"
       @click-left="onClickLeft"
     >
       <template #left>
@@ -42,6 +42,9 @@ export default {
   methods: {
     onClickLeft() {
       Toast('返回');
+      this.$bridge.callHandler('pop', {}, (res) => {
+        console.log(`获取app响应数据:${res}`);
+      });
     },
     getImgUrl,
   },
