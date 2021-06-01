@@ -17,6 +17,9 @@ export default {
     };
   },
   components: {},
+  mounted() {
+    console.log('process', process.env);
+  },
 };
 </script>
 

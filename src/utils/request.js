@@ -17,6 +17,7 @@ axios.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${appToken}`;
   }
 
+  console.log('process.env --- ', process.env);
   if (process.env.NODE_ENV === 'production') {
     config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
   }

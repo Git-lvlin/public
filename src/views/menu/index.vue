@@ -6,7 +6,7 @@
       <van-cell
         title="单约列表"
         is-link
-        url="/user-appointment"
+        to="/user-appointment"
       />
       <van-cell
         title="团约列表"
