@@ -17,11 +17,8 @@ axios.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${appToken}`;
   }
 
-  if (config.url.includes('/live/')) {
-    config.headers.back = 'java';
-    if (process.env.NODE_ENV === 'production') {
-      config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
-    }
+  if (process.env.NODE_ENV === 'production') {
+    config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
   }
   return config;
 }, (error) => Promise.reject(error));
@@ -65,6 +62,7 @@ const getToken = () => new Promise((resolve) => {
 const request = async ({
   url, method, data, options = {},
 }) => {
+  console.log(process);
   const { showLoading = true, showError = true } = options;
   if (App.isApp && !appToken) {
     appToken = await getToken();

@@ -4,7 +4,7 @@
   >
     <van-nav-bar
       left-arrow
-      safe-area-inset-top
+      :safe-area-inset-top="true"
       @click-left="onClickLeft"
     >
       <template #left>
