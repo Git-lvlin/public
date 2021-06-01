@@ -5,7 +5,12 @@ module.exports = {
   devServer: {
     proxy: {
       '/activity': {
-        target: 'http://dev-yeahgo-activity.waiad.icu',
+        target: 'http://dev-yeahgo-gateway.waiad.icu',
+        ws: true,
+        changeOrigin: true,
+      },
+      '/member': {
+        target: 'http://dev-yeahgo-gateway.waiad.icu',
         ws: true,
         changeOrigin: true,
       },

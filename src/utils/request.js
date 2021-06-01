@@ -1,9 +1,14 @@
 import axios from 'axios';
 import { Toast } from 'vant';
 import App from '@/utils/app';
-import { getQueryString } from '@/utils/tools';
+import { refresToken } from '@/constant/index';
 
 Toast.setDefaultOptions('loading', { forbidClick: true });
+
+// accessToken过期
+const ACCESS_TOKEN_INVALID = 10014;
+// refreshToken过期
+const REFRESH_TOKEN_INVALID = 10015;
 
 let requestCount = 0;
 
@@ -26,30 +31,59 @@ axios.interceptors.request.use((config) => {
   return config;
 }, (error) => Promise.reject(error));
 
-axios.interceptors.response.use((response) => {
-  if (response.data.code === 400810) {
-    setTimeout(() => {
-      Toast({
-        message: response.data.msg,
-      });
+/* eslint-disable */
 
-      if (!App.isApp) {
-        let params = '';
-        const shareId = getQueryString('share_id');
-        if (shareId) {
-          params = `&share_id=${shareId}`;
-        }
-        window.location.href = `https://bingou.com.cn/h5/Login/login.html?ref_url=${encodeURIComponent(window.location.href)}${params}`;
-      }
-    });
+function requestRefreshToken() {
+  //获取原生用户信息
+  return post({
+    url: refresToken,
+    data: { 'id': '1395631517728378881', 'refreshToken': 'eyJhbGciOiJIUzUxMiJ9.eyJNRU1CRVJOQU1FIjoiMTgxMjIyNTI3NDUiLCJjcmVhdGVkIjoxNjIyNTM3NTA1MzE5LCJ0b2tlblR5cGUiOiJyZWZyZXNoVG9rZW4iLCJleHAiOjE2MjMxNDIzMDV9.0hf2BejooKMcLiPq-DasHWuiaYKg0BrSPaN-0m1b-KwoKRn1xjj3bYqgKlei1fk3ugcCBs9hv5vBqZ2vTe-XpA' },
+  }).then(res => res.data);
+}
+
+let isRefreshing = false
+let requestHistory = []
+
+axios.interceptors.response.use(async response => {
+  const { code } = response.data
+  if (code == 0) {
+    return response.data;
   }
-  return response.data;
-},
-(error) => Promise.reject(error));
+  if (code == REFRESH_TOKEN_INVALID) {
+    // refreshToken过期退出登录
+    Toast('登录过期，请重新登录')
+    return null;
+  }
+  if (code === ACCESS_TOKEN_INVALID) {
+    const config = response.config
+    if (!isRefreshing) {
+      isRefreshing = true
+      var res = await requestRefreshToken();
+      const { accessToken } = res.data
+      axios.defaults.headers['accessToken'] = accessToken
+      config.headers['accessToken'] = accessToken
+      //恢复历史请求
+      requestHistory.forEach(cb => cb(accessToken))
+      requestHistory = []
+      return axios(config)
+    } else {
+      return new Promise((resolve) => {
+        requestHistory.push((token) => {
+          config.headers['accessToken'] = token
+          resolve(axios(config))
+        })
+      })
+    }
+  }
+}, error => {
+  return Promise.reject(error)
+})
+
+/* eslint-enable */
 
 const resolveArr = [];
 
-const getToken = () => new Promise((resolve) => {
+const getAppToken = () => new Promise((resolve) => {
   if (resolveArr.length === 0) {
     App.getToken((args) => {
       // eslint-disable-next-line prefer-destructuring
@@ -67,7 +101,7 @@ const request = async ({
 }) => {
   const { showLoading = true, showError = true } = options;
   if (App.isApp && !appToken) {
-    appToken = await getToken();
+    appToken = await getAppToken();
   }
 
   if (showLoading && requestCount === 0) {

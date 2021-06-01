@@ -10,7 +10,7 @@ const routes = [
     path: '/',
     name: 'Index',
     component: Index,
-    // redirect: '/home',
+    redirect: '/user-appointment',
     children: [],
   },
   {
