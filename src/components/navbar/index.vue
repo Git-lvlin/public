@@ -42,6 +42,9 @@ export default {
   methods: {
     onClickLeft() {
       Toast('返回');
+      this.$bridge.callHandler('pop', {}, (res) => {
+        console.log(`获取app响应数据:${res}`);
+      });
     },
     getImgUrl,
   },
