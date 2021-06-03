@@ -53,7 +53,7 @@
 import Image from '@/components/image';
 import Big from 'big.js';
 import CountTime from '@/components/count-down';
-import { getImgUrl } from '@/utils/tools';
+import { getImgUrl, getBaseApiUrl } from '@/utils/tools';
 
 Big.DP = 2;
 
@@ -77,19 +77,19 @@ export default {
     getImgUrl,
     onToDetail() {
       const {
-        good,
-      } = this;
-      const baseUrl = getBaseApiUrl();
-      const paramStr = `?orderType=${good.orderType || 4}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
-      if (this.$store.state.appInfo.isApp) {
-        this.$bridge.callHandler(
-          'router',
-          `${baseUrl}/shopping/detail${paramStr}`,
-        )
-      } else{
-        console.log('不是App内')
-      }
-    }
+        activityId,
+        spuId,
+        skuId,
+      } = this.good;
+      this.$router.push({
+        path: '/team-detail',
+        query: {
+          activityId,
+          spuId,
+          skuId,
+        },
+      });
+    },
   },
 };
 </script>

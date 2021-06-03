@@ -3,7 +3,7 @@
     class="user_appointment"
   >
     <div class="flex_fix">
-      <nav-bar title="单约专享" :share="true" />
+      <nav-bar title="单约专享" />
     </div>
     <img
       class="back_img flex_fix"

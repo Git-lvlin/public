@@ -22,7 +22,7 @@
 
 <script>
 import { Image, List } from 'vant';
-import { getImgUrl } from '@/utils/tools';
+import { getImgUrl, getBaseApiUrl } from '@/utils/tools';
 import NavBar from '@/components/navbar';
 import CountDown from '@/components/count-down';
 import teamApi from '@/apis/appointment';
@@ -56,6 +56,21 @@ export default {
   },
   methods: {
     getImgUrl,
+    onToDetail() {
+      const {
+        good,
+      } = this;
+      const baseUrl = getBaseApiUrl();
+      const paramStr = `?orderType=${good.orderType || 4}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
+      if (this.$store.state.appInfo.isApp) {
+        this.$bridge.callHandler(
+          'router',
+          `${baseUrl}/shopping/detail${paramStr}`,
+        )
+      } else{
+        console.log('不是App内')
+      }
+    }
   },
 };
 </script>
