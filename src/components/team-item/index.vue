@@ -51,11 +51,8 @@
 
 <script>
 import Image from '@/components/image';
-import Big from 'big.js';
 import CountTime from '@/components/count-down';
-import { getImgUrl, getBaseApiUrl } from '@/utils/tools';
-
-Big.DP = 2;
+import { getImgUrl } from '@/utils/tools';
 
 export default {
   props: {

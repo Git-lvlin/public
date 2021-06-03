@@ -15,9 +15,9 @@
             width="16px"
             height="16px"
             round
-            :src="good.storeInfo.storeIcon"
+            :src="good.storeInfo && good.storeInfo.storeIcon || ''"
           />
-          <div class="store_name text_one_line">{{good.storeInfo.storeName}}</div>
+          <div class="store_name text_one_line">{{good.storeInfo && good.storeInfo.storeName || ''}}</div>
         </div>
         <div class="team_title text_two_line">
           <span

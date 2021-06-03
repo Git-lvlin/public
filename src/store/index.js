@@ -33,9 +33,12 @@ const getPx = (num) => {
   }
   return num / window.devicePixelRatio;
 };
-navigationBarHeight = getPx(navigationBarHeight);
-bottomBarHeight = getPx(bottomBarHeight);
-
+if (navigationBarHeight > 0) {
+  navigationBarHeight = getPx(navigationBarHeight);
+}
+if (bottomBarHeight > 0) {
+  bottomBarHeight = getPx(bottomBarHeight);
+}
 
 Vue.use(Vuex);
 Vue.prototype.appInfo = appInfo;

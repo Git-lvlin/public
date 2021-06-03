@@ -3,7 +3,7 @@
     class="user_detail"
   >
     <div class="flex_fix">
-      <nav-bar title="团约专享" :share="true" />
+      <nav-bar title="团约专享" :share="true" :shareObj="shareObj" />
     </div>
     <img
       class="back_img flex_fix"
@@ -34,6 +34,7 @@ export default {
       loading: false,
       finished: true,
       good: {},
+      shareObj: {},
     };
   },
   components: {
@@ -48,9 +49,20 @@ export default {
       query,
     } = this.$router.history.current;
     teamApi.getTeamDetail(query).then((res) => {
-      console.log('res', res);
       if (res.code === 0) {
-        this.good = res.data.curGoods;
+        const good = res.data.curGoods;
+        this.good = good;
+        this.shareObj = {
+          shareObjectNo: good.spuId,
+          shareParams: {
+            activityId: good.activityId,
+            spuId: good.spuId,
+            skuId: good.skuId,
+            orderType: good.orderType,
+            objectId: good.objectId,
+            wsId: good.wsId,
+          },
+        }
       }
     });
   },

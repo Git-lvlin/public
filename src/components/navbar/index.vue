@@ -64,8 +64,16 @@ export default {
       });
     },
     onShare() {
-      if (this.shareObj && this.shareObj.path) {
-
+      if (JSON.stringify(this.shareObj) !== "{}") {
+        this.$bridge.callHandler('share', {
+          contentType: 1,
+          paramId: 2,
+          shareUrl: encodeURIComponent(window.location.href),
+          sharePopup: false,
+          ...this.shareObj,
+        }, (res) => {
+          console.log(`获取app响应数据:${res}`);
+        });
       } else {
         this.$bridge.callHandler('share', {
           contentType: 2,
