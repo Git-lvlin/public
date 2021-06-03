@@ -6,14 +6,16 @@ module.exports = {
   extends: [
     'plugin:vue/essential',
     '@vue/airbnb',
+    // 'standard',
   ],
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: "babel-eslint",
+    sourceType: "module",
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'import/extensions': ['error', 'always', {
+    'import/extensions': ['error', 'ignorePackages', {
       js: 'never', ts: 'never', tsx: 'never', vue: 'never',
     }],
     'no-param-reassign': 0,

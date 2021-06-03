@@ -3,7 +3,7 @@
     class="user_detail"
   >
     <div class="flex_fix">
-      <NavBar title="团约专享" />
+      <nav-bar title="团约专享" :share="true" />
     </div>
     <img
       class="back_img flex_fix"
@@ -13,9 +13,9 @@
       <div class="team_detail_title">戴尔笔记本团约 今日疯抢中</div>
       <div class="flex_center end_time">
         <div class="end_time_text">距结束</div>
-        <CountDown :time="good.endTime" block />
+        <count-down :time="good.endTime" block />
       </div>
-      <Panle :good="good" />
+      <panle :good="good" />
     </div>
   </div>
 </template>

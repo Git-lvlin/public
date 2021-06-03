@@ -1,16 +1,17 @@
 import Vue from 'vue';
 import Big from 'big.js';
 import VConsole from 'vconsole';
-import Bridge from '@/utils/jsBridge';
+import jsBridge from '@/utils/jsBridge';
 import App from './App';
 import router from './router';
 import store from './store';
 
 const vconsole = new VConsole();
 
-Vue.prototype.$bridge = Bridge;
+Vue.prototype.$bridge = jsBridge;
 Vue.config.productionTip = false;
 Vue.filter('price', (value) => new Big(value).div(new Big(100)));
+Vue.filter('pxtovw', (value) => `${value / 375 * 100}vw`);
 
 new Vue({
   router,

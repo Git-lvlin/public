@@ -9,7 +9,7 @@
     "build": "vue-cli-service build --mode dev",
     "build:test": "vue-cli-service build --mode test",
     "build:prod": "vue-cli-service build --mode prod",
-    "lint": "eslint --fix --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
     "axios": "^0.21.0",

@@ -3,15 +3,16 @@
     class="team_appointment"
   >
     <div class="flex_fix">
-      <NavBar title="团约专享" />
+      <nav-bar title="团约专享" />
     </div>
     <img
       class="back_img flex_fix"
       :src="getImgUrl('publicMobile/together/activity_back.png')"
     />
     <div class="container">
-      <SeparateLine title="正在疯抢" />
+      <separate-line v-if="teamList.length" title="正在疯抢" />
       <van-list
+        v-if="teamList.length"
         v-model="loading"
         :finished="finished"
         offset=0
@@ -20,14 +21,14 @@
         @load="onBottomReach"
       >
         <div class="goods_list">
-          <TeamItem
+          <team-item
             v-for="item in teamList"
             :key="item.skuId"
             :good="item"
           />
         </div>
         <template #finished>
-          <SeparateLine title="没有更多商品" />
+          <separate-line title="没有更多商品" />
         </template>
       </van-list>
     </div>
@@ -48,7 +49,7 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      size: 2,
+      size: 10,
       totalPage: 1,
       teamList: [],
     };

@@ -1,9 +1,9 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="onToDetail">
     <div class="flex_fix img-wrap">
       <pic
-        width="100px"
-        height="100px"
+        :width="100 | pxtovw"
+        :height="100 | pxtovw"
         :src="good.imageUrl"
       />
       <div class="sale" >已约{{good.activitySaleNum}}件</div>
@@ -11,7 +11,7 @@
     <div class="info_box">
       <div class="title text_two_line">{{good.goodsName}}</div>
       <div class="desc text_one_line">{{good.goodsDesc}}</div>
-      <div class="time_down"><CountDown :time="good.endTime" color="#e7512d" />后结束</div>
+      <div class="time_down"><count-down :time="good.endTime" color="#e7512d" />后结束</div>
       <div class="flex_middle footer">
         <div class="price_box">
           <div class="price_market">
@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import Big from 'big.js';
 import Image from '@/components/image';
 import CountDown from '@/components/count-down';
+import { getBaseApiUrl } from "@/utils/tools";
 
 export default {
   props: {
@@ -55,11 +55,23 @@ export default {
       time: 30 * 60 * 60 * 60,
     };
   },
-  filters: {
-    price(value) {
-      return new Big(value).div(new Big(100));
-    },
-  },
+  methods: {
+    onToDetail() {
+      const {
+        good,
+      } = this;
+      const baseUrl = getBaseApiUrl();
+      const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
+      if (this.$store.state.appInfo.isApp) {
+        this.$bridge.callHandler(
+          'router',
+          `${baseUrl}/shopping/detail${paramStr}`,
+        )
+      } else{
+        console.log('不是App内')
+      }
+    }
+  }
 };
 </script>
 

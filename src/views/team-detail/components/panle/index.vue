@@ -5,8 +5,9 @@
         <pic
           width="140px"
           height="140px"
+          :src="good.imageUrl"
         />
-        <div class="sale_num">已团约{{good.saleNum}}件</div>
+        <div class="sale_num">{{good.saleNum}}人成团</div>
       </div>
       <div class="info_box">
         <div class="flex_middle store">
@@ -14,8 +15,9 @@
             width="16px"
             height="16px"
             round
+            :src="good.storeInfo.storeIcon"
           />
-          <div class="store_name">满京华社区店-南山分店</div>
+          <div class="store_name text_one_line">{{good.storeInfo.storeName}}</div>
         </div>
         <div class="team_title text_two_line">
           <span
@@ -30,12 +32,15 @@
         <div class="price_box">
           <div class="flex_middle progress_box" >
             <div class="flex_fix progress_back"><div class="progress">70%</div></div>
-            <div class="sale" >已约{{good.saleNum}}件</div>
+            <div class="sale" >已约{{good.activitySaleNum}}件</div>
           </div>
           <div class="price">
             <span class="price_title">团购价</span>
-            <div class="price_text"><span class="min_size">¥</span>8.89</div>
-            <span class="market_price">¥8.89</span>
+            <div class="price_text">
+              <span class="min_size">¥</span>
+              {{good.activityPrice | price}}
+            </div>
+            <span class="market_price">¥{{good.marketPrice | price}}</span>
           </div>
         </div>
       </div>
@@ -69,7 +74,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .team_detail_panle {
   overflow: hidden;
   padding: 12px;
@@ -112,6 +117,7 @@ export default {
 }
 .team_title {
   max-width: 100%;
+  height: 44px;
   color: #333333;
   font-size: 16px;
   line-height: 22px;

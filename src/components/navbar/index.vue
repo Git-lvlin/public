@@ -1,6 +1,7 @@
 <template>
   <div
     class="nav_bar"
+    :style="{'padding-top': `${safeHeight}px`}"
   >
     <van-nav-bar
       left-arrow
@@ -8,24 +9,23 @@
       @click-left="onClickLeft"
     >
       <template #left>
-        <van-image
-          width="24px"
-          height="24px"
+        <img
+          class="back_img"
           :src="getImgUrl('miniprogram/common/back_white@2x.png')"
         />
       </template>
       <template #title>
         <div class="nav_title">{{title}}</div>
       </template>
-      <template #right>
-        <img class="right_icon" :src="getImgUrl('publicMobile/common/share.png')" />
+      <template #right v-if="share">
+        <img class="right_icon" :src="getImgUrl('publicMobile/common/share.png')" @click="onShare" />
       </template>
     </van-nav-bar>
   </div>
 </template>
 
 <script>
-import { NavBar, Toast, Image } from 'vant';
+import { NavBar, Image } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 
 export default {
@@ -34,19 +34,49 @@ export default {
       type: String,
       default: '',
     },
+    share: {
+      type: Boolean,
+      default: false,
+    },
+    shareObj: {
+      type: Object,
+      default: () => {},
+    },
   },
   components: {
     [NavBar.name]: NavBar,
     [Image.name]: Image,
   },
+  data() {
+    return {
+      safeHeight: 0,
+    };
+  },
+  created() {
+    this.safeHeight = this.$store.state.navigationBarHeight;
+  },
   methods: {
+    getImgUrl,
     onClickLeft() {
-      Toast('返回');
-      this.$bridge.callHandler('pop', {}, (res) => {
+      // Toast('返回');
+      this.$bridge.callHandler('pop', "", (res) => {
         console.log(`获取app响应数据:${res}`);
       });
     },
-    getImgUrl,
+    onShare() {
+      if (this.shareObj && this.shareObj.path) {
+
+      } else {
+        this.$bridge.callHandler('share', {
+          contentType: 2,
+          paramId: 2,
+          shareUrl: encodeURIComponent(window.location.href),
+          sharePopup: false,
+        }, (res) => {
+          console.log(`获取app响应数据:${res}`);
+        });
+      }
+    }
   },
 };
 </script>
@@ -58,6 +88,12 @@ export default {
   }
   .van-hairline--bottom::after {
     border-bottom-width: 0;
+  }
+
+  .back_img {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
   }
 
   .nav_title {

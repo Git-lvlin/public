@@ -3,29 +3,30 @@
     class="user_appointment"
   >
     <div class="flex_fix">
-      <NavBar title="单约专享" />
+      <nav-bar title="单约专享" :share="true" />
     </div>
     <img
       class="back_img flex_fix"
       :src="getImgUrl('publicMobile/together/activity_back.png')"
     />
     <div class="container">
-      <SeparateLine title="正在疯抢" />
+      <separate-line v-if="goodList.length" title="正在疯抢" />
       <van-list
+        v-if="goodList.length"
         v-model="loading"
         :finished="finished"
         finished-text="没有更多商品"
         @load="onBottomReach"
       >
         <div class="goods_list">
-          <GoodsItem
+          <goods-item
             v-for="item in goodList"
             :key="item.id"
             :good="item"
           />
         </div>
         <template #finished>
-          <SeparateLine title="没有更多商品" />
+          <separate-line title="没有更多商品" />
         </template>
       </van-list>
     </div>
@@ -52,16 +53,17 @@ export default {
     };
   },
   components: {
-    NavBar,
+    'nav-bar': NavBar,
     GoodsItem,
     SeparateLine,
     [Image.name]: Image,
     [List.name]: List,
   },
-  mounted () {
+  created () {
     // 不推荐在这里调用 fetchItem
     this.getUserList();
-    console.log('windows', window);
+    // console.log('windows', window);
+    console.log(this.$store.state);
   },
   methods: {
     getImgUrl,

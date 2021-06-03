@@ -2,8 +2,8 @@
   <div class="team_item">
     <div class="img_warp">
       <pic
-        width="351px"
-        height="195px"
+        :width="351 | pxtovw"
+        :height="195 | pxtovw"
         :src="good.imageUrl"
       />
     </div>
@@ -11,8 +11,8 @@
       <div class="flex_middle team_title">
         <div class="flex_fix">
           <pic
-            width="32px"
-            height="17px"
+            :width="32 | pxtovw"
+            :height="17 | pxtovw"
             :src="getImgUrl('publicMobile/common/team_label.png')"
           />
         </div>
@@ -76,26 +76,25 @@ export default {
   methods: {
     getImgUrl,
     onToDetail() {
-      console.log(this.good);
       const {
-        activityId,
-        spuId,
-        skuId,
-      } = this.good;
-      this.$router.push({
-        path: '/team-detail',
-        query: {
-          activityId,
-          spuId,
-          skuId,
-        },
-      });
-    },
+        good,
+      } = this;
+      const baseUrl = getBaseApiUrl();
+      const paramStr = `?orderType=${good.orderType || 4}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
+      if (this.$store.state.appInfo.isApp) {
+        this.$bridge.callHandler(
+          'router',
+          `${baseUrl}/shopping/detail${paramStr}`,
+        )
+      } else{
+        console.log('不是App内')
+      }
+    }
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .team_item {
   border-radius: 8px;
   overflow: hidden;

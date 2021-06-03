@@ -4,7 +4,9 @@ import util from '@/utils/util';
 
 // 获取当前环境接口域名
 export const getBaseApiUrl = () => {
-  const url = apiUrl;
+  // const url = apiUrl;
+  const envUrl = process.env.VUE_APP_JAVA_API_URL ;
+  const url = envUrl ? envUrl : apiUrl;
   return url;
 };
 
@@ -70,8 +72,23 @@ export const throttle = (func, wait) => {
 };
 
 // 取url参数
+export const getQueryObj = (str) => {
+  let hash;
+  const myJson = {};
+  const url = str ? str : window.location.search;
+  if (url.indexOf('?') < 0 && url.indexOf('&') < 0) {
+    return {};
+  }
+  const hashes = url.slice(url.indexOf('?') + 1).split('&');
+  for (let i = 0; i < hashes.length; i++) {
+    hash = hashes[i].split('=');
+    myJson[hash[0]] = hash[1];
+  }
+  return myJson;
+};
+
 export const getQueryString = (name) => {
-  const reg = new RegExp(`(^|&)'${name}=([^&]*)(&|$)`, 'i');
+  const reg = new RegExp(`(^|&)'${name}=([^&]*)(&|$)`, "i");
   const r = window.location.search.substr(1).match(reg);
   if (r != null) return unescape(r[2]);
   return null;
