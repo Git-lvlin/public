@@ -11,7 +11,7 @@
       <van-cell
         title="团约列表"
         is-link
-        url="/team-appointment"
+        to="/team-appointment"
       />
     </van-cell-group>
   </div>

@@ -104,6 +104,14 @@ export const urlAddParams = (str) => {
   return url;
 };
 
+export const objToParamStr = (paramObj = {}) => {
+  const sdata = [];
+  for (let attr in paramObj) {
+    sdata.push(`${attr}=${paramObj[attr]}`);
+  }
+  return sdata.join('&');
+};
+
 // 转为浮点数
 export const mapNum = (list = []) => {
   list.forEach((item) => {

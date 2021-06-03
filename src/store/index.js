@@ -22,10 +22,11 @@ appInfo.isApp = appInfo.webViewClientTag ? true : false;
 // 设置安全区域
 const urlParams = getQueryObj(window.location.search) || {};
 let {
-  navigationBarHeight,
-  bottomBarHeight,
-  numa
+  navigationBarHeight = 0,
+  bottomBarHeight = 0,
 } = urlParams;
+// 避免重复设置 navigationBarHeight bottomBarHeight
+const deviceInfo = {};
 const getPx = (num) => {
   num = Number(num) || 0;
   if (!num) {
@@ -33,11 +34,11 @@ const getPx = (num) => {
   }
   return num / window.devicePixelRatio;
 };
-if (navigationBarHeight > 0) {
-  navigationBarHeight = getPx(navigationBarHeight);
+if (!!navigationBarHeight && navigationBarHeight > 0) {
+  deviceInfo.navigationBarHeight = getPx(navigationBarHeight);
 }
-if (bottomBarHeight > 0) {
-  bottomBarHeight = getPx(bottomBarHeight);
+if (!!navigationBarHeight && bottomBarHeight > 0) {
+  deviceInfo.bottomBarHeight = getPx(bottomBarHeight);
 }
 
 Vue.use(Vuex);
@@ -46,8 +47,7 @@ Vue.prototype.appInfo = appInfo;
 export default new Vuex.Store({
   state: {
     appInfo,
-    navigationBarHeight,
-    bottomBarHeight,
+    ...deviceInfo,
   },
   mutations: {
   },

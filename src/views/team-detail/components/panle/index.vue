@@ -45,13 +45,13 @@
         </div>
       </div>
     </div>
-    <div class="join_btn">立即参与团约</div>
+    <div class="join_btn" @click="onToConfirmOrder">立即参与团约</div>
   </div>
 </template>
 
 <script>
 import Image from '@/components/image';
-import { getImgUrl } from '@/utils/tools';
+import { getImgUrl, getBaseApiUrl } from '@/utils/tools';
 
 export default {
   props: {
@@ -70,6 +70,36 @@ export default {
   },
   methods: {
     getImgUrl,
+    onToConfirmOrder() {
+      const {
+        good,
+      } = this;
+      const baseUrl = getBaseApiUrl();
+      const orderData = {
+        orderType: good.orderType || 4,
+        objectId: good.objectId || '',
+        activityId: good.activityId || '',
+        storeGoodsInfos: [],
+      }
+      orderData.storeGoodsInfos[0] = {
+        storeNo: good.storeInfo.storeNo,
+        goodsInfos: [{
+          spuId: good.spuId,
+          skuId: good.skuId,
+          skuNum: 1,
+        }]
+      };
+      const paramStr = JSON.stringify(orderData);
+      console.log("🚀 ~ file: index.vue ~ line 93 ~ onToConfirmOrder ~ paramStr", paramStr)
+      if (this.$store.state.appInfo.isApp) {
+        this.$bridge.callHandler(
+          'router',
+          `${baseUrl}/shopping/confirmOrder?data=${paramStr}`,
+        )
+      } else{
+        console.log('不是App内')
+      }
+    }
   },
 };
 </script>

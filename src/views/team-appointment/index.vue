@@ -61,9 +61,10 @@ export default {
     [Image.name]: Image,
     [List.name]: List,
   },
-  mounted () {
+  created () {
     // 不推荐在这里调用 fetchItem
     this.getTeamList();
+    console.log(this.$store);
   },
   methods: {
     getImgUrl,
