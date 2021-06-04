@@ -4,12 +4,12 @@
   >
     <van-cell-group>
       <van-cell
-        title="单约列表"
+        title="单约专享"
         is-link
         to="/user-appointment"
       />
       <van-cell
-        title="团约列表"
+        title="团约专享"
         is-link
         to="/team-appointment"
       />

@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { getQueryObj } from '@/utils/tools';
-import { getQueryString } from '../utils/tools';
 
 // 设置是否在app内
 const {

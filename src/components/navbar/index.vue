@@ -4,11 +4,11 @@
     :style="{'padding-top': `${safeHeight}px`}"
   >
     <van-nav-bar
-      left-arrow
+      :left-arrow="!isMiniprogram"
       :safe-area-inset-top="true"
       @click-left="onClickLeft"
     >
-      <template #left>
+      <template #left v-if="!isMiniprogram">
         <img
           class="back_img"
           :src="getImgUrl('miniprogram/common/back_white@2x.png')"
@@ -50,10 +50,12 @@ export default {
   data() {
     return {
       safeHeight: 0,
+      isMiniprogram: false,
     };
   },
   created() {
     this.safeHeight = this.$store.state.navigationBarHeight;
+    this.isMiniprogram = this.$store.state.appInfo.isMiniprogram;
   },
   methods: {
     getImgUrl,

@@ -39,7 +39,7 @@ function setupWebViewJavascriptBridge(callback) {
     if (window.WVJBCallbacks) {
       return window.WVJBCallbacks.push(callback);
     }
-    // window.WVJBCallbacks = [callback];
+    window.WVJBCallbacks = [callback];
     // const WVJBIframe = document.createElement('iframe');
     // WVJBIframe.style.display = 'none';
     // WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';

@@ -23,6 +23,7 @@ axios.interceptors.request.use((config) => {
   }
 
   console.log('process.env --- ', process.env);
+  console.log('window', window);
   if (process.env.NODE_ENV === 'production') {
     config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
   }

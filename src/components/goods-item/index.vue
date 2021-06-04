@@ -67,7 +67,11 @@ export default {
           'router',
           `${baseUrl}/shopping/detail${paramStr}`,
         )
-      } else{
+      } else if (this.$store.state.appInfo.isMiniprogram) {
+        wx.miniProgram.navigateTo({
+          url: `/subpages/cart/detail/index${paramStr}`
+        })
+      } else {
         console.log('不是App内')
       }
     }

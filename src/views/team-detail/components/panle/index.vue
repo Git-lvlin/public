@@ -51,7 +51,7 @@
 
 <script>
 import Image from '@/components/image';
-import { getImgUrl, getBaseApiUrl } from '@/utils/tools';
+import { getImgUrl, getBaseApiUrl, objToParamStr } from '@/utils/tools';
 
 export default {
   props: {
@@ -89,14 +89,21 @@ export default {
           skuNum: 1,
         }]
       };
-      const paramStr = JSON.stringify(orderData);
-      console.log("🚀 ~ file: index.vue ~ line 93 ~ onToConfirmOrder ~ paramStr", paramStr)
+      let paramStr = orderData;
+      console.log("🚀 onToConfirmOrder ~ paramStr", paramStr)
       if (this.$store.state.appInfo.isApp) {
+        paramStr = JSON.stringify(orderData)
         this.$bridge.callHandler(
           'router',
           `${baseUrl}/shopping/confirmOrder?data=${paramStr}`,
         )
-      } else{
+      } else if (this.$store.state.appInfo.isMiniprogram) {
+        paramStr.storeGoodsInfos = JSON.stringify(paramStr.storeGoodsInfos);
+        paramStr = objToParamStr(paramStr);
+        wx.miniProgram.navigateTo({
+          url: `/subpages/cart/create/index?${paramStr}`
+        })
+      } else {
         console.log('不是App内')
       }
     }

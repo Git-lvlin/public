@@ -18,7 +18,7 @@ const routes = [
     name: 'UserAppointment',
     component: () => import('@/views/user-appointment'),
     meta: {
-      title: '单约列表',
+      title: '单约专享',
     },
   },
   {
@@ -26,7 +26,7 @@ const routes = [
     name: 'TeamAppointment',
     component: () => import('@/views/team-appointment'),
     meta: {
-      title: '团约列表',
+      title: '团约专享',
     },
   },
   {
@@ -41,9 +41,9 @@ const routes = [
     path: '/menu',
     name: 'Menu',
     component: () => import('@/views/menu'),
-    meta: {
-      title: 'H5 菜单页',
-    },
+    // meta: {
+    //   title: 'H5 菜单页',
+    // },
   },
 ];
 
