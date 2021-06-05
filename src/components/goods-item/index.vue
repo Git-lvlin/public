@@ -33,7 +33,7 @@
 <script>
 import Image from '@/components/image';
 import CountDown from '@/components/count-down';
-import { getBaseApiUrl } from "@/utils/tools";
+import { appBaseUrl } from "@/constant/index";
 
 export default {
   props: {
@@ -60,12 +60,12 @@ export default {
       const {
         good,
       } = this;
-      const baseUrl = getBaseApiUrl();
       const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
+      console.log(window.navigator)
       if (this.$store.state.appInfo.isApp) {
         this.$bridge.callHandler(
           'router',
-          `${baseUrl}/shopping/detail${paramStr}`,
+          `${appBaseUrl}/shopping/detail${paramStr}`,
         )
       } else if (this.$store.state.appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({

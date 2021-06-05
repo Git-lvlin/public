@@ -51,7 +51,8 @@
 
 <script>
 import Image from '@/components/image';
-import { getImgUrl, getBaseApiUrl, objToParamStr } from '@/utils/tools';
+import { appBaseUrl } from '@/constant/index'
+import { getImgUrl, objToParamStr } from '@/utils/tools';
 
 export default {
   props: {
@@ -74,7 +75,6 @@ export default {
       const {
         good,
       } = this;
-      const baseUrl = getBaseApiUrl();
       const orderData = {
         orderType: good.orderType || 4,
         objectId: good.objectId || '',
@@ -95,7 +95,7 @@ export default {
         paramStr = JSON.stringify(orderData)
         this.$bridge.callHandler(
           'router',
-          `${baseUrl}/shopping/confirmOrder?data=${paramStr}`,
+          `${appBaseUrl}/shopping/confirmOrder?data=${paramStr}`,
         )
       } else if (this.$store.state.appInfo.isMiniprogram) {
         paramStr.storeGoodsInfos = JSON.stringify(paramStr.storeGoodsInfos);

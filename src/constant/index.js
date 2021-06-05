@@ -9,6 +9,7 @@ export const VERSION = '1.0.0';
 // export const apiUrl = 'http://dev-yeahgo-public-web.waiad.icu/';
 // export const apiUrl = 'http://8.135.39.109';
 export const apiUrl = 'http://dev-yeahgo-gateway.waiad.icu';
+export const appBaseUrl = 'https://www.yeahgo.com';
 export const refresToken = '/member/open/refreshToken';
 // 服务器接口域名
 export const HTTP_TIMEOUT = 5000;
