@@ -2,7 +2,7 @@ import { apiUrl } from '@/constant/index';
 import { IMG_CDN } from '@/constant/common';
 import util from '@/utils/util';
 
-// 获取当前环境接口域名
+// 获取当前环境接口域名 
 export const getBaseApiUrl = () => {
   // const url = apiUrl;
   const envUrl = process.env.VUE_APP_JAVA_API_URL ;
@@ -11,7 +11,7 @@ export const getBaseApiUrl = () => {
 };
 
 // 格式化图片路径
-export const getImgUrl = (url = '') => IMG_CDN + url;
+export const getImgUrl = (url = '') => IMG_CDN[process.env.VUE_APP_API_ENV] + url;
 
 // 获取当前距离结束时间
 export const getLastTime = (time) => {

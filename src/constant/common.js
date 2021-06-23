@@ -1,7 +1,14 @@
 // 定义常用常量
 
 // oss cdn 域名
-export const IMG_CDN = 'http://dev-yeahgo-oss.waiad.icu/';
+export const IMG_CDN = {
+  dev: 'https://dev-yeahgo-oss.yeahgo.com/',
+  uat: 'https://uat-yeahgo-oss.yeahgo.com/',
+  fat: 'https://fat-yeahgo-oss.yeahgo.com/',
+  pro: 'https://pro-yeahgo-oss.yeahgo.com/',
+};
+
+console.log("==================ppppppppppppppppppppppppp", process);
 
 // 字符类型资源位id
 export const PAY_TYPE_KEY = 'PAYTYPE';

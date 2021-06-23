@@ -6,9 +6,9 @@ import { IMG_CDN } from './common';
 export const VERSION = '1.0.0';
 
 // 服务器接口域名
-// export const apiUrl = 'http://dev-yeahgo-public-web.waiad.icu/';
 // export const apiUrl = 'http://8.135.39.109';
-export const apiUrl = 'http://dev-yeahgo-gateway.waiad.icu';
+export const apiUrl = 'https://api-dev.yeahgo.com';
+// jsbridge 打开app配置域名 
 export const appBaseUrl = 'https://www.yeahgo.com';
 export const refresToken = '/member/open/refreshToken';
 // 服务器接口域名
@@ -20,7 +20,7 @@ export const SOURCE_TYPE = 4;
 export const NODATA_LIST = [
   {
     type: 'content',
-    img: `${IMG_CDN}miniprogram/common/nodata/content.png`,
+    img: `${IMG_CDN['pro']}miniprogram/common/nodata/content.png`,
     title: '暂无数据',
   },
 ];
