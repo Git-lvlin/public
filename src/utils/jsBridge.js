@@ -24,14 +24,24 @@ if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
     if (window.__wxjs_environment === 'miniprogram') {
       isMiniprogram = true;
     } else {
-      isMiniprogram = false;
+      setupWebViewJavascriptBridge((bridge) => {
+        if (isAndroid) {
+          // 安卓端，接收数据时，需要先进行初始化
+          bridge.init((message, responseCallback) => {
+            const data = {
+              'Javascript Responds': 'Wee!',
+            };
+            responseCallback(data);
+          });
+        }
+      });
     }
   }, false);
 }
 
 // 这是必须要写的，用来创建一些设置
 function setupWebViewJavascriptBridge(callback) {
-  if (isAndroid && !isMiniprogram) {
+  if (isAndroid) {
     if (window.WebViewJavascriptBridge) {
       callback(window.WebViewJavascriptBridge);
     } else {
@@ -42,7 +52,7 @@ function setupWebViewJavascriptBridge(callback) {
       );
     }
   }
-  if (isiOS && !isMiniprogram) {
+  if (isiOS) {
     if (window.WebViewJavascriptBridge) {
       return callback(window.WebViewJavascriptBridge);
     }
@@ -60,17 +70,6 @@ function setupWebViewJavascriptBridge(callback) {
     }, 0);
   }
 }
-setupWebViewJavascriptBridge((bridge) => {
-  if (isAndroid) {
-    // 安卓端，接收数据时，需要先进行初始化
-    bridge.init((message, responseCallback) => {
-      const data = {
-        'Javascript Responds': 'Wee!',
-      };
-      responseCallback(data);
-    });
-  }
-});
 
 export default {
   // 给APP发送数据
