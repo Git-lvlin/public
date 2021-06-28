@@ -18,10 +18,20 @@
 
 const isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1;
 const isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+let isMiniprogram = false;
+if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
+  document.addEventListener('WeixinJSBridgeReady', () => {
+    if (window.__wxjs_environment === 'miniprogram') {
+      isMiniprogram = true;
+    } else {
+      isMiniprogram = false;
+    }
+  }, false);
+}
 
 // 这是必须要写的，用来创建一些设置
 function setupWebViewJavascriptBridge(callback) {
-  if (isAndroid) {
+  if (isAndroid && !isMiniprogram) {
     if (window.WebViewJavascriptBridge) {
       callback(window.WebViewJavascriptBridge);
     } else {
@@ -32,7 +42,7 @@ function setupWebViewJavascriptBridge(callback) {
       );
     }
   }
-  if (isiOS) {
+  if (isiOS && !isMiniprogram) {
     if (window.WebViewJavascriptBridge) {
       return callback(window.WebViewJavascriptBridge);
     }
