@@ -42,6 +42,7 @@ export default {
       type: Object,
       default: () => {},
     },
+
   },
   components: {
     [NavBar.name]: NavBar,
@@ -53,9 +54,13 @@ export default {
       isMiniprogram: false,
     };
   },
+  computed: {
+    isMiniprogram () {
+      return this.$store.state.appInfo.isMiniprogram;
+    },
+  },
   created() {
     this.safeHeight = this.$store.state.navigationBarHeight;
-    this.isMiniprogram = this.$store.state.appInfo.isMiniprogram;
   },
   methods: {
     getImgUrl,
