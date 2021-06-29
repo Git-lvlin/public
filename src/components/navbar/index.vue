@@ -56,6 +56,7 @@ export default {
   },
   computed: {
     isMiniprogram () {
+      console.log(this.$store.state.appInfo);
       return this.$store.state.appInfo.isMiniprogram;
     },
   },

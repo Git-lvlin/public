@@ -8,11 +8,11 @@
 
 <script>
 export default {
-  created() {
+  mounted() {
     const {
       appInfo,
     } = this.$store.state;
-    console.log("🚀 ~ file: App.vue ~ line 16 ~ created ~ window", window)
+    console.log("created ~ window", window)
     if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
       document.addEventListener('WeixinJSBridgeReady', () => {
         if (window.__wxjs_environment === 'miniprogram') {
