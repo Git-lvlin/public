@@ -77,9 +77,9 @@ export default {
         // console.log("res", res);
         if(res.code == 0) {
           const data = res.data.data;
-        if(!!data.state) {
-          this.getUserList()
-        }
+          if(data.state == 1) {
+            this.getUserList()
+          }
         }
       });
 
