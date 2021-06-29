@@ -64,7 +64,8 @@ function setupWebViewJavascriptBridge(callback) {
     WVJBIframe.style.display = 'none';
     // WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
     // WVJBIframe.src = 'https://__bridge_loaded__';
-    WVJBIframe.src = 'https://publicmobile-uat.yeahgo.com';
+    // WVJBIframe.src = 'https://publicmobile-uat.yeahgo.com';
+    WVJBIframe.src = 'https://publicmobile.yeahgo.com';
     document.documentElement.appendChild(WVJBIframe);
     setTimeout(() => {
       document.documentElement.removeChild(WVJBIframe);
