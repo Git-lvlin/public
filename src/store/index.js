@@ -7,15 +7,16 @@ const {
   userAgent,
 } = navigator;
 const appInfo = getQueryObj(userAgent);
-if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
-  document.addEventListener('WeixinJSBridgeReady', () => {
-    if (window.__wxjs_environment === 'miniprogram') {
-      appInfo.isMiniprogram = true;
-    } else {
-      appInfo.isMiniprogram = false;
-    }
-  }, false);
-}
+// if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
+//   document.addEventListener('WeixinJSBridgeReady', () => {
+//     if (window.__wxjs_environment === 'miniprogram') {
+//       appInfo.isMiniprogram = true;
+//     } else {
+//       appInfo.isMiniprogram = false;
+//     }
+//   }, false);
+// }
+
 appInfo.isApp = appInfo.webViewClientTag ? true : false;
 
 // 设置安全区域
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     ...deviceInfo,
   },
   mutations: {
+    updateAppInfo (state, value) {
+      state.appInfo = value
+    }
   },
   actions: {
   },

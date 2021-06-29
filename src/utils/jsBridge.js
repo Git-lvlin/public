@@ -24,17 +24,7 @@ if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
     if (window.__wxjs_environment === 'miniprogram') {
       isMiniprogram = true;
     } else {
-      setupWebViewJavascriptBridge((bridge) => {
-        if (isAndroid) {
-          // 安卓端，接收数据时，需要先进行初始化
-          bridge.init((message, responseCallback) => {
-            const data = {
-              'Javascript Responds': 'Wee!',
-            };
-            responseCallback(data);
-          });
-        }
-      });
+      isMiniprogram = false;
     }
   }, false);
 }
@@ -63,13 +53,27 @@ function setupWebViewJavascriptBridge(callback) {
     const WVJBIframe = document.createElement('iframe');
     WVJBIframe.style.display = 'none';
     // WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
-    WVJBIframe.src = 'https://__bridge_loaded__';
+    // WVJBIframe.src = 'https://__bridge_loaded__';
+    // WVJBIframe.src = 'https://publicmobile-uat.yeahgo.com';
+    WVJBIframe.src = 'https://publicmobile.yeahgo.com';
     document.documentElement.appendChild(WVJBIframe);
     setTimeout(() => {
       document.documentElement.removeChild(WVJBIframe);
     }, 0);
   }
 }
+
+setupWebViewJavascriptBridge((bridge) => {
+  if (isAndroid) {
+    // 安卓端，接收数据时，需要先进行初始化
+    bridge.init((message, responseCallback) => {
+      const data = {
+        'Javascript Responds': 'Wee!',
+      };
+      responseCallback(data);
+    });
+  }
+});
 
 export default {
   // 给APP发送数据
