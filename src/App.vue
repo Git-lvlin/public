@@ -22,11 +22,12 @@ export default {
         } else {
           appInfo.isMiniprogram = false;
         }
-        this.$store.commit("updateAppInfo", appInfo);
-        console.log("mounted ~ this.$store", this)
       }, false);
+    } else {
+      appInfo.isMiniprogram = true;
     }
-    console.log("spet 4");
+    this.$store.commit("updateAppInfo", appInfo);
+    console.log("mounted ~ this.$store", this)
   },
 }
 </script>
