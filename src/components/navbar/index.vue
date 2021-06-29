@@ -4,7 +4,7 @@
     :style="{'padding-top': `${safeHeight}px`}"
   >
     <van-nav-bar
-      :left-arrow="!isMiniprogram"
+      :left-arrow="false"
       :safe-area-inset-top="true"
       @click-left="onClickLeft"
     >
