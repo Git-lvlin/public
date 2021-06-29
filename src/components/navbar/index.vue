@@ -4,11 +4,11 @@
     :style="{'padding-top': `${safeHeight}px`}"
   >
     <van-nav-bar
-      :left-arrow="!isMiniprogram"
+      :left-arrow="false"
       :safe-area-inset-top="true"
       @click-left="onClickLeft"
     >
-      <template #left v-if="!isMiniprogram">
+      <template #left v-if="false">
         <img
           class="back_img"
           :src="getImgUrl('miniprogram/common/back_white@2x.png')"
