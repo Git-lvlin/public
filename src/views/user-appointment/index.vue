@@ -74,9 +74,12 @@ export default {
         resourceKey: "MINIEXAMINE",
         timeVersion: new Date().getTime(),
       }).then(res => {
-        console.log("res", res);
-        if(!!res.state) {
+        // console.log("res", res);
+        if(res.code == 0) {
+          const data = res.data.data;
+        if(!!data.state) {
           this.getUserList()
+        }
         }
       });
 
