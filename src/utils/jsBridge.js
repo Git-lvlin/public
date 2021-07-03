@@ -20,22 +20,8 @@ const userAgent = navigator.userAgent;
 const isAndroid = userAgent.indexOf('Android') > -1 || userAgent.indexOf('Adr') > -1;
 const isiOS = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 
-if (userAgent.indexOf('MicroMessenger') == -1) {//说明不在微信中
-  // 走不在小程序的逻辑
-  loadApp();
-} else {
-  wx.miniProgram.getEnv(function(res) {
-    if (res.miniprogram) {
-      // 走在小程序的逻辑
-    } else {
-      // 走不在小程序的逻辑
-      loadApp();
-    }
-  })
-}
-
 // 这是必须要写的，用来创建一些设置
-function setupWebViewJavascriptBridge(callback) {
+const setupWebViewJavascriptBridge = (callback) => {
   if (isAndroid) {
     if (window.WebViewJavascriptBridge) {
       callback(window.WebViewJavascriptBridge);
@@ -81,6 +67,21 @@ const loadApp = () => {
     }
   });
 };
+
+// 初始化 jsBridge
+if (userAgent.indexOf('MicroMessenger') == -1) {//说明不在微信中
+  // 走不在小程序的逻辑
+  loadApp();
+} else {
+  wx.miniProgram.getEnv(function(res) {
+    if (res.miniprogram) {
+      // 走在小程序的逻辑
+    } else {
+      // 走不在小程序的逻辑
+      loadApp();
+    }
+  })
+}
 
 export default {
   // 给APP发送数据
