@@ -40,6 +40,7 @@ import NavBar from '@/components/navbar';
 import GoodsItem from '@/components/goods-item';
 import SeparateLine from '@/components/separate-line';
 import teamApi from '@/apis/appointment';
+import commonApi from '@/apis/common';
 
 export default {
   data() {
@@ -61,12 +62,28 @@ export default {
   },
   created () {
     // 不推荐在这里调用 fetchItem
-    this.getUserList();
+    // this.getUserList();
+    this.getResourceKey();
     // console.log('windows', window);
-    console.log(this.$store.state);
+    // console.log(this.$store.state);
   },
   methods: {
     getImgUrl,
+    getResourceKey() {
+      commonApi.getResourceKey({
+        resourceKey: "MINIEXAMINE",
+        timeVersion: new Date().getTime(),
+      }).then(res => {
+        // console.log("res", res);
+        if(res.code == 0) {
+          const data = res.data.data;
+          if(data.state == 1) {
+            this.getUserList()
+          }
+        }
+      });
+
+    },
     getUserList() {
       const {
         page,
