@@ -8,8 +8,6 @@ export const IMG_CDN = {
   pro: 'https://pro-yeahgo-oss.yeahgo.com/',
 };
 
-console.log("==================ppppppppppppppppppppppppp", process);
-
 // 字符类型资源位id
 export const PAY_TYPE_KEY = 'PAYTYPE';
 
