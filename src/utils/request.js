@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { Toast } from 'vant';
-import App from '@/utils/app';
 import { refresToken } from '@/constant/index';
 
 Toast.setDefaultOptions('loading', { forbidClick: true });
@@ -84,27 +83,11 @@ axios.interceptors.response.use(async response => {
 
 const resolveArr = [];
 
-const getAppToken = () => new Promise((resolve) => {
-  if (resolveArr.length === 0) {
-    App.getToken((args) => {
-      // eslint-disable-next-line prefer-destructuring
-      if (args[0]) {
-        resolveArr.forEach((item) => item(args[0]));
-        resolveArr.length = 0;
-      }
-    });
-  }
-  resolveArr.push(resolve);
-});
-
 const request = async ({
   url, method, data, options = {},
 }) => {
   console.log(process);
   const { showLoading = true, showError = true } = options;
-  if (App.isApp && !appToken) {
-    appToken = await getAppToken();
-  }
 
   if (showLoading && requestCount === 0) {
     Toast.loading({
