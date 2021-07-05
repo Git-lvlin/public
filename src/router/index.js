@@ -45,6 +45,14 @@ const routes = [
     //   title: 'H5 菜单页',
     // },
   },
+  {
+    path: '/price-comparsion',
+    name: 'PriceComparsion',
+    component: () => import('@/views/price-comparsion'),
+    meta: {
+      title: '比价优选',
+    }
+  }
 ];
 
 const router = new VueRouter({

@@ -13,6 +13,11 @@
         is-link
         to="/team-appointment"
       />
+      <van-cell
+        title="比价优选"
+        is-link
+        to="/price-comparsion"
+      />
     </van-cell-group>
   </div>
 </template>

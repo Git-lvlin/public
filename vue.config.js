@@ -14,8 +14,13 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
+      '/open': {
+        target: 'https://api-dev.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
     },
-    https: false,
+    https: true,
   },
   css: {
     loaderOptions: {

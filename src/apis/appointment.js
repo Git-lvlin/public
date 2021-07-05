@@ -1,9 +1,11 @@
-import { post } from '@/utils/request';
+import { post, get } from '@/utils/request';
 
 const url = {
   teamList: '/activity/option/group/platform/list',
   teamDetail: '/activity/option/group/platform/goodsInfo',
   userList: '/activity/option/group/personal/list',
+  saveList: '/contestprice/open/contestprice/GetHotGoodsList',
+  hotList: '/contestprice/open/contestprice/GetRecGoodsList',
 };
 
 export default {
@@ -31,4 +33,20 @@ export default {
       options,
     });
   },
+  // 获取低价爆品
+  getSaveGoodsList(params = {}, options = {}) {
+    return get({
+      url: url.saveList,
+      data: params,
+      options,
+    })
+  },
+  // 获取热门推荐列表
+  getHotGoodsList(params = {}, options = {}) {
+    return get({
+      url: url.hotList,
+      data: params,
+      options,
+    })
+  }
 };
