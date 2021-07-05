@@ -6,12 +6,12 @@
       <van-cell
         title="单约专享"
         is-link
-        to="/user-appointment"
+        to="/web/user-appointment"
       />
       <van-cell
         title="团约专享"
         is-link
-        to="/team-appointment"
+        to="/web/team-appointment"
       />
       <van-cell
         title="比价优选"

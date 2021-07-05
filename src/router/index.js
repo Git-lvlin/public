@@ -10,11 +10,11 @@ const routes = [
     path: '/',
     name: 'Index',
     component: Index,
-    redirect: '/menu',
+    redirect: '/web/menu',
     children: [],
   },
   {
-    path: '/user-appointment',
+    path: '/web/user-appointment',
     name: 'UserAppointment',
     component: () => import('@/views/user-appointment'),
     meta: {
@@ -22,7 +22,7 @@ const routes = [
     },
   },
   {
-    path: '/team-appointment',
+    path: '/web/team-appointment',
     name: 'TeamAppointment',
     component: () => import('@/views/team-appointment'),
     meta: {
@@ -30,7 +30,7 @@ const routes = [
     },
   },
   {
-    path: '/team-detail',
+    path: '/web/team-detail',
     name: 'TeamDetail',
     component: () => import('@/views/team-detail'),
     meta: {
@@ -38,7 +38,7 @@ const routes = [
     },
   },
   {
-    path: '/menu',
+    path: '/web/menu',
     name: 'Menu',
     component: () => import('@/views/menu'),
     // meta: {
@@ -70,19 +70,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || '约购';
   next();
-  if (App.isApp) {
-    if (to.meta && to.meta.share) {
-      if (App.appType === 'android') {
-        window.Android.SHARE();
-      } else {
-        window.webkit.messageHandlers.SHARE.postMessage([]);
-      }
-    } else if (App.appType === 'android') {
-      window.Android.SHARE_HIDE();
-    } else {
-      window.webkit.messageHandlers.SHARE_HIDE.postMessage([]);
-    }
-  }
 });
 
 export default router;
