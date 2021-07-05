@@ -62,19 +62,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || '约购';
   next();
-  if (App.isApp) {
-    if (to.meta && to.meta.share) {
-      if (App.appType === 'android') {
-        window.Android.SHARE();
-      } else {
-        window.webkit.messageHandlers.SHARE.postMessage([]);
-      }
-    } else if (App.appType === 'android') {
-      window.Android.SHARE_HIDE();
-    } else {
-      window.webkit.messageHandlers.SHARE_HIDE.postMessage([]);
-    }
-  }
 });
 
 export default router;
