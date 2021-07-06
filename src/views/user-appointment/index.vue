@@ -41,6 +41,7 @@ import GoodsItem from '@/components/goods-item';
 import SeparateLine from '@/components/separate-line';
 import teamApi from '@/apis/appointment';
 import commonApi from '@/apis/common';
+import jsBridge from '@/utils/jsBridge';
 
 export default {
   data() {
@@ -66,6 +67,8 @@ export default {
     this.getResourceKey();
     // console.log('windows', window);
     // console.log(this.$store.state);
+    this.jsb = jsBridge;
+    console.log(this.jsb);
   },
   methods: {
     getImgUrl,

@@ -12,7 +12,6 @@ export default {
     const {
       appInfo,
     } = this.$store.state;
-    console.log("mounted ~ window", window.WeixinJSBridge)
     if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
       document.addEventListener('WeixinJSBridgeReady', () => {
         if (window.__wxjs_environment === 'miniprogram') {
@@ -25,7 +24,6 @@ export default {
       appInfo.isMiniprogram = true;
     }
     this.$store.commit("updateAppInfo", appInfo);
-    console.log("mounted ~ this.$store", this)
   },
 }
 </script>

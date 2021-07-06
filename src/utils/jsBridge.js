@@ -56,7 +56,9 @@ const setupWebViewJavascriptBridge = (callback) => {
 
 const loadApp = () => {
   setupWebViewJavascriptBridge((bridge) => {
+    console.log("初始化")
     if (isAndroid) {
+      console.log("isAndroid")
       // 安卓端，接收数据时，需要先进行初始化
       bridge.init((message, responseCallback) => {
         const data = {
@@ -70,9 +72,12 @@ const loadApp = () => {
 
 // 初始化 jsBridge
 if (userAgent.indexOf('MicroMessenger') == -1) {//说明不在微信中
+  console.log("不在微信中")
   // 走不在小程序的逻辑
   loadApp();
 } else {
+  const script = document.createElement('script');
+  script.src = './jweixin-1.3.2.js';
   wx.miniProgram.getEnv(function(res) {
     if (res.miniprogram) {
       // 走在小程序的逻辑
