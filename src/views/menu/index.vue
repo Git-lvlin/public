@@ -16,7 +16,7 @@
       <van-cell
         title="比价优选"
         is-link
-        to="/price-comparsion"
+        to="/web/price-comparsion"
       />
     </van-cell-group>
   </div>

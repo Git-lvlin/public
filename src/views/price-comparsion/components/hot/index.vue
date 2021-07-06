@@ -1,13 +1,14 @@
 <template>
-  <div class="hot">
+  <div class="hot" @click="onToDetail">
     <div class="left-box">
       <van-image
         class="hot-good-img"
         width="100px"
         height="100px"
-        :src="getImgUrl('publicMobile/price/gold-medal1.png')"
+        :src="good.image"
       />
-      <div class="save">{{good.save}}</div>
+      <div class="save" v-if="good.goodsContestRate">{{'降价'+good.goodsContestRate+'%'}}</div>
+      <div class="save2" v-else>精选特惠</div>
     </div>
     <div class="right-box">
       <div class="title">{{good.title}}</div>
@@ -18,7 +19,7 @@
           height="18px"
           :src="getImgUrl('publicMobile/price/icon.png')"
         />
-        <span class="icon">{{good.sort}}</span>
+        <span class="icon">{{good.gcName}}类销量排名第{{good.gcRang}}</span>
       </div>
       <div class="num">
         <van-image
@@ -27,12 +28,12 @@
           height="18px"
           :src="getImgUrl('publicMobile/price/hot.png')"
         />
-        <span class="icon">{{good.num}}</span>
+        <span class="icon">销量{{good.saleNum>9999?(good.saleNum/10000)+'万+':good.saleNum}}</span>
       </div>
-      <div class="compare">{{good.compare}}</div>
+      <div class="compare">{{good.contestPlatformNum?'共有'+good.contestPlatformNum+'个商场比价':''}}</div>
       <div class="price">
-        <span class="span1">¥{{good.price}}</span>
-        <span class="span2">¥{{good.oldPrice}}</span>
+        <span class="span1">¥{{good.salePrice/100}}</span>
+        <span class="span2">¥{{good.marketPrice/100}}</span>
         <van-image
           class="right-img"
           width="20px"
@@ -56,6 +57,26 @@ export default {
   },
   methods: {
     getImgUrl,
+    onToDetail() {
+      const {
+        good,
+      } = this;
+      const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
+      console.log(window.navigator)
+      console.log("$store.state.appInfo", this.$store.state.appInfo)
+      if (this.$store.state.appInfo.isApp) {
+        this.$bridge.callHandler(
+          'router',
+          `${appBaseUrl}/shopping/detail${paramStr}`,
+        )
+      } else if (this.$store.state.appInfo.isMiniprogram) {
+        wx.miniProgram.navigateTo({
+          url: `/subpages/cart/detail/index${paramStr}`
+        })
+      } else {
+        console.log('不是App内')
+      }
+    }
   }
 }
 </script>
@@ -88,6 +109,17 @@ export default {
   color: #ffffff;
   font-family: PingFang SC;
   font-size: 12px;
+}
+.save2 {
+  text-align: center;
+  width: 100%;
+  height: 22px;
+  line-height: 22px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #b37614;
+  font-size: 12px;
+  background-image: linear-gradient(90.02deg,#fbf8cc 0%,#fae963 100%);
 }
 .right-box {
   display: flex;
@@ -158,6 +190,7 @@ export default {
   letter-spacing: 1.4px;
 }
 .span2 {
+  margin-left: 8px;
   font-family: PingFang SC;
   color: #cccccc;
   font-size: 12px;

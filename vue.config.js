@@ -14,13 +14,14 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
-      '/open': {
-        target: 'https://api-dev.yeahgo.com',
+      '/contestprice': {
+        target: 'http://local.yeahgo.com',
         ws: true,
         changeOrigin: true,
       },
     },
-    https: true,
+    https: false,
+    disableHostCheck: true
   },
   css: {
     loaderOptions: {

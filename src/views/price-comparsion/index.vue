@@ -73,65 +73,11 @@ export default {
   props: {
     list: {
       type: Array,
-      default: [
-        {
-          src: getImgUrl('publicMobile/price/gold-medal1.png'),
-          title: '宁夏菠萝蜜500g装时令鲜水果g装时令鲜水果g装时令鲜水果g装时令鲜水果g装时令鲜水果',
-          sort: '方便速食类销量排名第1',
-          num: '销量1万+',
-          compare: '共有4个商场比价',
-          save: '降价50%',
-          price: '10.88',
-          oldPrice: '13.99',
-        },
-      ]
+      default: []
     },
     listData: {
       type: Array,
-      default: [
-        {
-          src: getImgUrl('publicMobile/price/gold-medal1.png'),
-          save: '1',
-          price: '10',
-          oldPrice: '13',
-          type: true,
-        },
-        {
-          src: getImgUrl('publicMobile/price/gold-medal1.png'),
-          save: '1',
-          price: '10',
-          oldPrice: '13',
-          type: true,
-        },
-        {
-          src: getImgUrl('publicMobile/price/gold-medal1.png'),
-          save: '1',
-          price: '10',
-          oldPrice: '13',
-          type: true,
-        },
-        {
-          src: getImgUrl('publicMobile/price/gold-medal1.png'),
-          save: '1',
-          price: '10',
-          oldPrice: '13',
-          type: true,
-        },
-        {
-          src: getImgUrl('publicMobile/price/gold-medal1.png'),
-          save: '1',
-          price: '10',
-          oldPrice: '13',
-          type: true,
-        },
-        {
-          src: getImgUrl('publicMobile/price/gold-medal1.png'),
-          save: '1',
-          price: '10',
-          oldPrice: '13',
-          type: true,
-        }
-      ]
+      default: []
     },
   },
   data() {
@@ -151,9 +97,20 @@ export default {
   },
   created () {
     this.onLoad()
+    this.getListData()
   },
   methods: {
     getImgUrl,
+    getListData() {
+      teamApi.getSaveGoodsList().then((res) => {
+        const {
+          data,
+        } = res;
+        if (data && data.records) {
+          this.listData = data.records;
+        }
+      })
+    },
     onLoad() {
       const {
         page,

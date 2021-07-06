@@ -46,7 +46,7 @@ const routes = [
     // },
   },
   {
-    path: '/price-comparsion',
+    path: '/web/price-comparsion',
     name: 'PriceComparsion',
     component: () => import('@/views/price-comparsion'),
     meta: {
