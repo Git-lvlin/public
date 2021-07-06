@@ -48,7 +48,10 @@
       />
       <div class="hot-list">
         <van-list
+          v-if="list.length"
           v-model="loading"
+          offset=0
+          :immediate-check="false"
           :finished="finished"
           finished-text="没有更多了"
           @load="onBottomReach"
@@ -125,13 +128,13 @@ export default {
           data,
         } = res;
         if (data && data.records) {
-          this.totalPage = data.totalPage;
+          this.totalPage = data.totalpage;
           if (page < 2) {
             this.list = data.records;
           } else {
             this.list = this.list.concat(data.records);
           }
-          if (data.records.length < this.size) {
+          if (this.list.length >= data.total) {
             this.finished = true;
           }
         }

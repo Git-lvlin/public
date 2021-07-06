@@ -5,7 +5,7 @@ const url = {
   teamDetail: '/activity/option/group/platform/goodsInfo',
   userList: '/activity/option/group/personal/list',
   saveList: '/contestprice/open/contestprice/GetHotGoodsList',
-  hotList: '/contestprice/open/contestprice/GetRecGoodsList',
+  hotList: '/contestprice/open/contestprice/GetRecGoodsList?isPage=1',
 };
 
 export default {
