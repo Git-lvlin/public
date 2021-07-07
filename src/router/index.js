@@ -52,6 +52,14 @@ const routes = [
     meta: {
       title: '比价优选',
     }
+  },
+  {
+    path: '/web/membership-store-in',
+    name: 'MembershipStoreIn',
+    component: () => import('@/views/membership-store-in'),
+    meta: {
+      title: '会员店入驻',
+    }
   }
 ];
 

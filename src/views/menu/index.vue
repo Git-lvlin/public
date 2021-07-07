@@ -18,6 +18,11 @@
         is-link
         to="/web/price-comparsion"
       />
+      <van-cell
+        title="会员店入驻"
+        is-link
+        to="/web/membership-store-in"
+      />
     </van-cell-group>
   </div>
 </template>
