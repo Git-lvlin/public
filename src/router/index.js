@@ -60,6 +60,22 @@ const routes = [
     meta: {
       title: '会员店入驻',
     }
+  },
+  {
+    path: '/web/member-special',
+    name: 'MemberSpecial',
+    component: () => import('@/views/member-special'),
+    meta: {
+      title: '会员约购专享',
+    }
+  },
+  {
+    path: '/web/coupon',
+    name: 'Coupon',
+    component: () => import('@/views/coupon'),
+    meta: {
+      title: '领券中心',
+    }
   }
 ];
 

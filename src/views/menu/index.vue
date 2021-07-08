@@ -23,6 +23,16 @@
         is-link
         to="/web/membership-store-in"
       />
+      <van-cell
+        title="会员约购专享"
+        is-link
+        to="/web/member-special"
+      />
+      <van-cell
+        title="领券中心"
+        is-link
+        to="/web/coupon"
+      />
     </van-cell-group>
   </div>
 </template>
