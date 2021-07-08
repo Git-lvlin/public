@@ -19,8 +19,17 @@
 
     </div>
 
-    <div class="fold">
-      使用规则：限首单使用，不包含新人专享，不和其他满减券和折扣券同时使用
+    <div class="fold" :class="open?'look':''" @click="openAll">
+      <div class="fold-box" :class="open?'two':''">
+        使用规则：限首单使用，不包含新人专享，不和其他满减券和折扣券同时使用
+      </div>
+      <van-image
+        class="img"
+        :class="open?'click':''"
+        width="9px"
+        height="9px"
+        :src="getImgUrl('publicMobile/coupon/arrow.png')"
+      />
     </div>
 
   </div>
@@ -28,6 +37,9 @@
 
 <script>
 import { getImgUrl } from '@/utils/tools';
+import { Image as VanImage } from 'vant';
+import Vue from 'vue';
+Vue.use(VanImage);
 
 export default {
   props: {
@@ -36,7 +48,15 @@ export default {
       default: () => {},
     },
   },
+  data() {
+    return {
+      open: false
+    }
+  },
   methods: {
+    openAll() {
+      this.open = !this.open
+    },
     getImgUrl,
     onToDetail() {
       const {
@@ -65,7 +85,7 @@ export default {
 <style lang="scss" scoped>
 .hot {
   width: 100%;
-  height: 111px;
+  // height: 111px;
   margin-bottom: 12px;
   border-radius: 8px;
   display: flex;
@@ -136,13 +156,50 @@ export default {
   }
 }
 .fold {
+  position: relative;
   width: 100%;
-  background-color:#fbfbfb;
-  font-family:PingFang SC;
-  font-weight:200;
+  height: 22px;
+  overflow: hidden;
+  background-color: #fbfbfb;
+  font-family: PingFang SC;
+  font-weight: 200;
   color:#999999;
-  font-size:10px;
-  line-height:14px;
+  font-size: 10px;
+  line-height: 22px;
+  .fold-box {
+    margin-left: 12px;
+    padding-top: 3px;
+    padding-bottom: 4px;
+    width: 250px;
+    height: 44px;
+    overflow: hidden;
+    /* 将对象作为弹性伸缩盒子模型显示 。 */
+    display: -webkit-box;
+    /* 限制在一个块元素显示的文本的行数，即行数设置 */
+    -webkit-line-clamp: 1;
+    /* 规定框从上向下垂直排列子元素 */
+    -webkit-box-orient: vertical;
+  }
+  .two {
+    -webkit-line-clamp: 2;
+  }
+  .img {
+    position: absolute;
+    right: 22px;
+    top: 8px;
+    transform:rotate(180deg);
+    transform: all 1.2s;
+  }
+  .click {
+    position: absolute;
+    right: 22px;
+    top: 8px;
+    transform:rotate(360deg);
+  }
+  transform: all 1.2s;
+}
+.look {
+  height: 48px;
 }
 
 </style>
