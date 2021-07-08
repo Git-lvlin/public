@@ -85,7 +85,6 @@ export default {
 <style lang="scss" scoped>
 .hot {
   width: 100%;
-  // height: 111px;
   margin-bottom: 12px;
   border-radius: 8px;
   display: flex;

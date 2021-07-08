@@ -31,10 +31,13 @@
         </div>
       </div>
       <div class="btn-tab">
-        <div class="btn act">全部</div>
+        <div class="btn-box">
+          <btn v-for="item in btns" :key="item" :good="item" />
+        </div>
+        <!-- <div class="btn act">全部</div>
         <div class="btn">食品专区</div>
         <div class="btn">美妆洗护</div>
-        <div class="btn">日用百货</div>
+        <div class="btn">日用百货</div> -->
       </div>
       <div class="bottom-box"
       :style="{
@@ -70,11 +73,40 @@ import { Image as VanImage, List } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import Item from './components/coupon';
 import teamApi from '@/apis/appointment';
-
+import Btn from './components/btn';
 Vue.use(VanImage);
 Vue.use(List);
 export default {
   props: {
+    btns: {
+      type: Array,
+      default: [
+        {
+          regName: '全部',
+          id: 0
+        },
+        {
+          regName: '图片专区',
+          id: 1
+        },
+        {
+          regName: '直播专区',
+          id: 2
+        },
+        {
+          regName: '颜色专区',
+          id: 3
+        },
+        {
+          regName: '绿色专区',
+          id: 4
+        },
+        {
+          regName: '激情专区',
+          id: 5
+        },
+      ]
+    },
     list: {
       type: Array,
       default: [
@@ -107,6 +139,7 @@ export default {
   },
   data() {
     return {
+      btns: [],
       robed: false,
       list: [],
       loading: false,
@@ -117,7 +150,8 @@ export default {
     };
   },
   components: {
-    Item
+    Item,
+    Btn
   },
   created () {
   },
@@ -292,26 +326,31 @@ html,body {
   }
   .btn-tab {
     width: 100%;
-    display: flex;
-    justify-content: center;
+    // display: flex;
+    // justify-content: center;
     padding: 14px 14px 12px 16px;
+    white-space: nowrap;/*文本不会换行，文本会在在同一行上继续*/
     overflow: hidden;
     overflow-x: auto;
-    .btn {
-      width:86px;
-      height:37px;
-      font-family:PingFang SC;
-      font-weight:600;
-      color:#fdf4ed;
-      font-size:16px;
-      line-height:37px;
-      text-align:center;
+    .btn-box {
+      height: 37px;
+      white-space: nowrap;/*文本不会换行，文本会在在同一行上继续*/
     }
-    .act {
-      background-color:#fefaf5;
-      border-radius:18.5px;
-      color:#d93d33;
-    }
+    // .btn {
+    //   width:86px;
+    //   height:37px;
+    //   font-family:PingFang SC;
+    //   font-weight:600;
+    //   color:#fdf4ed;
+    //   font-size:16px;
+    //   line-height:37px;
+    //   text-align:center;
+    // }
+    // .act {
+    //   background-color:#fefaf5;
+    //   border-radius:18.5px;
+    //   color:#d93d33;
+    // }
   }
   .bottom-box {
     width: 100%;
@@ -344,4 +383,12 @@ html,body {
 .big {
   font-size: 24px;
 }
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none;
+}
+.element::-webkit-scrollbar { width: 0 !important }
+.element { -ms-overflow-style: none; }
+.element { overflow: -moz-scrollbars-none; }
 </style>
