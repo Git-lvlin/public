@@ -8,6 +8,7 @@
 import { getImgUrl } from '@/utils/tools';
 import { Image as VanImage } from 'vant';
 import Vue from 'vue';
+import { appBaseUrl } from "@/constant/index";
 Vue.use(VanImage);
 
 export default {
@@ -29,6 +30,7 @@ export default {
         all[i].classList.remove("act")
       }
       all[this.good.id].classList.add('act')
+      this.$emit('actId', this.good.id)
     },
     getImgUrl,
     onToDetail() {

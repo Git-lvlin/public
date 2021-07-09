@@ -10,7 +10,9 @@
         'background-image': `url('${getImgUrl('publicMobile/coupon/box-bg.png')}')`
       }"
       >
-        <div class="time-end">12:23:32 后结束</div>
+        <div class="time-end">
+          <van-count-down class="time-end-item" :time="timeDown" format="HH:mm:ss后结束" />
+        </div>
         <div class="coupon"
         :style="{
           'background-image': `url('${getImgUrl('publicMobile/coupon/red.png')}')`
@@ -20,24 +22,20 @@
             ¥<span class="big">8</span>.88
           </div>
           <div class="position2">
-            <p class="p1">无门槛</p>
-            <p class="p2">满88元使用</p>
-            <p class="p3">有效期:2021.05.1前有效</p>
+            <p class="p1">{{couponType}}</p>
+            <p class="p2">{{timeInfo.couponName}}</p>
+            <p class="p3">有效期至:{{endTime}}</p>
           </div>
           <div class="position3" v-if="!robed">
-            <div class="small">抢</div>
+            <div class="small" @click="nowRob">抢</div>
           </div>
-          <div class="position4" v-else>去使用</div>
+          <div class="position4" v-else @click="goUse">去使用</div>
         </div>
       </div>
       <div class="btn-tab">
         <div class="btn-box">
-          <btn v-for="item in btns" :key="item" :good="item" />
+          <btn v-for="item in btns" :key="item" v-on:actId="getId" :good="item" />
         </div>
-        <!-- <div class="btn act">全部</div>
-        <div class="btn">食品专区</div>
-        <div class="btn">美妆洗护</div>
-        <div class="btn">日用百货</div> -->
       </div>
       <div class="bottom-box"
       :style="{
@@ -52,7 +50,7 @@
               offset=0
               :immediate-check="false"
               :finished="finished"
-              finished-text="没有更多商品"
+              finished-text="一滴也没有了"
               @load="onBottomReach"
             >
               <item v-for="item in list" :key="item" :good="item" />
@@ -69,13 +67,16 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, List } from 'vant';
-import { getImgUrl } from '@/utils/tools';
-import Item from './components/coupon';
+import { Image as VanImage, List, Dialog, CountDown } from 'vant';
+import { getImgUrl, getQueryObj } from '@/utils/tools';
 import teamApi from '@/apis/appointment';
 import Btn from './components/btn';
+import Item from './components/coupon';
+
 Vue.use(VanImage);
 Vue.use(List);
+Vue.use(CountDown);
+
 export default {
   props: {
     btns: {
@@ -109,36 +110,12 @@ export default {
     },
     list: {
       type: Array,
-      default: [
-        {
-          price: '8',
-          type: 1,
-          title: '8元新人首单券',
-          time: '有效期：2021.05.01前有效'
-        },
-        {
-          price: '8',
-          type: 1,
-          title: '8元新人首单券',
-          time: '有效期：2021.05.01前有效'
-        },
-        {
-          price: '8',
-          type: 1,
-          title: '8元新人首单券',
-          time: '有效期：2021.05.01前有效'
-        },
-        {
-          price: '8',
-          type: 1,
-          title: '8元新人首单券',
-          time: '有效期：2021.05.01前有效'
-        }
-      ]
+      default: []
     },
   },
   data() {
     return {
+      arr: ['-', '满减券', '折扣券', '立减券'],
       btns: [],
       robed: false,
       list: [],
@@ -147,25 +124,129 @@ export default {
       page: 1,
       size: 10,
       totalPage: 1,
+      pageSize: 10,
+      options: {},
+      timeInfo: {}, 
     };
+  },
+  computed: {
+    couponType: function() {
+      return this.arr[this.timeInfo.couponType] || '立减券'
+    },
+    endTime: function() {
+      const str = this.timeInfo.activityEndTime || 1627718424000
+      const date = new Date(str);
+      const YY = date.getFullYear() + '.';
+      const MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.';
+      const DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+      return YY + MM + DD;
+    },
+    timeDown: function() {
+      return this.timeInfo.deadlineTime - this.timeInfo.currentTime
+    }
   },
   components: {
     Item,
-    Btn
+    Btn,
+    [Dialog.Component.name]: Dialog.Component,
   },
   created () {
+    this.getTimeInfo()
+    this.onLoad()
+    this.options = getQueryObj(window.location.href)
+    console.log('options', this.options)
   },
   methods: {
+    getTimeInfo() {
+      teamApi.getCouponTimeInfo({memberId: this.options.memberId},{token: this.options.token}).then((res) => {
+        console.log('timeInfo', res)
+        if (res.data && res.data.length) {
+          this.timeInfo = res.data
+          if (this.timeInfo.status) {
+            this.robed = true
+          }
+        }
+      })
+    },
+    getId(a) {
+      const {
+        page,
+        pageSize,
+      } = this;
+      console.log('gcId1', a)
+      console.log('memberId', this.options.memberId)
+      teamApi.getCouponClassList({
+        memberId: this.options.memberId,
+        page,
+        pageSize,
+        gcId1: a
+      }).then((res) => {
+        const {
+          data,
+        } = res;
+        if (data && data.records) {
+          this.totalPage = data.totalpage;
+          if (page < 2) {
+            this.list = data.records;
+          } else {
+            this.list = this.list.concat(data.records);
+          }
+          if (this.list.length >= data.total) {
+            this.finished = true;
+          }
+        }
+        this.loading = false;
+      }).catch(() => {
+        this.loading = false;
+      });
+    },
+    formatDate(date) {
+      var date = new Date(date);
+      var YY = date.getFullYear() + '.';
+      var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.';
+      var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+      return YY + MM + DD;
+    },
+    nowRob() {
+      teamApi.getCoupon({
+        couponId: this.timeInfo.couponId
+      }).then((res) => {
+        if (res.code === 0) {
+          Dialog({ message: '抢券成功!' });
+          this.robed = !this.robed
+        }
+      })
+    },
+    goUse() {
+      const {
+        timeInfo,
+      } = this;
+      const paramStr = `?orderType=${timeInfo.orderType || 3}&spuId=${timeInfo.spuId || ''}&objectId=${timeInfo.objectId || ''}&activityId=${timeInfo.activityId || ''}&skuId=${timeInfo.skuId || ''}&wsId=${timeInfo.wsId || ''}`
+      console.log(window.navigator)
+      console.log("$store.state.appInfo", this.$store.state.appInfo)
+      if (this.$store.state.appInfo.isApp) {
+        this.$bridge.callHandler(
+          'router',
+          `${appBaseUrl}/shopping/detail${paramStr}`,
+        )
+      } else if (this.$store.state.appInfo.isMiniprogram) {
+        wx.miniProgram.navigateTo({
+          url: `/subpages/cart/detail/index${paramStr}`
+        })
+      } else {
+        console.log('不是App内')
+      }
+    },
     getImgUrl,
     onLoad() {
       const {
         page,
-        size,
+        pageSize,
       } = this;
       this.loading = true;
-      teamApi.getHotGoodsList({
+      teamApi.getCouponAll({
         page,
-        size,
+        pageSize,
       }).then((res) => {
         const {
           data,
@@ -228,18 +309,22 @@ html,body {
       text-align: center;
       line-height: 26px;
       background-color:#fcf7f2;
-      font-family:HuXiaoBo-NanShen;
-      color:#e83527;
       font-size:16.8px;
+      .time-end-item {
+        font-family:HuXiaoBo-NanShen;
+        color:#e83527;
+        font-size:16.8px;
+      }
     }
     .coupon {
+      position: relative;
       width: 290px;
       height: 74px;
       background-size: 290px 74px;
       margin-left: 44px;
       margin-top: 42px;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
       .position1 {
         margin-left: 14px;
@@ -253,6 +338,7 @@ html,body {
         text-align: center;
       }
       .position2 {
+        margin-left: 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -281,8 +367,9 @@ html,body {
         }
       }
       .position3 {
-        margin-right: 14px;
-        position: relative;
+        position: absolute;
+        top: 14px;
+        right: 14px;
         width:45px;
         height:45px;
         background-color:#f6e8ca;
@@ -309,17 +396,19 @@ html,body {
         }
       }
       .position4 {
-        margin-right: 14px;
-        width:60px;
-        height:27px;
-        border:1px solid;
-        border-color:#f6e8ca;
-        border-radius:13.5px;
-        font-family:PingFang SC;
-        font-weight:500;
-        color:#f6e8ca;
-        font-size:12px;
-        line-height:27px;
+        position: absolute;
+        top: 25px;
+        right: 14px;
+        width: 60px;
+        height: 27px;
+        border: 1px solid;
+        border-color: #f6e8ca;
+        border-radius: 13.5px;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #f6e8ca;
+        font-size: 12px;
+        line-height: 27px;
         text-align: center;
       }
     }

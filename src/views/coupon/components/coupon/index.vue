@@ -8,20 +8,21 @@
     >
 
       <div class="position-one">
-        <p class="price">¥<span class="big">8</span></p>
-        <p class="detail">无门槛</p>
+        <p class="price" v-if="good.couponType !== 2">¥<span class="big">{{good.freeAmount/100}}</span></p>
+        <p class="price" v-else><span class="big">{{good.freeDiscount}}</span>折</p>
+        <p class="detail">{{type[good.couponType]}}</p>
       </div>
       <div class="position-two">
-        <p class="p1">{{good.title}}</p>
-        <p class="p2">有效期:2021.05.01前有效</p>
+        <p class="p1">{{good.couponName}}</p>
+        <p class="p2">有效期:{{endTime}}前有效</p>
       </div>
-      <div class="position-three">去使用</div>
+      <div class="position-three" @click="onToDetail">去使用</div>
 
     </div>
 
     <div class="fold" :class="open?'look':''" @click="openAll">
       <div class="fold-box" :class="open?'two':''">
-        使用规则：限首单使用，不包含新人专享，不和其他满减券和折扣券同时使用
+        使用规则：{{good.couponRule}}
       </div>
       <van-image
         class="img"
@@ -40,7 +41,7 @@ import { getImgUrl } from '@/utils/tools';
 import { Image as VanImage } from 'vant';
 import Vue from 'vue';
 Vue.use(VanImage);
-
+const type = ['-', '满减券', '折扣券', '立减券']
 export default {
   props: {
     good: {
@@ -50,7 +51,17 @@ export default {
   },
   data() {
     return {
-      open: false
+      open: false,
+      type: ['-', '满减券', '折扣券', '立减券'],
+    }
+  },
+  computed: {
+    endTime:function() {
+      var date = new Date(this.good.activityEndTime);
+      var YY = date.getFullYear() + '.';
+      var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '.';
+      var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
+      return YY + MM + DD;
     }
   },
   methods: {
@@ -119,6 +130,7 @@ export default {
       color:#d93d33;
       font-size:10px;
       line-height:14px;
+      white-space:nowrap;
     }
   }
   .position-two {
