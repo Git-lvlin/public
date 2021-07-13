@@ -22,8 +22,14 @@
       </div>
       <div class="get-button">
         <van-image
+          v-if="!hold"
           width="100%"
           :src="getImgUrl('publicMobile/newpeoples/button.png')"
+        />
+        <van-image
+          v-else
+          width="100%"
+          :src="getImgUrl('publicMobile/newpeoples/buttoned.png')"
         />
       </div>
     </div>
@@ -43,6 +49,7 @@
     <div class="hot-recommend-box">
       <div class="hot-list">
         <van-list
+          style="display: flex;flex-direction: row;flex-wrap: wrap;justify-content: space-between;"
           v-if="list.length"
           v-model="loading"
           offset=0
@@ -80,6 +87,7 @@ export default {
   },
   data() {
     return {
+      hold: false,
       listData: [],
       list: [],
       loading: false,
@@ -208,8 +216,12 @@ export default {
     height: 70px;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.02);
     white-space: nowrap;/*文本不会换行，文本会在在同一行上继续*/
+    overflow: hidden;
     overflow-x: auto;
     .save-box {
+      display: flex;
+      display: inline-block;
+      flex-wrap: wrap;
       height: 100%;
     }
   }
@@ -217,6 +229,12 @@ export default {
     position: relative;
     width: 100%;
     min-height: 618px;
+    .hot-list {
+      padding: 0 12px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
   }
   .list-title {
     margin-top: 15px;
@@ -246,8 +264,4 @@ export default {
   .element::-webkit-scrollbar { width: 0 !important }
   .element { -ms-overflow-style: none; }
   .element { overflow: -moz-scrollbars-none; }
-  .hot-list {
-    padding: 0 12px;
-  }
-
 </style>

@@ -59,7 +59,7 @@ export default {
   margin-right: 8px;
   width: 140px;
   height: 100%;
-  background-size: 100% 100%;
+  background-size: 140px 100%;
   overflow: hidden;
 }
 .flex {

@@ -187,6 +187,7 @@
     <div class="cushions"></div>
     <div class="button-box" :class="isShow?'show':''">
       <van-image
+        @click="onToDetail"
         width="332px"
         :src="getImgUrl('publicMobile/store/button.png')"
       />
@@ -218,6 +219,26 @@ export default {
       this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
       if (this.scroll > 600) {
         this.isShow = true
+      }
+    },
+    onToDetail() {
+      const {
+        good,
+      } = this;
+      console.log(window.navigator)
+      console.log("$store.state.appInfo", this.$store.state.appInfo)
+      if (this.$store.state.appInfo.isApp) {
+        this.$bridge.callHandler(
+          'router',
+          `${appBaseUrl}/store/member/settled`,
+        )
+      } else if (this.$store.state.appInfo.isMiniprogram) {
+        const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
+        wx.miniProgram.navigateTo({
+          url: `/subpages/cart/detail/index${paramStr}`
+        })
+      } else {
+        console.log('不是App内')
       }
     }
   },

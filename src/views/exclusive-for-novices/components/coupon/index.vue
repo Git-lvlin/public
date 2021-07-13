@@ -1,48 +1,22 @@
 <template>
-  <div class="hot" @click="onToDetail">
+  <span class="hot" @click="onToDetail">
     <div class="left-box">
       <van-image
         class="hot-good-img"
-        width="100px"
-        height="100px"
+        width="172px"
+        height="172px"
         :src="good.image"
       />
-      <div class="save" v-if="good.goodsContestRate">{{'降价'+good.goodsContestRate+'%'}}</div>
-      <div class="save2" v-else>精选特惠</div>
     </div>
     <div class="right-box">
       <div class="title">{{good.title}}</div>
-      <div class="sort">
-        <van-image
-          class="sort-icon"
-          width="18px"
-          height="18px"
-          :src="getImgUrl('publicMobile/price/icon.png')"
-        />
-        <span class="icon">{{good.gcName}}类销量排名第{{good.gcRang}}</span>
-      </div>
-      <div class="num">
-        <van-image
-          class="hot-icon"
-          width="18px"
-          height="18px"
-          :src="getImgUrl('publicMobile/price/hot.png')"
-        />
-        <span class="icon">销量{{good.saleNum>9999?(good.saleNum/10000)+'万+':good.saleNum}}</span>
-      </div>
-      <div class="compare">{{good.contestPlatformNum?'共有'+good.contestPlatformNum+'个商场比价':''}}</div>
+      <div class="sort">{{good.gcName}}</div>
       <div class="price">
         <span class="span1">¥{{good.salePrice/100}}</span>
         <span class="span2">¥{{good.marketPrice/100}}</span>
-        <van-image
-          class="right-img"
-          width="20px"
-          height="20px"
-          :src="getImgUrl('publicMobile/price/right.png')"
-        />
       </div>
     </div>
-  </div>
+  </span>
 </template>
 
 <script>
@@ -83,49 +57,28 @@ export default {
 
 <style lang="scss" scoped>
 .hot {
-  width: 100%;
-  padding: 12px;
+  width: 172px;
+  height: 277px;
   background-color: #ffffff;
-  margin-bottom: 12px;
+  margin-bottom: 7px;
   border-radius: 8px;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-}
-.left-box {
   display: flex;
   flex-direction: column;
-  width: 100px;
-  height: 100%;
-  border-radius: 8px;
   overflow: hidden;
 }
-.save {
-  text-align: center;
-  width: 100%;
-  height: 22px;
-  line-height: 22px;
-  background-color: #d7291d;
-  color: #ffffff;
-  font-family: PingFang SC;
-  font-size: 12px;
-}
-.save2 {
-  text-align: center;
-  width: 100%;
-  height: 22px;
-  line-height: 22px;
-  font-family: PingFang SC;
-  font-weight: 500;
-  color: #b37614;
-  font-size: 12px;
-  background-image: linear-gradient(90.02deg,#fbf8cc 0%,#fae963 100%);
+
+.left-box {
+  width: 172px;
+  height: 172px;
 }
 .right-box {
+  padding: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 215px;
+  width: 172px;
+  height: 105px;
+  overflow: hidden;
 }
 .title {
   height: 22px;
@@ -139,17 +92,15 @@ export default {
   overflow: hidden;
 }
 .sort {
-  display: flex;
-  justify-content: flex-start;
-  width: 174px;
-  height: 18px;
-  background-image: linear-gradient(90deg,#fdf6f2 0%,#fdf6f2 100%);
-  border-radius: 9.5px;
-  margin-bottom: 5px;
-  font-family: PingFang SC;
-  color: #333333;
-  font-size: 13px;
-  line-height: 18px;
+  width:48px;
+  height:15px;
+  background-color:rgba(215, 41, 29, 0.1);
+  border-radius:2px;
+  font-family:PingFang SC;
+  color:#d7291d;
+  font-size:10px;
+  line-height:15px;
+  text-align: center;
 }
 .icon {
   margin-left: 8px;
@@ -196,10 +147,6 @@ export default {
   font-size: 12px;
   letter-spacing: 0.6px;
   text-decoration: line-through;
-}
-.right-img {
-  position: absolute;
-  right: 24px;
 }
 </style>
 
