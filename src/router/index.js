@@ -54,17 +54,17 @@ const routes = [
     }
   },
   {
-    path: '/web/membership-store-in',
-    name: 'MembershipStoreIn',
-    component: () => import('@/views/membership-store-in'),
+    path: '/web/store-in',
+    name: 'StoreIn',
+    component: () => import('@/views/store-in'),
     meta: {
       title: '会员店入驻',
     }
   },
   {
-    path: '/web/member-special',
-    name: 'MemberSpecial',
-    component: () => import('@/views/member-special'),
+    path: '/web/special',
+    name: 'Special',
+    component: () => import('@/views/special'),
     meta: {
       title: '会员约购专享',
     }

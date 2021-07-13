@@ -9,10 +9,12 @@
       />
     </div>
     <div class="right-box">
-      <div class="title">{{good.title}}</div>
-      <div class="sort">{{good.gcName}}</div>
+      <div class="title">
+        <div class="title-index">{{good.title}}</div>
+        <div class="sort">{{good.gcName}}</div>
+      </div>
       <div class="price">
-        <span class="span1">¥{{good.salePrice/100}}</span>
+        <span class="span1">¥<span class="big">{{good.salePrice/100}}</span></span>
         <span class="span2">¥{{good.marketPrice/100}}</span>
       </div>
     </div>
@@ -75,62 +77,45 @@ export default {
   padding: 8px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   width: 172px;
   height: 105px;
   overflow: hidden;
 }
 .title {
-  height: 22px;
-  font-family: PingFang SC;
-  color: #333333;
-  font-size: 16px;
-  line-height: 22px;
-  margin-bottom: 5px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  .title-index {
+    font-family:PingFang SC;
+    text-align: justify;
+    font-weight:500;
+    color:#333333;
+    font-size:14px;
+    line-height:18px;
+    overflow: hidden;
+    /* 将对象作为弹性伸缩盒子模型显示 。 */
+    display: -webkit-box;
+    /* 限制在一个块元素显示的文本的行数，即行数设置 */
+    -webkit-line-clamp: 2;
+    /* 规定框从上向下垂直排列子元素 */
+    -webkit-box-orient: vertical;
+  }
+  .sort {
+    margin-top: 4px;
+    width:48px;
+    height:15px;
+    background-color:rgba(215, 41, 29, 0.1);
+    border-radius:2px;
+    font-family:PingFang SC;
+    color:#d7291d;
+    font-size:10px;
+    line-height:15px;
+    text-align: center;
+  }
 }
-.sort {
-  width:48px;
-  height:15px;
-  background-color:rgba(215, 41, 29, 0.1);
-  border-radius:2px;
-  font-family:PingFang SC;
-  color:#d7291d;
-  font-size:10px;
-  line-height:15px;
-  text-align: center;
-}
-.icon {
-  margin-left: 8px;
-}
-.num {
-  display: flex;
-  justify-content: flex-start;
-  width: 91px;
-  height: 18px;
-  background-image: linear-gradient(90deg,#fdf1f4 0%,#fdf1f4 100%);
-  border-radius: 9.5px;
-  margin-bottom: 4px;
-  font-family: PingFang SC;
-  color: #333333;
-  font-size: 13px;
-  line-height: 18px;
-}
-.compare {
-  height: 17px;
-  font-family: PingFang SC;
-  color: #999999;
-  font-size: 12px;
-  letter-spacing: 0.6px;
-  line-height: 17px;
-  margin-bottom: 8px;
-}
+
 .price {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
 }
 .span1 {
@@ -139,14 +124,20 @@ export default {
   color: #d7291d;
   font-size: 12px;
   letter-spacing: 1.4px;
+  line-height: 22px;
+  .big {
+    font-size: 14px;
+  }
 }
 .span2 {
   margin-left: 8px;
+  height: 22px;
   font-family: PingFang SC;
   color: #cccccc;
-  font-size: 12px;
-  letter-spacing: 0.6px;
+  font-size: 10px;
+  letter-spacing: .5px;
   text-decoration: line-through;
+  line-height: 22px;
 }
 </style>
 

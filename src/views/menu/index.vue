@@ -21,12 +21,12 @@
       <van-cell
         title="会员店入驻"
         is-link
-        to="/web/membership-store-in"
+        to="/web/store-in"
       />
       <van-cell
         title="会员约购专享"
         is-link
-        to="/web/member-special"
+        to="/web/special"
       />
       <van-cell
         title="领券中心"
