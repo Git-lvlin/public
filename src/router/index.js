@@ -76,6 +76,22 @@ const routes = [
     meta: {
       title: '领券中心',
     }
+  },
+  {
+    path: '/web/exclusive-for-novices',
+    name: 'ExclusiveForNovices',
+    component: () => import('@/views/exclusive-for-novices'),
+    meta: {
+      title: '新人专享',
+    }
+  },
+  {
+    path: '/web/share',
+    name: 'Share',
+    component: () => import('@/views/share'),
+    meta: {
+      title: '分享页',
+    }
   }
 ];
 

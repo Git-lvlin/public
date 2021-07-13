@@ -33,6 +33,16 @@
         is-link
         to="/web/coupon"
       />
+      <van-cell
+        title="新人专享"
+        is-link
+        to="/web/exclusive-for-novices"
+      />
+      <van-cell
+        title="分享页"
+        is-link
+        to="/web/share"
+      />
     </van-cell-group>
   </div>
 </template>

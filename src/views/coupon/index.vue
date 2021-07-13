@@ -68,7 +68,7 @@
 <script>
 import Vue from 'vue';
 import { Image as VanImage, List, Dialog, CountDown } from 'vant';
-import { getImgUrl, getQueryObj } from '@/utils/tools';
+import { getImgUrl, getQueryObj, debounce } from '@/utils/tools';
 import teamApi from '@/apis/appointment';
 import Btn from './components/btn';
 import Item from './components/coupon';
@@ -173,32 +173,33 @@ export default {
         page,
         pageSize,
       } = this;
-      console.log('gcId1', a)
-      console.log('memberId', this.options.memberId)
-      teamApi.getCouponClassList({
-        memberId: this.options.memberId,
-        page,
-        pageSize,
-        gcId1: a
-      }).then((res) => {
-        const {
-          data,
-        } = res;
-        if (data && data.records) {
-          this.totalPage = data.totalpage;
-          if (page < 2) {
-            this.list = data.records;
-          } else {
-            this.list = this.list.concat(data.records);
+      clearTimeout(this.listId)
+      this.listId = setTimeout(() => {
+        teamApi.getCouponClassList({
+          memberId: this.options.memberId,
+          page,
+          pageSize,
+          gcId1: a
+        }).then((res) => {
+          const {
+            data,
+          } = res;
+          if (data && data.records) {
+            this.totalPage = data.totalpage;
+            if (page < 2) {
+              this.list = data.records;
+            } else {
+              this.list = this.list.concat(data.records);
+            }
+            if (this.list.length >= data.total) {
+              this.finished = true;
+            }
           }
-          if (this.list.length >= data.total) {
-            this.finished = true;
-          }
-        }
-        this.loading = false;
-      }).catch(() => {
-        this.loading = false;
-      });
+          this.loading = false;
+        }).catch(() => {
+          this.loading = false;
+        });
+      }, 200)
     },
     formatDate(date) {
       var date = new Date(date);
@@ -208,14 +209,17 @@ export default {
       return YY + MM + DD;
     },
     nowRob() {
-      teamApi.getCoupon({
-        couponId: this.timeInfo.couponId
-      }).then((res) => {
-        if (res.code === 0) {
-          Dialog({ message: '抢券成功!' });
-          this.robed = !this.robed
-        }
-      })
+      clearTimeout(this.timeid)
+      this.timeid = setTimeout(() => {
+        teamApi.getCoupon({
+          couponId: this.timeInfo.couponId
+        }).then((res) => {
+          if (res.code === 0) {
+            Dialog({ message: '抢券成功!' });
+            this.robed = !this.robed
+          }
+        })
+      }, 800)
     },
     goUse() {
       const {
