@@ -38,7 +38,7 @@ export default {
       if (this.$store.state.appInfo.isApp) {
         this.$bridge.callHandler(
           'router',
-          `${appBaseUrl}/contest/price${paramStr}`,
+          `${appBaseUrl}/flutter/contest/price${paramStr}`,
         )
       } else if (this.$store.state.appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({
