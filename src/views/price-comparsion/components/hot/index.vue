@@ -8,7 +8,7 @@
         :src="good.image"
       />
       <div class="save" v-if="good.goodsContestRate">{{'降价'+good.goodsContestRate+'%'}}</div>
-      <div class="save2" v-else>精选特惠</div>
+      <div class="save" v-else>精选特惠</div>
     </div>
     <div class="right-box">
       <div class="title">{{good.title}}</div>
@@ -108,16 +108,6 @@ export default {
   background-color: #d7291d;
   color: #ffffff;
   font-family: PingFang SC;
-  font-size: 12px;
-}
-.save2 {
-  text-align: center;
-  width: 100%;
-  height: 22px;
-  line-height: 22px;
-  font-family: PingFang SC;
-  font-weight: 500;
-  background-color: #d7291d;
   font-size: 12px;
 }
 .right-box {
