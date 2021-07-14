@@ -10,7 +10,8 @@ const url = {
   couponList: '/activity/open/couponCenterList',
   couponClassList: '/activity/open/couponCenterClassList',
   couponTimeInfo: '/activity/open/couponCmsCenterList',
-  couponIndex: '/activity/open/couponIndex',
+  // 新人红包
+  couponIndex: '/activity/open/newMemberCouponList',
 };
 
 export default {
@@ -87,9 +88,9 @@ export default {
     })
   },
   // 新人专享 红包
-  getCouponTimeInfo(params = {}, options = {}) {
+  getNewPeoplesCoupon(params = {}, options = {}) {
     return post({
-      url: url.couponTimeInfo,
+      url: url.couponIndex,
       data: params,
       options,
     })
