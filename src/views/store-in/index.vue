@@ -230,7 +230,7 @@ export default {
       if (this.$store.state.appInfo.isApp) {
         this.$bridge.callHandler(
           'router',
-          `${appBaseUrl}/store/member/settled`,
+          `${appBaseUrl}/flutter/store/member/settled`,
         )
       } else if (this.$store.state.appInfo.isMiniprogram) {
         const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`

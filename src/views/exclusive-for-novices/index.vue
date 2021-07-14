@@ -87,6 +87,7 @@ export default {
   },
   data() {
     return {
+      couponId: '',
       hold: false,
       listData: [],
       list: [],
@@ -95,6 +96,7 @@ export default {
       page: 1,
       size: 10,
       totalPage: 1,
+      param: {},
     };
   },
   components: {
@@ -102,18 +104,22 @@ export default {
     Hot,
   },
   created () {
+    this.param = {
+      memberId,
+      indexVersion
+    }
     this.onLoad()
     this.getListData()
   },
   methods: {
     getImgUrl,
     getListData() {
-      teamApi.getSaveGoodsList().then((res) => {
+      teamApi.getNewPeoplesCoupon(this.param).then((res) => {
         const {
           data,
         } = res;
         if (data && data.records) {
-          this.listData = data.records;
+          this.listData = data.records
         }
       })
     },

@@ -10,6 +10,7 @@ const url = {
   couponList: '/activity/open/couponCenterList',
   couponClassList: '/activity/open/couponCenterClassList',
   couponTimeInfo: '/activity/open/couponCmsCenterList',
+  couponIndex: '/activity/open/couponIndex',
 };
 
 export default {
@@ -78,6 +79,14 @@ export default {
     })
   },
   // 领券中心 倒计时配置
+  getCouponTimeInfo(params = {}, options = {}) {
+    return post({
+      url: url.couponTimeInfo,
+      data: params,
+      options,
+    })
+  },
+  // 新人专享 红包
   getCouponTimeInfo(params = {}, options = {}) {
     return post({
       url: url.couponTimeInfo,

@@ -5,15 +5,17 @@
   }"
   >
     <div class="flex">
-      <div class="l">
-        ¥<span class="m">20</span>
+      <div class="l" v-if="isPrice">
+        ¥<span class="m">{{good.freeAmount/100}}</span>
+      </div>
+      <div class="l" v-else>
+        <span class="m">{{good.freeDiscount}}</span>折
       </div>
       <div class="r">
-        <p>满45.00可用</p>
+        <p>{{good.title}}</p>
         <p class="p">常温奶酒</p>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -26,6 +28,14 @@ export default {
       type: Object,
       default: () => {},
     },
+  },
+  computed: {
+    isPrice: () => {
+      if (this.good.couponType === 1 || this.good.couponType === 3) {
+        return true
+      }
+      return false
+    }
   },
   methods: {
     getImgUrl,
