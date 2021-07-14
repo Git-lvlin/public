@@ -117,9 +117,8 @@ export default {
   line-height: 22px;
   font-family: PingFang SC;
   font-weight: 500;
-  color: #b37614;
+  background-color: #d7291d;
   font-size: 12px;
-  background-image: linear-gradient(90.02deg,#fbf8cc 0%,#fae963 100%);
 }
 .right-box {
   display: flex;
