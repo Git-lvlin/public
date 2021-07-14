@@ -200,7 +200,7 @@ export default {
     bottom: 12px;
     padding: 10px 0px 10px 8px;
     width: 351px;
-    height: 139px;
+    height: 151px;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.02);

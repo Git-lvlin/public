@@ -11,10 +11,8 @@
       <span class="tag1">降价</span>
       <span class="tag2">{{good.goodsContestRate+'%'}}</span>
     </div>
-    <div class="price">
-      <span class="span1">¥{{good.salePrice/100}}</span>
-      <span class="span2">¥{{good.marketPrice/100}}</span>
-    </div>
+    <p class="span1">¥{{good.salePrice/100}}</p>
+    <p class="span2">¥{{good.marketPrice/100}}</p>
   </div>
 </template>
 
@@ -77,25 +75,30 @@ export default {
   text-align: center;
   margin-bottom: 4px;
 }
-.price {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
 .span1 {
+  width: 100%;
+  height: 17px;
   font-family: Helvetica Neue;
   font-weight: 700;
-  letter-spacing: 1.17px;
   color: #d7291d;
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .span2 {
-  font-family: PingFang SC;
-  color: #999999;
-  font-size: 10px;
-  letter-spacing: 0.5px;
-  text-decoration: line-through;
+  width: 100%;
+  height:14px;
+  font-family:PingFang SC;
+  color:#999999;
+  font-size:10px;
+  letter-spacing:1px;
+  text-decoration:line-through;
+  line-height:14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .save-tag-box {
   width: 52px;
@@ -122,6 +125,8 @@ export default {
     font-size: 10px;
     line-height: 14px;
     text-align: center;
+    border:0.5px solid;
+    border-color:#e6362f;
   }
 }
 
