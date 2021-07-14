@@ -45,6 +45,54 @@ const routes = [
     //   title: 'H5 菜单页',
     // },
   },
+  {
+    path: '/web/price-comparsion',
+    name: 'PriceComparsion',
+    component: () => import('@/views/price-comparsion'),
+    meta: {
+      title: '比价优选',
+    }
+  },
+  {
+    path: '/web/store-in',
+    name: 'StoreIn',
+    component: () => import('@/views/store-in'),
+    meta: {
+      title: '会员店入驻',
+    }
+  },
+  {
+    path: '/web/special',
+    name: 'Special',
+    component: () => import('@/views/special'),
+    meta: {
+      title: '会员约购专享',
+    }
+  },
+  {
+    path: '/web/coupon',
+    name: 'Coupon',
+    component: () => import('@/views/coupon'),
+    meta: {
+      title: '领券中心',
+    }
+  },
+  {
+    path: '/web/exclusive-for-novices',
+    name: 'ExclusiveForNovices',
+    component: () => import('@/views/exclusive-for-novices'),
+    meta: {
+      title: '新人专享',
+    }
+  },
+  {
+    path: '/web/share',
+    name: 'Share',
+    component: () => import('@/views/share'),
+    meta: {
+      title: '分享页',
+    }
+  }
 ];
 
 const router = new VueRouter({

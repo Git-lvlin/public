@@ -15,14 +15,16 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "@vant/touch-emulator": "^1.3.0",
     "axios": "^0.21.0",
     "big.js": "^6.1.1",
     "copy-to-clipboard": "^3.3.1",
     "dayjs": "^1.10.5",
     "qs": "^6.9.4",
+    "serve": "^12.0.0",
     "vant": "2.12.1",
     "vconsole": "^3.7.0",
-    "vue": "2.6.12",
+    "vue": "^2.6.12",
     "vue-router": "^3.4.9",
     "vuex": "3.6.0"
   },
@@ -42,6 +44,6 @@
     "postcss-px-to-viewport": "^1.1.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.14"
   }
 }

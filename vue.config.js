@@ -4,18 +4,29 @@ module.exports = {
   publicPath: '/',
   devServer: {
     proxy: {
-      '/activity': {
-        target: 'http://dev-yeahgo-gateway.waiad.icu',
-        ws: true,
-        changeOrigin: true,
-      },
+      // '/activity': {
+      //   target: 'http://dev-yeahgo-gateway.waiad.icu',
+      //   ws: true,
+      //   changeOrigin: true,
+      // },
       '/member': {
         target: 'http://dev-yeahgo-gateway.waiad.icu',
         ws: true,
         changeOrigin: true,
       },
+      '/contestprice': {
+        target: 'http://local.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
+      '/activity': {
+        target: 'http://local.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
     },
     https: false,
+    disableHostCheck: true
   },
   css: {
     loaderOptions: {
