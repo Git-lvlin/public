@@ -61,13 +61,13 @@ export default {
       const {
         good,
       } = this;
-      const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
+      const paramStr = `?id=${good.id || ''}`
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
         this.$bridge.callHandler(
           'router',
-          `${appBaseUrl}/shopping/detail${paramStr}`,
+          `${appBaseUrl}/flutter/contest/price${paramStr}`,
         )
       } else if (this.$store.state.appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({
