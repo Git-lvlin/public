@@ -114,7 +114,11 @@ export default {
   methods: {
     getImgUrl,
     getListData() {
-      teamApi.getNewPeoplesCoupon(this.param).then((res) => {
+      const {
+        query,
+      } = this.$router.history.current;
+      console.log('query', query)
+      teamApi.getNewPeoplesCoupon(query).then((res) => {
         const {
           data,
         } = res;

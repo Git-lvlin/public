@@ -13,7 +13,7 @@
       </div>
       <div class="r">
         <p>{{good.title}}</p>
-        <p class="p">常温奶酒</p>
+        <p class="p">{{good.goodsTypeDisplay}}</p>
       </div>
     </div>
   </div>
