@@ -43,6 +43,11 @@
         is-link
         to="/web/share"
       />
+      <van-cell
+        title="邀请好友"
+        is-link
+        to="/web/invitation"
+      />
     </van-cell-group>
   </div>
 </template>

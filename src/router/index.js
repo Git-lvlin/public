@@ -92,6 +92,14 @@ const routes = [
     meta: {
       title: '分享页',
     }
+  },
+  {
+    path: '/web/invitation',
+    name: 'Invitation',
+    component: () => import('@/views/invitation'),
+    meta: {
+      title: '邀请好友',
+    }
   }
 ];
 

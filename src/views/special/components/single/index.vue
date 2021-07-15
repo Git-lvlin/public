@@ -20,7 +20,7 @@
 
 <script>
 import { getImgUrl } from '@/utils/tools';
-
+import { appBaseUrl } from "@/constant/index";
 export default {
   props: {
     good: {
