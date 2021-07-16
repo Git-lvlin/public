@@ -63,6 +63,13 @@
         <p class="text2">新人注册领168元好礼</p>
         <p class="text3">大小:188.8MB 版本1.1.0</p>
       </div>
+      <van-image
+        class="bottom-img"
+        width="112px"
+        height="40px"
+        :src="getImgUrl('publicMobile/share/button-img.png')"
+        id="downloadButton3"
+      />
     </div>
   </div>
 </template>
@@ -138,7 +145,7 @@ export default {
   flex-direction: column;
   min-height: 100vh;
   background-color: #ffffff;
-  padding-bottom: 135px;
+  padding-bottom: 111px;
   .head {
     width:100%;
     height: 450px;
@@ -231,6 +238,37 @@ export default {
           line-height:20px;
           white-space:nowrap;
         }
+      }
+    }
+  }
+  .bottom-box {
+    position: fixed;
+    bottom: 34px;
+    width:100%;
+    height:78px;
+    background-color:#ffffff;
+    box-shadow:0px -4px 8px rgba(0, 0, 0, 0.07);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .content-box {
+      margin: 0 22px 0 8px;
+      width: 148px;
+      height: 60px;
+      display: flex;
+      flex-direction: column;
+      font-family:PingFang SC;
+      color:#999999;
+      font-size:12.7px;
+      letter-spacing:0.45px;
+      line-height:17px;
+      .text1 {
+        height:24px;
+        font-family:PingFang SC;
+        font-weight:600;
+        color:#000000;
+        font-size:17px;
+        line-height:24px;
       }
     }
   }
