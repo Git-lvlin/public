@@ -157,7 +157,6 @@ export default {
       document.body.removeChild(transfer);
     },
     onToDetail(type) {
-      console.log('type', type)
       const {
         good,
       } = this;
@@ -347,7 +346,7 @@ export default {
           width:56px;
           height:23px;
           background-color:#ffffff;
-          border:0.69px solid;
+          border:1px solid;
           font-family:PingFang SC;
           color:#fd1101;
           font-size:12px;
