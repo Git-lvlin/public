@@ -12,7 +12,6 @@ const REFRESH_TOKEN_INVALID = 10015;
 let requestCount = 0;
 
 let appToken = '';
-
 axios.defaults.timeout = 10 * 1000;
 
 axios.interceptors.request.use((config) => {
@@ -88,7 +87,7 @@ const request = async ({
 }) => {
   console.log(process);
   const { showLoading = true, showError = true } = options;
-
+  console.log('options', options)
   if (showLoading && requestCount === 0) {
     Toast.loading({
       message: '加载中...',
@@ -106,14 +105,20 @@ const request = async ({
     params = 'params';
   }
 
-  return axios({
+  let all = {
     url,
     method,
     [params]: {
       ...data,
       platform: 'web_app',
     },
-  }).then((res) => {
+  }
+  if (options.token) {
+    all.headers = {
+      token: options.token
+    }
+  }
+  return axios(all).then((res) => {
     if (res.code !== 0 && showError) {
       setTimeout(() => {
         Toast({
