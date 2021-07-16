@@ -199,6 +199,7 @@
 import Vue from 'vue';
 import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import { appBaseUrl } from "@/constant/index";
 Vue.use(VanImage);
 export default {
   props: {
