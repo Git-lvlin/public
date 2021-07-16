@@ -164,7 +164,7 @@ export default {
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
-        if (type) {
+        if (type === 'all') {
           this.$bridge.callHandler(
             'router',
             `${appBaseUrl}/flutter/mine/member_list/page`,
