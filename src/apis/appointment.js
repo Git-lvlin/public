@@ -10,9 +10,8 @@ const url = {
   couponList: '/activity/open/couponCenterList',
   couponClassList: '/activity/open/couponCenterClassList',
   couponTimeInfo: '/activity/open/couponCmsCenterList',
-  // 新人红包
   couponIndex: '/activity/open/newMemberCouponList',
-
+  getInviteInfo: '/member/auth/memberInvite/getInviteInfo',
 };
 
 export default {
@@ -92,6 +91,14 @@ export default {
   getNewPeoplesCoupon(params = {}, options = {}) {
     return post({
       url: url.couponIndex,
+      data: params,
+      options,
+    })
+  },
+  // 获取用户分享信息
+  apiGetInviteInfo(params = {}, options = {}) {
+    return post({
+      url: url.getInviteInfo,
       data: params,
       options,
     })

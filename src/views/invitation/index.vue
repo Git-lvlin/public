@@ -54,8 +54,8 @@
       <div class="content2">
         <p class="sub-title">生成我的专属邀请海报</p>
         <div class="center">
-          <span class="l-s">邀请码:9WWM5KHG</span>
-          <span class="r-s">复制</span>
+          <span class="l-s">邀请码: <span id="code">{{inviteCode}}</span></span>
+          <span class="r-s" @click="copy">复制</span>
         </div>
         <div class="now-button" @click="onToDetail">立即邀请</div>
       </div>
@@ -75,8 +75,8 @@
               />
             </div>
           </div>
-          <p class="price"><span class="span">40</span>元</p>
-          <p class="num">已邀请<span>56</span>位新用户，累计获得佣金</p>
+          <p class="price"><span class="span">{{info.totalCommission}}</span>元</p>
+          <p class="num">已邀请<span>{{info.inviteNum}}</span>位新用户，累计获得佣金</p>
           <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
         </div>
       </div>
@@ -112,9 +112,10 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage } from 'vant';
+import { Image as VanImage, Dialog } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
+import teamApi from '@/apis/appointment';
 Vue.use(VanImage);
 export default {
   props: {
@@ -122,14 +123,32 @@ export default {
   },
   data() {
     return {
+      info: {},
+      inviteCode: null
     };
   },
   components: {
+    [Dialog.Component.name]: Dialog.Component,
   },
   created () {
+
   },
   methods: {
     getImgUrl,
+    copy() {
+      let transfer = document.createElement('input');
+      document.body.appendChild(transfer);
+      transfer.value = this.inviteCode;
+      transfer.focus();
+      transfer.select();
+      if (document.execCommand('copy')) {
+        document.execCommand('copy');
+      }
+      transfer.blur();
+      console.log('复制成功');
+      Dialog({ message: '复制成功' });
+      document.body.removeChild(transfer);
+    },
     onToDetail(type) {
       console.log('type', type)
       const {
@@ -143,6 +162,7 @@ export default {
             'router',
             `${appBaseUrl}/flutter/mine/member_list/page`,
           )
+          return
         }
         this.$bridge.callHandler(
           'router',
@@ -159,7 +179,17 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.menu)
+    const {
+      query,
+    } = this.$router.history.current;
+    console.log('query', query)
+    this.inviteCode = query.inviteCode
+    teamApi.apiGetInviteInfo({}, {token:query.token}).then((res) => {
+      console.log('apiGetInviteInfo', res)
+      if (res.code === 0 && res.data.length) {
+        this.info = res.data
+      }
+    })
   },
 };
 </script>
