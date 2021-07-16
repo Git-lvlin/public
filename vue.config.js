@@ -1,6 +1,11 @@
 const PxToVw = require('postcss-px-to-viewport');
 
 module.exports = {
+  configureWebpack: {
+    externals: {
+      'OpenInstall': 'https://web.cdn.openinstall.io/openinstall.js'
+    }
+  },
   publicPath: '/',
   devServer: {
     proxy: {

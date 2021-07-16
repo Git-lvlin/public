@@ -57,28 +57,27 @@
           <span class="l-s">邀请码:9WWM5KHG</span>
           <span class="r-s">复制</span>
         </div>
-        <div class="now-button">立即邀请</div>
+        <div class="now-button" @click="onToDetail">立即邀请</div>
       </div>
     </div>
     <div class="item-box item-box3">
       <div class="content3">
         <div class="center-box">
           <div class="sub-title">
-            <div>我的邀请</div>
-            <div class="right-top-btn-box">
+            <div class="left-text">我的邀请</div>
+            <div class="right-top-btn-box" @click="onToDetail('all')">
               <p>查看全部</p>
               <van-image
+                class="right-img"
                 width="12px"
                 height="12px"
                 :src="getImgUrl('publicMobile/invitation/r.png')"
               />
             </div>
           </div>
-          <div class="center">
-            <p><span>40</span>元</p>
-            <p>已邀请<span>56</span>位新用户，累计获得佣金</p>
-          </div>
-          <div class="now-button">邀请好友一起领取</div>
+          <p class="price"><span class="span">40</span>元</p>
+          <p class="num">已邀请<span>56</span>位新用户，累计获得佣金</p>
+          <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
         </div>
       </div>
     </div>
@@ -131,16 +130,23 @@ export default {
   },
   methods: {
     getImgUrl,
-    onToDetail() {
+    onToDetail(type) {
+      console.log('type', type)
       const {
         good,
       } = this;
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
+        if (type) {
+          this.$bridge.callHandler(
+            'router',
+            `${appBaseUrl}/flutter/mine/member_list/page`,
+          )
+        }
         this.$bridge.callHandler(
           'router',
-          `${appBaseUrl}/flutter/store/member/settled`,
+          `${appBaseUrl}/inviteFriend`,
         )
       } else if (this.$store.state.appInfo.isMiniprogram) {
         const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
@@ -261,6 +267,20 @@ export default {
       height:188px;
       background-color:#ffffff;
       border-radius:4px;
+      overflow: hidden;
+      .now-button {
+        width:280px;
+        height:52px;
+        background-image:linear-gradient(90deg,#fd0a01 0%,#fe7300 100%);
+        border-radius:26px;
+        margin: 0 auto;
+        font-family:PingFang SC;
+        font-weight:500;
+        color:#ffffff;
+        font-size:20px;
+        line-height:52px;
+        text-align:center;
+      }
       .sub-title {
         width: 100%;
         height: 52px;
@@ -309,6 +329,7 @@ export default {
       height:234px;
       background-color:#ffffff;
       border-radius:4px;
+      overflow: hidden;
     }
     .content4 {
       padding: 16px 12px;
@@ -336,6 +357,81 @@ export default {
   }
   .item-box3 {
     height: 276px;
+    overflow: hidden;
+    .content3 {
+      .center-box {
+        .sub-title {
+          width: 100%;
+          height: 36px;
+          line-height: 36px;
+          display: flex;
+          justify-content: space-between;
+          background-color:#fff7db;
+          .left-text {
+            margin-left: 16px;
+            font-family:PingFang SC;
+            font-weight:500;
+            color:#843f29;
+            font-size:16px;
+            text-align:center;
+          }
+          .right-top-btn-box {
+            margin-right: 11px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family:PingFang SC;
+            color:#843f29;
+            font-size: 12px;
+            line-height: 17px;
+            .right-img {
+              margin-left: 4px;
+            }
+          }
+        }
+        .price {
+          margin-top: 21px;
+          font-family:PingFang SC;
+          font-weight:500;
+          color:#f93a30;
+          font-size:12px;
+          line-height:17px;
+          text-align:center;
+          .span {
+            font-family:DINPro;
+            font-weight:700;
+            color:#f93a30;
+            font-size:48px;
+            line-height:48px;
+            text-align:center;
+          }
+        }
+        .num {
+          margin-top: 4px;
+          height: 28px;
+          line-height: 28px;
+          font-family:PingFang SC;
+          color:#a56545;
+          font-size:14px;
+          line-height:20px;
+          text-align:center;
+        }
+        .now-button {
+          width:280px;
+          height:52px;
+          background-image:linear-gradient(90deg,#fd0a01 0%,#fe7300 100%);
+          border-radius:30px;
+          font-family:PingFang SC;
+          font-weight:600;
+          color:#ffffff;
+          font-size:20px;
+          line-height:52px;
+          text-align:center;
+          margin: 0 auto;
+          margin-top: 21px;
+        }
+      }
+    }
   }
   .item-box4 {
     height: 205px;

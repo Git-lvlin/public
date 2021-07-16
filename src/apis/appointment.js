@@ -12,6 +12,7 @@ const url = {
   couponTimeInfo: '/activity/open/couponCmsCenterList',
   // 新人红包
   couponIndex: '/activity/open/newMemberCouponList',
+
 };
 
 export default {
