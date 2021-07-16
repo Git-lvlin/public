@@ -5,7 +5,12 @@
         'background-image': `url('${getImgUrl('publicMobile/invitation/text.png')}')`
       }"
     >
-      用户135****7710成功邀请1位好友成为店主！
+      <van-swipe class="my-swipe" :autoplay="2000" style="height: 36px;" :show-indicators="false" indicator-color="white" vertical>
+        <van-swipe-item>用户135****7710成功邀请1位好友成为店主！</van-swipe-item>
+        <van-swipe-item>用户136****5443成功邀请1位好友成为店主！</van-swipe-item>
+        <van-swipe-item>用户133****7234成功邀请1位好友成为店主！</van-swipe-item>
+        <van-swipe-item>用户136****8192成功邀请1位好友成为店主！</van-swipe-item>
+      </van-swipe>
     </div>
     <van-image
       class="banner"
@@ -112,11 +117,13 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog } from 'vant';
+import { Image as VanImage, Dialog, Swipe, SwipeItem } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/appointment';
 Vue.use(VanImage);
+Vue.use(Swipe);
+Vue.use(SwipeItem);
 export default {
   props: {
 
@@ -216,6 +223,7 @@ export default {
       font-size:12px;
       line-height:36px;
       text-align:center;
+      overflow: hidden;
     }
     .content-box {
       position: relative;
@@ -466,5 +474,10 @@ export default {
   .item-box4 {
     height: 205px;
     margin-bottom: 33px;
+  }
+  .my-swipe .van-swipe-item {
+    font-size: 12px;
+    line-height: 36px;
+    text-align: center;
   }
 </style>
