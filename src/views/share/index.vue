@@ -6,7 +6,7 @@
       }"
     >
       <div id="downloadButton" class="button">立即下载</div>
-      <p class="p">已安装？点这里打开约购</p>
+      <p id="downloadButton2" class="p">已安装？点这里打开约购</p>
     </div>
     <div class="title"><span class="red">约购</span>APP 1件也享批发价</div>
     <div class="subtitle">有温度的 低价电商平台</div>
@@ -51,6 +51,19 @@
         </div>
       </div>
     </div>
+    <div class="bottom-box">
+      <van-image
+        class="logo"
+        width="54px"
+        height="54px"
+        :src="getImgUrl('publicMobile/share/logo.png')"
+      />
+      <div class="content-box">
+        <p class="text1">约购-约着买更便宜</p>
+        <p class="text2">新人注册领168元好礼</p>
+        <p class="text3">大小:188.8MB 版本1.1.0</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -93,8 +106,19 @@ export default {
                 this.schemeWakeup();
                 
                 /*用户点击某个按钮时(假定按钮id为downloadButton)，安装app*/
-                var m = this, button = document.getElementById("downloadButton");
+                var m = this,
+                button = document.getElementById("downloadButton"),
+                button2 = document.getElementById("downloadButton2"),
+                button3 = document.getElementById("downloadButton3");
                 button.onclick = function() {
+                    m.wakeupOrInstall();
+                    return false;
+                }
+                button2.onclick = function() {
+                    m.wakeupOrInstall();
+                    return false;
+                }
+                button3.onclick = function() {
                     m.wakeupOrInstall();
                     return false;
                 }

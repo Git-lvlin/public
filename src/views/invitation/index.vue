@@ -80,8 +80,8 @@
               />
             </div>
           </div>
-          <p class="price"><span class="span">{{info.totalCommission}}</span>元</p>
-          <p class="num">已邀请<span>{{info.inviteNum}}</span>位新用户，累计获得佣金</p>
+          <p class="price"><span class="span">{{info.totalCommission/100 || 0}}</span>元</p>
+          <p class="num">已邀请<span>{{info.inviteNum || 0}}</span>位新用户，累计获得佣金</p>
           <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
         </div>
       </div>

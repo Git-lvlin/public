@@ -19,7 +19,7 @@ axios.interceptors.request.use((config) => {
   if (appToken) {
     config.headers.Authorization = `Bearer ${appToken}`;
   }
-  config.headers.p = "miniprogram";
+  config.headers.p = "H5";
   config.headers.v = "1.0.0";
 
   console.log('process.env --- ', process.env);
