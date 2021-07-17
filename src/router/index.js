@@ -100,6 +100,14 @@ const routes = [
     meta: {
       title: '邀请好友',
     }
+  },
+  {
+    path: '/web/market',
+    name: 'Market',
+    component: () => import('@/views/market'),
+    meta: {
+      title: '营销资源落地页',
+    }
   }
 ];
 

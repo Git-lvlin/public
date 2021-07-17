@@ -12,6 +12,7 @@ const url = {
   couponTimeInfo: '/activity/open/couponCmsCenterList',
   couponIndex: '/activity/open/newMemberCouponList',
   getInviteInfo: '/member/auth/memberInvite/getInviteInfo',
+  activitySubject: '/cms/open/activitySubject/getById',
 };
 
 export default {
@@ -99,6 +100,14 @@ export default {
   apiGetInviteInfo(params = {}, options = {}) {
     return post({
       url: url.getInviteInfo,
+      data: params,
+      options,
+    })
+  },
+  // 营销资源
+  getActivitySubject(params = {}, options = {}) {
+    return get({
+      url: url.activitySubject,
       data: params,
       options,
     })

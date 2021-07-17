@@ -9,6 +9,7 @@ import Vue from 'vue';
 import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import List from './components/list';
+import teamApi from '@/apis/appointment';
 Vue.use(VanImage);
 export default {
   props: {
@@ -26,12 +27,27 @@ export default {
     List,
   },
   created () {
+
   },
   methods: {
     getImgUrl,
+    getListData() {
+      const {
+        query,
+      } = this.$router.history.current;
+      console.log('query', query)
+      teamApi.getActivitySubject({id: query.id}).then((res) => {
+        const {
+          data,
+        } = res;
+        if (data && data.itemList) {
+          this.list = data.itemList;
+        }
+      })
+    },
   },
   mounted() {
-
+    this.getListData()
   },
 };
 </script>

@@ -48,6 +48,11 @@
         is-link
         to="/web/invitation"
       />
+      <van-cell
+        title="营销资源落地页面"
+        is-link
+        to="/web/market"
+      />
     </van-cell-group>
   </div>
 </template>
