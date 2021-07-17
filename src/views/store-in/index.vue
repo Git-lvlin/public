@@ -3,6 +3,7 @@
     <van-image
       class="banner"
       width="100%"
+      height="471px"
       :src="getImgUrl('publicMobile/store/bg.png')"
     />
     <div class="title">
