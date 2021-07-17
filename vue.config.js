@@ -42,7 +42,7 @@ module.exports = {
             unitToConvert: 'px', // 需要转换的单位，默认为"px"；
             viewportWidth: 375, // 设计稿的视口宽度
             unitPrecision: 6, // 单位转换后保留的小数位数
-            propList: ['*'], // 要进行转换的属性列表,*表示匹配所有,!表示不转换
+            propList: ['*', '!letter-spacing'], // 要进行转换的属性列表,*表示匹配所有,!表示不转换
             viewportUnit: 'vw', // 转换后的视口单位
             fontViewportUnit: 'vw', // 转换后字体使用的视口单位
             selectorBlackList: [], // 不进行转换的css选择器，继续使用原有单位
