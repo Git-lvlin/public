@@ -61,7 +61,6 @@
       <div class="content-box">
         <p class="text1">约购-约着买更便宜</p>
         <p class="text2">新人注册领168元好礼</p>
-        <p class="text3">大小:188.8MB 版本1.1.0</p>
       </div>
       <van-image
         class="bottom-img"
@@ -255,7 +254,6 @@ export default {
     .content-box {
       margin: 0 22px 0 8px;
       width: 148px;
-      height: 60px;
       display: flex;
       flex-direction: column;
       font-family:PingFang SC;
