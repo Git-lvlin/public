@@ -103,6 +103,7 @@ export default {
       new OpenInstall({
             /*appKey必选参数，openinstall平台为每个应用分配的ID*/
             appKey : "sh7yz9",
+            preferWakeup:true,
             /*自定义遮罩的html*/
             //mask:function(){
             //  return "<div id='_shadow' style='position:fixed;left:0;top:0;background:rgba(0,255,0,0.5);filter:alpha(opacity=50);width:100%;height:100%;z-index:10000;'></div>"

@@ -61,7 +61,7 @@ export default {
       const {
         good,
       } = this;
-      const paramStr = `?id=${good.id || ''}`
+      const paramStr = `?id=${good.id}&storeNo=${good.storeNo}`
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
