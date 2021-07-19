@@ -184,13 +184,15 @@ export default {
     }
   },
   mounted() {
-    console.log('准备拿token')
-    this.$bridge.registerHandler(
+    console.log('准备拿token', )
+    this.$bridge.callHandler(
           'fetchToken',
+          {},
           (a,b) => {
             console.log('a',a,'b____'+b)
           }
         )
+    console.log('ed')
     // teamApi.apiGetInviteInfo({}, {token:query.token}).then((res) => {
     //   console.log('apiGetInviteInfo', res)
     //   if (res.code === 0 && res.data.length) {
