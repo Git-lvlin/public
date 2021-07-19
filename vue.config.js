@@ -3,8 +3,8 @@ const PxToVw = require('postcss-px-to-viewport');
 module.exports = {
   configureWebpack: {
     externals: {
-      'OpenInstall': 'https://web.cdn.openinstall.io/openinstall.js',
-      'jwx': 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/jweixin-1.3.2.js'
+      // 'OpenInstall': 'https://web.cdn.openinstall.io/openinstall.js',
+      // 'jwx': 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/jweixin-1.3.2.js'
     }
   },
   publicPath: '/',

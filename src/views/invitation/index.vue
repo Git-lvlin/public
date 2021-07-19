@@ -131,7 +131,8 @@ export default {
   data() {
     return {
       info: {},
-      inviteCode: null
+      inviteCode: null,
+      token: null
     };
   },
   components: {
@@ -184,21 +185,19 @@ export default {
     }
   },
   mounted() {
-    console.log('准备拿token', )
     this.$bridge.callHandler(
           'fetchToken',
           {},
-          (a,b) => {
-            console.log('a',a,'b____'+b)
+          (a) => {
+            this.token = a
           }
         )
-    console.log('ed')
-    // teamApi.apiGetInviteInfo({}, {token:query.token}).then((res) => {
-    //   console.log('apiGetInviteInfo', res)
-    //   if (res.code === 0 && res.data.length) {
-    //     this.info = res.data
-    //   }
-    // })
+    teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
+      console.log('apiGetInviteInfo', res)
+      if (res.code === 0 && res.data.length) {
+        this.info = res.data
+      }
+    })
   },
 };
 </script>
