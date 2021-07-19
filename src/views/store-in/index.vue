@@ -186,7 +186,7 @@
       <div class="sub"><span></span>缴纳店铺保证金,开始经营</div>
     </div>
     <div class="cushions"></div>
-    <div class="button-box" :class="isShow?'show':''">
+    <div class="button-box">
       <van-image
         @click="onToDetail"
         width="332px"
@@ -217,12 +217,6 @@ export default {
   },
   methods: {
     getImgUrl,
-    menu() {
-      this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
-      if (this.scroll > 600) {
-        this.isShow = true
-      }
-    },
     onToDetail() {
       const {
         good,
@@ -243,9 +237,6 @@ export default {
         console.log('不是App内')
       }
     }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.menu)
   },
 };
 </script>
@@ -446,17 +437,12 @@ export default {
   }
   .button-box {
     position: fixed;
-    bottom: -104px;
+    bottom: 0px;
     text-align: center;
     margin: 0 auto;
     width: 100%;
     height: 104px;
     background-color:#f8d7ab;
     z-index: 11;
-    transition: all 1s;
-    -webkit-transition: all 1s; /* Safari */
-  }
-  .show {
-    bottom: 0;
   }
 </style>
