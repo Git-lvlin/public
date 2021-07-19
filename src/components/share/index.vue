@@ -79,40 +79,7 @@ export default {
     };
   },
   methods: {
-    shareLog(shareSource, shareChannel) {
-      post({
-        url: '/h5/logger/share_log',
-        data: {
-          share_url: this.shareData.link,
-          share_platform: App.appType === 'android' ? 1 : 2,
-          share_object_id: 0,
-          share_type: 3,
-          share_source: shareSource,
-          share_channel: shareChannel,
-          status: 1,
-        },
-        options: {
-          showLoading: false,
-        },
-      });
-    },
-    naviteShare(channel) {
-      if (App.appType === 'android') {
-        window.Android[channel](
-          this.shareData.link,
-          this.shareData.title,
-          this.shareData.desc,
-          this.shareData.imgUrl,
-        );
-      } else {
-        window.webkit.messageHandlers[channel].postMessage([
-          this.shareData.link,
-          this.shareData.title,
-          this.shareData.desc,
-          this.shareData.imgUrl,
-        ]);
-      }
-    },
+    
     onSelect(option) {
       switch (option.name) {
         case '微信好友':

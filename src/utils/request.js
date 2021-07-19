@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { Toast } from 'vant';
-import App from '@/utils/app';
 import { refresToken } from '@/constant/index';
 
 Toast.setDefaultOptions('loading', { forbidClick: true });
@@ -13,7 +12,6 @@ const REFRESH_TOKEN_INVALID = 10015;
 let requestCount = 0;
 
 let appToken = '';
-
 axios.defaults.timeout = 10 * 1000;
 
 axios.interceptors.request.use((config) => {
@@ -21,7 +19,7 @@ axios.interceptors.request.use((config) => {
   if (appToken) {
     config.headers.Authorization = `Bearer ${appToken}`;
   }
-  config.headers.p = "miniprogram";
+  config.headers.p = "H5";
   config.headers.v = "1.0.0";
 
   console.log('process.env --- ', process.env);
@@ -84,28 +82,12 @@ axios.interceptors.response.use(async response => {
 
 const resolveArr = [];
 
-const getAppToken = () => new Promise((resolve) => {
-  if (resolveArr.length === 0) {
-    App.getToken((args) => {
-      // eslint-disable-next-line prefer-destructuring
-      if (args[0]) {
-        resolveArr.forEach((item) => item(args[0]));
-        resolveArr.length = 0;
-      }
-    });
-  }
-  resolveArr.push(resolve);
-});
-
 const request = async ({
   url, method, data, options = {},
 }) => {
   console.log(process);
   const { showLoading = true, showError = true } = options;
-  if (App.isApp && !appToken) {
-    appToken = await getAppToken();
-  }
-
+  console.log('options', options)
   if (showLoading && requestCount === 0) {
     Toast.loading({
       message: '加载中...',
@@ -123,14 +105,20 @@ const request = async ({
     params = 'params';
   }
 
-  return axios({
+  let all = {
     url,
     method,
     [params]: {
       ...data,
       platform: 'web_app',
     },
-  }).then((res) => {
+  }
+  if (options.token) {
+    all.headers = {
+      token: options.token
+    }
+  }
+  return axios(all).then((res) => {
     if (res.code !== 0 && showError) {
       setTimeout(() => {
         Toast({

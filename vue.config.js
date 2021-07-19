@@ -1,21 +1,37 @@
 const PxToVw = require('postcss-px-to-viewport');
 
 module.exports = {
+  configureWebpack: {
+    externals: {
+      'OpenInstall': 'https://web.cdn.openinstall.io/openinstall.js'
+    }
+  },
   publicPath: '/',
   devServer: {
     proxy: {
-      '/activity': {
-        target: 'http://dev-yeahgo-gateway.waiad.icu',
-        ws: true,
-        changeOrigin: true,
-      },
+      // '/activity': {
+      //   target: 'http://dev-yeahgo-gateway.waiad.icu',
+      //   ws: true,
+      //   changeOrigin: true,
+      // },
       '/member': {
         target: 'http://dev-yeahgo-gateway.waiad.icu',
         ws: true,
         changeOrigin: true,
       },
+      '/contestprice': {
+        target: 'http://local.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
+      '/activity': {
+        target: 'http://local.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
     },
     https: false,
+    disableHostCheck: true
   },
   css: {
     loaderOptions: {
@@ -25,8 +41,8 @@ module.exports = {
           new PxToVw({
             unitToConvert: 'px', // 需要转换的单位，默认为"px"；
             viewportWidth: 375, // 设计稿的视口宽度
-            unitPrecision: 5, // 单位转换后保留的小数位数
-            propList: ['*'], // 要进行转换的属性列表,*表示匹配所有,!表示不转换
+            unitPrecision: 6, // 单位转换后保留的小数位数
+            propList: ['*', '!letter-spacing'], // 要进行转换的属性列表,*表示匹配所有,!表示不转换
             viewportUnit: 'vw', // 转换后的视口单位
             fontViewportUnit: 'vw', // 转换后字体使用的视口单位
             selectorBlackList: [], // 不进行转换的css选择器，继续使用原有单位
