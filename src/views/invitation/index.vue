@@ -184,6 +184,7 @@ export default {
     }
   },
   mounted() {
+    console.log('准备拿token')
     this.$bridge.registerHandler(
           'fetchToken',
           (a,b) => {
