@@ -184,17 +184,18 @@ export default {
     }
   },
   mounted() {
-    const {
-      query,
-    } = this.$router.history.current;
-    console.log('query', query)
-    this.inviteCode = query.inviteCode
-    teamApi.apiGetInviteInfo({}, {token:query.token}).then((res) => {
-      console.log('apiGetInviteInfo', res)
-      if (res.code === 0 && res.data.length) {
-        this.info = res.data
-      }
-    })
+    this.$bridge.registerHandler(
+          'fetchToken',
+          (a,b) => {
+            console.log('a',a,'b____'+b)
+          }
+        )
+    // teamApi.apiGetInviteInfo({}, {token:query.token}).then((res) => {
+    //   console.log('apiGetInviteInfo', res)
+    //   if (res.code === 0 && res.data.length) {
+    //     this.info = res.data
+    //   }
+    // })
   },
 };
 </script>
