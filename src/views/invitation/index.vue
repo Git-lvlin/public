@@ -55,7 +55,7 @@
         </div>
       </div>
     </div>
-    <div class="item-box item-box2">
+    <!-- <div class="item-box item-box2">
       <div class="content2">
         <p class="sub-title">生成我的专属邀请海报</p>
         <div class="center">
@@ -64,7 +64,7 @@
         </div>
         <div class="now-button" @click="onToDetail">立即邀请</div>
       </div>
-    </div>
+    </div> -->
     <div class="item-box item-box3">
       <div class="content3">
         <div class="center-box">
