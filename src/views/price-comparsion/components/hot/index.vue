@@ -56,7 +56,10 @@ export default {
     },
   },
   computed: {
-    saleNum: () => '销量' + this.good.saleNum>9999?parseInt(this.good.saleNum/10000)+'万+':this.good.saleNum,
+    saleNum: () => {
+      const num = this.good.saleNum > 9999 ? parseInt(this.good.saleNum/10000) + '万+' : this.good.saleNum
+      return '销量' + num
+    },
     salePrice: () => '¥' + this.good.salePrice/100,
     marketPrice: () => '¥' + this.good.marketPrice/100,
     contestPlatformNum: () => '共有' + this.good.contestPlatformNum + '个商场比价',
