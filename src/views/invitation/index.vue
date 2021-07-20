@@ -132,7 +132,6 @@ export default {
     return {
       info: {},
       inviteCode: null,
-      token: null
     };
   },
   components: {
@@ -143,7 +142,9 @@ export default {
       totalCommission: () => this.info.totalCommission?this.info.totalCommission/100:0
     }
   },
-  created () {
+  async created () {
+    await this.getInfo
+    console.log('end', this.info)
   },
   methods: {
     getImgUrl,
@@ -152,11 +153,12 @@ export default {
         try {
           this.$bridge.callHandler('fetchToken',{},
                 (a) => {
-                  this.token = a
-                  teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
+                  console.log('a', a)
+                  teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
                     console.log('apiGetInviteInfo', res)
                     if (res.code === 0 && res.data.length) {
-                      reslove(res.data)
+                      this.info = res.data
+                      reslove(true)
                     }
                   })
                 }
@@ -208,8 +210,7 @@ export default {
       }
     }
   },
-  async mounted() {
-    this.info = await this.getInfo
+  mounted() {
   }
 };
 </script>
