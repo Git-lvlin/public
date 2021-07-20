@@ -142,32 +142,23 @@ export default {
       totalCommission: () => this.info.totalCommission?this.info.totalCommission/100:0
     }
   },
-  async created () {
-    await this.getInfo
-    console.log('end', this.info)
+  created () {
   },
   methods: {
     getImgUrl,
     getInfo() {
-      return new Promise((reslove, reject) => {
-        try {
-          this.$bridge.callHandler('fetchToken',{},
-                (a) => {
-                  console.log('a', a)
-                  teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
-                    console.log('apiGetInviteInfo', res)
-                    if (res.code === 0 && res.data.length) {
-                      this.info = res.data
-                      reslove(true)
-                    }
-                  })
+      this.$bridge.callHandler('fetchToken',{},
+            (a) => {
+              console.log('a', a)
+              teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
+                console.log('apiGetInviteInfo', res)
+                if (res.code === 0 && res.data.length) {
+                  this.info = res.data
                 }
-              )
-        } catch (error) {
-          console.log('error', error)
-          reject(error)
-        }
-      })
+              })
+            }
+          )
+
     },
     // copy() {
     //   let transfer = document.createElement('input');
@@ -211,6 +202,8 @@ export default {
     }
   },
   mounted() {
+    this.getInfo()
+    console.log('end', this.info)
   }
 };
 </script>
