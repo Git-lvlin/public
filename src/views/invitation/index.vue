@@ -190,14 +190,15 @@ export default {
           {},
           (a) => {
             this.token = a
+            teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
+              console.log('apiGetInviteInfo', res)
+              if (res.code === 0 && res.data.length) {
+                this.info = res.data
+              }
+            })
           }
         )
-    teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
-      console.log('apiGetInviteInfo', res)
-      if (res.code === 0 && res.data.length) {
-        this.info = res.data
-      }
-    })
+
   },
 };
 </script>
