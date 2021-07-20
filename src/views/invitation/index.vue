@@ -80,7 +80,7 @@
               />
             </div>
           </div>
-          <p class="price"><span class="span">{{totalCommission}}</span>元</p>
+          <p class="price"><span class="span">{{info.totalCommission?info.totalCommission/100:0}}</span>元</p>
           <p class="num">已邀请<span>{{info.inviteNum}}</span>位新用户，累计获得佣金</p>
           <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
         </div>
@@ -130,36 +130,29 @@ export default {
   },
   data() {
     return {
-      info: {},
+      info: null,
       inviteCode: null,
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  computed() {
-    return {
-      totalCommission: () => this.info.totalCommission?this.info.totalCommission/100:0
-    }
-  },
   created () {
+    this.$bridge.callHandler('fetchToken',{},
+          (a) => {
+            console.log('a', a)
+            const the = this
+            teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
+              console.log('apiGetInviteInfo', res)
+              if (res.code === 0 && res.data.length) {
+                the.info = res.data
+              }
+            })
+          }
+        )
   },
   methods: {
     getImgUrl,
-    getInfo() {
-      this.$bridge.callHandler('fetchToken',{},
-            (a) => {
-              console.log('a', a)
-              teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
-                console.log('apiGetInviteInfo', res)
-                if (res.code === 0 && res.data.length) {
-                  this.info = res.data
-                }
-              })
-            }
-          )
-
-    },
     // copy() {
     //   let transfer = document.createElement('input');
     //   document.body.appendChild(transfer);
@@ -201,10 +194,6 @@ export default {
       }
     }
   },
-  mounted() {
-    this.getInfo()
-    console.log('end', this.info)
-  }
 };
 </script>
 
