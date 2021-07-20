@@ -80,8 +80,8 @@
               />
             </div>
           </div>
-          <p class="price"><span class="span">{{info.totalCommission/100 || 0}}</span>元</p>
-          <p class="num">已邀请<span>{{info.inviteNum || 0}}</span>位新用户，累计获得佣金</p>
+          <p class="price"><span class="span">{{totalCommission}}</span>元</p>
+          <p class="num">已邀请<span>{{info.inviteNum}}</span>位新用户，累计获得佣金</p>
           <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
         </div>
       </div>
@@ -138,25 +138,42 @@ export default {
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
+  computed() {
+    return {
+      totalCommission: () => this.info.totalCommission/100 || 0
+    }
+  },
   created () {
-
+    this.$bridge.callHandler(
+          'fetchToken',
+          {},
+          (a) => {
+            this.token = a
+            teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
+              console.log('apiGetInviteInfo', res)
+              if (res.code === 0 && res.data.length) {
+                this.info = res.data
+              }
+            })
+          }
+        )
   },
   methods: {
     getImgUrl,
-    copy() {
-      let transfer = document.createElement('input');
-      document.body.appendChild(transfer);
-      transfer.value = this.inviteCode;
-      transfer.focus();
-      transfer.select();
-      if (document.execCommand('copy')) {
-        document.execCommand('copy');
-      }
-      transfer.blur();
-      console.log('复制成功');
-      Dialog({ message: '复制成功' });
-      document.body.removeChild(transfer);
-    },
+    // copy() {
+    //   let transfer = document.createElement('input');
+    //   document.body.appendChild(transfer);
+    //   transfer.value = this.inviteCode;
+    //   transfer.focus();
+    //   transfer.select();
+    //   if (document.execCommand('copy')) {
+    //     document.execCommand('copy');
+    //   }
+    //   transfer.blur();
+    //   console.log('复制成功');
+    //   Dialog({ message: '复制成功' });
+    //   document.body.removeChild(transfer);
+    // },
     onToDetail(type) {
       const {
         good,
@@ -183,22 +200,6 @@ export default {
         console.log('不是App内')
       }
     }
-  },
-  mounted() {
-    this.$bridge.callHandler(
-          'fetchToken',
-          {},
-          (a) => {
-            this.token = a
-            teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
-              console.log('apiGetInviteInfo', res)
-              if (res.code === 0 && res.data.length) {
-                this.info = res.data
-              }
-            })
-          }
-        )
-
   },
 };
 </script>
