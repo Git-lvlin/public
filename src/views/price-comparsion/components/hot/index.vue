@@ -57,8 +57,11 @@ export default {
   },
   computed: {
     saleNum: () => {
-      const num = this.good.saleNum > 9999 ? parseInt(this.good.saleNum/10000) + '万+' : this.good.saleNum
-      return '销量' + num
+      if (this.good.saleNum > 9999) {
+        const num = parseInt(this.good.saleNum/10000)
+        return '销量' + num + '万+'
+      }
+      return '销量' + this.good.saleNum
     },
     salePrice: () => '¥' + this.good.salePrice/100,
     marketPrice: () => '¥' + this.good.marketPrice/100,
