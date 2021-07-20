@@ -11,7 +11,7 @@
       }"
       >
         <div class="time-end">
-          <van-count-down class="time-end-item" :time="timeDown" format="HH:mm:ss后结束" />
+          <van-count-down class="time-end-item" :time="timeout" format="HH:mm:ss 后结束" />
         </div>
         <div class="coupon"
         :style="{
@@ -127,6 +127,7 @@ export default {
       pageSize: 10,
       options: {},
       timeInfo: {}, 
+      timeout: 0,
     };
   },
   computed: {
@@ -141,9 +142,6 @@ export default {
       const DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
       return YY + MM + DD;
     },
-    timeDown: function() {
-      return this.timeInfo.deadlineTime - this.timeInfo.currentTime
-    }
   },
   components: {
     Item,
@@ -157,11 +155,21 @@ export default {
     console.log('options', this.options)
   },
   methods: {
+    getGcid() {
+      teamApi.getGcid({gcParentId:0}).then((res) => {
+        console.log('res', res)
+        if (res.code === 0) {
+          this.btns = [{gcName: '全部', id: 0}]
+          this.btns = this.btns.concat(res.data.records)
+        }
+      })
+    },
     getTimeInfo() {
       teamApi.getCouponTimeInfo({memberId: this.options.memberId},{token: this.options.token}).then((res) => {
         console.log('timeInfo', res)
-        if (res.data && res.data.length) {
+        if (res.code === 0 && res.data) {
           this.timeInfo = res.data
+          this.timeout = this.timeInfo.deadlineTime - this.timeInfo.currentTime
           if (this.timeInfo.status) {
             this.robed = true
           }
@@ -278,6 +286,10 @@ export default {
       }
     },
   },
+  mounted() {
+    this.getGcid()
+    this.getId(0)
+  }
 };
 </script>
 

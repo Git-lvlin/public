@@ -1,6 +1,6 @@
 <template>
   <div @click="onClick" class="btn" :class="good.id===0?'act':''">
-    {{good.regName}}
+    {{good.gcName}}
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default {
       } else {
         console.log('不是App内')
       }
-    }
+    },
   }
 }
 </script>

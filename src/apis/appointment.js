@@ -13,6 +13,7 @@ const url = {
   couponIndex: '/activity/open/newMemberCouponList',
   getInviteInfo: '/member/auth/memberInvite/getInviteInfo',
   activitySubject: '/cms/open/activitySubject/getById',
+  getGcid: '/goods/open/category',
 };
 
 export default {
@@ -84,6 +85,14 @@ export default {
   getCouponTimeInfo(params = {}, options = {}) {
     return post({
       url: url.couponTimeInfo,
+      data: params,
+      options,
+    })
+  },
+  // 领券中心 分类列表
+  getGcid(params = {}, options = {}) {
+    return get({
+      url: url.getGcid,
       data: params,
       options,
     })
