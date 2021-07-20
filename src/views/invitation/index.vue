@@ -80,8 +80,8 @@
               />
             </div>
           </div>
-          <p class="price"><span class="span">{{info.totalCommission?info.totalCommission/100:0}}</span>元</p>
-          <p class="num">已邀请<span>{{info.inviteNum || 0}}</span>位新用户，累计获得佣金</p>
+          <p class="price"><span class="span">{{totalCommission?totalCommission/100:0}}</span>元</p>
+          <p class="num">已邀请<span>{{inviteNum || 0}}</span>位新用户，累计获得佣金</p>
           <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
         </div>
       </div>
@@ -125,15 +125,10 @@ Vue.use(VanImage);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
 export default {
-  props: {
-
-  },
   data() {
     return {
-      info: {
-        totalCommission: false,
-        inviteNum: false,
-      },
+      totalCommission: false,
+      inviteNum: false,
       inviteCode: null,
     };
   },
@@ -141,21 +136,28 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
-    this.$bridge.callHandler('fetchToken', {}, (a) => {
-            teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
-              if (res.code === 0 && res.data.length) {
-                const data = res.data
-                this.info = {
-                  ...this.info,
-                  data
-                }
-              }
-            })
-          }
-        )
+    if (this.$store.state.appInfo.isApp) {
+      this.getInfo()
+    } else if (this.$store.state.appInfo.isMiniprogram) {
+      console.log('应该没有小程序')
+      // this.getMiniprogramInfo()
+    } else {
+      console.log('不是App内')
+    }
   },
   methods: {
     getImgUrl,
+    getInfo() {
+      this.$bridge.callHandler('fetchToken', {}, (a) => {
+              teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
+                if (res && res.code === 0 && res.data) {
+                  this.totalCommission = res.data.totalCommission
+                  this.inviteNum = res.data.inviteNum
+                }
+              })
+            }
+          )
+    },
     // copy() {
     //   let transfer = document.createElement('input');
     //   document.body.appendChild(transfer);
