@@ -208,30 +208,43 @@ export default {
   },
   data() {
     return {
-      isShow: false
+      isShow: false,
+      hasToken: false
     };
   },
   components: {
   },
   created () {
+    this.$bridge.callHandler(
+          'fetchToken',
+          {},
+          (a) => {
+            if (a && a.length) {
+              this.hasToken = true
+            }
+          }
+        )
   },
   methods: {
     getImgUrl,
     onToDetail() {
-      const {
-        good,
-      } = this;
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
+        if (!this.hasToken) {
+          this.$bridge.callHandler(
+            'router',
+            `${appBaseUrl}/login/index`,
+          )
+          return
+        }
         this.$bridge.callHandler(
           'router',
           `${appBaseUrl}/flutter/store/member/settled`,
         )
       } else if (this.$store.state.appInfo.isMiniprogram) {
-        const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
         wx.miniProgram.navigateTo({
-          url: `/subpages/cart/detail/index${paramStr}`
+          url: '/pages/login/main/index'
         })
       } else {
         console.log('不是App内')
