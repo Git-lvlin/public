@@ -99,8 +99,7 @@ export default {
     Hot,
   },
   created () {
-    this.onLoad()
-    this.getListData()
+
   },
   methods: {
     getImgUrl,
@@ -150,6 +149,10 @@ export default {
       }
     },
   },
+  mounted() {
+    this.onLoad()
+    this.getListData()
+  }
 };
 </script>
 

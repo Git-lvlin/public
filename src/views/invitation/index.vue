@@ -86,7 +86,7 @@
         </div>
       </div>
     </div>
-    <div class="item-box item-box4">
+    <!-- <div class="item-box item-box4">
       <div class="title-box">
         <van-image
           class="title-img"
@@ -107,7 +107,7 @@
           <span>3.</span>好友通过您的邀请码或者邀请海报注册会员并下载APP。
         </p>
       </div>
-    </div>
+    </div> -->
 
 
     </div>
