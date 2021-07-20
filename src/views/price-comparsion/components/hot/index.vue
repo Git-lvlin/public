@@ -7,7 +7,7 @@
         height="100px"
         :src="good.image"
       />
-      <div class="save" v-if="good.goodsContestRate">{{goodsContestRate}}</div>
+      <div class="save" v-if="good.goodsContestRate">{{'降价'+good.goodsContestRate+'%'}}</div>
       <div class="save" v-else>精选特惠</div>
     </div>
     <div class="right-box">
@@ -19,7 +19,7 @@
           height="18px"
           :src="getImgUrl('publicMobile/price/icon.png')"
         />
-        <span class="icon">{{gcNameAndgcRang}}</span>
+        <span class="icon">{{good.gcName}}类销量排名第{{good.gcRang}}</span>
       </div>
       <div class="num">
         <van-image
@@ -28,12 +28,13 @@
           height="18px"
           :src="getImgUrl('publicMobile/price/hot.png')"
         />
-        <span class="icon">{{saleNum}}</span>
+        <span class="icon" v-if="good.saleNum>9999">销量{{parseInt(good.saleNum/10000)+'万+'}}</span>
+        <span class="icon" v-else>销量{{good.saleNum}}</span>
       </div>
-      <div class="compare" v-if="good.contestPlatformNum">{{contestPlatformNum}}</div>
+      <div class="compare">{{good.contestPlatformNum?'共有'+good.contestPlatformNum+'个商场比价':''}}</div>
       <div class="price">
-        <span class="span1">{{salePrice}}</span>
-        <span class="span2">{{marketPrice}}</span>
+        <span class="span1">¥{{good.salePrice/100}}</span>
+        <span class="span2">¥{{good.marketPrice/100}}</span>
         <van-image
           class="right-img"
           width="20px"
@@ -54,20 +55,6 @@ export default {
       type: Object,
       default: () => {},
     },
-  },
-  computed: {
-    saleNum: () => {
-      if (this.good.saleNum > 9999) {
-        const num = parseInt(this.good.saleNum/10000)
-        return '销量' + num + '万+'
-      }
-      return '销量' + this.good.saleNum
-    },
-    salePrice: () => '¥' + this.good.salePrice/100,
-    marketPrice: () => '¥' + this.good.marketPrice/100,
-    contestPlatformNum: () => '共有' + this.good.contestPlatformNum + '个商场比价',
-    gcNameAndgcRang: () => this.good.gcName + '类销量排名第' + this.good.gcRang,
-    goodsContestRate: () => '降价' + this.good.goodsContestRate + '%',
   },
   methods: {
     getImgUrl,
