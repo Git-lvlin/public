@@ -128,6 +128,7 @@ export default {
       options: {},
       timeInfo: {}, 
       timeout: 0,
+      token: null
     };
   },
   computed: {
@@ -149,10 +150,19 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
-    this.getTimeInfo()
-    this.onLoad()
-    this.options = getQueryObj(window.location.href)
-    console.log('options', this.options)
+    this.$bridge.callHandler(
+          'fetchToken',
+          {},
+          (a) => {
+            console.log('a', a)
+            if (a) {
+              this.token = a
+              this.getTimeInfo()
+              this.onLoad()
+            }
+          }
+        )
+
   },
   methods: {
     getGcid() {
@@ -165,7 +175,7 @@ export default {
       })
     },
     getTimeInfo() {
-      teamApi.getCouponTimeInfo({memberId: this.options.memberId},{token: this.options.token}).then((res) => {
+      teamApi.getCouponTimeInfo(null, {token: this.token}).then((res) => {
         console.log('timeInfo', res)
         if (res.code === 0 && res.data) {
           this.timeInfo = res.data
@@ -184,7 +194,6 @@ export default {
       clearTimeout(this.listId)
       this.listId = setTimeout(() => {
         teamApi.getCouponClassList({
-          memberId: this.options.memberId,
           page,
           pageSize,
           gcId1: a
