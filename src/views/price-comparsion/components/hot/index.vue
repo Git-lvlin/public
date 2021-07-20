@@ -28,7 +28,7 @@
           height="18px"
           :src="getImgUrl('publicMobile/price/hot.png')"
         />
-        <span class="icon">销量{{good.saleNum>9999?(good.saleNum/10000)+'万+':good.saleNum}}</span>
+        <span class="icon">销量{{good.saleNum>9999?parseInt(good.saleNum/10000)+'万+':good.saleNum}}</span>
       </div>
       <div class="compare">{{good.contestPlatformNum?'共有'+good.contestPlatformNum+'个商场比价':''}}</div>
       <div class="price">
