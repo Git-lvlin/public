@@ -140,26 +140,33 @@ export default {
   },
   computed() {
     return {
-      totalCommission: () => this.info.totalCommission/100 || 0
+      totalCommission: () => this.info.totalCommission?this.info.totalCommission/100:0
     }
   },
   created () {
-    this.$bridge.callHandler(
-          'fetchToken',
-          {},
-          (a) => {
-            this.token = a
-            teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
-              console.log('apiGetInviteInfo', res)
-              if (res.code === 0 && res.data.length) {
-                this.info = res.data
-              }
-            })
-          }
-        )
   },
   methods: {
     getImgUrl,
+    getInfo() {
+      return new Promise((reslove, reject) => {
+        try {
+          this.$bridge.callHandler('fetchToken',{},
+                (a) => {
+                  this.token = a
+                  teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
+                    console.log('apiGetInviteInfo', res)
+                    if (res.code === 0 && res.data.length) {
+                      reslove(res.data)
+                    }
+                  })
+                }
+              )
+        } catch (error) {
+          console.log('error', error)
+          reject(error)
+        }
+      })
+    },
     // copy() {
     //   let transfer = document.createElement('input');
     //   document.body.appendChild(transfer);
@@ -201,6 +208,9 @@ export default {
       }
     }
   },
+  async mounted() {
+    this.info = await this.getInfo
+  }
 };
 </script>
 
