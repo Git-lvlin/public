@@ -81,32 +81,7 @@ export default {
   props: {
     btns: {
       type: Array,
-      default: [
-        {
-          regName: '全部',
-          id: 0
-        },
-        {
-          regName: '图片专区',
-          id: 1
-        },
-        {
-          regName: '直播专区',
-          id: 2
-        },
-        {
-          regName: '颜色专区',
-          id: 3
-        },
-        {
-          regName: '绿色专区',
-          id: 4
-        },
-        {
-          regName: '激情专区',
-          id: 5
-        },
-      ]
+      default: []
     },
     list: {
       type: Array,
@@ -128,7 +103,9 @@ export default {
       options: {},
       timeInfo: {}, 
       timeout: 0,
-      token: null
+      param: {
+        token:null
+      }
     };
   },
   computed: {
@@ -150,24 +127,27 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
-    this.$bridge.callHandler(
-          'fetchToken',
-          {},
-          (a) => {
-            console.log('a', a)
-            if (a) {
-              this.token = a
-              this.getTimeInfo()
-              this.onLoad()
-            }
-          }
-        )
-
+    if (this.$store.state.appInfo.isApp) {
+      this.getAppInfo()
+    } else if (this.$store.state.appInfo.isMiniprogram) {
+      this.getMiniprogramInfo()
+    } else {
+      console.log('不是App内')
+    }
   },
   methods: {
+    getAppInfo() {
+      this.$bridge.callHandler('fetchToken',{},
+            (a) => {
+              this.param.token = a
+            }
+          )
+    },
+    getMiniprogramInfo() {
+      this.param = this.$router.history.current
+    },
     getGcid() {
-      teamApi.getGcid({gcParentId:0}).then((res) => {
-        console.log('res', res)
+      teamApi.getGcid({gcParentId:0}, {token:this.param.token}).then((res) => {
         if (res.code === 0) {
           this.btns = [{gcName: '全部', id: 0}]
           this.btns = this.btns.concat(res.data.records)
@@ -175,9 +155,8 @@ export default {
       })
     },
     getTimeInfo() {
-      teamApi.getCouponTimeInfo(null, {token: this.token}).then((res) => {
-        console.log('timeInfo', res)
-        if (res.code === 0 && res.data) {
+      teamApi.getCouponTimeInfo(null, {token: this.param.token}).then((res) => {
+        if (res && res.code === 0 && res.data) {
           this.timeInfo = res.data
           this.timeout = this.timeInfo.deadlineTime - this.timeInfo.currentTime
           if (this.timeInfo.status) {
@@ -196,8 +175,8 @@ export default {
         teamApi.getCouponClassList({
           page,
           pageSize,
-          gcId1: a
-        }).then((res) => {
+          gcId1: a,
+        }, {token:this.param.token}).then((res) => {
           const {
             data,
           } = res;
@@ -268,7 +247,7 @@ export default {
       teamApi.getCouponAll({
         page,
         pageSize,
-      }).then((res) => {
+      },{token: this.param.token}).then((res) => {
         const {
           data,
         } = res;
@@ -296,8 +275,11 @@ export default {
     },
   },
   mounted() {
+    this.getTimeInfo()
+    this.onLoad()
     this.getGcid()
     this.getId(0)
+
   }
 };
 </script>

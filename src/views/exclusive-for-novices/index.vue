@@ -104,26 +104,35 @@ export default {
     Hot,
   },
   created () {
-    this.param = {
-      memberId,
-      indexVersion
+    if (this.$store.state.appInfo.isApp) {
+      this.getAppInfo()
+    } else if (this.$store.state.appInfo.isMiniprogram) {
+      this.getMiniprogramInfo()
+    } else {
+      console.log('不是App内')
     }
-    this.onLoad()
-    this.getListData()
   },
   methods: {
+    getAppInfo() {
+      this.$bridge.callHandler('fetchToken',{},
+            (a) => {
+              this.param.token = a
+            }
+          )
+      this.$bridge.callHandler('indexVersion',{},
+            (a) => {
+              this.param.indexVersion = a
+            }
+          )
+    },
+    getMiniprogramInfo() {
+      this.param = this.$router.history.current
+    },
     getImgUrl,
     getListData() {
-      const {
-        query,
-      } = this.$router.history.current;
-      console.log('query', query)
-      teamApi.getNewPeoplesCoupon(query).then((res) => {
-        const {
-          data,
-        } = res;
-        if (data && data.records) {
-          this.listData = data.records
+      teamApi.getNewPeoplesCoupon({indexVersion: this.param.indexVersion}, {token: this.param.token}).then((res) => {
+        if (res?.data?.records) {
+          this.listData = res.data.records
         }
       })
     },
@@ -163,6 +172,10 @@ export default {
       }
     },
   },
+  mounted() {
+    this.onLoad()
+    this.getListData()
+  }
 };
 </script>
 
