@@ -81,7 +81,7 @@
             </div>
           </div>
           <p class="price"><span class="span">{{info.totalCommission?info.totalCommission/100:0}}</span>元</p>
-          <p class="num">已邀请<span>{{info.inviteNum}}</span>位新用户，累计获得佣金</p>
+          <p class="num">已邀请<span>{{info.inviteNum || 0}}</span>位新用户，累计获得佣金</p>
           <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
         </div>
       </div>
@@ -130,7 +130,10 @@ export default {
   },
   data() {
     return {
-      info: null,
+      info: {
+        totalCommission: false,
+        inviteNum: false,
+      },
       inviteCode: null,
     };
   },
@@ -138,14 +141,14 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
-    this.$bridge.callHandler('fetchToken',{},
-          (a) => {
-            console.log('a', a)
-            const the = this
+    this.$bridge.callHandler('fetchToken', {}, (a) => {
             teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
-              console.log('apiGetInviteInfo', res)
               if (res.code === 0 && res.data.length) {
-                the.info = res.data
+                const data = res.data
+                this.info = {
+                  ...this.info,
+                  data
+                }
               }
             })
           }
