@@ -119,7 +119,7 @@ const request = async ({
     }
   }
   return axios(all).then((res) => {
-    if (res.code === 10014) {
+    if (res.code === 10014 || res.code === 10010) {
       if (this.$store.state.appInfo.isApp) {
         this.$bridge.callHandler(
           'router',
