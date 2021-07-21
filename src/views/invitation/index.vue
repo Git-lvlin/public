@@ -50,6 +50,7 @@
           <van-image
             class="item-img"
             width="100%"
+            lazy-load
             :src="getImgUrl('publicMobile/invitation/item.png')"
           />
         </div>
@@ -117,13 +118,14 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Swipe, SwipeItem } from 'vant';
+import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/appointment';
 Vue.use(VanImage);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
+Vue.use(Lazyload);
 export default {
   data() {
     return {
