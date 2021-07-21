@@ -130,7 +130,8 @@ export default {
       })
     },
     getMiniprogramInfo() {
-      this.param = this.$router.history.current
+      this.indexVersion = this.$router.history.current.indexVersion
+      this.token = this.$router.history.current.token
     },
     getImgUrl,
     getListData(indexVersion, token) {
