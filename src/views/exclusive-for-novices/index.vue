@@ -115,16 +115,19 @@ export default {
   },
   methods: {
     getAppInfo() {
-      this.$bridge.callHandler('fetchToken',{},
-            (a) => {
-              this.token = a
-            }
-          )
-      this.$bridge.callHandler('indexVersion',{},
-            (a) => {
-              this.indexVersion = a
-            }
-          )
+      Promise.all([this.getToken(), this.getIndexVersion()]).then(() => {
+        this.getListData(this.indexVersion, this.token)
+      })
+    },
+    getToken() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('fetchToken',{},(a) => {this.token = a;resolve()})
+      })
+    },
+    getIndexVersion() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('indexVersion',{},(a) => {this.indexVersion = a;resolve()})
+      })
     },
     getMiniprogramInfo() {
       this.param = this.$router.history.current
@@ -175,9 +178,6 @@ export default {
   },
   mounted() {
     this.onLoad()
-    setTimeout(() => {
-      this.getListData(this.indexVersion, this.token)
-    }, 10)
   }
 };
 </script>
