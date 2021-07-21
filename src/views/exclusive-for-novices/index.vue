@@ -96,7 +96,8 @@ export default {
       page: 1,
       size: 10,
       totalPage: 1,
-      param: {},
+      token: null,
+      indexVersion: null,
     };
   },
   components: {
@@ -116,12 +117,12 @@ export default {
     getAppInfo() {
       this.$bridge.callHandler('fetchToken',{},
             (a) => {
-              this.param.token = a
+              this.token = a
             }
           )
       this.$bridge.callHandler('indexVersion',{},
             (a) => {
-              this.param.indexVersion = a
+              this.indexVersion = a
             }
           )
     },
@@ -129,8 +130,8 @@ export default {
       this.param = this.$router.history.current
     },
     getImgUrl,
-    getListData() {
-      teamApi.getNewPeoplesCoupon({indexVersion: this.param.indexVersion}, {token: this.param.token}).then((res) => {
+    getListData(indexVersion, token) {
+      teamApi.getNewPeoplesCoupon({indexVersion: indexVersion}, {token: token}).then((res) => {
         if (res?.data?.records) {
           this.listData = res.data.records
         }
@@ -174,7 +175,9 @@ export default {
   },
   mounted() {
     this.onLoad()
-    this.getListData()
+    setTimeout(() => {
+      this.getListData(this.indexVersion, this.token)
+    }, 10)
   }
 };
 </script>
