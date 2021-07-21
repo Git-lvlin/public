@@ -135,10 +135,9 @@ export default {
     },
     getImgUrl,
     getListData(indexVersion, token) {
-      // teamApi.getNewPeoplesCoupon({indexVersion: indexVersion}, {token: token}).then((res) => {
-      teamApi.getNewPeoplesCoupon().then((res) => {
+      teamApi.getNewPeoplesCoupon({indexVersion: indexVersion}, {token: token}).then((res) => {
         if (res?.data?.records) {
-          this.listData = res.data.records
+          this.listData = res.data.couponInfo.records
         }
       })
     },
