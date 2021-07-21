@@ -109,6 +109,7 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
+    console.log('created-start')
     if (this.$store.state.appInfo.isApp) {
       this.getAppInfo()
     } else if (this.$store.state.appInfo.isMiniprogram) {
@@ -119,16 +120,21 @@ export default {
   },
   methods: {
     getCoupon() {
-      teamApi.getNewRedbox({token: this.token}).then((res) => {
-        if(res.code ===0) {
-          this.hold = true
-          Dialog({ message: '领取成功!' });
-        }
-      })
+      if (this.token) {
+        teamApi.getNewRedbox({token: this.token}).then((res) => {
+          console.log('一键领取', res)
+          if(res.code ===0) {
+            this.hold = true
+            Dialog({ message: '领取成功!' });
+          }
+        })
+      } else {
+        console.log('token is null', this.token)
+      }
     },
     getAppInfo() {
       Promise.all([this.getToken(), this.getIndexVersion()]).then(() => {
-        this.getListData(this.indexVersion, this.token)
+        console.log('token&indexVersion获取成功', this.token, this.indexVersion)
       })
     },
     getToken() {
@@ -146,9 +152,12 @@ export default {
       this.token = this.$router.history.current.token
     },
     getImgUrl,
-    getListData(indexVersion, token) {
-      teamApi.getNewPeoplesCoupon({indexVersion:indexVersion}, {token: token}).then((res) => {
-        this.listData = res.data.couponInfo.records
+    getListData() {
+      teamApi.getNewPeoplesCoupon().then((res) => {
+        console.log('getListData-res', res)
+        if (res.code === 0) {
+          this.listData = res?.data?.couponInfo?.records
+        }
       })
     },
     onLoad() {
@@ -188,6 +197,7 @@ export default {
     },
   },
   mounted() {
+    this.getListData()
     this.onLoad()
   }
 };
