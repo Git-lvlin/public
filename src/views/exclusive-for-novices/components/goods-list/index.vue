@@ -4,8 +4,15 @@
     'background-image': `url('${getImgUrl('publicMobile/newpeoples/coupon-bg.png')}')`
   }"
   >
+    <van-image
+      v-if="hold"
+      class="tag"
+      width="41px"
+      height="34px"
+      :src="getImgUrl('publicMobile/newpeoples/coupon-tag.png')"
+    />
     <div class="flex">
-      <div class="l" v-if="isPrice">
+      <div class="l" v-if="good.couponType === 1 || good.couponType === 3">
         ¥<span class="m">{{good.freeAmount/100}}</span>
       </div>
       <div class="l" v-else>
@@ -28,13 +35,9 @@ export default {
       type: Object,
       default: () => {},
     },
-  },
-  computed: {
-    isPrice: () => {
-      if (this.good.couponType === 1 || this.good.couponType === 3) {
-        return true
-      }
-      return false
+    hold: {
+      typeof: Boolean,
+      default: false
     }
   },
   methods: {
@@ -65,11 +68,12 @@ export default {
 
 <style lang="scss" scoped>
 .save {
+  position: relative;
   display: inline-block;
   margin-right: 8px;
   width: 140px;
-  height: 100%;
-  background-size: 140px 100%;
+  height: 58px;
+  background-size: 140px 58px;
   overflow: hidden;
 }
 .flex {
@@ -78,6 +82,7 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  z-index: 3;
   .l {
     margin-left: 10px;
     font-family:PingFang SC;
@@ -103,7 +108,12 @@ export default {
     }
   }
 }
-
+.tag {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+}
 
 
 </style>

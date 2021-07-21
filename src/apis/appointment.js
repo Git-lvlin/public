@@ -7,6 +7,7 @@ const url = {
   saveList: '/contestprice/open/contestprice/GetHotGoodsList',
   hotList: '/contestprice/open/contestprice/GetRecGoodsList?isPage=1',
   sendMemberCoupon: '/activity/auth/sendMemberCoupon',
+  sendNewMemberCoupon: '/activity/auth/sendNewMemberCoupon',
   couponList: '/activity/open/couponCenterList',
   couponClassList: '/activity/option/couponCenterClassList',
   couponTimeInfo: '/activity/option/couponCmsCenterList',
@@ -93,6 +94,14 @@ export default {
   getGcid(params = {}, options = {}) {
     return get({
       url: url.getGcid,
+      data: params,
+      options,
+    })
+  },
+  // 新人红包 领取
+  getNewRedbox(params = {}, options = {}) {
+    return post({
+      url: url.sendNewMemberCoupon,
       data: params,
       options,
     })

@@ -17,16 +17,19 @@
             v-for="item in listData"
             :key="item.skuId"
             :good="item"
+            :hold="hold"
           />
         </div>
       </div>
       <div class="get-button">
         <van-image
+          @click="getCoupon"
           v-if="!hold"
           width="100%"
           :src="getImgUrl('publicMobile/newpeoples/button.png')"
         />
         <van-image
+          @click="getCoupon"
           v-else
           width="100%"
           :src="getImgUrl('publicMobile/newpeoples/buttoned.png')"
@@ -67,7 +70,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, List } from 'vant';
+import { Image as VanImage, List, Dialog } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import Save from './components/goods-list';
 import Hot from './components/coupon';
@@ -103,6 +106,7 @@ export default {
   components: {
     Save,
     Hot,
+    [Dialog.Component.name]: Dialog.Component,
   },
   created () {
     if (this.$store.state.appInfo.isApp) {
@@ -114,6 +118,14 @@ export default {
     }
   },
   methods: {
+    getCoupon() {
+      teamApi.getNewRedbox({token: this.token}).then((res) => {
+        if(res.code ===0) {
+          this.hold = true
+          Dialog({ message: '领取成功!' });
+        }
+      })
+    },
     getAppInfo() {
       Promise.all([this.getToken(), this.getIndexVersion()]).then(() => {
         this.getListData(this.indexVersion, this.token)
@@ -135,10 +147,8 @@ export default {
     },
     getImgUrl,
     getListData(indexVersion, token) {
-      teamApi.getNewPeoplesCoupon({indexVersion: indexVersion}, {token: token}).then((res) => {
-        if (res?.data?.couponInfo?.records) {
-          this.listData = res.data.couponInfo.records
-        }
+      teamApi.getNewPeoplesCoupon({indexVersion:indexVersion}, {token: token}).then((res) => {
+        this.listData = res.data.couponInfo.records
       })
     },
     onLoad() {
