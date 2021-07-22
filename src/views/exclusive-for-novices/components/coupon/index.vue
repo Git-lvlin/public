@@ -2,9 +2,9 @@
   <span class="hot" @click="onToDetail">
     <div class="left-box">
       <van-image
+        class="good-img"
         width="100%"
         height="172px"
-        fit="contain"
         :src="good.image"
       />
     </div>
@@ -72,6 +72,10 @@ export default {
 .left-box {
   width: 100%;
   height: 172px;
+  .good-img {
+    width: 100%;
+    height: 100%;
+  }
 }
 .right-box {
   padding: 8px;
