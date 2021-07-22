@@ -75,6 +75,7 @@ export default {
   height: 172px;
 }
 .right-box {
+  box-sizing: border-box;
   padding: 8px;
   display: flex;
   flex-direction: column;
