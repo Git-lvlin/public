@@ -1,5 +1,6 @@
 <template>
-  <div class="save" @click="onToDetail"
+  <!-- <div class="save" @click="onToDetail" -->
+  <div class="save"
   :style="{
     'background-image': `url('${getImgUrl('publicMobile/newpeoples/coupon-bg.png')}')`
   }"
