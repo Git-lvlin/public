@@ -2,7 +2,8 @@
   <span class="hot" @click="onToDetail">
     <div class="left-box">
       <van-image
-        width="100%"
+        class="hot-good-img"
+        width="172px"
         height="172px"
         :src="good.image"
       />
@@ -21,11 +22,8 @@
 </template>
 
 <script>
-import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
-Vue.use(VanImage);
-
 export default {
   props: {
     good: {
@@ -72,7 +70,7 @@ export default {
 }
 
 .left-box {
-  width: 100%;
+  width: 172px;
   height: 172px;
 }
 .right-box {
@@ -80,7 +78,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
+  width: 172px;
   height: 105px;
   overflow: hidden;
 }

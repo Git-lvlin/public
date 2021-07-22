@@ -278,10 +278,8 @@ export default {
     width: 100%;
     min-height: 618px;
     .hot-list {
-      padding: 0 12px;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      width: 351px;
+      margin: 0 auto;
     }
   }
   .list-title {
