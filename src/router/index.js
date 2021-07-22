@@ -108,6 +108,14 @@ const routes = [
     meta: {
       title: '营销资源落地页',
     }
+  },
+  {
+    path: '/web/agreement',
+    name: 'Agreement',
+    component: () => import('@/views/agreement'),
+    meta: {
+      title: '协议',
+    }
   }
 ];
 

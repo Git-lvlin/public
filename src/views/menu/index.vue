@@ -53,6 +53,11 @@
         is-link
         to="/web/market"
       />
+      <van-cell
+        title="协议"
+        is-link
+        to="/web/agreement"
+      />
     </van-cell-group>
   </div>
 </template>
