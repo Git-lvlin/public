@@ -103,9 +103,7 @@ export default {
       options: {},
       timeInfo: {}, 
       timeout: 0,
-      param: {
-        token:null
-      }
+      token: null
     };
   },
   computed: {
@@ -139,15 +137,15 @@ export default {
     getAppInfo() {
       this.$bridge.callHandler('fetchToken',{},
             (a) => {
-              this.param.token = a
+              this.token = a
             }
           )
     },
     getMiniprogramInfo() {
-      this.param = this.$router.history.current
+      this.token = this.$router.history.current.token
     },
     getGcid() {
-      teamApi.getGcid({gcParentId:0}, {token:this.param.token}).then((res) => {
+      teamApi.getGcid({gcParentId:0}, {token:this.token}).then((res) => {
         if (res.code === 0) {
           this.btns = [{gcName: '全部', id: 0}]
           this.btns = this.btns.concat(res.data.records)
@@ -155,7 +153,7 @@ export default {
       })
     },
     getTimeInfo() {
-      teamApi.getCouponTimeInfo(null, {token: this.param.token}).then((res) => {
+      teamApi.getCouponTimeInfo(null, {token: this.token}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.timeInfo = res.data
           this.timeout = this.timeInfo.deadlineTime - this.timeInfo.currentTime
@@ -176,7 +174,7 @@ export default {
           page,
           pageSize,
           gcId1: a,
-        }, {token:this.param.token}).then((res) => {
+        }, {token:this.token}).then((res) => {
           const {
             data,
           } = res;
@@ -209,7 +207,7 @@ export default {
       this.timeid = setTimeout(() => {
         teamApi.getCoupon({
           couponId: this.timeInfo.couponId
-        }).then((res) => {
+        }, {token: this.token}).then((res) => {
           if (res.code === 0) {
             Dialog({ message: '抢券成功!' });
             this.robed = !this.robed
@@ -247,7 +245,7 @@ export default {
       teamApi.getCouponAll({
         page,
         pageSize,
-      },{token: this.param.token}).then((res) => {
+      }, {token: this.token}).then((res) => {
         const {
           data,
         } = res;
