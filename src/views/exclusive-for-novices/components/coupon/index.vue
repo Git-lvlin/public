@@ -5,6 +5,7 @@
         class="hot-good-img"
         width="172px"
         height="172px"
+        fit="contain"
         :src="good.image"
       />
     </div>
