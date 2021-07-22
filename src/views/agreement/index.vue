@@ -33,8 +33,7 @@ const pdfNameMap = {
   ],
   user: [
     '约购平台个人信息保护及隐私权政策1.0',
-    'user1'
-    // '约购平台用户服务协议1.0',
+    '约购平台用户服务协议1.0',
   ],
 }
 Vue.use(VanImage);
@@ -52,8 +51,6 @@ export default {
       query,
     } = this.$router.history.current;
     console.log('query', query)
-    query.reg = 'user'
-    query.index = 0
     if (!query.reg) {
       return console.log('没有选中协议')
     }
