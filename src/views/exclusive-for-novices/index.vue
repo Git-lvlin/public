@@ -58,11 +58,12 @@
           offset=0
           :immediate-check="false"
           :finished="finished"
-          finished-text="没有更多了"
+          finished-text=""
           @load="onBottomReach"
         >
           <hot v-for="item in list" :key="item" :good="item" />
         </van-list>
+        <div class="no" v-show="finished">没有更多了</div>
       </div>
     </div>
   </div>
@@ -121,7 +122,7 @@ export default {
   methods: {
     getCoupon() {
       if (this.token) {
-        teamApi.getNewRedbox({token: this.token}).then((res) => {
+        teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
           console.log('一键领取', res)
           if(res.code ===0) {
             this.hold = true
@@ -311,4 +312,16 @@ export default {
   .element::-webkit-scrollbar { width: 0 !important }
   .element { -ms-overflow-style: none; }
   .element { overflow: -moz-scrollbars-none; }
+  .no {
+    padding-top: 22px;
+    padding-bottom: 25px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    height:17px;
+    font-family:PingFang SC;
+    color:#f5f5f5;
+    font-size:12px;
+    line-height:17px;
+  }
 </style>
