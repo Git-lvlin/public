@@ -3,7 +3,7 @@
     <div class="left-box">
       <van-image
         class="good-img"
-        width="100%"
+        width="172px"
         height="172px"
         :src="good.image"
       />
@@ -70,11 +70,11 @@ export default {
 }
 
 .left-box {
-  width: 100%;
+  width: 172px;
   height: 172px;
   .good-img {
-    width: 100%;
-    height: 100%;
+    width: 172px;
+    height: 172px;
   }
 }
 .right-box {
