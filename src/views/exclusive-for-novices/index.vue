@@ -17,14 +17,13 @@
             v-for="item in listData"
             :key="item.skuId"
             :good="item"
-            :hold="hold"
           />
         </div>
       </div>
       <div class="get-button">
         <van-image
           @click="getCoupon"
-          v-if="!hold"
+          v-if="hold!==2"
           width="100%"
           :src="getImgUrl('publicMobile/newpeoples/button.png')"
         />
@@ -92,7 +91,7 @@ export default {
   data() {
     return {
       couponId: '',
-      hold: false,
+      hold: 1,
       listData: [],
       list: [],
       loading: false,
@@ -125,7 +124,7 @@ export default {
         teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
           console.log('一键领取', res)
           if(res.code ===0) {
-            this.hold = true
+            this.hold = 2
             Dialog({ message: '领取成功!' });
           }
         })
@@ -157,6 +156,7 @@ export default {
       teamApi.getNewPeoplesCoupon().then((res) => {
         console.log('getListData-res', res)
         if (res.code === 0) {
+          this.hold = res?.data?.pLqStatus
           this.listData = res?.data?.couponInfo?.records
         }
       })

@@ -6,7 +6,7 @@
   }"
   >
     <van-image
-      v-if="hold"
+      v-if="good.lqStatus === 2"
       class="tag"
       width="41px"
       height="34px"
