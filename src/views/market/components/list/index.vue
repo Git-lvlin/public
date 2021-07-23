@@ -2,7 +2,7 @@
   <div class="item" @click="onToDetail">
     <van-image
       width="100%"
-      :src="good.img"
+      :src="good.image"
       @click="onToDetail"
     />
   </div>
