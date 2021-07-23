@@ -42,7 +42,7 @@ export default {
       console.log('query', query)
       teamApi.getActivitySubject({id: query.id}).then((res) => {
         console.log('getActivitySubject-res', res)
-        if (res.res.data && res.data.itemList) {
+        if (res.data && res.data.itemList) {
           this.list = res.data.itemList;
           this.setTitle(res.data.title)
         }
