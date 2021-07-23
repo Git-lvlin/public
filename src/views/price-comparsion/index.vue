@@ -2,6 +2,7 @@
   <div class="price_comparsion">
     <van-image
       width="100%"
+      height="500px"
       :src="getImgUrl('publicMobile/price/bg.png')"
     />
     <div class="save-goods-box">
@@ -90,7 +91,7 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      size: 10,
+      size: 5,
       totalPage: 1,
     };
   },
