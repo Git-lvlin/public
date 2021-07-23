@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { getImgUrl } from '@/utils/tools';
+import { getImgUrl, getQueryObj } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 export default {
   props: {
@@ -21,10 +21,8 @@ export default {
   methods: {
     getImgUrl,
     onToDetail() {
-      const {
-        good,
-      } = this;
-      const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
+      const query = getQueryObj(this.good.actionUrl)
+      const paramStr = `?orderType=${query.orderType || 3}&spuId=${query.spuId || ''}&objectId=${query.objectId || ''}&activityId=${query.activityId || ''}&skuId=${query.skuId || ''}&wsId=${query.wsId || ''}`
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
