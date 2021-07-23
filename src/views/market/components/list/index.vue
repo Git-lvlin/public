@@ -47,6 +47,7 @@ export default {
 <style lang="scss" scoped>
 .item {
   width: 100%;
+  line-height: 0;
 }
 </style>
 

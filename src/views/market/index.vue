@@ -27,9 +27,13 @@ export default {
     List,
   },
   created () {
-
+    this.getListData()
   },
   methods: {
+    setTitle(a) {
+      console.log('document.title', document.title)
+      document.title = a
+    },
     getImgUrl,
     getListData() {
       const {
@@ -37,17 +41,16 @@ export default {
       } = this.$router.history.current;
       console.log('query', query)
       teamApi.getActivitySubject({id: query.id}).then((res) => {
-        const {
-          data,
-        } = res;
-        if (data && data.itemList) {
-          this.list = data.itemList;
+        console.log('getActivitySubject-res', res)
+        if (res.res.data && res.data.itemList) {
+          this.list = res.data.itemList;
+          this.setTitle(res.data.title)
         }
       })
     },
   },
   mounted() {
-    this.getListData()
+
   },
 };
 </script>
