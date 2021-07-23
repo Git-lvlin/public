@@ -1,10 +1,5 @@
 <template>
   <div class="box">
-    <!-- <van-image
-      class="pdf"
-      width="100%"
-      :src="getImgUrl(`publicMobile/agreement/user/约购平台用户服务协议1.0.pdf`)"
-    /> -->
     <pdf class="pdf" :src="pdf"></pdf>
   </div>
 </template>
