@@ -120,6 +120,9 @@ export default {
   },
   methods: {
     getCoupon() {
+      if (this.hold === 2) {
+        return
+      }
       if (this.token) {
         teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
           console.log('一键领取', res)
