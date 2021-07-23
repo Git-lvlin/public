@@ -138,6 +138,7 @@ export default {
     getAppInfo() {
       Promise.all([this.getToken(), this.getIndexVersion()]).then(() => {
         console.log('token&indexVersion获取成功', this.token, this.indexVersion)
+        this.getListData()
       })
     },
     getToken() {
@@ -156,7 +157,7 @@ export default {
     },
     getImgUrl,
     getListData() {
-      teamApi.getNewPeoplesCoupon().then((res) => {
+      teamApi.getNewPeoplesCoupon({}, {token:this.token}).then((res) => {
         console.log('getListData-res', res)
         if (res.code === 0) {
           this.hold = res?.data?.pLqStatus
@@ -201,7 +202,6 @@ export default {
     },
   },
   mounted() {
-    this.getListData()
     this.onLoad()
   }
 };
