@@ -176,8 +176,8 @@
       <div class="sub"><span></span>开通支付通道,填写开店申请资料。</div>
       <div class="stag"><span>2</span>平台信息审核</div>
       <div class="sub"><span></span>平台信息审核,签署协议</div>
-      <div class="stag"><span>3</span>获得会员资格</div>
-      <div class="sub"><span></span>获得会员资格,店铺在线装修</div>
+      <div class="stag"><span>3</span>获得社区店主资格</div>
+      <div class="sub"><span></span>获得社区店主资格,店铺在线装修</div>
       <div class="stag"><span>4</span>开始经营</div>
       <div class="sub"><span></span>缴纳店铺保证金,开始经营</div>
     </div>
