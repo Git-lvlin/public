@@ -1,11 +1,16 @@
 <template>
-  <div class="box">
+  <div v-if="url" class="box">
     <!-- <van-image
       class="pdf"
       width="100%"
       :src="getImgUrl(`publicMobile/agreement/user/约购平台用户服务协议1.0.pdf`)"
     /> -->
-    <pdf class="pdf" :src="pdf"></pdf>
+    <pdf class="pdf"
+      v-for="i in numPages" 
+      :key="i"  
+      :src="url" 
+      :page="i"
+    ></pdf>
   </div>
 </template>
 
@@ -40,7 +45,8 @@ Vue.use(VanImage);
 export default {
   data() {
     return {
-      pdf: ''
+      url: null,
+      numPages: null, // pdf 总页数
     };
   },
   components: {
@@ -58,11 +64,24 @@ export default {
       query.index = 0
     }
     const indexName = pdfNameMap?.[query.reg]?.[query.index]
-    this.pdf = getImgUrl(`publicMobile/agreement/${query.reg}/${indexName}.pdf`)
+    this.url = getImgUrl(`publicMobile/agreement/${query.reg}/${indexName}.pdf`)
   },
   methods: {
     getImgUrl,
+    getNumPages() {
+      try {
+        let loadingTask = pdf.createLoadingTask(this.url)
+        loadingTask.promise.then(pdf => {
+          this.numPages = pdf.numPages
+        })
+      } catch (error) {
+        console.log('error')
+      }
+    },
   },
+  mounted() {
+    this.getNumPages()
+  }
 };
 </script>
 
