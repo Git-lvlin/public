@@ -19,7 +19,7 @@
         to="/web/price-comparsion"
       />
       <van-cell
-        title="会员店入驻"
+        title="社区店入驻"
         is-link
         to="/web/store-in"
       />

@@ -58,7 +58,7 @@ const routes = [
     name: 'StoreIn',
     component: () => import('@/views/store-in'),
     meta: {
-      title: '会员店入驻',
+      title: '社区店入驻',
     }
   },
   {

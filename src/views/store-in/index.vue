@@ -50,9 +50,9 @@
           :src="getImgUrl('publicMobile/store/item-img1.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>买一件也是批发价</div>
-          <div class="li"><span class="sort">02</span>商品利润直接返回</div>
-          <div class="li"><span class="sort">03</span>3000多个知名品牌</div>
+          <div class="li"><span class="sort">01</span>一件直批</div>
+          <div class="li"><span class="sort">02</span>利润直返</div>
+          <div class="li"><span class="sort">03</span>众多知名品牌</div>
           <div class="li"><span class="sort">04</span>限量低价抢购</div>
         </div>
       </div>
@@ -85,10 +85,10 @@
           :src="getImgUrl('publicMobile/store/item-img2.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>约购提供众多官方精选</div>
-          <div class="li"><span class="sort">02</span>厂家直供的品质好货</div>
-          <div class="li"><span class="sort">03</span>对商品不满意可在规定</div>
-          <div class="li"><span class="sort sort-null">04</span>时间内申请退货退款</div>
+          <div class="li"><span class="sort">01</span>品牌厂家</div>
+          <div class="li"><span class="sort">02</span>直供好货</div>
+          <div class="li"><span class="sort">03</span>品质保证</div>
+          <div class="li"><span class="sort">04</span>买的放心</div>
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@
           width="255px"
           :src="getImgUrl('publicMobile/store/title.png')"
         />
-        <span class="span-text">优势三:零成本开店</span>
+        <span class="span-text">优势三:零成本 赚得多</span>
       </div>
       <div class="content">
         <van-image
@@ -126,10 +126,8 @@
           :src="getImgUrl('publicMobile/store/item-img3.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>0成本轻松开店</div>
-          <div class="li"><span class="sort">02</span>海量商品随意选择</div>
-          <div class="li"><span class="sort">03</span>无需囤货一键代发</div>
-          <div class="li"><span class="sort">04</span>为您提供全方位的服务</div>
+          <div class="li"><span class="sort">01</span>零投入 零囤货 零风险</div>
+          <div class="li"><span class="sort">02</span>高提成 高补贴 高收入</div>
         </div>
       </div>
     </div>
@@ -146,7 +144,7 @@
           width="255px"
           :src="getImgUrl('publicMobile/store/title.png')"
         />
-        <span class="span-text">优势四:大额优惠券</span>
+        <span class="span-text">优势四:有温度 超服务</span>
       </div>
       <div class="content">
         <van-image
@@ -155,10 +153,8 @@
           :src="getImgUrl('publicMobile/store/item-img4.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>约购会员可在品牌促销</div>
-          <div class="li"><span class="sort sort-null">02</span>平台活动中领取大额优</div>
-          <div class="li"><span class="sort sort-null">03</span>惠券</div>
-          <div class="li"><span class="sort">02</span>物超所值,就在约购</div>
+          <div class="li"><span class="sort">01</span>社约集约，免费加盟</div>
+          <div class="li"><span class="sort">02</span>专业服务，无忧入驻</div>
         </div>
       </div>
     </div>
@@ -168,7 +164,7 @@
         height="13px"
         :src="getImgUrl('publicMobile/store/title-l.png')"
       />
-      <span class="title-text">仅需四步成为会员店主</span>
+      <span class="title-text">仅需四步成为社区店主</span>
       <van-image
         width="17px"
         height="13px"
@@ -353,6 +349,7 @@ export default {
       .r-box {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         width: 153px;
         height: 96px;
         margin-left: 18px;
