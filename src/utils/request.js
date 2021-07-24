@@ -145,6 +145,7 @@ const request = async ({
     }
     return res;
   }).catch((error) => {
+    console.log('axios-err', error)
     if (showError) {
       setTimeout(() => {
         if (error.message === 'timeout of 10000ms exceeded') {
