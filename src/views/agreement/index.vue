@@ -1,24 +1,24 @@
 <template>
   <div class="box">
     <div v-if="reg==='user'">
-      <user0 v-if="index===0" />
-      <user1 v-if="index===1" />
+      <user0 v-if="index==0" />
+      <user1 v-if="index==1" />
     </div>
     <div v-if="reg==='store'">
-      <store0 v-if="index===0" />
-      <store1 v-if="index===1" />
-      <store2 v-if="index===2" />
-      <store3 v-if="index===3" />
+      <store0 v-if="index==0" />
+      <store1 v-if="index==1" />
+      <store2 v-if="index==2" />
+      <store3 v-if="index==3" />
     </div>
     <div v-if="reg==='business'">
-      <business0 v-if="index===0" />
-      <business1 v-if="index===1" />
-      <business2 v-if="index===2" />
-      <business3 v-if="index===3" />
-      <business4 v-if="index===4" />
-      <business5 v-if="index===5" />
-      <business6 v-if="index===6" />
-      <business7 v-if="index===7" />
+      <business0 v-if="index==0" />
+      <business1 v-if="index==1" />
+      <business2 v-if="index==2" />
+      <business3 v-if="index==3" />
+      <business4 v-if="index==4" />
+      <business5 v-if="index==5" />
+      <business6 v-if="index==6" />
+      <business7 v-if="index==7" />
     </div>
   </div>
 </template>
@@ -87,16 +87,20 @@ export default {
     business7,
   },
   created () {
-    const {
-      query,
-    } = this.$router.history.current;
-    console.log('query', query)
-    this.reg = query.reg || 'user'
-    this.index = query.index || 0
+
   },
   methods: {
+    getData() {
+      const {
+        query,
+      } = this.$router.history.current;
+      console.log('query', query);
+      this.reg = query.reg || 'user';
+      this.index = query.index || 0;
+    }
   },
   mounted() {
+    this.getData()
   }
 };
 </script>
