@@ -3,7 +3,6 @@
     <van-image
       width="100%"
       :src="good.image"
-      @click="onToDetail"
     />
   </div>
 </template>
@@ -21,8 +20,13 @@ export default {
   methods: {
     getImgUrl,
     onToDetail() {
+      console.log('...', this.good)
+      if (!this.good || !this.good.actionUrl) {
+        return console.log(this.good)
+      }
       const query = getQueryObj(this.good.actionUrl)
-      const paramStr = `?orderType=${query.orderType || 3}&spuId=${query.spuId || ''}&objectId=${query.objectId || ''}&activityId=${query.activityId || ''}&skuId=${query.skuId || ''}&wsId=${query.wsId || ''}`
+      console.log('query', query)
+      const paramStr = `?&spuId=${query.spuId || ''}&skuId=${query.skuId || ''}`
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {

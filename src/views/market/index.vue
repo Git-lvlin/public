@@ -27,7 +27,7 @@ export default {
     List,
   },
   created () {
-    this.getListData()
+    console.log('created')
   },
   methods: {
     setTitle(a) {
@@ -42,15 +42,17 @@ export default {
       console.log('query', query)
       teamApi.getActivitySubject({id: query.id}).then((res) => {
         console.log('getActivitySubject-res', res)
-        if (res.data && res.data.itemList) {
+        if (res?.data?.itemList && res?.data?.title) {
           this.list = res.data.itemList;
           this.setTitle(res.data.title)
         }
+        console.log('mounted')
       })
     },
   },
   mounted() {
-
+    console.log('mounted')
+    this.getListData()
   },
 };
 </script>
