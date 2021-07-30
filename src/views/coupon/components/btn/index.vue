@@ -1,6 +1,7 @@
 <template>
   <div @click="onClick" class="btn" :class="good.id===0?'act':''">
-    {{good.gcName}}
+    <div v-show="act" class="btn">{{good.gcName}}</div>
+    <div v-show="act" class="btn-act">{{good.gcName}}</div>
   </div>
 </template>
 
@@ -69,7 +70,15 @@ export default {
   line-height:37px;
   text-align:center;
 }
-.act {
+.btn-act {
+  display: inline-block;
+  width:86px;
+  height:37px;
+  font-family:PingFang SC;
+  font-weight:600;
+  font-size:16px;
+  line-height:37px;
+  text-align:center;
   background-color:#fefaf5;
   border-radius:18.5px;
   color:#d93d33;

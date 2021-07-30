@@ -10,7 +10,7 @@
         'background-image': `url('${getImgUrl('publicMobile/coupon/box-bg.png')}')`
       }"
       >
-        <div class="time-end">
+        <div class="time-end" v-if="timeout">
           <van-count-down class="time-end-item" :time="timeout" format="HH:mm:ss 后结束" />
         </div>
         <div class="coupon"
@@ -19,7 +19,15 @@
         }"
         >
           <div class="position1">
-            ¥<span class="big">8</span>.88
+            <div v-if="timeInfo.couponType == 1">
+              ¥<span class="big">{{left}}</span>.{{right}}
+            </div>
+            <div v-if="timeInfo.couponType == 2">
+              <span>{{timeInfo.freeDiscount}}</span>折
+            </div>
+            <div v-if="timeInfo.couponType == 3">
+              ¥<span class="big">{{left}}</span>.{{right}}
+            </div>
           </div>
           <div class="position2">
             <p class="p1">{{couponType}}</p>
@@ -103,7 +111,9 @@ export default {
       options: {},
       timeInfo: {}, 
       timeout: 0,
-      token: null
+      token: null,
+      left: null,
+      right: null,
     };
   },
   computed: {
@@ -156,6 +166,8 @@ export default {
       teamApi.getCouponTimeInfo(null, {token: this.token}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.timeInfo = res.data
+          this.left = this.timeInfo.freeAmount?(this.timeInfo.freeAmount/100).split('.')[0]:null
+          this.right = this.timeInfo.freeAmount?(this.timeInfo.freeAmount/100).split('.')[1]:null
           this.timeout = this.timeInfo.deadlineTime - this.timeInfo.currentTime
           if (this.timeInfo.status) {
             this.robed = true
@@ -420,8 +432,6 @@ html,body {
   }
   .btn-tab {
     width: 100%;
-    // display: flex;
-    // justify-content: center;
     padding: 14px 14px 12px 16px;
     white-space: nowrap;/*文本不会换行，文本会在在同一行上继续*/
     overflow: hidden;
@@ -430,21 +440,6 @@ html,body {
       height: 37px;
       white-space: nowrap;/*文本不会换行，文本会在在同一行上继续*/
     }
-    // .btn {
-    //   width:86px;
-    //   height:37px;
-    //   font-family:PingFang SC;
-    //   font-weight:600;
-    //   color:#fdf4ed;
-    //   font-size:16px;
-    //   line-height:37px;
-    //   text-align:center;
-    // }
-    // .act {
-    //   background-color:#fefaf5;
-    //   border-radius:18.5px;
-    //   color:#d93d33;
-    // }
   }
   .bottom-box {
     width: 100%;

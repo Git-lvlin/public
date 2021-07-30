@@ -139,6 +139,11 @@ export default {
     justify-content: flex-start;
     padding-left: 32px;
     .p1 {
+      width: 120px;
+      height: 20px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       font-family:PingFang SC;
       color:#d93d33;
       font-size:14px;

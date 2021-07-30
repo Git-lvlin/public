@@ -262,7 +262,11 @@ export default {
       letter-spacing:0.45px;
       line-height:17px;
       .text1 {
+        width: 100%;
         height:24px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         font-family:PingFang SC;
         font-weight:600;
         color:#000000;
