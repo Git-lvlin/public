@@ -132,7 +132,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || '约购';
+  document.title = to.meta.title || '';
   next();
 });
 
