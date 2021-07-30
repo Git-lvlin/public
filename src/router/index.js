@@ -106,7 +106,7 @@ const routes = [
     name: 'Market',
     component: () => import('@/views/market'),
     meta: {
-      title: '营销资源落地页',
+      title: '',
     }
   },
   {
