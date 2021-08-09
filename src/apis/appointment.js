@@ -8,7 +8,7 @@ const url = {
   hotList: '/contestprice/open/contestprice/GetRecGoodsList?isPage=1',
   sendMemberCoupon: '/activity/auth/sendMemberCoupon',
   sendNewMemberCoupon: '/activity/auth/sendNewMemberCoupon',
-  couponList: '/activity/open/couponCenterList',
+  couponList: '/activity/option/couponCenterList',
   couponClassList: '/activity/option/couponCenterClassList',
   couponTimeInfo: '/activity/option/couponCmsCenterList',
   couponIndex: '/activity/option/newMemberCouponList',
