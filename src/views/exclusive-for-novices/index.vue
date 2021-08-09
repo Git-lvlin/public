@@ -20,7 +20,7 @@
           />
         </div>
       </div>
-      <div class="get-button">
+      <div class="get-button" v-if="listData.length">
         <van-image
           @click="getCoupon"
           v-if="hold!==2"
