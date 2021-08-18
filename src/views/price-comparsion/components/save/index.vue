@@ -23,7 +23,7 @@
           'background-image': `url('${getImgUrl('publicMobile/price/price-sale-bg.png')}')`
         }"
       >
-        <div class="price"><span class="price-head">¥</span><span class="price-span">{{good.salePrice>=10000?good.salePrice/100/10000:good.salePrice/100}}</span></div>
+        <div class="price"><span class="price-head">¥</span><span class="price-span">{{good.salePrice/100>=10000?good.salePrice/100/10000 + '万':good.salePrice/100}}</span></div>
       </div>
     </div>
     <div class="lastbox">
