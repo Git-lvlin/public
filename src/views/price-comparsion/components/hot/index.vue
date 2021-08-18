@@ -98,6 +98,10 @@ export default {
   border-radius: 4px;
   overflow: hidden;
   margin-right: 12px;
+  .hot-good-img {
+    border-radius: 4px;
+    overflow: hidden;
+  }
 }
 .save2 {
   position: absolute;

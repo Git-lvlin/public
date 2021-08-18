@@ -2,8 +2,6 @@
   <div class="save" @click="onToDetail">
     <van-image
       class="img"
-      width="110px"
-      height="110px"
       :src="good.image"
     />
     <div class="name">{{good.title}}</div>
@@ -71,17 +69,18 @@ export default {
 
 <style lang="scss" scoped>
 .save {
+  // display: flex;
+  // flex-direction: column;
   display: inline-block;
   padding: 6px;
   margin-right: 4px;
-  width: 122px;
-  height: 215px;
+  width: 110px;
+  // height: 203px;
   background: #FFFFFF;
   border-radius: 6px;
-  overflow: hidden;
+  // overflow: hidden;
   .img {
-    width: 110px;
-    height: 110px;
+    width: 100%;
     border-radius: 6px;
     overflow: hidden;
   }

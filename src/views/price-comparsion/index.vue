@@ -9,7 +9,8 @@
       <div class="title-img-box">
         <van-image
           class="title-img"
-          height="57px"
+          width="283px"
+          height="66px"
           :src="getImgUrl('publicMobile/price/title1.png')"
         />
       </div>
@@ -144,11 +145,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  body,html {
+    background-color: #EA3327;
+  }
   .price_comparsion {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     background-color: #EA3327;
+    padding-bottom: 50px;
   }
   .save-goods-box {
     padding-bottom: 24px;
