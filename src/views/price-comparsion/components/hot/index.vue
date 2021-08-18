@@ -8,9 +8,8 @@
         height="122px"
         :src="good.image"
       />
-      <!-- <div class="save1" v-if="good.goodsContestRate"><span class="save-text">降价</span><span class="save-num">{{good.goodsContestRate}}%</span></div>
-      <div class="save2" v-else><p>精选</p><p>特惠</p></div> -->
-      <div class="save2"><p>精选</p><p>特惠</p></div>
+      <div class="save1" v-if="good.goodsContestRate"><span class="save-text">降价</span><span class="save-num">{{good.goodsContestRate}}%</span></div>
+      <div class="save2" v-else><p>精选</p><p>特惠</p></div>
     </div>
     <div class="right-box">
       <div class="title">{{good.title}}</div>
@@ -37,12 +36,6 @@
       <div class="price">
         <span class="span1">¥{{good.salePrice/100}}</span>
         <span class="span2">¥{{good.marketPrice/100}}</span>
-        <!-- <van-image
-          class="right-img"
-          width="20px"
-          height="20px"
-          :src="getImgUrl('publicMobile/price/right.png')"
-        /> -->
       </div>
     </div>
   </div>
@@ -160,7 +153,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // width: 215px;
+  width: 190px;
 }
 .title {
   height: 22px;
