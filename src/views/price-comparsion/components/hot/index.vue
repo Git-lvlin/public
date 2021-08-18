@@ -1,14 +1,16 @@
 <template>
   <div class="hot" @click="onToDetail">
+    <div class="right-img">立即抢购</div>
     <div class="left-box">
       <van-image
         class="hot-good-img"
-        width="100px"
-        height="100px"
+        width="122px"
+        height="122px"
         :src="good.image"
       />
-      <div class="save" v-if="good.goodsContestRate">{{'降价'+good.goodsContestRate+'%'}}</div>
-      <div class="save" v-else>精选特惠</div>
+      <!-- <div class="save1" v-if="good.goodsContestRate"><span class="save-text">降价</span><span class="save-num">{{good.goodsContestRate}}%</span></div>
+      <div class="save2" v-else><p>精选</p><p>特惠</p></div> -->
+      <div class="save2"><p>精选</p><p>特惠</p></div>
     </div>
     <div class="right-box">
       <div class="title">{{good.title}}</div>
@@ -35,12 +37,12 @@
       <div class="price">
         <span class="span1">¥{{good.salePrice/100}}</span>
         <span class="span2">¥{{good.marketPrice/100}}</span>
-        <van-image
+        <!-- <van-image
           class="right-img"
           width="20px"
           height="20px"
           :src="getImgUrl('publicMobile/price/right.png')"
-        />
+        /> -->
       </div>
     </div>
   </div>
@@ -84,6 +86,7 @@ export default {
 
 <style lang="scss" scoped>
 .hot {
+  position: relative;
   width: 100%;
   padding: 12px;
   background-color: #ffffff;
@@ -91,31 +94,73 @@ export default {
   border-radius: 8px;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .left-box {
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: 100px;
-  height: 100%;
-  border-radius: 8px;
+  width: 122px;
+  height: 122px;
+  border-radius: 4px;
   overflow: hidden;
+  margin-right: 12px;
 }
-.save {
+.save2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(90deg, #FBF8CC 0%, #FAE963 100%);
+  border-radius: 4px;
+  border-top-left-radius: 0;
   text-align: center;
-  width: 100%;
-  height: 22px;
-  line-height: 22px;
-  background-color: #d7291d;
-  color: #ffffff;
-  font-family: PingFang SC;
   font-size: 12px;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #B37614;
+  line-height: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.save1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background-color: #FF5455;
+  border-radius: 4px;
+  color: #ffffff;
+  .save-text {
+    height: 14px;
+    font-size: 10px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 14px;
+  }
+  .save-num {
+    height: 17px;
+    font-size: 12px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 17px;
+  }
 }
 .right-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 215px;
+  // width: 215px;
 }
 .title {
   height: 22px;
@@ -189,7 +234,18 @@ export default {
 }
 .right-img {
   position: absolute;
-  right: 24px;
+  right: 12px;
+  bottom: 12px;
+  width: 72px;
+  height: 32px;
+  background: #EA3327;
+  border-radius: 18px;
+  text-align: center;
+  font-size: 12px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 32px;
 }
 </style>
 

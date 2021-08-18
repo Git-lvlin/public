@@ -2,17 +2,34 @@
   <div class="save" @click="onToDetail">
     <van-image
       class="img"
-      width="78px"
-      height="78px"
+      width="110px"
+      height="110px"
       :src="good.image"
     />
+    <div class="name">{{good.title}}</div>
     <div class="tag" v-if="!good.goodsContestRate">精选特惠</div>
-    <div class="save-tag-box" v-else>
+    <div class="save-tag-box" 
+      :style="{
+        'background-image': `url('${getImgUrl('publicMobile/price/tag.png')}')`
+      }"
+      v-else
+    >
       <span class="tag1">降价</span>
       <span class="tag2">{{good.goodsContestRate+'%'}}</span>
     </div>
-    <p class="span1">¥{{good.salePrice/100}}</p>
-    <p class="span2">¥{{good.marketPrice/100}}</p>
+    <div class="price-box">
+      <div class="price-bg-pic" 
+        :style="{
+          'background-image': `url('${getImgUrl('publicMobile/price/price-sale-bg.png')}')`
+        }"
+      >
+        <div class="price"><span class="price-head">¥</span><span class="price-span">{{good.salePrice>=10000?good.salePrice/100/10000:good.salePrice/100}}</span></div>
+      </div>
+    </div>
+    <div class="lastbox">
+      <p class="span1">{{good.marketPrice/100}}</p>
+      <p class="span2">即将恢复</p>
+    </div>
   </div>
 </template>
 
@@ -55,78 +72,125 @@ export default {
 <style lang="scss" scoped>
 .save {
   display: inline-block;
-  margin-right: 12px;
-  width: 78px;
-  height: 100%;
+  padding: 6px;
+  margin-right: 4px;
+  width: 122px;
+  height: 215px;
+  background: #FFFFFF;
+  border-radius: 6px;
   overflow: hidden;
+  .img {
+    width: 110px;
+    height: 110px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
 }
-.img {
-  border-radius: 4px;
+.name {
+  width: 100%;
+  height: 18px;
+  font-size: 13px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .tag {
-  width: 46px;
+  width: 64px;
   height: 14px;
-  background-image: linear-gradient(270deg,#fb5f2a 0%,#e5352f 100%);
+  background: linear-gradient(261deg, #E5352F 0%, #FB5F2A 100%);
   border-radius: 2px;
   font-size: 10px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
   line-height: 14px;
-  font-family: PingFang SC;
-  color: #ffffff;
+  letter-spacing: 1px;
   text-align: center;
+  margin-top: 2px;
   margin-bottom: 4px;
+}
+.price-box {
+  width: 100%;
+  .price-bg-pic {
+    position: relative;
+    width: 91px;
+    height: 38px;
+    margin: 0 auto;
+    background-size: 100% 100%;
+    text-align: center;
+  }
+  .price {
+    position: relative;
+    top: -4px;
+    line-height: 38px;
+    text-align: center;
+    color: #FFFFFF;
+    .price-head {
+      height: 13px;
+      font-size: 9px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      line-height: 13px;
+    }
+    .price-span {
+      height: 14px;
+      font-size: 11px;
+      font-family: DINPro-Medium, DINPro;
+      font-weight: 500;
+      line-height: 14px;
+    }
+  }
+}
+.lastbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .span1 {
-  width: 100%;
-  height: 17px;
-  font-family: Helvetica Neue;
-  font-weight: 700;
-  color: #d7291d;
-  font-size: 12px;
-  line-height: 15px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  height: 14px;
+  font-size: 10px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 14px;
+  text-decoration:line-through;
 }
 .span2 {
-  width: 100%;
-  height:14px;
-  font-family:PingFang SC;
-  color:#999999;
-  font-size:10px;
-  letter-spacing:1px;
-  text-decoration:line-through;
-  line-height:14px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  height: 12px;
+  font-size: 10px;
+  font-family: DINPro-Regular, DINPro;
+  font-weight: 400;
+  color: #999999;
+  line-height: 12px;
 }
 .save-tag-box {
-  width: 52px;
+  width: 64px;
   height: 14px;
-  border-radius: 2px;
   display: flex;
+  margin-top: 2px;
   margin-bottom: 4px;
+  font-size: 10px;
+  line-height: 14px;
+  background-size: 100% 100%;
   .tag1 {
     width: 50%;
     height: 100%;
-    background-color: #e6362f;
-    font-family:PingFang SC;
-    font-weight: 500;
-    color: #ffffff;
-    font-size: 10px;
-    line-height: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FFFFFF;
     text-align: center;
   }
   .tag2 {
     width: 50%;
     height: 100%;
-    font-family: PingFang SC;
-    color: #d7291d;
-    font-size: 10px;
-    line-height: 14px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #D7291D;
     text-align: center;
-    border:0.5px solid;
-    border-color:#e6362f;
   }
 }
 

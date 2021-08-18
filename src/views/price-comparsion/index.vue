@@ -2,25 +2,17 @@
   <div class="price_comparsion">
     <van-image
       width="100%"
-      height="500px"
+      height="215px"
       :src="getImgUrl('publicMobile/price/bg.png')"
     />
     <div class="save-goods-box">
       <div class="title-img-box">
         <van-image
           class="title-img"
-          width="283px"
-          height="66px"
-          :src="getImgUrl('publicMobile/price/title.png')"
+          height="57px"
+          :src="getImgUrl('publicMobile/price/title1.png')"
         />
-        <div class="p">低价爆品</div>
       </div>
-      <van-image
-        class="gold-medal-img"
-        width="51px"
-        height="49px"
-        :src="getImgUrl('publicMobile/price/gold-medal1.png')"
-      />
       <div class="save-list">
         <div class="save-box">
           <save
@@ -37,16 +29,10 @@
           class="title-img"
           width="283px"
           height="66px"
-          :src="getImgUrl('publicMobile/price/title.png')"
+          :src="getImgUrl('publicMobile/price/title2.png')"
         />
-        <div class="p">热门推荐</div>
       </div>
-      <van-image
-        class="gold-medal-img"
-        width="51px"
-        height="49px"
-        :src="getImgUrl('publicMobile/price/gold-medal1.png')"
-      />
+
       <div class="hot-list">
         <van-list
           v-if="list.length"
@@ -162,52 +148,19 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #b7483f;
+    background-color: #EA3327;
   }
   .save-goods-box {
-    position: relative;
-    top: -70px;
-    width: 100%;
-    height: 210px;
-    background-color: #f3b2b0;
-    border-radius: 12px;
+    padding-bottom: 24px;
   }
   .title-img-box {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .p {
-    position: absolute;
-    top: 4px;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 40px;
-    font-family: PingFang SC;
-    font-weight: 600;
-    color: #b43e35;
-    font-size: 28px;
-    letter-spacing: -0.87px;
-    line-height: 40px;
-    text-align: center;
-  }
-  .gold-medal-img {
-    position: absolute;
-    top: -15px;
-    left: 12px;
+    display: flex;
+    justify-content: center;
   }
   .save-list {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 12px;
-    padding: 10px 0px 10px 8px;
-    width: 351px;
-    height: 151px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.02);
+    padding-left: 12px;
+    width: 100%;
+    height: 215px;
     white-space: nowrap;/*文本不会换行，文本会在在同一行上继续*/
     overflow-x: auto;
   }
@@ -218,9 +171,7 @@ export default {
     position: relative;
     top: -12px;
     width: 100%;
-    min-height: 618px;
-    background-color: #f3b2b0;
-    border-radius: 12px;
+    // min-height: 618px;
   }
   ::-webkit-scrollbar {
     width: 0 !important;
@@ -231,7 +182,6 @@ export default {
   .element { -ms-overflow-style: none; }
   .element { overflow: -moz-scrollbars-none; }
   .hot-list {
-    margin-top: 59px;
     padding: 0 12px;
   }
 </style>
