@@ -209,10 +209,13 @@ export default {
   margin-bottom: 8px;
 }
 .price {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
+  // display: flex;
+  // justify-content: flex-start;
+  // align-items: center;
+  width: 60%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .span1 {
   font-family: Helvetica Neue;
