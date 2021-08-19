@@ -1,51 +1,53 @@
 <template>
   <div class="price_comparsion">
-    <van-image
-      width="100%"
-      height="215px"
-      :src="getImgUrl('publicMobile/price/bg.png')"
-    />
-    <div class="save-goods-box">
-      <div class="title-img-box">
-        <van-image
-          class="title-img"
-          width="283px"
-          height="66px"
-          :src="getImgUrl('publicMobile/price/title1.png')"
-        />
-      </div>
-      <div class="save-list">
-        <div class="save-box">
-          <save
-            v-for="item in listData"
-            :key="item.skuId"
-            :good="item"
+    <div class="container">
+      <van-image
+        width="100%"
+        height="215px"
+        :src="getImgUrl('publicMobile/price/bg.png')"
+      />
+      <div class="save-goods-box">
+        <div class="title-img-box">
+          <van-image
+            class="title-img"
+            width="283px"
+            height="66px"
+            :src="getImgUrl('publicMobile/price/title1.png')"
           />
         </div>
+        <div class="save-list">
+          <div class="save-box">
+            <save
+              v-for="item in listData"
+              :key="item.skuId"
+              :good="item"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="hot-recommend-box">
-      <div class="title-img-box">
-        <van-image
-          class="title-img"
-          width="283px"
-          height="66px"
-          :src="getImgUrl('publicMobile/price/title2.png')"
-        />
-      </div>
+      <div class="hot-recommend-box">
+        <div class="title-img-box">
+          <van-image
+            class="title-img"
+            width="283px"
+            height="66px"
+            :src="getImgUrl('publicMobile/price/title2.png')"
+          />
+        </div>
 
-      <div class="hot-list">
-        <van-list
-          v-if="list.length"
-          v-model="loading"
-          offset=0
-          :immediate-check="false"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="onBottomReach"
-        >
-          <hot v-for="item in list" :key="item" :good="item" />
-        </van-list>
+        <div class="hot-list">
+          <van-list
+            v-if="list.length"
+            v-model="loading"
+            offset=0
+            :immediate-check="false"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="onBottomReach"
+          >
+            <hot v-for="item in list" :key="item" :good="item" />
+          </van-list>
+        </div>
       </div>
     </div>
   </div>
@@ -145,15 +147,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  body,html {
-    background-color: #EA3327;
-  }
   .price_comparsion {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    max-height: 100vh;
     background-color: #EA3327;
-    padding-bottom: 50px;
+    overflow: hidden;
+    .container {
+      overflow-y: auto;
+    }
   }
   .save-goods-box {
     padding-bottom: 24px;
