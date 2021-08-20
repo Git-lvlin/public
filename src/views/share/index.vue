@@ -60,7 +60,7 @@
       />
       <div class="content-box">
         <p class="text1">约购-约着买更便宜</p>
-        <p class="text2">新人注册领168元好礼</p>
+        <!-- <p class="text2">新人注册领168元好礼</p> -->
       </div>
       <van-image
         class="bottom-img"
