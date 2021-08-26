@@ -1,6 +1,6 @@
 <template>
   <div @click="onClick" class="btn" :class="good.id===0?'act':''">
-    <div v-show="act" class="btn">{{good.gcName}}</div>
+    <div v-show="!act" class="btn">{{good.gcName}}</div>
     <div v-show="act" class="btn-act">{{good.gcName}}</div>
   </div>
 </template>
