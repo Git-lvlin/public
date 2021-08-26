@@ -20,13 +20,13 @@
         >
           <div class="position1">
             <div v-if="timeInfo.couponType == 1">
-              ¥<span class="big">{{left}}</span>.{{right}}
+              ¥<span class="big">{{left}}</span>
             </div>
             <div v-if="timeInfo.couponType == 2">
               <span>{{timeInfo.freeDiscount}}</span>折
             </div>
             <div v-if="timeInfo.couponType == 3">
-              ¥<span class="big">{{left}}</span>.{{right}}
+              ¥<span class="big">{{left}}</span>
             </div>
           </div>
           <div class="position2">
@@ -113,7 +113,6 @@ export default {
       timeout: 0,
       token: null,
       left: null,
-      right: null,
     };
   },
   computed: {
@@ -165,8 +164,7 @@ export default {
       teamApi.getCouponTimeInfo(null, {token: this.token}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.timeInfo = res.data
-          this.left = this.timeInfo.freeAmount?(this.timeInfo.freeAmount/100).split('.')[0]:null
-          this.right = this.timeInfo.freeAmount?(this.timeInfo.freeAmount/100).split('.')[1]:null
+          this.left = this.timeInfo.freeAmount?(this.timeInfo.freeAmount/100):null
           this.timeout = this.timeInfo.deadlineTime - this.timeInfo.currentTime
           if (this.timeInfo.status) {
             this.robed = true
