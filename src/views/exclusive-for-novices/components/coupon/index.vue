@@ -1,14 +1,13 @@
 <template>
   <span class="hot" @click="onToDetail">
-    <div class="left-box">
+    <!-- <div class="left-box"> -->
       <van-image
         class="hot-good-img"
         width="172px"
         height="172px"
-        fit="contain"
         :src="good.image"
       />
-    </div>
+    <!-- </div> -->
     <div class="right-box">
       <div class="title">
         <div class="title-index">{{good.title}}</div>

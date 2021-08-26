@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       arr: ['-', '满减券', '折扣券', '立减券'],
-      btns: [],
+      btns: [{gcName: '全部', id: 0}],
       robed: false,
       list: [],
       loading: false,
@@ -157,7 +157,6 @@ export default {
     getGcid() {
       teamApi.getGcid({gcParentId:0}, {token:this.token}).then((res) => {
         if (res.code === 0) {
-          this.btns = [{gcName: '全部', id: 0}]
           this.btns = this.btns.concat(res.data.records)
         }
       })
@@ -180,8 +179,6 @@ export default {
         page,
         pageSize,
       } = this;
-      clearTimeout(this.listId)
-      this.listId = setTimeout(() => {
         teamApi.getCouponClassList({
           page,
           pageSize,
@@ -205,7 +202,6 @@ export default {
         }).catch(() => {
           this.loading = false;
         });
-      }, 200)
     },
     formatDate(date) {
       var date = new Date(date);
@@ -289,7 +285,6 @@ export default {
     this.onLoad()
     this.getGcid()
     this.getId(0)
-
   }
 };
 </script>
