@@ -3,7 +3,7 @@
     <!-- <div class="left-box"> -->
       <van-image
         class="hot-good-img"
-        width="172px"
+        width="100%"
         height="172px"
         :src="good.image"
       />
