@@ -6,7 +6,7 @@
   }"
   >
     <van-image
-      v-if="good.lqStatus === 2"
+      v-if="good.lqStatus === 2 || hold === 2"
       class="tag"
       width="41px"
       height="34px"
@@ -37,8 +37,8 @@ export default {
       default: () => {},
     },
     hold: {
-      typeof: Boolean,
-      default: false
+      typeof: Number,
+      default: 1
     }
   },
   methods: {

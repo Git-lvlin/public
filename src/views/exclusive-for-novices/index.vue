@@ -17,6 +17,7 @@
             v-for="item in listData"
             :key="item.skuId"
             :good="item"
+            :hold="hold"
           />
         </div>
       </div>
