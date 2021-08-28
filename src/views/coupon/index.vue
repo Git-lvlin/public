@@ -42,7 +42,7 @@
       </div>
       <div class="btn-tab">
         <div class="btn-box">
-          <btn v-for="item in btns" :key="item" v-on:actId="getId" :good="item" />
+          <btn v-for="item in btns" :key="item" :indexId="indexId" v-on:actId="getId" :good="item" />
         </div>
       </div>
       <div class="bottom-box"
@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       arr: ['-', '满减券', '折扣券', '立减券'],
-      btns: [{gcName: '全部', id: 0}],
+      btns: [],
       robed: false,
       list: [],
       loading: false,
@@ -109,10 +109,12 @@ export default {
       totalPage: 1,
       pageSize: 10,
       options: {},
-      timeInfo: {}, 
+      timeInfo: {},
       timeout: 0,
       token: null,
       left: null,
+      right: null,
+      indexId: 0,
     };
   },
   computed: {
@@ -156,6 +158,7 @@ export default {
     getGcid() {
       teamApi.getGcid({gcParentId:0}, {token:this.token}).then((res) => {
         if (res.code === 0) {
+          this.btns = [{gcName: '全部', id: 0}]
           this.btns = this.btns.concat(res.data.records)
         }
       })
@@ -164,7 +167,7 @@ export default {
       teamApi.getCouponTimeInfo(null, {token: this.token}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.timeInfo = res.data
-          this.left = this.timeInfo.freeAmount?(this.timeInfo.freeAmount/100):null
+          this.left = this.timeInfo.freeAmount/100
           this.timeout = this.timeInfo.deadlineTime - this.timeInfo.currentTime
           if (this.timeInfo.status) {
             this.robed = true
@@ -173,33 +176,35 @@ export default {
       })
     },
     getId(a) {
+      this.indexId = a
+      console.log('this.indexId', this.indexId)
       const {
         page,
         pageSize,
       } = this;
-        teamApi.getCouponClassList({
-          page,
-          pageSize,
-          gcId1: a,
-        }, {token:this.token}).then((res) => {
-          const {
-            data,
-          } = res;
-          if (data && data.records) {
-            this.totalPage = data.totalpage;
-            if (page < 2) {
-              this.list = data.records;
-            } else {
-              this.list = this.list.concat(data.records);
-            }
-            if (this.list.length >= data.total) {
-              this.finished = true;
-            }
+      teamApi.getCouponClassList({
+        page,
+        pageSize,
+        gcId1: a,
+      }, {token:this.token}).then((res) => {
+        const {
+          data,
+        } = res;
+        if (data && data.records) {
+          this.totalPage = data.totalpage;
+          if (page < 2) {
+            this.list = data.records;
+          } else {
+            this.list = this.list.concat(data.records);
           }
-          this.loading = false;
-        }).catch(() => {
-          this.loading = false;
-        });
+          if (this.list.length >= data.total) {
+            this.finished = true;
+          }
+        }
+        this.loading = false;
+      }).catch(() => {
+        this.loading = false;
+      });
     },
     formatDate(date) {
       var date = new Date(date);
@@ -278,10 +283,10 @@ export default {
       }
     },
   },
-  mounted() {
-    this.getTimeInfo()
-    this.onLoad()
-    this.getGcid()
+  async mounted() {
+    await this.getTimeInfo()
+    await this.onLoad()
+    await this.getGcid()
     this.getId(0)
   }
 };
