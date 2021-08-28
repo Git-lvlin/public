@@ -1,8 +1,10 @@
 <template>
   <div class="coupon-box">
-    <div class="head"
+    <van-loading class="load" v-if="load" />
+
+    <div v-else class="head"
     :style="{
-      'background-image': `url('${getImgUrl('publicMobile/coupon/bg.png')}')`
+      'background-image': `url('${bgImgUrl}')`
     }"
     >
       <div class="coupon-index"
@@ -75,12 +77,13 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, List, Dialog, CountDown } from 'vant';
+import { Image as VanImage, List, Dialog, CountDown, Loading } from 'vant';
 import { getImgUrl, getQueryObj, debounce } from '@/utils/tools';
 import teamApi from '@/apis/appointment';
 import Btn from './components/btn';
 import Item from './components/coupon';
 
+Vue.use(Loading);
 Vue.use(VanImage);
 Vue.use(List);
 Vue.use(CountDown);
@@ -115,6 +118,8 @@ export default {
       left: null,
       right: null,
       indexId: 0,
+      load: true,
+      bgImgUrl: getImgUrl('publicMobile/coupon/bg.png'),
     };
   },
   computed: {
@@ -177,7 +182,6 @@ export default {
     },
     getId(a) {
       this.indexId = a
-      console.log('this.indexId', this.indexId)
       const {
         page,
         pageSize,
@@ -282,8 +286,23 @@ export default {
         this.onLoad();
       }
     },
+    loadImg() {
+      return new Promise((resolve, reject) => {
+        let bgImg = new Image();
+        bgImg.src = this.bgImgUrl; // 获取背景图片的url
+        bgImg.onerror = () => {
+          console.log('img onerror')
+          reject()
+        }
+        bgImg.onload = () => { // 等背景图片加载成功后 去除loading
+          this.load = false
+          resolve()
+        }
+      })
+    }
   },
   async mounted() {
+    await this.loadImg()
     await this.getTimeInfo()
     await this.onLoad()
     await this.getGcid()
@@ -295,6 +314,9 @@ export default {
 <style lang="scss" scoped>
 html,body {
   background-color: #d93d33;
+}
+.load {
+  margin: auto;
 }
 .coupon-box {
   display: flex;
