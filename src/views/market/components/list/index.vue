@@ -26,7 +26,7 @@ export default {
       }
       const query = getQueryObj(this.good.actionUrl)
       console.log('query', query)
-      const paramStr = `?&spuId=${query.spuId || ''}&skuId=${query.skuId || ''}`
+      const paramStr = `?&spuId=${query.spuId || ''}&skuId=${query.skuId || ''}&orderType=${query.orderType || '2'}`
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
