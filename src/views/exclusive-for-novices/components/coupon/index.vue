@@ -10,8 +10,12 @@
     <!-- </div> -->
     <div class="right-box">
       <div class="title">
-        <div class="title-index">{{good.title}}</div>
-        <div class="sort">{{good.gcName}}</div>
+        <div class="title-index">{{good.goodsName}}</div>
+        <div class="tag-box">
+          <div v-if="good.couponList[0]" class="sort">{{good.couponList[0].couponDesc}}</div>
+          <div v-if="good.couponList[1]" class="sort">{{good.couponList[1].couponDesc}}</div>
+          <div v-if="good.couponList[2]" class="sort">{{good.couponList[2].couponDesc}}</div>
+        </div>
       </div>
       <div class="price">
         <span class="span1">¥<span class="big">{{good.salePrice/100}}</span></span>
@@ -99,17 +103,28 @@ export default {
     /* 规定框从上向下垂直排列子元素 */
     -webkit-box-orient: vertical;
   }
-  .sort {
+  .tag-box {
     margin-top: 4px;
-    width:48px;
-    height:15px;
-    background-color:rgba(215, 41, 29, 0.1);
-    border-radius:2px;
-    font-family:PingFang SC;
-    color:#d7291d;
-    font-size:10px;
-    line-height:15px;
-    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    .sort {
+      margin-right: 6px;
+      padding: 0 5px;
+      margin-bottom: 4px;
+      // width: 48px;
+      height: 15px;
+      background-color: rgba(215, 41, 29, 0.1);
+      border-radius: 2px;
+      font-family: PingFang SC;
+      color: #d7291d;
+      font-size: 10px;
+      line-height: 15px;
+      text-align: center;
+    }
+    .sort:last-child {
+      margin-right: 0;
+    }
   }
 }
 

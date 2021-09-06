@@ -21,6 +21,7 @@
           />
         </div>
       </div>
+      <div v-if="listData.length" class="text">(新人券仅当前新人专享商品可用。)</div>
       <div class="get-button" v-if="listData.length">
         <van-image
           @click="getCoupon"
@@ -63,7 +64,7 @@
         >
           <hot v-for="item in list" :key="item" :good="item" />
         </van-list>
-        <div class="no" v-show="finished">没有更多了</div>
+        <!-- <div class="no" v-show="finished">没有更多了</div> -->
       </div>
     </div>
   </div>
@@ -96,12 +97,13 @@ export default {
       listData: [],
       list: [],
       loading: false,
-      finished: false,
+      finished: true,
       page: 1,
       size: 10,
       totalPage: 1,
       token: null,
       indexVersion: null,
+      isNew: false
     };
   },
   components: {
@@ -120,31 +122,54 @@ export default {
     }
   },
   methods: {
-    getCoupon() {
+    async getCoupon() {
       if (this.hold === 2) {
         return
       }
       if (this.token) {
-        teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
-          console.log('一键领取', res)
-          if(res.code ===0) {
-            this.hold = 2
-            Dialog({ message: '领取成功!' });
-          }
-        })
+        const status = await this.getStatus()
+        console.log('status', status)
+        if (status == 2) {
+          this.hold = 2
+          Dialog({ message: '已领取过' });
+          return
+        }
+        if (this.isNew === 'true') {
+          teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
+            console.log('一键领取', res)
+            if(res.code ===0) {
+              this.hold = 2
+              Dialog({ message: '领取成功!' });
+            }
+          })
+        } else {
+          Dialog({ message: '红包仅限新人领取' });
+        }
       } else {
         console.log('token is null', this.token)
       }
     },
+    getStatus() {
+      return new Promise((resolve) => {
+        teamApi.getMemberCouponLqStatus().then(({data}) => {
+          data&&resolve(data.status)
+        })
+      })
+    },
     getAppInfo() {
-      Promise.all([this.getToken(), this.getIndexVersion()]).then(() => {
-        console.log('token&indexVersion获取成功', this.token, this.indexVersion)
+      Promise.all([this.getToken(), this.getIndexVersion(), this.getMemberRecognize()]).then(() => {
+        console.log('token&indexVersion&isNew获取成功', this.token, this.indexVersion, this.isNew)
         this.getListData()
       })
     },
     getToken() {
       return new Promise((resolve) => {
         this.$bridge.callHandler('fetchToken',{},(a) => {this.token = a;resolve()})
+      })
+    },
+    getMemberRecognize() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getMemberRecognize',{},(a) => {this.isNew = a;resolve()})
       })
     },
     getIndexVersion() {
@@ -155,6 +180,7 @@ export default {
     getMiniprogramInfo() {
       this.indexVersion = this.$router.history.current.indexVersion
       this.token = this.$router.history.current.token
+      this.isNew = this.$router.history.current.isNew
     },
     getImgUrl,
     getListData() {
@@ -163,46 +189,37 @@ export default {
         if (res.code === 0) {
           this.hold = res?.data?.pLqStatus
           this.listData = res?.data?.couponInfo?.records
+          this.getCoupon()
         }
       })
     },
     onLoad() {
-      const {
-        page,
-        size,
-      } = this;
       this.loading = true;
-      teamApi.getHotGoodsList({
-        page,
-        size,
-      }).then((res) => {
-        const {
-          data,
-        } = res;
-        if (data && data.records) {
-          this.totalPage = data.totalpage;
-          if (page < 2) {
-            this.list = data.records;
-          } else {
-            this.list = this.list.concat(data.records);
-          }
-          if (this.list.length >= data.total) {
-            this.finished = true;
-          }
-        }
+      teamApi.getNewCouponGoodsList({}).then((res) => {
+        let data = res.data.goodsList;
+        // const len = data.length;
+        // for (let i=0;i<len;i++) {
+          // data[i].couponList = JSON.stringify(data[i].couponList)
+          // data[i].couponList = data[i].couponList.map(element => {
+          //   return element.couponDesc
+          // }).toString();
+        // }
+        this.list = data
+        console.log('list', this.list)
         this.loading = false;
       }).catch(() => {
         this.loading = false;
       });
     },
     onBottomReach() {
-      if (this.totalPage > this.page) {
-        this.page += 1;
-        this.onLoad();
-      }
+      // if (this.totalPage > this.page) {
+      //   this.page += 1;
+      //   this.onLoad();
+      // }
     },
   },
-  mounted() {
+  async mounted() {
+    console.log('onLoad')
     this.onLoad()
   }
 };
@@ -249,9 +266,21 @@ export default {
       border-radius: 0px 0px 50% 50%/0 0 100% 100%;
       margin-bottom: 12px;
     }
+    .text {
+      position: absolute;
+      bottom: 61px;
+      width: 100%;
+      text-align: center;
+      height: 14px;
+      font-size: 10px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #FFFFFF;
+      line-height: 14px;
+    }
     .get-button {
       position: absolute;
-      bottom: 16px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
       width: 260px;
