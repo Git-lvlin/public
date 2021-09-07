@@ -74,6 +74,7 @@
 import Vue from 'vue';
 import { Image as VanImage, List, Dialog } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import { getUserInfo } from '@/utils/userInfo';
 import Save from './components/goods-list';
 import Hot from './components/coupon';
 import teamApi from '@/apis/appointment';
@@ -111,9 +112,18 @@ export default {
     Hot,
     [Dialog.Component.name]: Dialog.Component,
   },
-  created () {
+  async created () {
     console.log('created-start')
+    console.log('this.$store.state', this.$store.state)
     if (this.$store.state.appInfo.isApp) {
+      const version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
+      if (version > 104) {
+        const {token, isNew} = await getUserInfo()
+        this.token = token
+        this.isNew = isNew
+        this.getListData()
+        return
+      }
       this.getAppInfo()
     } else if (this.$store.state.appInfo.isMiniprogram) {
       this.getMiniprogramInfo()
@@ -146,12 +156,13 @@ export default {
           Dialog({ message: '红包仅限新人领取' });
         }
       } else {
+        Dialog({ message: '未登录！' });
         console.log('token is null', this.token)
       }
     },
     getStatus() {
       return new Promise((resolve) => {
-        teamApi.getMemberCouponLqStatus().then(({data}) => {
+        teamApi.getMemberCouponLqStatus({}, {token: this.token}).then(({data}) => {
           data&&resolve(data.status)
         })
       })

@@ -28,6 +28,7 @@
 <script>
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
+import { goToApp } from "@/utils/userInfo";
 export default {
   props: {
     good: {
@@ -45,6 +46,19 @@ export default {
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
+        const version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
+        if (version > 104) {
+          const param = {
+            orderType: good.orderType || 3,
+            spuId: good.spuId || '',
+            skuId: good.skuId || '',
+            objectId: good.objectId || '',
+            activityId: good.activityId || '',
+            wsId: good.wsId || '',
+          }
+          goToApp(appBaseUrl, '/shopping/detail', param)
+          return
+        }
         this.$bridge.callHandler(
           'router',
           `${appBaseUrl}/shopping/detail${paramStr}`,
