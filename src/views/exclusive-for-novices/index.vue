@@ -121,9 +121,6 @@ export default {
       console.log('isNewVersion', isNewVersion)
       if (isNewVersion) {
         await this.getUserInfo();
-        console.log('info', this.info)
-        this.token = this.info.token
-        this.isNew = this.info.isNew
         this.getListData()
         return
       }
@@ -172,7 +169,14 @@ export default {
     },
     getUserInfo() {
       return new Promise((resolve) => {
-        this.$bridge.callHandler('getUserInfo',{},(res) => {console.log('rrr', res);this.info=res.data;resolve()})
+        this.$bridge.callHandler('getUserInfo',{},({data}) => {
+          console.log('data', data);
+          const { accessToken, isNew } = data
+          console.log('accessToken', accessToken, isNew)
+          this.token = accessToken
+          this.isNew = isNew
+          resolve()
+        })
       })
     },
     getAppInfo() {
@@ -203,6 +207,7 @@ export default {
     },
     getImgUrl,
     getListData() {
+      console.log('getListData-start')
       teamApi.getNewPeoplesCoupon({}, {token:this.token}).then((res) => {
         console.log('getListData-res', res)
         if (res.code === 0) {
