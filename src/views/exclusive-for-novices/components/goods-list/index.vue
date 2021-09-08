@@ -17,7 +17,7 @@
         ¥<span class="m">{{good.freeAmount/100}}</span>
       </div>
       <div class="l" v-else>
-        <span class="m">{{good.freeDiscount}}</span>折
+        <span class="m">{{good.freeDiscount/100}}</span>折
       </div>
       <div class="r">
         <p>{{good.title}}</p>
