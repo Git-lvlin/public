@@ -48,15 +48,7 @@ export default {
       if (this.$store.state.appInfo.isApp) {
         const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
         if (isNewVersion) {
-          const param = {
-            orderType: good.orderType || 3,
-            spuId: good.spuId || '',
-            skuId: good.skuId || '',
-            objectId: good.objectId || '',
-            activityId: good.activityId || '',
-            wsId: good.wsId || '',
-          }
-          goToApp(appBaseUrl, '/shopping/detail', param, this.$bridge)
+          goToApp(appBaseUrl, '/shopping/detail', paramStr, this.$bridge)
           return
         }
         this.$bridge.callHandler(

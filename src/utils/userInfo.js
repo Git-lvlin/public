@@ -1,11 +1,10 @@
 
-export const goToApp = (baseUrl, router, param={}, bridge) => {
+export const goToApp = (baseUrl, router, param, bridge) => {
   const data = {
     code: 0,
     msg: 'success',
     data: {
-      url: `${baseUrl}${router}`,
-      ...param,
+      url: `${baseUrl}${router}${param}`,
     }
   }
   const zero = JSON.stringify(data);
