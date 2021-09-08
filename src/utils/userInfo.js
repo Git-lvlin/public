@@ -2,7 +2,7 @@
 export const getUserInfo = () => {
   return new Promise((resolve) => {
     this.$bridge.callHandler(
-      'userInfo',
+      'getUserInfo',
       {},
       ({code, data}) => {
         if (code === 0) {
