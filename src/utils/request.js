@@ -128,7 +128,7 @@ const request = async ({
       }
       if (this.$store.state.appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({
-          url: '/pages/login/main/index'
+          url: '/pages/login/mobile/index'
         })
         return
       }
