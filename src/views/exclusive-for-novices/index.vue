@@ -74,7 +74,7 @@
 import Vue from 'vue';
 import { Image as VanImage, List, Dialog } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { getUserInfo } from '@/utils/userInfo';
+import { getUserInfo, judgeVersionIsNew } from '@/utils/userInfo';
 import Save from './components/goods-list';
 import Hot from './components/coupon';
 import teamApi from '@/apis/appointment';
@@ -116,8 +116,9 @@ export default {
     console.log('created-start')
     console.log('this.$store.state', this.$store.state)
     if (this.$store.state.appInfo.isApp) {
-      const version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
-      if (version > 104) {
+      const isNewVersion = judgeVersionIsNew()
+      console.log('isNewVersion', isNewVersion)
+      if (isNewVersion) {
         const {token, isNew} = await getUserInfo()
         this.token = token
         this.isNew = isNew

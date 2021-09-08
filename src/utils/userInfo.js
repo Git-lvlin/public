@@ -27,3 +27,8 @@ export const goToApp = (baseUrl, router, param) => {
     data,
   )
 }
+
+export const judgeVersionIsNew = () => {
+  const version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
+  return version > 104
+}
