@@ -119,9 +119,10 @@ export default {
       const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
       console.log('isNewVersion', isNewVersion)
       if (isNewVersion) {
-        const {token, isNew} = await getUserInfo()
-        this.token = token
-        this.isNew = isNew
+        const res = await getUserInfo();
+        console.log('res', res)
+        this.token = res.data.token
+        this.isNew = res.data.isNew
         this.getListData()
         return
       }

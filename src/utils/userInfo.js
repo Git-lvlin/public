@@ -1,20 +1,9 @@
 
-export const getUserInfo = () => {
-  let that = this
-  return new Promise((resolve) => {
-    console.log('bridge-start')
-    that.$bridge.callHandler(
-      'getUserInfo',
-      {},
-      ({code, data}) => {
-        console.log('code', code, data)
-        if (code === 0) {
-          resolve(data)
-        }
-      },
-    )
+export const getUserInfo = () => 
+  new Promise((resolve) => {
+    this.$bridge.callHandler('getUserInfo', {}, (res) => {console.log('rrr', res);resolve(res.data)})
   })
-}
+
 
 export const goToApp = (baseUrl, router, param={}) => {
   const data = {
