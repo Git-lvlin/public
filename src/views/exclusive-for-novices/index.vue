@@ -74,7 +74,7 @@
 import Vue from 'vue';
 import { Image as VanImage, List, Dialog } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { getUserInfo, judgeVersionIsNew } from '@/utils/userInfo';
+import { judgeVersionIsNew } from '@/utils/userInfo';
 import Save from './components/goods-list';
 import Hot from './components/coupon';
 import teamApi from '@/apis/appointment';
@@ -119,10 +119,10 @@ export default {
       const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
       console.log('isNewVersion', isNewVersion)
       if (isNewVersion) {
-        const res = await getUserInfo();
-        console.log('res', res)
-        this.token = res.data.token
-        this.isNew = res.data.isNew
+        await this.getUserInfo();
+        console.log('info', this.info)
+        this.token = this.info.token
+        this.isNew = this.info.isNew
         this.getListData()
         return
       }
@@ -167,6 +167,11 @@ export default {
         teamApi.getMemberCouponLqStatus({}, {token: this.token}).then(({data}) => {
           data&&resolve(data.status)
         })
+      })
+    },
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {console.log('rrr', res);this.info=res.data;resolve()})
       })
     },
     getAppInfo() {
@@ -231,8 +236,7 @@ export default {
       // }
     },
   },
-  async mounted() {
-    console.log('onLoad')
+  mounted() {
     this.onLoad()
   }
 };
