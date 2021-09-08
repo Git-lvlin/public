@@ -170,9 +170,9 @@ export default {
     },
     getUserInfo() {
       return new Promise((resolve) => {
-        this.$bridge.callHandler('getUserInfo',{},({data}) => {
-          console.log('data', data);
-          const { accessToken, isNew } = data
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          console.log('res', res);
+          const { accessToken, isNew } = res.data
           console.log('accessToken', accessToken, isNew)
           this.token = accessToken
           this.isNew = isNew
