@@ -116,7 +116,7 @@ export default {
     console.log('created-start')
     console.log('this.$store.state', this.$store.state)
     if (this.$store.state.appInfo.isApp) {
-      const isNewVersion = judgeVersionIsNew()
+      const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
       console.log('isNewVersion', isNewVersion)
       if (isNewVersion) {
         const {token, isNew} = await getUserInfo()

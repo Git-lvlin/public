@@ -28,14 +28,17 @@ export const goToApp = (baseUrl, router, param) => {
   )
 }
 
-export const judgeVersionIsNew = () => {
-  let version;
-  if (this.$store.state.appInfo.appVersion.includes('-')) {
-    version = this.$store.state.appInfo.appVersion.split('-')[0].replace(/\./g, '')
+export const judgeVersionIsNew = (v) => {
+  console.log('appVersion', v)
+  if (v.includes('-')) {
+    const numVersion = v.split('-')[0];
+    console.log('numVersion', numVersion)
+    const version = numVersion.replace(/\./g, '')
     console.log('非生产环境', version)
+    return version > 104
   } else {
-    version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
+    const version = v.replace(/\./g, '')
     console.log('生产环境', version)
+    return version > 104
   }
-  return version > 104
 }
