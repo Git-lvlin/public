@@ -13,7 +13,7 @@ export const getUserInfo = () => {
   })
 }
 
-export const goToApp = (baseUrl, router, param) => {
+export const goToApp = (baseUrl, router, param={}) => {
   const data = {
     code: 0,
     msg: 'success',
