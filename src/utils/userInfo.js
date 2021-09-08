@@ -1,13 +1,13 @@
 
 export const goToApp = (baseUrl, router, param={}) => {
-  const data = {
+  const data = JSON.stringify({
     code: 0,
     msg: 'success',
     data: {
       url: `${baseUrl}${router}`,
       ...param,
     }
-  }
+  })
   this.$bridge.callHandler(
     'router',
     data,
