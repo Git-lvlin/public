@@ -30,15 +30,15 @@ export const goToApp = (baseUrl, router, param={}) => {
 
 export const judgeVersionIsNew = (v) => {
   console.log('appVersion', v)
+  const breakPointVersion = 103
   if (v.includes('-')) {
     const numVersion = v.split('-')[0];
     console.log('numVersion', numVersion)
     const version = numVersion.replace(/\./g, '')
     console.log('非生产环境', version)
-    return version > 104
-  } else {
-    const version = v.replace(/\./g, '')
-    console.log('生产环境', version)
-    return version > 104
+    return version > breakPointVersion
   }
+  const version = v.replace(/\./g, '')
+  console.log('生产环境', version)
+  return version > breakPointVersion
 }
