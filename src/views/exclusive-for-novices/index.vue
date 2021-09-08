@@ -124,6 +124,7 @@ export default {
         this.getListData()
         return
       }
+      console.log('兼容低版本逻辑')
       this.getAppInfo()
     } else if (this.$store.state.appInfo.isMiniprogram) {
       this.getMiniprogramInfo()
