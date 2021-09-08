@@ -56,7 +56,7 @@ export default {
             activityId: good.activityId || '',
             wsId: good.wsId || '',
           }
-          goToApp(appBaseUrl, '/shopping/detail', param)
+          goToApp(appBaseUrl, '/shopping/detail', param, this.$bridge)
           return
         }
         this.$bridge.callHandler(
