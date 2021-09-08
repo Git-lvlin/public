@@ -104,7 +104,8 @@ export default {
       totalPage: 1,
       token: null,
       indexVersion: null,
-      isNew: false
+      isNew: false,
+      info: {}
     };
   },
   components: {
