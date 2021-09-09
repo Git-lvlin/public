@@ -25,9 +25,9 @@ export const judgeVersionIsNew = (v) => {
   return version > breakPointVersion
 }
 
-export const getUserInfo = () => {
+export const getUserInfo = (bridge) => {
   return new Promise((resolve) => {
-    this.$bridge.callHandler('getUserInfo',{},(res) => {
+    bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res)
       resolve(d.data)
     })

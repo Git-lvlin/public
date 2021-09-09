@@ -216,7 +216,7 @@ export default {
   async created () {
     this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
     if (this.isNewVersion) {
-      this.info = await getUserInfo()
+      this.info = await getUserInfo(this.$bridge)
       return
     }
     this.$bridge.callHandler(
