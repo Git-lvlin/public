@@ -44,6 +44,7 @@
 <script>
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
+import { goToApp, judgeVersionIsNew } from '@/utils/userInfo';
 export default {
   props: {
     good: {
@@ -58,8 +59,17 @@ export default {
         good,
       } = this;
       const paramStr = `?id=${good.id}&storeNo=${good.storeNo}`
-      console.log(window.navigator)
-      console.log("$store.state.appInfo", this.$store.state.appInfo)
+      const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
+      if (isNewVersion) {
+        if (this.$store.state.appInfo.isMiniprogram) {
+          wx.miniProgram.navigateTo({
+            url: `/subpages/cart/detail/index${paramStr}`
+          })
+          return
+        }
+        goToApp(appBaseUrl, '/flutter/contest/price', paramStr, this.$bridge)
+        return
+      }
       if (this.$store.state.appInfo.isApp) {
         this.$bridge.callHandler(
           'router',

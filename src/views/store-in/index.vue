@@ -197,6 +197,7 @@ import Vue from 'vue';
 import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
+import { getUserInfo, goToApp } from '@/utils/userInfo';
 Vue.use(VanImage);
 export default {
   props: {
@@ -205,12 +206,19 @@ export default {
   data() {
     return {
       isShow: false,
-      hasToken: false
+      hasToken: false,
+      info: {},
+      isNewVersion: false,
     };
   },
   components: {
   },
-  created () {
+  async created () {
+    this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
+    if (this.isNewVersion) {
+      this.info = await getUserInfo()
+      return
+    }
     this.$bridge.callHandler(
           'fetchToken',
           {},
@@ -224,6 +232,11 @@ export default {
   methods: {
     getImgUrl,
     onToDetail() {
+      if (this.isNewVersion) {
+        const router = this.info?.accessToken?'/flutter/store/member/settled':'/login/index'
+        goToApp(appBaseUrl, router, '', this.$bridge)
+        return
+      }
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {

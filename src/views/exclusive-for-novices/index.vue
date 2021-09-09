@@ -142,9 +142,8 @@ export default {
           Dialog({ message: '已领取过' });
           return
         }
-        if (this.isNew === 'true') {
+        if (this.isNew) {
           teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
-            console.log('一键领取', res)
             if(res.code ===0) {
               this.hold = 2
               Dialog({ message: '领取成功!' });
@@ -154,7 +153,7 @@ export default {
           Dialog({ message: '红包仅限新人领取' });
         }
       } else {
-        Dialog({ message: '未登录！' });
+        Dialog({ message: '未登录' });
         console.log('token is null', this.token)
       }
     },

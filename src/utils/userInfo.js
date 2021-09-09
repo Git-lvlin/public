@@ -24,3 +24,12 @@ export const judgeVersionIsNew = (v) => {
   const version = v.replace(/\./g, '')
   return version > breakPointVersion
 }
+
+export const getUserInfo = () => {
+  return new Promise((resolve) => {
+    this.$bridge.callHandler('getUserInfo',{},(res) => {
+      const d = JSON.parse(res)
+      resolve(d.data)
+    })
+  })
+}
