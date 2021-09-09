@@ -114,11 +114,8 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   async created () {
-    console.log('created-start')
-    console.log('this.$store.state', this.$store.state)
     if (this.$store.state.appInfo.isApp) {
       const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
-      console.log('isNewVersion', isNewVersion)
       if (isNewVersion) {
         await this.getUserInfo();
         this.getListData()
@@ -172,7 +169,6 @@ export default {
       return new Promise((resolve) => {
         this.$bridge.callHandler('getUserInfo',{},(res) => {
           const d = JSON.parse(res)
-          console.log('d', d)
           this.token = d.data.accessToken
           this.isNew = d.data.isNew
           resolve()
@@ -181,7 +177,6 @@ export default {
     },
     getAppInfo() {
       Promise.all([this.getToken(), this.getIndexVersion(), this.getMemberRecognize()]).then(() => {
-        console.log('token&indexVersion&isNew获取成功', this.token, this.indexVersion, this.isNew)
         this.getListData()
       })
     },
@@ -207,9 +202,7 @@ export default {
     },
     getImgUrl,
     getListData() {
-      console.log('getListData-start')
       teamApi.getNewPeoplesCoupon({}, {token:this.token}).then((res) => {
-        console.log('getListData-res', res)
         if (res.code === 0) {
           this.hold = res?.data?.pLqStatus
           this.listData = res?.data?.couponInfo?.records
@@ -229,7 +222,6 @@ export default {
           // }).toString();
         // }
         this.list = data
-        console.log('list', this.list)
         this.loading = false;
       }).catch(() => {
         this.loading = false;

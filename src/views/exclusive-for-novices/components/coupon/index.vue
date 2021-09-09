@@ -43,8 +43,6 @@ export default {
         good,
       } = this;
       const paramStr = `?orderType=${good.orderType || 3}&spuId=${good.spuId || ''}&objectId=${good.objectId || ''}&activityId=${good.activityId || ''}&skuId=${good.skuId || ''}&wsId=${good.wsId || ''}`
-      console.log(window.navigator)
-      console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
         const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
         if (isNewVersion) {
