@@ -215,10 +215,6 @@ export default {
   },
   async created () {
     this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
-    if (this.isNewVersion) {
-      this.info = await getUserInfo(this.$bridge)
-      return
-    }
     this.$bridge.callHandler(
           'fetchToken',
           {},
@@ -231,8 +227,11 @@ export default {
   },
   methods: {
     getImgUrl,
-    onToDetail() {
+    async onToDetail() {
       if (this.isNewVersion) {
+        console.log('onToDetail', onToDetail)
+        this.info = await getUserInfo(this.$bridge)
+        console.log('info', this.info)
         const router = this.info?.accessToken?'/flutter/store/member/settled':'/login/index'
         goToApp(appBaseUrl, router, '', this.$bridge)
         return
