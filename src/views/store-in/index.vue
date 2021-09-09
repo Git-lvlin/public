@@ -197,7 +197,7 @@ import Vue from 'vue';
 import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
-import { getUserInfo, goToApp, judgeVersionIsNew } from '@/utils/userInfo';
+import { goToApp, judgeVersionIsNew } from '@/utils/userInfo';
 Vue.use(VanImage);
 export default {
   props: {
@@ -207,7 +207,6 @@ export default {
     return {
       isShow: false,
       hasToken: false,
-      info: {},
       isNewVersion: false,
     };
   },
@@ -216,27 +215,38 @@ export default {
   created () {
     console.log('created', this.$store.state.appInfo)
     this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
+    console.log('isNewVersion', this.isNewVersion)
     if (this.isNewVersion) {
       return
-    }
-    this.$bridge.callHandler(
-          'fetchToken',
-          {},
-          (a) => {
-            if (a && a.length) {
-              this.hasToken = true
-            }
+    } else {
+      console.log('老版本')
+      this.$bridge.callHandler(
+        'fetchToken',
+        {},
+        (a) => {
+          if (a && a.length) {
+            this.hasToken = true
           }
-        )
+        }
+      )
+    }
   },
   methods: {
     getImgUrl,
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.hasToken = d.data.accessToken?true:false
+          resolve()
+        })
+      })
+    },
     async onToDetail() {
+      console.log('onToDetail')
       if (this.isNewVersion) {
-        console.log('onToDetail', onToDetail)
-        this.info = await getUserInfo(this.$bridge)
-        console.log('info', this.info)
-        const router = this.info.accessToken?'/flutter/store/member/settled':'/login/index'
+        await this.getUserInfo()
+        const router = this.hasToken?'/flutter/store/member/settled':'/login/index'
         goToApp(appBaseUrl, router, '', this.$bridge)
         return
       }
