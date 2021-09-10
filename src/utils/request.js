@@ -47,7 +47,7 @@ let requestHistory = []
 
 axios.interceptors.response.use(async response => {
   const { code } = response.data
-  if (code == 0) {
+  if (code == 0 || code == -1) {
     return response.data;
   }
   if (code == REFRESH_TOKEN_INVALID) {
@@ -147,12 +147,6 @@ const request = async ({
     console.log('axios-err', error)
     if (showError) {
       setTimeout(() => {
-        if (error.code === -1) {
-          Toast({
-            message: error.message,
-          });
-          return
-        }
         if (error.message === 'timeout of 10000ms exceeded') {
           Toast({
             message: '网络请求超时',
