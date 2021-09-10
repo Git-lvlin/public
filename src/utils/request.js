@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { Toast } from 'vant';
+import { Toast, Dialog } from 'vant';
 import { refresToken } from '@/constant/index';
 import { appBaseUrl } from "@/constant/index";
 import { goToApp } from "@/utils/userInfo";
-
 Toast.setDefaultOptions('loading', { forbidClick: true });
 
 // accessToken过期
@@ -137,9 +136,7 @@ const request = async ({
     }
     if (res.code !== 0 && showError) {
       setTimeout(() => {
-        Toast({
-          message: res.msg,
-        });
+        Dialog({ message: res.msg });
       }, 1000);
     }
     return res;
