@@ -147,6 +147,12 @@ const request = async ({
     console.log('axios-err', error)
     if (showError) {
       setTimeout(() => {
+        if (error.code === -1) {
+          Toast({
+            message: error.message,
+          });
+          return
+        }
         if (error.message === 'timeout of 10000ms exceeded') {
           Toast({
             message: '网络请求超时',
