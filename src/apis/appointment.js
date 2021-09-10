@@ -7,7 +7,6 @@ const url = {
   saveList: '/contestprice/open/contestprice/GetHotGoodsList',
   hotList: '/contestprice/open/contestprice/GetRecGoodsList?isPage=1',
   newCouponGoodsList: '/activity/option/newCouponGoodsList',
-  getMemberCouponLqStatus: '/activity/option/getMemberCouponLqStatus',
   sendMemberCoupon: '/activity/auth/sendMemberCoupon',
   sendNewMemberCoupon: '/activity/auth/sendNewMemberCoupon',
   couponList: '/activity/option/couponCenterList',
@@ -104,14 +103,6 @@ export default {
   getGcid(params = {}, options = {}) {
     return get({
       url: url.getGcid,
-      data: params,
-      options,
-    })
-  },
-  // 新人红包是否领取
-  getMemberCouponLqStatus(params = {}, options = {}) {
-    return get({
-      url: url.getMemberCouponLqStatus,
       data: params,
       options,
     })

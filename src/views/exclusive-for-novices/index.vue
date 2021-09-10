@@ -135,13 +135,6 @@ export default {
         return
       }
       if (this.token) {
-        const status = await this.getStatus()
-        console.log('status', status)
-        if (status == 2) {
-          this.hold = 2
-          Dialog({ message: '已领取过' });
-          return
-        }
         if (this.isNew) {
           teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
             if(res.code ===0) {
@@ -156,13 +149,6 @@ export default {
         Dialog({ message: '未登录' });
         console.log('token is null', this.token)
       }
-    },
-    getStatus() {
-      return new Promise((resolve) => {
-        teamApi.getMemberCouponLqStatus({}, {token: this.token}).then(({data}) => {
-          data&&resolve(data.status)
-        })
-      })
     },
     getUserInfo() {
       return new Promise((resolve) => {
