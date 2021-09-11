@@ -199,13 +199,6 @@ export default {
       this.loading = true;
       teamApi.getNewCouponGoodsList({}).then((res) => {
         let data = res.data.goodsList;
-        // const len = data.length;
-        // for (let i=0;i<len;i++) {
-          // data[i].couponList = JSON.stringify(data[i].couponList)
-          // data[i].couponList = data[i].couponList.map(element => {
-          //   return element.couponDesc
-          // }).toString();
-        // }
         this.list = data
         this.loading = false;
       }).catch(() => {
@@ -213,10 +206,6 @@ export default {
       });
     },
     onBottomReach() {
-      // if (this.totalPage > this.page) {
-      //   this.page += 1;
-      //   this.onLoad();
-      // }
     },
   },
   mounted() {
