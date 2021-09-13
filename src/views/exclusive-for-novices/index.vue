@@ -21,6 +21,7 @@
           />
         </div>
       </div>
+      <div v-if="listData.length" class="text">(新人券仅当前新人专享商品可用。)</div>
       <div class="get-button" v-if="listData.length">
         <van-image
           @click="getCoupon"
@@ -63,7 +64,7 @@
         >
           <hot v-for="item in list" :key="item" :good="item" />
         </van-list>
-        <div class="no" v-show="finished">没有更多了</div>
+        <!-- <div class="no" v-show="finished">没有更多了</div> -->
       </div>
     </div>
   </div>
@@ -73,6 +74,7 @@
 import Vue from 'vue';
 import { Image as VanImage, List, Dialog } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import { judgeVersionIsNew } from '@/utils/userInfo';
 import Save from './components/goods-list';
 import Hot from './components/coupon';
 import teamApi from '@/apis/appointment';
@@ -96,12 +98,14 @@ export default {
       listData: [],
       list: [],
       loading: false,
-      finished: false,
+      finished: true,
       page: 1,
       size: 10,
       totalPage: 1,
       token: null,
       indexVersion: null,
+      isNew: false,
+      info: {}
     };
   },
   components: {
@@ -109,9 +113,15 @@ export default {
     Hot,
     [Dialog.Component.name]: Dialog.Component,
   },
-  created () {
-    console.log('created-start')
+  async created () {
     if (this.$store.state.appInfo.isApp) {
+      const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
+      if (isNewVersion) {
+        await this.getUserInfo();
+        this.getListData()
+        return
+      }
+      console.log('兼容低版本逻辑')
       this.getAppInfo()
     } else if (this.$store.state.appInfo.isMiniprogram) {
       this.getMiniprogramInfo()
@@ -120,31 +130,49 @@ export default {
     }
   },
   methods: {
-    getCoupon() {
+    async getCoupon() {
       if (this.hold === 2) {
         return
       }
       if (this.token) {
-        teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
-          console.log('一键领取', res)
-          if(res.code ===0) {
-            this.hold = 2
-            Dialog({ message: '领取成功!' });
-          }
-        })
+        if (this.isNew) {
+          teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
+            if(res.code ===0) {
+              this.hold = 2
+              Dialog({ message: '领取成功!' });
+            }
+          })
+        } else {
+          Dialog({ message: '红包仅限新人领取' });
+        }
       } else {
+        Dialog({ message: '未登录' });
         console.log('token is null', this.token)
       }
     },
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          this.isNew = d.data.isNew
+          resolve()
+        })
+      })
+    },
     getAppInfo() {
-      Promise.all([this.getToken(), this.getIndexVersion()]).then(() => {
-        console.log('token&indexVersion获取成功', this.token, this.indexVersion)
+      Promise.all([this.getToken(), this.getIndexVersion(), this.getMemberRecognize()]).then(() => {
         this.getListData()
       })
     },
     getToken() {
       return new Promise((resolve) => {
         this.$bridge.callHandler('fetchToken',{},(a) => {this.token = a;resolve()})
+      })
+    },
+    getMemberRecognize() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getMemberRecognize',{},(a) => {this.isNew = a;resolve()})
       })
     },
     getIndexVersion() {
@@ -155,51 +183,29 @@ export default {
     getMiniprogramInfo() {
       this.indexVersion = this.$router.history.current.indexVersion
       this.token = this.$router.history.current.token
+      this.isNew = this.$router.history.current.isNew
     },
     getImgUrl,
     getListData() {
       teamApi.getNewPeoplesCoupon({}, {token:this.token}).then((res) => {
-        console.log('getListData-res', res)
         if (res.code === 0) {
           this.hold = res?.data?.pLqStatus
           this.listData = res?.data?.couponInfo?.records
+          this.getCoupon()
         }
       })
     },
     onLoad() {
-      const {
-        page,
-        size,
-      } = this;
       this.loading = true;
-      teamApi.getHotGoodsList({
-        page,
-        size,
-      }).then((res) => {
-        const {
-          data,
-        } = res;
-        if (data && data.records) {
-          this.totalPage = data.totalpage;
-          if (page < 2) {
-            this.list = data.records;
-          } else {
-            this.list = this.list.concat(data.records);
-          }
-          if (this.list.length >= data.total) {
-            this.finished = true;
-          }
-        }
+      teamApi.getNewCouponGoodsList({}).then((res) => {
+        let data = res.data.goodsList;
+        this.list = data
         this.loading = false;
       }).catch(() => {
         this.loading = false;
       });
     },
     onBottomReach() {
-      if (this.totalPage > this.page) {
-        this.page += 1;
-        this.onLoad();
-      }
     },
   },
   mounted() {
@@ -249,9 +255,21 @@ export default {
       border-radius: 0px 0px 50% 50%/0 0 100% 100%;
       margin-bottom: 12px;
     }
+    .text {
+      position: absolute;
+      bottom: 61px;
+      width: 100%;
+      text-align: center;
+      height: 14px;
+      font-size: 10px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #FFFFFF;
+      line-height: 14px;
+    }
     .get-button {
       position: absolute;
-      bottom: 16px;
+      bottom: 12px;
       left: 50%;
       transform: translateX(-50%);
       width: 260px;

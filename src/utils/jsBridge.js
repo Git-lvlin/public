@@ -34,23 +34,24 @@ const setupWebViewJavascriptBridge = (callback) => {
     }
   }
   if (isiOS) {
-    if (window.WebViewJavascriptBridge) {
-      return callback(window.WebViewJavascriptBridge);
+    if (window.WKWebViewJavascriptBridge) {
+      return callback(window.WKWebViewJavascriptBridge);
     }
-    if (window.WVJBCallbacks) {
-      return window.WVJBCallbacks.push(callback);
+    if (window.WKWVJBCallbacks) {
+      return window.WKWVJBCallbacks.push(callback);
     }
-    window.WVJBCallbacks = [callback];
-    const WVJBIframe = document.createElement('iframe');
-    WVJBIframe.style.display = 'none';
-    // WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
-    WVJBIframe.src = 'https://__bridge_loaded__';
-    // WVJBIframe.src = 'https://publicmobile-uat.yeahgo.com';
-    // WVJBIframe.src = 'https://publicmobile.yeahgo.com';
-    document.documentElement.appendChild(WVJBIframe);
-    setTimeout(() => {
-      document.documentElement.removeChild(WVJBIframe);
-    }, 0);
+    window.WKWVJBCallbacks = [callback];
+    window.webkit.messageHandlers.iOS_Native_InjectJavascript.postMessage(null)
+    // const WVJBIframe = document.createElement('iframe');
+    // WVJBIframe.style.display = 'none';
+    // // WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+    // WVJBIframe.src = 'https://__bridge_loaded__';
+    // // WVJBIframe.src = 'https://publicmobile-uat.yeahgo.com';
+    // // WVJBIframe.src = 'https://publicmobile.yeahgo.com';
+    // document.documentElement.appendChild(WVJBIframe);
+    // setTimeout(() => {
+    //   document.documentElement.removeChild(WVJBIframe);
+    // }, 0);
   }
 }
 

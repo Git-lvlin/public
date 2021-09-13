@@ -56,16 +56,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="item-box item-box2">
-      <div class="content2">
-        <p class="sub-title">生成我的专属邀请海报</p>
-        <div class="center">
-          <span class="l-s">邀请码: <span id="code">{{inviteCode}}</span></span>
-          <span class="r-s" @click="copy">复制</span>
-        </div>
-        <div class="now-button" @click="onToDetail">立即邀请</div>
-      </div>
-    </div> -->
     <div class="item-box item-box3">
       <div class="content3">
         <div class="center-box">
@@ -87,30 +77,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="item-box item-box4">
-      <div class="title-box">
-        <van-image
-          class="title-img"
-          width="182px"
-          height="33px"
-          :src="getImgUrl('publicMobile/invitation/item-title.png')"
-        />
-        <span class="span-text">邀请步骤</span>
-      </div>
-      <div class="content4">
-        <p>
-          <span>1.</span>可以直接复制邀请码给好友下载APP注册填写。
-        </p>
-        <p>
-          <span>2.</span>海报中的二维码已经包含您的邀请信息。
-        </p>
-        <p>
-          <span>3.</span>好友通过您的邀请码或者邀请海报注册会员并下载APP。
-        </p>
-      </div>
-    </div> -->
-
-
     </div>
 
   </div>
@@ -122,6 +88,8 @@ import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/appointment';
+import { judgeVersionIsNew, goToApp } from '@/utils/userInfo';
+
 Vue.use(VanImage);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
@@ -132,17 +100,23 @@ export default {
       totalCommission: false,
       inviteNum: false,
       inviteCode: null,
+      token: null,
+      isNewVersion: null
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  created () {
+  async created () {
     if (this.$store.state.appInfo.isApp) {
+      this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
+      if (this.isNewVersion) {
+        await this.getUserInfo();
+        this.getInviteInfo()
+        return
+      }
+      console.log('兼容低版本逻辑')
       this.getInfo()
-    } else if (this.$store.state.appInfo.isMiniprogram) {
-      console.log('应该没有小程序')
-      // this.getMiniprogramInfo()
     } else {
       console.log('不是App内')
     }
@@ -151,36 +125,51 @@ export default {
     getImgUrl,
     getInfo() {
       this.$bridge.callHandler('fetchToken', {}, (a) => {
-              teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
-                if (res && res.code === 0 && res.data) {
-                  this.totalCommission = res.data.totalCommission
-                  this.inviteNum = res.data.inviteNum
-                }
-              })
+          teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
+            if (res && res.code === 0 && res.data) {
+              this.totalCommission = res.data.totalCommission
+              this.inviteNum = res.data.inviteNum
             }
-          )
+          })
+        }
+      )
     },
-    // copy() {
-    //   let transfer = document.createElement('input');
-    //   document.body.appendChild(transfer);
-    //   transfer.value = this.inviteCode;
-    //   transfer.focus();
-    //   transfer.select();
-    //   if (document.execCommand('copy')) {
-    //     document.execCommand('copy');
-    //   }
-    //   transfer.blur();
-    //   console.log('复制成功');
-    //   Dialog({ message: '复制成功' });
-    //   document.body.removeChild(transfer);
-    // },
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          // this.isNew = d.data.isNew
+          resolve()
+        })
+      })
+    },
+    getInviteInfo() {
+      console.log('this.token', this.token)
+      teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
+        if (res && res.code === 0 && res.data) {
+          this.totalCommission = res.data.totalCommission
+          this.inviteNum = res.data.inviteNum
+        }
+      })
+    },
     onToDetail(type) {
       const {
         good,
       } = this;
-      console.log(window.navigator)
-      console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
+        if (this.isNewVersion) {
+          if (type === 'all') {
+            goToApp(appBaseUrl, '/flutter/mine/member_list/page', '', this.$bridge)
+            return
+          }
+          this.$bridge.callHandler(
+            'inviteFriend',
+          )
+          return
+        }
+
+        // 老版本
         if (type === 'all') {
           this.$bridge.callHandler(
             'router',

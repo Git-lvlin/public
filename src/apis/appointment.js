@@ -6,6 +6,7 @@ const url = {
   userList: '/activity/option/group/personal/list',
   saveList: '/contestprice/open/contestprice/GetHotGoodsList',
   hotList: '/contestprice/open/contestprice/GetRecGoodsList?isPage=1',
+  newCouponGoodsList: '/activity/option/newCouponGoodsList',
   sendMemberCoupon: '/activity/auth/sendMemberCoupon',
   sendNewMemberCoupon: '/activity/auth/sendNewMemberCoupon',
   couponList: '/activity/option/couponCenterList',
@@ -54,6 +55,14 @@ export default {
   getHotGoodsList(params = {}, options = {}) {
     return get({
       url: url.hotList,
+      data: params,
+      options,
+    })
+  },
+  // 新人红包页面商品列表
+  getNewCouponGoodsList(params = {}, options = {}) {
+    return post({
+      url: url.newCouponGoodsList,
       data: params,
       options,
     })

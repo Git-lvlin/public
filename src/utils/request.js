@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { Toast } from 'vant';
+import { Toast, Dialog } from 'vant';
 import { refresToken } from '@/constant/index';
 import { appBaseUrl } from "@/constant/index";
+import { goToApp } from "@/utils/userInfo";
 Toast.setDefaultOptions('loading', { forbidClick: true });
 
 // accessToken过期
@@ -45,7 +46,7 @@ let requestHistory = []
 
 axios.interceptors.response.use(async response => {
   const { code } = response.data
-  if (code == 0) {
+  if (code == 0 || code == -1) {
     return response.data;
   }
   if (code == REFRESH_TOKEN_INVALID) {
@@ -121,15 +122,12 @@ const request = async ({
   return axios(all).then((res) => {
     if (res.code === 10014 || res.code === 10010) {
       if (this.$store.state.appInfo.isApp) {
-        this.$bridge.callHandler(
-          'router',
-          `${appBaseUrl}/login/index`,
-        )
+        goToApp(appBaseUrl, '/login/index')
         return
       }
       if (this.$store.state.appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({
-          url: '/pages/login/main/index'
+          url: '/pages/login/mobile/index'
         })
         return
       }
@@ -138,9 +136,7 @@ const request = async ({
     }
     if (res.code !== 0 && showError) {
       setTimeout(() => {
-        Toast({
-          message: res.msg,
-        });
+        Dialog({ message: res.msg });
       }, 1000);
     }
     return res;
