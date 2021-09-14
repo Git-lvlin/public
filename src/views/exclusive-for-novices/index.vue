@@ -105,7 +105,8 @@ export default {
       token: null,
       indexVersion: null,
       isNew: false,
-      info: {}
+      info: {},
+      flag: true,
     };
   },
   components: {
@@ -131,11 +132,14 @@ export default {
   },
   methods: {
     async getCoupon() {
+      if (!this.flag) {
+        return
+      }
+      this.flag = false
       if (this.hold === 2) {
         return
       }
       if (this.token) {
-        // if (this.isNew) {
           teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
             if(res.code ===0) {
               this.hold = 2
@@ -143,10 +147,8 @@ export default {
             } else {
               Dialog({ message: res.msg });
             }
+            this.flag = true
           })
-        // } else {
-        //   Dialog({ message: '红包仅限新人领取' });
-        // }
       } else {
         Dialog({ message: '未登录' });
         console.log('token is null', this.token)
