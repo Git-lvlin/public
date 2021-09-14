@@ -191,7 +191,9 @@ export default {
         if (res.code === 0) {
           this.hold = res?.data?.pLqStatus
           this.listData = res?.data?.couponInfo?.records
-          this.getCoupon()
+          if (this.hold !== 2) {
+            this.getCoupon()
+          }
         }
       })
     },
