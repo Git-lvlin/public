@@ -43,7 +43,7 @@
           height="24px"
           :src="getImgUrl('publicMobile/newpeoples/red-icon.png')"
         />
-      <span>新人2重好礼：新人尝鲜价</span>
+      <span>新人2重好礼：下单最高减50元</span>
         <van-image
           width="24px"
           height="24px"
