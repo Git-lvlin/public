@@ -310,7 +310,7 @@ export default {
     display: flex;
     justify-content: center;
     span {
-      width:209px;
+      // width:209px;
       height:25px;
       text-shadow:0px 2px 4px rgba(222, 24, 24, 0.5);
       font-family:PingFang SC;
