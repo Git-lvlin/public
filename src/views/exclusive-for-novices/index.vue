@@ -144,8 +144,6 @@ export default {
             if(res.code ===0) {
               this.hold = 2
               Dialog({ message: '领取成功!' });
-            } else {
-              Dialog({ message: res.msg });
             }
             this.flag = true
           })
