@@ -2,10 +2,10 @@
   <div class="price_comparsion">
     <van-image
       width="100%"
-      :src="getImgUrl('publicMobile/newpeoples/head-bg.png')"
+      :src="getImgUrl('publicMobile/newpeoples/head-bg-914.png')"
     />
     <div class="save-goods-box">
-      <div class="title">新人1重好礼：168元新人券</div>
+      <div class="title">新人1重好礼：100元新人券</div>
       <van-image
         class="title-icon"
         :src="getImgUrl('publicMobile/newpeoples/money-icon.png')"
