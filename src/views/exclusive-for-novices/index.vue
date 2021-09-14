@@ -21,7 +21,7 @@
           />
         </div>
       </div>
-      <div v-if="listData.length" class="text">(新人券仅当前新人专享商品可用。)</div>
+      <div v-if="listData.length" class="text">(新人红包仅当前新人专享商品可用。)</div>
       <div class="get-button" v-if="listData.length">
         <van-image
           @click="getCoupon"
