@@ -10,6 +10,7 @@
 <script>
 import { getImgUrl, getQueryObj } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
+import { goToApp, judgeVersionIsNew } from "@/utils/userInfo";
 export default {
   props: {
     good: {
@@ -25,11 +26,14 @@ export default {
         return console.log(this.good)
       }
       const query = getQueryObj(this.good.actionUrl)
-      console.log('query', query)
       const paramStr = `?&spuId=${query.spuId || ''}&skuId=${query.skuId || ''}&orderType=${query.orderType || '2'}`
-      console.log(window.navigator)
-      console.log("$store.state.appInfo", this.$store.state.appInfo)
+
       if (this.$store.state.appInfo.isApp) {
+        const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
+        if (isNewVersion) {
+          goToApp(appBaseUrl, '/shopping/detail', paramStr, this.$bridge)
+          return
+        }
         this.$bridge.callHandler(
           'router',
           `${appBaseUrl}/shopping/detail${paramStr}`,
