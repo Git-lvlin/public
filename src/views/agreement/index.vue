@@ -9,6 +9,7 @@
       <store1 v-if="index==1" />
       <store2 v-if="index==2" />
       <store3 v-if="index==3" />
+      <store4 v-if="index==4" />
     </div>
     <div v-if="reg==='business'">
       <business0 v-if="index==0" />
@@ -31,6 +32,7 @@ import store0 from './components/store/0.vue';
 import store1 from './components/store/1.vue';
 import store2 from './components/store/2.vue';
 import store3 from './components/store/3.vue';
+import store4 from './components/store/4.vue';
 
 import business0 from './components/business/0.vue';
 import business1 from './components/business/1.vue';
@@ -78,6 +80,7 @@ export default {
     store1,
     store2,
     store3,
+    store4,
     business0,
     business1,
     business2,

@@ -5,7 +5,7 @@
       :src="getImgUrl('publicMobile/newpeoples/head-bg-914.png')"
     />
     <div class="save-goods-box">
-      <div class="title">新人1重好礼：100元新人券</div>
+      <div class="title">新人1重好礼：100元新人红包</div>
       <van-image
         class="title-icon"
         :src="getImgUrl('publicMobile/newpeoples/money-icon.png')"
