@@ -20,7 +20,7 @@
       </div>
       <div class="r">
         <p>{{good.title}}</p>
-        <p class="p">{{good.goodsTypeDisplay}}</p>
+        <!-- <p class="p">{{good.goodsTypeDisplay}}</p> -->
       </div>
     </div>
   </div>
@@ -64,8 +64,8 @@ export default {
   z-index: 3;
   .l {
     margin-left: 10px;
-    font-family:PingFang SC;
-    font-weight:500;
+    font-family: PingFang SC;
+    font-weight: 500;
     color:#f23c2a;
     font-size:14px;
     line-height:20px;
@@ -76,8 +76,8 @@ export default {
   .r {
     font-family:PingFang SC;
     color:#f23c2a;
-    font-size:10px;
-    line-height:14px;
+    font-size:12px;
+    // line-height:14px;
     margin-left: 23px;
     display: flex;
     flex-direction: column;
