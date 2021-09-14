@@ -135,16 +135,16 @@ export default {
         return
       }
       if (this.token) {
-        if (this.isNew) {
+        // if (this.isNew) {
           teamApi.getNewRedbox({}, {token: this.token}).then((res) => {
             if(res.code ===0) {
               this.hold = 2
               Dialog({ message: '领取成功!' });
             }
           })
-        } else {
-          Dialog({ message: '红包仅限新人领取' });
-        }
+        // } else {
+        //   Dialog({ message: '红包仅限新人领取' });
+        // }
       } else {
         Dialog({ message: '未登录' });
         console.log('token is null', this.token)
@@ -191,7 +191,7 @@ export default {
         if (res.code === 0) {
           this.hold = res?.data?.pLqStatus
           this.listData = res?.data?.couponInfo?.records
-          if (this.hold !== 2) {
+          if (this.hold == 1) {
             this.getCoupon()
           }
         }
