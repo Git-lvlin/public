@@ -122,7 +122,7 @@ const request = async ({
   return axios(all).then((res) => {
     if (res.code === 10014 || res.code === 10010) {
       if (this.$store.state.appInfo.isApp) {
-        goToApp(appBaseUrl, '/login/index')
+        this.$bridge&&goToApp(appBaseUrl, '/login/index', '', this.$bridge)
         return
       }
       if (this.$store.state.appInfo.isMiniprogram) {
