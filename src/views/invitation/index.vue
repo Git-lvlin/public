@@ -17,6 +17,11 @@
       width="100%"
       :src="getImgUrl('publicMobile/invitation/b.png')"
     />
+    <van-image
+      class="banner"
+      width="100%"
+      :src="memberQrCode"
+    />
     <div class="content-box">
       <van-image
         class="img-title"
@@ -101,7 +106,8 @@ export default {
       inviteNum: false,
       inviteCode: null,
       token: null,
-      isNewVersion: null
+      isNewVersion: null,
+      memberQrCode: null,
     };
   },
   components: {
@@ -113,6 +119,7 @@ export default {
       if (this.isNewVersion) {
         await this.getUserInfo();
         this.getInviteInfo()
+        this.getImg()
         return
       }
       console.log('兼容低版本逻辑')
@@ -133,6 +140,13 @@ export default {
           })
         }
       )
+    },
+    getImg() {
+      teamApi.getShareImg({paramId: 4}, {token: this.token}).then((res) => {
+        if (res && res.code === 0 && res.data) {
+          this.memberQrCode = res.data.memberQrCode
+        }
+      })
     },
     getUserInfo() {
       return new Promise((resolve) => {

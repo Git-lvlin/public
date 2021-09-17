@@ -16,6 +16,7 @@ const url = {
   getInviteInfo: '/member/auth/memberInvite/getInviteInfo',
   activitySubject: '/cms/open/activitySubject/getById',
   getGcid: '/goods/open/category',
+  share: '/share/option/shareParam/queryMemberQrCode',
 };
 
 export default {
@@ -135,6 +136,14 @@ export default {
   getActivitySubject(params = {}, options = {}) {
     return get({
       url: url.activitySubject,
+      data: params,
+      options,
+    })
+  },
+  // 营销资源
+  getShareImg(params = {}, options = {}) {
+    return post({
+      url: url.share,
       data: params,
       options,
     })
