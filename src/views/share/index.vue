@@ -98,6 +98,7 @@ export default {
   methods: {
     getImgUrl,
     nowUpdata() {
+      console.log('OpenInstall', OpenInstall)
       const data = OpenInstall.parseUrlParams();///openinstall.js中提供的工具函数，解析url中的所有查询参数
       new OpenInstall({
             /*appKey必选参数，openinstall平台为每个应用分配的ID*/

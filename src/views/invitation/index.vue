@@ -17,11 +17,28 @@
       width="100%"
       :src="getImgUrl('publicMobile/invitation/b.png')"
     />
-    <van-image
-      class="banner"
-      width="100%"
-      :src="memberQrCode"
-    />
+    <div class="item-box one-box">
+      <div class="title-box">
+        <van-image
+          class="title-img"
+          width="196px"
+          height="33px"
+          :src="getImgUrl('publicMobile/invitation/item-title.png')"
+        />
+        <span class="span-text">扫码下载</span>
+      </div>
+      <div class="one-box-content">
+        <van-image
+          class="code"
+          :src="memberQrCode"
+        />
+        <div class="right-box">
+          <div class="text">微信小程序分享二维码</div>
+          <div class="btn" @click="saveNow">立即保存</div>
+        </div>
+      </div>
+
+    </div>
     <div class="content-box">
       <van-image
         class="img-title"
@@ -29,7 +46,6 @@
         height="30px"
         :src="getImgUrl('publicMobile/invitation/t.png')"
       />
-
     <div class="item-box">
       <van-image
         class="link-l"
@@ -114,6 +130,7 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   async created () {
+    this.getImg()
     if (this.$store.state.appInfo.isApp) {
       this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
       if (this.isNewVersion) {
@@ -130,6 +147,9 @@ export default {
   },
   methods: {
     getImgUrl,
+    saveNow() {
+      console.log('立即保存')
+    },
     getInfo() {
       this.$bridge.callHandler('fetchToken', {}, (a) => {
           teamApi.apiGetInviteInfo({}, {token: a}).then((res) => {
@@ -142,7 +162,7 @@ export default {
       )
     },
     getImg() {
-      teamApi.getShareImg({paramId: 4}, {token: this.token}).then((res) => {
+      teamApi.getShareImg({paramId: 4}, {token: 'AQAAAAAAYVsrJRN-iSdbrWABN_IlSl-tUiGbd_gatlPLl3Pw-6rDu6m0UNTuCJqC2ZU='}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.memberQrCode = res.data.memberQrCode
         }
@@ -245,6 +265,7 @@ export default {
   .banner {
     margin-bottom: 17px;
   }
+
   .item-box {
     position: relative;
     margin: 0 auto;
@@ -395,6 +416,54 @@ export default {
         margin-bottom: 14px;
       }
     }
+  }
+  .one-box {
+    top: -90px;
+    width:352px;
+    height:205px;
+    .one-box-content {
+      margin: 0 auto;
+      margin-top: 49px;
+      width: 328px;
+      height: 132px;
+      background-color: #fff;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .code {
+        margin-right: 13px;
+        width: 116px;
+        height: 116px;
+      }
+      .right-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .text {
+          margin-bottom: 26px;
+          height: 22px;
+          font-size: 16px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #8D5328;
+          line-height: 22px;
+        }
+        .btn {
+          width: 165px;
+          height: 34px;
+          background: linear-gradient(90deg, #FD0A01 0%, #FE7300 100%);
+          border-radius: 26px;
+          font-size: 16px;
+          font-family: PingFangSC-Medium, PingFang SC;
+          font-weight: 500;
+          color: #FFFFFF;
+          line-height: 34px;
+          text-align: center;
+        }
+      }
+    }
+
   }
   .item-box2 {
     height:246px;
