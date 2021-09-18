@@ -14,6 +14,21 @@ export const goToApp = (baseUrl, router, param, bridge) => {
   )
 }
 
+export const savePicShare = (src, bridge) => {
+  const data = {
+    code: 0,
+    msg: 'success',
+    data: {
+      imgSrc: `${src}`,
+    }
+  }
+  const zero = JSON.stringify(data);
+  bridge.callHandler(
+    'savePicShare',
+    zero,
+  )
+}
+
 export const judgeVersionIsNew = (v) => {
   const breakPointVersion = 103
   if (v.includes('-')) {

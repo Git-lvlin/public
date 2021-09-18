@@ -109,7 +109,7 @@ import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/appointment';
-import { judgeVersionIsNew, goToApp } from '@/utils/userInfo';
+import { judgeVersionIsNew, goToApp, savePicShare } from '@/utils/userInfo';
 
 Vue.use(VanImage);
 Vue.use(Swipe);
@@ -130,13 +130,12 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   async created () {
-    this.getImg()
     if (this.$store.state.appInfo.isApp) {
       this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
       if (this.isNewVersion) {
         await this.getUserInfo();
-        this.getInviteInfo()
-        this.getImg()
+        this.getImg();
+        this.getInviteInfo();
         return
       }
       console.log('兼容低版本逻辑')
@@ -148,7 +147,8 @@ export default {
   methods: {
     getImgUrl,
     saveNow() {
-      console.log('立即保存')
+      console.log('立即保存', memberQrCode)
+      savePicShare(memberQrCode, this.$bridge)
     },
     getInfo() {
       this.$bridge.callHandler('fetchToken', {}, (a) => {
@@ -162,7 +162,7 @@ export default {
       )
     },
     getImg() {
-      teamApi.getShareImg({paramId: 4}, {token: 'AQAAAAAAYVsrJRN-iSdbrWABN_IlSl-tUiGbd_gatlPLl3Pw-6rDu6m0UNTuCJqC2ZU='}).then((res) => {
+      teamApi.getShareImg({paramId: 4}, {token: this.token}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.memberQrCode = res.data.memberQrCode
         }
