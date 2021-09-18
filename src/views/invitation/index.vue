@@ -39,7 +39,7 @@
       </div>
 
     </div>
-    <div class="content-box">
+    <!-- <div class="content-box">
       <van-image
         class="img-title"
         width="246px"
@@ -76,8 +76,8 @@
           />
         </div>
       </div>
-    </div>
-    <div class="item-box item-box3">
+    </div> -->
+    <div class="item-box item-box3" v-if="inviteNum">
       <div class="content3">
         <div class="center-box">
           <div class="sub-title">
