@@ -77,7 +77,9 @@
         </div>
       </div>
     </div> -->
-    <div class="item-box item-box3" v-if="inviteNum">
+    <!-- <div class="item-box item-box3" v-if="inviteNum"> -->
+
+    <div class="item-box item-box3">
       <div class="content3">
         <div class="center-box">
           <div class="sub-title">
@@ -254,7 +256,7 @@ export default {
     .content-box {
       position: relative;
       width: 100%;
-      top: -67px;
+      top: -90px;
       .img-title {
         position: relative;
         left: 50%;
