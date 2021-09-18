@@ -39,8 +39,8 @@
       </div>
 
     </div>
-    <!-- <div class="content-box">
-      <van-image
+    <div class="content-box">
+      <!-- <van-image
         class="img-title"
         width="246px"
         height="30px"
