@@ -147,8 +147,8 @@ export default {
   methods: {
     getImgUrl,
     saveNow() {
-      console.log('立即保存', memberQrCode)
-      savePicShare(memberQrCode, this.$bridge)
+      console.log('立即保存', this.memberQrCode)
+      savePicShare(this.memberQrCode, this.$bridge)
     },
     getInfo() {
       this.$bridge.callHandler('fetchToken', {}, (a) => {
