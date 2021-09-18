@@ -39,3 +39,14 @@ export const judgeVersionIsNew = (v) => {
   const version = v.replace(/\./g, '')
   return version > breakPointVersion
 }
+
+export const judgeVersionIsNewShare = (v) => {
+  const breakPointVersion = 104
+  if (v.includes('-')) {
+    const numVersion = v.split('-')[0];
+    const version = numVersion.replace(/\./g, '')
+    return version > breakPointVersion
+  }
+  const version = v.replace(/\./g, '')
+  return version > breakPointVersion
+}

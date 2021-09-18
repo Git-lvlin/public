@@ -109,7 +109,7 @@ import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/appointment';
-import { judgeVersionIsNew, goToApp, savePicShare } from '@/utils/userInfo';
+import { judgeVersionIsNew, judgeVersionIsNewShare, goToApp, savePicShare } from '@/utils/userInfo';
 
 Vue.use(VanImage);
 Vue.use(Swipe);
@@ -123,6 +123,7 @@ export default {
       inviteCode: null,
       token: null,
       isNewVersion: null,
+      isNewVersionShare: null,
       memberQrCode: null,
     };
   },
@@ -132,6 +133,11 @@ export default {
   async created () {
     if (this.$store.state.appInfo.isApp) {
       this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
+      this.isNewVersionShare = judgeVersionIsNewShare(this.$store.state.appInfo.appVersion)
+      if (!this.isNewVersionShare) {
+        Dialog({ message: 'app版本过低请更新!' });
+        return
+      }
       if (this.isNewVersion) {
         await this.getUserInfo();
         this.getImg();
