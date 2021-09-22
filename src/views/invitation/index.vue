@@ -25,7 +25,7 @@
           height="33px"
           :src="getImgUrl('publicMobile/invitation/item-title.png')"
         />
-        <span class="span-text">扫码下载</span>
+        <span class="span-text">微信扫一扫</span>
       </div>
       <div class="one-box-content">
         <van-image
