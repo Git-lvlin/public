@@ -77,7 +77,7 @@
         </div>
       </div>
     </div> -->
-    <div class="item-box item-box3" v-if="inviteNum">
+    <div class="item-box item-box3">
       <div class="content3">
         <div class="center-box">
           <div class="sub-title">
