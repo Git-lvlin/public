@@ -25,7 +25,7 @@
           height="33px"
           :src="getImgUrl('publicMobile/invitation/item-title.png')"
         />
-        <span class="span-text">微信扫一扫</span>
+        <span class="span-text">小程序体验</span>
       </div>
       <div class="one-box-content">
         <van-image
@@ -33,8 +33,29 @@
           :src="memberQrCode"
         />
         <div class="right-box">
-          <div class="text">微信小程序分享二维码</div>
-          <div class="btn" @click="saveNow">立即保存</div>
+          <div class="text">约购微信小程序</div>
+          <div class="btn" @click="saveNow">邀请好友</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="item-box one-box">
+      <div class="title-box">
+        <van-image
+          class="title-img"
+          width="196px"
+          height="33px"
+          :src="getImgUrl('publicMobile/invitation/item-title.png')"
+        />
+        <span class="span-text">扫码下载</span>
+      </div>
+      <div class="one-box-content">
+        <div class="url-code" v-if="appDownLoadUrl">
+          <qrcode-vue :value="appDownLoadUrl" :size="size" level="H"></qrcode-vue>
+        </div>
+        <div class="right-box">
+          <div class="text">约购APP</div>
+          <div class="btn" @click="onToDetail">分享APP下载码</div>
         </div>
       </div>
 
@@ -77,7 +98,7 @@
         </div>
       </div>
     </div> -->
-    <div class="item-box item-box3">
+    <!-- <div class="item-box item-box3">
       <div class="content3">
         <div class="center-box">
           <div class="sub-title">
@@ -97,7 +118,7 @@
           <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
         </div>
       </div>
-    </div>
+    </div> -->
     </div>
 
   </div>
@@ -109,7 +130,14 @@ import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/appointment';
-import { judgeVersionIsNew, judgeVersionIsNewShare, goToApp, savePicShare } from '@/utils/userInfo';
+import QrcodeVue from 'qrcode.vue';
+import {
+  judgeVersionIsNew,
+  judgeVersionIsNewShare,
+  goToApp,
+  savePicShare,
+  setNavigationBarRightContent
+} from '@/utils/userInfo';
 
 Vue.use(VanImage);
 Vue.use(Swipe);
@@ -125,10 +153,13 @@ export default {
       isNewVersion: null,
       isNewVersionShare: null,
       memberQrCode: null,
+      appDownLoadUrl: null,
+      size: 108,
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
+    QrcodeVue,
   },
   async created () {
     if (this.$store.state.appInfo.isApp) {
@@ -153,7 +184,6 @@ export default {
   methods: {
     getImgUrl,
     saveNow() {
-      console.log('立即保存', this.memberQrCode)
       savePicShare(this.memberQrCode, this.$bridge)
     },
     getInfo() {
@@ -171,6 +201,7 @@ export default {
       teamApi.getShareImg({paramId: 4}, {token: this.token}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.memberQrCode = res.data.memberQrCode
+          this.appDownLoadUrl = res.data.appDownLoadUrl
         }
       })
     },
@@ -179,17 +210,16 @@ export default {
         this.$bridge.callHandler('getUserInfo',{},(res) => {
           const d = JSON.parse(res)
           this.token = d.data.accessToken
-          // this.isNew = d.data.isNew
           resolve()
         })
       })
     },
     getInviteInfo() {
-      console.log('this.token', this.token)
       teamApi.apiGetInviteInfo({}, {token: this.token}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.totalCommission = res.data.totalCommission
           this.inviteNum = res.data.inviteNum
+          setNavigationBarRightContent(`${appBaseUrl}/flutter/mine/member_list/page`, this.inviteNum, this.$bridge)
         }
       })
     },
@@ -203,8 +233,17 @@ export default {
             goToApp(appBaseUrl, '/flutter/mine/member_list/page', '', this.$bridge)
             return
           }
+          const data = {
+            code: 0,
+            msg: 'success',
+            data: {
+              imgSrc: `${this.appDownLoadUrl}`,
+            }
+          }
+          const zero = JSON.stringify(data);
           this.$bridge.callHandler(
             'inviteFriend',
+            zero,
           )
           return
         }
@@ -442,11 +481,19 @@ export default {
         width: 116px;
         height: 116px;
       }
+      .url-code {
+        margin-right: 13px;
+        width: 108px;
+        height: 108px;
+      }
       .right-box {
         display: flex;
         flex-direction: column;
         align-items: center;
         .text {
+          width: 100%;
+          text-align: left;
+          padding-left: 6px;
           margin-bottom: 26px;
           height: 22px;
           font-size: 16px;
