@@ -35,7 +35,7 @@ export const setNavigationBarRightContent = (url, num, bridge) => {
     msg: 'success',
     data: {
       link: `${url}`,
-      color: '',
+      color: '#EE7D30',
       content: `已邀${num}人＞`
     }
   }
