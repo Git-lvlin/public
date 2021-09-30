@@ -58,6 +58,16 @@
         is-link
         to="/web/agreement"
       />
+      <van-cell
+        title="资质证照"
+        is-link
+        to="/web/license"
+      />
+      <van-cell
+        title="资质证照"
+        is-link
+        to="/web/license-pc"
+      />
     </van-cell-group>
   </div>
 </template>

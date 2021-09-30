@@ -116,6 +116,22 @@ const routes = [
     meta: {
       title: '协议',
     }
+  },
+  {
+    path: '/web/license',
+    name: 'License',
+    component: () => import('@/views/license'),
+    meta: {
+      title: '资质证照',
+    }
+  },
+  {
+    path: '/web/license-pc',
+    name: 'LicensePc',
+    component: () => import('@/views/license-pc'),
+    meta: {
+      title: '资质证照',
+    }
   }
 ];
 
