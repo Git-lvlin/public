@@ -339,7 +339,7 @@ export default {
       intv: null,
       openFlag: true,
       selectFlag: true,
-      openResult: true,
+      openResult: false,
       popupType: 0, // 1-没机会 2-没中奖 3-中奖
       openData: {
         goodsName: '正品罗西尼情侣手表男款',
@@ -356,7 +356,8 @@ export default {
   },
   async created () {
     this.getUserInfo();
-    this.init()
+    this.init();
+    this.sameDayHasSgin();
   },
   mounted() {
     this.interval()
