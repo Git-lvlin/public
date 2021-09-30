@@ -58,6 +58,26 @@
         is-link
         to="/web/agreement"
       />
+      <van-cell
+        title="盲盒"
+        is-link
+        to="/web/bind-box"
+      />
+      <van-cell
+        title="我的奖品"
+        is-link
+        to="/web/my-prize"
+      />
+      <van-cell
+        title="资质证照"
+        is-link
+        to="/web/license"
+      />
+      <van-cell
+        title="资质证照"
+        is-link
+        to="/web/license-pc"
+      />
     </van-cell-group>
   </div>
 </template>

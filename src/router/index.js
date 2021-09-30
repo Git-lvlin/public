@@ -116,6 +116,38 @@ const routes = [
     meta: {
       title: '协议',
     }
+  },
+  {
+    path: '/web/bind-box',
+    name: 'BindBox',
+    component: () => import('@/views/bind-box'),
+    meta: {
+      title: '盲盒',
+    }
+  },
+  {
+    path: '/web/my-prize',
+    name: 'MyPrize',
+    component: () => import('@/views/my-prize'),
+    meta: {
+      title: '我的奖品',
+    }
+  },
+  {
+    path: '/web/license',
+    name: 'License',
+    component: () => import('@/views/license'),
+    meta: {
+      title: '资质证照',
+    }
+  },
+  {
+    path: '/web/license-pc',
+    name: 'LicensePc',
+    component: () => import('@/views/license-pc'),
+    meta: {
+      title: '资质证照',
+    }
   }
 ];
 
