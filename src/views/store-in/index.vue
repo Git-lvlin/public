@@ -153,7 +153,7 @@
           :src="getImgUrl('publicMobile/store/item-img4.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>社约集约，免费加盟</div>
+          <div class="li"><span class="sort">01</span>社区集约，免费加盟</div>
           <div class="li"><span class="sort">02</span>专业服务，无忧入驻</div>
         </div>
       </div>
@@ -193,16 +193,14 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { Image as VanImage } from 'vant';
-import { getImgUrl } from '@/utils/tools';
+import Vue from "vue";
+import { Image as VanImage } from "vant";
+import { getImgUrl } from "@/utils/tools";
 import { appBaseUrl } from "@/constant/index";
-import { goToApp, judgeVersionIsNew } from '@/utils/userInfo';
+import { goToApp, judgeVersionIsNew } from "@/utils/userInfo";
 Vue.use(VanImage);
 export default {
-  props: {
-
-  },
+  props: {},
   data() {
     return {
       isShow: false,
@@ -210,275 +208,269 @@ export default {
       isNewVersion: false,
     };
   },
-  components: {
-  },
-  created () {
-    console.log('created', this.$store.state.appInfo)
-    this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
-    console.log('isNewVersion', this.isNewVersion)
+  components: {},
+  created() {
+    console.log("created", this.$store.state.appInfo);
+    this.isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion);
+    console.log("isNewVersion", this.isNewVersion);
     if (this.isNewVersion) {
-      return
+      return;
     } else {
-      console.log('老版本')
-      this.$bridge.callHandler(
-        'fetchToken',
-        {},
-        (a) => {
-          if (a && a.length) {
-            this.hasToken = true
-          }
+      console.log("老版本");
+      this.$bridge.callHandler("fetchToken", {}, (a) => {
+        if (a && a.length) {
+          this.hasToken = true;
         }
-      )
+      });
     }
   },
   methods: {
     getImgUrl,
     getUserInfo() {
       return new Promise((resolve) => {
-        this.$bridge.callHandler('getUserInfo',{},(res) => {
-          const d = JSON.parse(res)
-          this.hasToken = d.data.accessToken?true:false
-          resolve()
-        })
-      })
+        this.$bridge.callHandler("getUserInfo", {}, (res) => {
+          const d = JSON.parse(res);
+          this.hasToken = d.data.accessToken ? true : false;
+          resolve();
+        });
+      });
     },
     async onToDetail() {
-      console.log('onToDetail')
+      console.log("onToDetail");
       if (this.isNewVersion) {
-        await this.getUserInfo()
-        const router = this.hasToken?'/flutter/store/member/settled':'/login/index'
-        goToApp(appBaseUrl, router, '', this.$bridge)
-        return
+        await this.getUserInfo();
+        const router = this.hasToken
+          ? "/flutter/store/member/settled"
+          : "/login/index";
+        goToApp(appBaseUrl, router, "", this.$bridge);
+        return;
       }
-      console.log(window.navigator)
-      console.log("$store.state.appInfo", this.$store.state.appInfo)
+      console.log(window.navigator);
+      console.log("$store.state.appInfo", this.$store.state.appInfo);
       if (this.$store.state.appInfo.isApp) {
         if (!this.hasToken) {
-          this.$bridge.callHandler(
-            'router',
-            `${appBaseUrl}/login/index`,
-          )
-          return
+          this.$bridge.callHandler("router", `${appBaseUrl}/login/index`);
+          return;
         }
         this.$bridge.callHandler(
-          'router',
-          `${appBaseUrl}/flutter/store/member/settled`,
-        )
+          "router",
+          `${appBaseUrl}/flutter/store/member/settled`
+        );
       } else if (this.$store.state.appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({
-          url: '/pages/login/main/index'
-        })
+          url: "/pages/login/main/index",
+        });
       } else {
-        console.log('不是App内')
+        console.log("不是App内");
       }
-    }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .store-in {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #fbe1c7;
+.store-in {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fbe1c7;
+}
+.banner {
+  margin-bottom: 17px;
+}
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  .title-text {
+    margin: 0 12px;
+    // width:167px;
+    height: 28px;
+    font-family: PingFang SC;
+    font-weight: 600;
+    color: #dd1e0c;
+    font-size: 20px;
+    line-height: 28px;
+    text-align: center;
   }
-  .banner {
-    margin-bottom: 17px;
+}
+.item-box {
+  position: relative;
+  margin: 0 auto;
+  margin-top: 15.06px;
+  width: 351px;
+  height: 180px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(226, 197, 167, 0.27), 0px 0px 3px #fbe1c7 inset;
+  .red {
+    position: absolute;
+    top: -16.34px;
+    right: -12px;
   }
-  .title {
+  .red-left {
+    position: absolute;
+    bottom: -84px;
+    left: -12px;
+    z-index: 2;
+  }
+  .money {
+    position: absolute;
+    bottom: -21px;
+    right: -12px;
+    z-index: 4;
+  }
+  .link-l {
+    position: absolute;
+    left: 20px;
+    bottom: -48px;
+    width: 8px;
+    height: 61px;
+    z-index: 9;
+  }
+  .link-r {
+    position: absolute;
+    right: 20px;
+    bottom: -48px;
+    width: 8px;
+    height: 61px;
+    z-index: 9;
+  }
+  .title-box {
+    position: absolute;
+    top: -6.68px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 255px;
+    height: 35.3px;
+    text-align: center;
+    .span-text {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      line-height: 35.3px;
+      text-shadow: 0px 2px 4px #2d4995;
+      font-family: PingFang SC;
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 16px;
+      letter-spacing: 0.89px;
+    }
+  }
+  .content {
+    padding: 44.32px 0 18.68px 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    width: 100%;
-    .title-text {
-      margin: 0 12px;
-      // width:167px;
-      height:28px;
-      font-family:PingFang SC;
-      font-weight:600;
-      color:#dd1e0c;
-      font-size:20px;
-      line-height:28px;
-      text-align:center;
-    }
-  }
-  .item-box {
-    position: relative;
-    margin: 0 auto;
-    margin-top: 15.06px;
-    width:351px;
-    height:180px;
-    background-color:#ffffff;
-    border-radius:8px;
-    box-shadow:0px 2px 4px rgba(226, 197, 167, 0.27),0px 0px 3px #fbe1c7 inset;
-    .red {
-      position: absolute;
-      top: -16.34px;
-      right: -12px;
-    }
-    .red-left {
-      position: absolute;
-      bottom: -84px;
-      left: -12px;
-      z-index: 2;
-    }
-    .money {
-      position: absolute;
-      bottom: -21px;
-      right: -12px;
-      z-index: 4;
-    }
-    .link-l {
-      position: absolute;
-      left: 20px;
-      bottom: -48px;
-      width: 8px;
-      height: 61px;
-      z-index: 9;
-    }
-    .link-r {
-      position: absolute;
-      right: 20px;
-      bottom: -48px;
-      width: 8px;
-      height: 61px;
-      z-index: 9;
-    }
-    .title-box {
-      position: absolute;
-      top: -6.68px;
-      left: 50%;
-      transform: translate(-50%);
-      width: 255px;
-      height: 35.3px;
-      text-align: center;
-      .span-text {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        line-height: 35.3px;
-        text-shadow:0px 2px 4px #2d4995;
-        font-family:PingFang SC;
-        font-weight:600;
-        color:#ffffff;
-        font-size:16px;
-        letter-spacing:0.89px;
-      }
-    }
-    .content {
-      padding: 44.32px 0 18.68px 0;
+    .r-box {
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      .r-box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 153px;
-        height: 96px;
-        margin-left: 18px;
-        .li {
-          margin-top: 4px;
-          font-family:PingFang SC;
-          font-weight:500;
-          color:#1a3378;
-          font-size:12.92px;
-          line-height:24px;
-          .sort {
-            width:17.53px;
-            height:17.54px;
-            background-image:linear-gradient(180deg,#f47d77 0%,#da3326 100%);
-            border-radius: 50%;
-            line-height: 17.54px;
-            text-align: center;
-            font-family:PingFang SC;
-            font-weight:500;
-            color:#ffffff;
-            font-size:12px;
-            margin-right: 5.54px;
-          }
-          .sort-null {
-            opacity: 0;
-          }
+      width: 153px;
+      height: 96px;
+      margin-left: 18px;
+      .li {
+        margin-top: 4px;
+        font-family: PingFang SC;
+        font-weight: 500;
+        color: #1a3378;
+        font-size: 12.92px;
+        line-height: 24px;
+        .sort {
+          width: 17.53px;
+          height: 17.54px;
+          background-image: linear-gradient(180deg, #f47d77 0%, #da3326 100%);
+          border-radius: 50%;
+          line-height: 17.54px;
+          text-align: center;
+          font-family: PingFang SC;
+          font-weight: 500;
+          color: #ffffff;
+          font-size: 12px;
+          margin-right: 5.54px;
         }
-        .li:nth-child(1) {
-          margin-top: 0;
+        .sort-null {
+          opacity: 0;
         }
       }
-    }
-  }
-  .item-box2 {
-    margin-top: 34.32px;
-  }
-  .z-index {
-    margin-top: 34.32px;
-    z-index: 4;
-    margin-bottom: 33px;
-  }
-  .last-box {
-    margin: 0 auto;
-    margin-top: 16px;
-    margin-bottom: 14px;
-    padding: 18px;
-    width: 351px;
-    height: 326px;
-    background-color:#ffffff;
-    border:3px solid;
-    border-color:#f6c78c;
-    border-radius:8px;
-    box-shadow:0px 2px 4px rgba(226, 197, 167, 0.27),0px 0px 3px #845c34 inset;
-    .stag {
-      margin-top: 28px;
-      font-family:PingFang SC;
-      font-weight:600;
-      color:#5a2629;
-      font-size:16px;
-      line-height:22px;
-      span {
-        display: inline-block;
-        margin-right: 6px;
-        width: 18px;
-        height: 18px;
-        background-color:#f0a03c;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 18px;
-      }
-    }
-    .stag:nth-child(1) {
-      margin-top: 0;
-    }
-    .sub {
-      margin-top: 10px;
-      font-family:PingFang SC;
-      color:#5a2629;
-      font-size:12px;
-      letter-spacing:0.5px;
-      line-height:17px;
-      span {
-        display: inline-block;
-        margin-right: 6px;
-        width:6px;
-        height:6px;
-        border-radius: 50%;
-        background-color:#ef9f3c;
+      .li:nth-child(1) {
+        margin-top: 0;
       }
     }
   }
-  .cushions {
-    width: 100%;
-    height: 104px;
+}
+.item-box2 {
+  margin-top: 34.32px;
+}
+.z-index {
+  margin-top: 34.32px;
+  z-index: 4;
+  margin-bottom: 33px;
+}
+.last-box {
+  margin: 0 auto;
+  margin-top: 16px;
+  margin-bottom: 14px;
+  padding: 18px;
+  width: 351px;
+  height: 326px;
+  background-color: #ffffff;
+  border: 3px solid;
+  border-color: #f6c78c;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(226, 197, 167, 0.27), 0px 0px 3px #845c34 inset;
+  .stag {
+    margin-top: 28px;
+    font-family: PingFang SC;
+    font-weight: 600;
+    color: #5a2629;
+    font-size: 16px;
+    line-height: 22px;
+    span {
+      display: inline-block;
+      margin-right: 6px;
+      width: 18px;
+      height: 18px;
+      background-color: #f0a03c;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 18px;
+    }
   }
-  .button-box {
-    position: fixed;
-    bottom: 0px;
-    text-align: center;
-    margin: 0 auto;
-    width: 100%;
-    height: 104px;
-    background-color:#f8d7ab;
-    z-index: 11;
+  .stag:nth-child(1) {
+    margin-top: 0;
   }
+  .sub {
+    margin-top: 10px;
+    font-family: PingFang SC;
+    color: #5a2629;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    line-height: 17px;
+    span {
+      display: inline-block;
+      margin-right: 6px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #ef9f3c;
+    }
+  }
+}
+.cushions {
+  width: 100%;
+  height: 104px;
+}
+.button-box {
+  position: fixed;
+  bottom: 0px;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  height: 104px;
+  background-color: #f8d7ab;
+  z-index: 11;
+}
 </style>
