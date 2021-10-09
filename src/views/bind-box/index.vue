@@ -222,30 +222,41 @@
     </van-popup>
 
     <!-- 拆盲盒结果弹窗 -->
-    <van-popup :style="{background: 'none'}" v-model="openResult">
-      <div class="popup-content">
-        <van-image v-if="popupType===1" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/no-chance-bg.png')" />
-        <van-image v-else-if="popupType===2" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/sorry-bg.png')" />
-        <van-image v-else-if="popupType===3" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/prize-bg.png')" />
-        <div class="popup-prize-box" v-if="popupType===3">
-          <div class="popup-title">{{openData.goodsName}}</div>
-          <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
-          <div class="popup-price">¥{{openData.salePrice}}</div>
+    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="openResult">
+      <!-- 默认开盒动画 -->
+      <van-image width="100%" id="uno" class="unopened" :src="getImgUrl('publicMobile/bindbox/unopened.png')" />
+      <van-image width="100%" id="oed" class="opened" :src="getImgUrl('publicMobile/bindbox/opened.png')" />
+      <!-- 中奖光 -->
+      <van-image id="light" class="light" :src="getImgUrl('publicMobile/bindbox/light.png')" />
+      <!-- 结果 -->
+      <div class="popup-content" id="last-popup">
+        <div class="img-bg-box">
+          <van-image v-if="popupType===1" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/no-chance-bg.png')" />
+          <van-image v-else-if="popupType===2" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/sorry-bg.png')" />
+          <van-image v-else-if="popupType===3" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/prize-bg.png')" />
+          <div class="popup-prize-box" v-if="popupType===3">
+            <div class="popup-title">{{openData.goodsName}}</div>
+            <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
+            <div class="popup-price">¥{{openData.salePrice}}</div>
+          </div>
+        </div>
+
+        <div class="popup-btn"
+          :style="{
+            'background-image': `url('${getImgUrl('publicMobile/bindbox/btn-red.png')}')`
+          }"
+          @click="onPopup"
+        >
+          <span v-if="popupType===1">查看任务</span>
+          <span v-else-if="popupType===2">知道了</span>
+          <span v-else-if="popupType===3">免费收下</span>
+        </div>
+        <!-- 关闭按钮 -->
+        <div class="popup-x" v-if="animationEnd" @click="closePopup">
+          <van-image width="36px" height="36px" :src="getImgUrl('publicMobile/bindbox/popup-x.png')" />
         </div>
       </div>
-      <div class="popup-btn"
-        :style="{
-          'background-image': `url('${getImgUrl('publicMobile/bindbox/btn-red.png')}')`
-        }"
-        @click="onPopup"
-      >
-        <span v-if="popupType===1">查看任务</span>
-        <span v-else-if="popupType===2">知道了</span>
-        <span v-else-if="popupType===3">免费收下</span>
-      </div>
-      <div class="popup-x" @click="closePopup">
-        <van-image width="36px" height="36px" :src="getImgUrl('publicMobile/bindbox/popup-x.png')" />
-      </div>
+
     </van-popup>
 
 
@@ -340,13 +351,16 @@ export default {
       openFlag: true,
       selectFlag: true,
       openResult: false,
-      popupType: 0, // 1-没机会 2-没中奖 3-中奖
+      popupType: 1, // 1-没机会 2-没中奖 3-中奖
       openData: {
         goodsName: '正品罗西尼情侣手表男款',
         salePrice: '699.00',
         imageUrl: `${getImgUrl('publicMobile/bindbox/center-box.png')}`,
       },
-      hasSgin: true
+      hasSgin: true,
+      win: false,
+      animationEnd: false,
+      opened: false,
     };
   },
   components: {
@@ -360,10 +374,32 @@ export default {
     this.sameDayHasSgin();
   },
   mounted() {
-    this.interval()
+    this.interval();
+    setTimeout(() => {
+      this.monitorUno();
+    }, 0)
   },
   methods: {
     getImgUrl,
+    monitorUno() {
+      let a = document.getElementById('uno');
+      let b = document.getElementById('oed');
+      let light = document.getElementById('light');
+      let last = document.getElementById('last-popup');
+      a.addEventListener('webkitAnimationEnd', () => {
+        // 抖动结束
+        a.style.display = 'none'
+        b.style.display = 'block'
+      });
+      b.addEventListener('webkitAnimationEnd', () => {
+        // 开盒结束
+        b.style.display = 'none'
+        if (this.popupType === 3) {
+          light.style.opacity = 1
+        }
+        last.style.display = 'flex'
+      });
+    },
     closePopup() {
       this.openResult = false
     },
@@ -371,7 +407,6 @@ export default {
       switch(this.popupType) {
         case 1:
           // 滚动条拉到底
-          this.openResult=false
           this.intoView()
           break
         case 2:
@@ -462,7 +497,7 @@ export default {
       teamApi.getDetailList(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
           this.bindBoxInfo = res.data
-          this.popupType = res.data.goodsName?3:2
+          // this.popupType = res.data.goodsName?3:2
         }
       })
     },
@@ -496,6 +531,8 @@ export default {
         teamApi.openBox({phone: this.phone}).then((res) => {
           if (res.code === 0) {
             this.openData = res.data
+            // 盲盒动画
+            this.openResult = true
           }
         })
       }
@@ -1059,39 +1096,154 @@ export default {
       }
     }
   }
-  .popup-content {
+  @keyframes rotate {
+    0%{-webkit-transform:rotate(0deg);}
+    25%{-webkit-transform:rotate(90deg);}
+    50%{-webkit-transform:rotate(180deg);}
+    75%{-webkit-transform:rotate(270deg);}
+    100%{-webkit-transform:rotate(360deg);}
+  }
+  @keyframes bindbox {
+    0%{
+      -webkit-transform: translateX(0) translateY(0) scale(1);
+    }
+    10%{
+      -webkit-transform: translateX(20px) translateY(-20px) scale(.9);
+    }
+    20%{
+      -webkit-transform: translateX(-20px) translateY(20px) scale(.88);
+    }
+    30%{
+      -webkit-transform: translateX(-20px) translateY(-20px) scale(.86);
+    }
+    40%{
+      -webkit-transform: translateX(20px)  translateY(20px) scale(.84);
+    }
+    50%{
+      -webkit-transform: translateX(-20px)  translateY(20px) scale(.82);
+    }
+    60%{
+      -webkit-transform: translateX(20px)  translateY(-20px) scale(.8);
+    }
+    70%{
+      -webkit-transform: translateX(-20px) translateY(-20px) scale(.78);
+    }
+    80%{
+      -webkit-transform: translateX(-20px)  translateY(20px) scale(.76);
+    }
+    90%{
+      -webkit-transform: translateX(20px)  translateY(-20px) scale(.74);
+    }
+    100%{
+      -webkit-transform: translateX(-20px) translateY(-20px) scale(.72);
+    }
+  }
+  @keyframes openbox {
+    0%{
+      opacity: 1;
+      -webkit-transform: translateY(0) scale(1);
+    }
+    100%{
+      opacity: 0;
+      -webkit-transform: translateY(200px) scale(.6);
+    }
+  }
+  .unopened {
     position: relative;
-    margin-bottom: 28px;
-    .popup-prize-box {
-      padding-top: 60px;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      .popup-title {
-        font-size: 18px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #333333;
-        line-height: 25px;
-      }
-      .popup-img {
-        margin: 12px 0 21px 0;
-      }
-      .popup-price {
-        font-size: 16px;
-        font-family: Avenir-Medium, Avenir;
-        font-weight: 500;
-        color: #333333;
-        line-height: 22px;
+    top: -100px;
+    animation: bindbox 1s ease-in-out 1 normal;
+  }
+  .opened {
+    display: none;
+    position: relative;
+    top: -100px;
+    animation: openbox .4s ease-in 1 normal;
+  }
+  .light {
+    position: relative;
+    width: 200%;
+    top: -50px;
+    left: -50%;
+    opacity: 0;
+    animation:rotate 4s linear infinite;
+  }
+  @keyframes last {
+    0%{
+      opacity: 0;
+      -webkit-transform: scale(.2);
+    }
+    20% {
+      opacity: 1;
+      -webkit-transform: scale(1.1);
+    }
+    40%{
+      opacity: 1;
+      -webkit-transform: scale(.9);
+    }
+    60%{
+      opacity: 1;
+      -webkit-transform: scale(1.05);
+    }
+    80%{
+      opacity: 1;
+      -webkit-transform: scale(.95);
+    }
+    100%{
+      opacity: 1;
+      -webkit-transform: scale(1);
+    }
+  }
+  .popup-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    animation: last 1s ease-in-out 1 normal;
+    .img-bg-box {
+      position: relative;
+      margin-bottom: 28px;
+      .popup-prize-box {
+        position: absolute;
+        top: 152px;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        .popup-title {
+          font-size: 18px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #333333;
+          line-height: 25px;
+        }
+        .popup-img {
+          width: 100%;
+          margin: 12px 0 21px 0;
+        }
+        .popup-price {
+          font-size: 16px;
+          font-family: Avenir-Medium, Avenir;
+          font-weight: 500;
+          color: #333333;
+          line-height: 22px;
+        }
       }
     }
   }
   .popup-btn {
+    position: relative;
     margin: 0 auto;
     width: 235px;
     height: 53px;
