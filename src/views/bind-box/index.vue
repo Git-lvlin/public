@@ -415,11 +415,11 @@ export default {
           this.closePopup(1)
           break
         case 3:
-          // 跳转到确认订单页面
+          // 跳转到商品详情页面
           const {  skuid, spuId, orderId, chanceId, memberId, orderType, activityId } = this.openData;
           const param = `?skuid=${skuid}&spuId=${spuId}&orderId=${orderId}&chanceId=${chanceId}&memberId=${memberId}&orderType=${orderType}&activityId=${activityId}`;
           console.log('param', param);
-          goToApp(appBaseUrl, '/shopping/confirmOrder', param, this.$bridge);
+          goToApp(appBaseUrl, '/shopping/detail', param, this.$bridge)
           break
       }
     },
