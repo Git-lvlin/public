@@ -1,5 +1,5 @@
 <template>
-  <div class="my-prize" v-if="prizeList">
+  <div class="my-prize">
     <div class="list-box">
       <list
         v-for="item in prizeList"
@@ -23,20 +23,29 @@ export default {
   data() {
     return {
       prizeList: null,
+      token: null,
     };
   },
   components: {
     list,
   },
-  created () {
+  async created () {
+    await this.getUserInfo()
+    this.init()
   },
   methods: {
     getImgUrl,
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          resolve()
+        })
+      })
+    },
     init() {
-      const {
-        query,
-      } = this.$router.history.current;
-      teamApi.getPrizeList({size:100,next:0}, {token: query.token}).then((res) => {
+      teamApi.getPrizeList({size:100,next:0}, {token: this.token}).then((res) => {
         if(res.code === 0) {
           this.prizeList = res.data.records
         }
@@ -44,7 +53,6 @@ export default {
     }
   },
   mounted() {
-    this.init()
   }
 };
 </script>

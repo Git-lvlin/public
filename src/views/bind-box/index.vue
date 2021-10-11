@@ -462,7 +462,7 @@ export default {
       this.bubbleShow = false
     },
     goMyPrize() {
-      this.$router.push({path:'/web/my-prize', query: {token: this.token}})
+      goToApp(meBaseUrl, '/web/my-prize', '', this.$bridge)
     },
     showPopupQa() {
       this.show = true
