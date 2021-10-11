@@ -17,12 +17,17 @@
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import { goToApp } from '@/utils/userInfo';
+import {timestampToTime} from '@/utils/util';
 export default {
   props: {
     good: {
       type: Object,
       default: () => {},
     },
+  },
+  created() {
+    this.good.createTime = timestampToTime(this.good.createTime*1000)
+    this.good.expireTime = timestampToTime(this.good.expireTime*1000)
   },
   methods: {
     getImgUrl,
@@ -41,6 +46,7 @@ export default {
 .prize {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 351px;
   height: 109px;
   background: #FFFFFF;
@@ -85,7 +91,6 @@ export default {
   text-align: center;
 }
 .ing,.ed {
-  text-align: center;
   width: 74px;
   height: 39px;
   background: #D93D33;
