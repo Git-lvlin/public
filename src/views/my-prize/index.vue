@@ -11,9 +11,12 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import prize from './components/prize';
 import teamApi from '@/apis/bindbox';
+Vue.use(VanImage);
 export default {
   data() {
     return {
@@ -37,8 +40,7 @@ export default {
       var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
       var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
       var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
-      strDate = Y+M+D+h+m;
-      return strDate;
+      return Y+M+D+h+m;
     },
     getUserInfo() {
       return new Promise((resolve) => {

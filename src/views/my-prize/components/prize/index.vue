@@ -1,6 +1,6 @@
 <template>
   <div class="prize">
-    <van-image v-if="good.imageUrl" width="89px" height="89px" :src="good.imageUrl" />
+    <van-image class="img" width="89px" height="89px" :src="good.imageUrl" />
     <div class="content">
       <p class="title">{{good.goodsName}}</p>
       <p class="time">获得时间：{{good.createTime}}</p>
@@ -47,6 +47,10 @@ export default {
   height: 109px;
   background: #FFFFFF;
   border-radius: 4px;
+}
+.img {
+  width: 89px;
+  height: 89px;
 }
 .content {
   margin-left: 10px;
