@@ -236,7 +236,7 @@
           <div class="popup-prize-box" v-if="popupType===3">
             <div class="popup-title">{{openData.goodsName}}</div>
             <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
-            <div class="popup-price">¥{{openData.salePrice}}</div>
+            <div class="popup-price">¥{{openData.salePrice/100}}</div>
           </div>
         </div>
 
