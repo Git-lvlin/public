@@ -357,7 +357,7 @@ export default {
         salePrice: '699.00',
         imageUrl: `${getImgUrl('publicMobile/bindbox/center-box.png')}`,
       },
-      hasSgin: true,
+      hasSgin: false,
       win: false,
       animationEnd: false,
       opened: false,
