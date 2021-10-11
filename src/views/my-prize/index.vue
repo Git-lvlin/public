@@ -1,7 +1,7 @@
 <template>
   <div class="my-prize">
     <div class="list-box">
-      <list
+      <prize
         v-for="item in prizeList"
         :key="item.id"
         :good="item"
@@ -12,7 +12,7 @@
 
 <script>
 import { getImgUrl } from '@/utils/tools';
-import { list } from './components/list';
+import prize from './components/prize';
 import teamApi from '@/apis/bindbox';
 
 export default {
@@ -23,7 +23,7 @@ export default {
     };
   },
   components: {
-    list,
+    prize,
   },
   async created () {
     console.log("created")
