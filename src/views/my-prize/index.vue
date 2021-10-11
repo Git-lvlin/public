@@ -14,7 +14,7 @@
 import { getImgUrl } from '@/utils/tools';
 import prize from './components/prize';
 import teamApi from '@/apis/bindbox';
-
+import { timestampToTime } from '@/utils/util';
 export default {
   data() {
     return {
@@ -47,6 +47,10 @@ export default {
         console.log('res', res)
         if(res.code === 0) {
           this.prizeList = res.data.records
+          this.prizeList.forEach((item) => {
+            item.createTime = timestampToTime(item.createTime*1000)
+            item.expireTime = timestampToTime(item.expireTime*1000)
+          })
         }
       })
     }

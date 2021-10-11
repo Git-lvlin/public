@@ -6,9 +6,9 @@
       <p class="time">获得时间：{{good.createTime}}</p>
       <p class="time">失效时间：{{good.expireTime}}</p>
     </div>
-    <div v-if="good.state===0" class="btn" @click="go">免费兑换</div>
-    <div v-else-if="good.state===1" class="ing">兑换中</div>
-    <div v-else-if="good.state===2" class="ed">已兑换</div>
+    <div v-if="good.status===0" class="btn" @click="go">免费兑换</div>
+    <div v-else-if="good.status===1" class="ing">兑换中</div>
+    <div v-else-if="good.status===2" class="ed">已兑换</div>
     <div v-else class="out">已失效</div>
   </div>
 </template>
@@ -17,17 +17,13 @@
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import { goToApp } from '@/utils/userInfo';
-import {timestampToTime} from '@/utils/util';
+
 export default {
   props: {
     good: {
       type: Object,
       default: () => {},
     },
-  },
-  created() {
-    this.good.createTime = timestampToTime(this.good.createTime*1000)
-    this.good.expireTime = timestampToTime(this.good.expireTime*1000)
   },
   methods: {
     getImgUrl,
