@@ -36,7 +36,7 @@ export default {
       const {
         query,
       } = this.$router.history.current;
-      teamApi.getPrizeList({size:100,next:1}, {token: query.token}).then((res) => {
+      teamApi.getPrizeList({size:100,next:0}, {token: query.token}).then((res) => {
         if(res.code === 0) {
           this.prizeList = res.data.records
         }
