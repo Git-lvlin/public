@@ -3,6 +3,7 @@
     <van-image :src="getImgUrl('publicMobile/license/yyzz.png')" />
     <van-image :src="getImgUrl('publicMobile/license/zzdx.png')" />
     <van-image :src="getImgUrl('publicMobile/license/zzdx-2.png')" />
+    <van-image :src="getImgUrl('publicMobile/license/ylqx.png')" />
   </div>
 </template>
 

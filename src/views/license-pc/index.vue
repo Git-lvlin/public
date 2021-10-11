@@ -16,6 +16,11 @@
         height="30%"
         :src="getImgUrl('publicMobile/license/zzdx-2.png')"
       />
+      <van-image
+        width="30%"
+        height="30%"
+        :src="getImgUrl('publicMobile/license/ylqx.png')"
+      />
     </div>
   </div>
 </template>
