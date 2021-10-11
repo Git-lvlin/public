@@ -350,7 +350,7 @@ export default {
       openFlag: true,
       selectFlag: true,
       openResult: false,
-      popupType: 1, // 1-没机会 2-没中奖 3-中奖
+      popupType: 2, // 1-没机会 2-没中奖 3-中奖
       openData: {
         goodsName: '正品罗西尼情侣手表男款',
         salePrice: '699.00',
@@ -396,17 +396,23 @@ export default {
         last.style.display = 'flex'
       });
     },
-    closePopup() {
+    closePopup(type) {
+      this.interval();
+      if (type) {
+        this.init()
+      }
       this.openResult = false
     },
     onPopup() {
       switch(this.popupType) {
         case 1:
           // 滚动条拉到底
+          this.closePopup()
           this.intoView()
           break
         case 2:
           // 初始化开盒流程后关闭弹窗
+          this.closePopup(1)
           break
         case 3:
           // 跳转到确认订单页面
@@ -515,19 +521,21 @@ export default {
           goToApp(appBaseUrl, '/flutter/mine/sign_in/detail', '', this.$bridge)
           break
         case 'invitaion':
-          this.$router.push({ path:'/web/invitation' })
+          goToApp(appBaseUrl, '/web/invitation', '', this.$bridge)
           break
       }
     },
     open() {
       if (this.openFlag&&!this.selectFlag) {
         this.openFlag = false
-        console.log('拆盒子', this.phone)
         teamApi.openBox({phone: this.phone}, {token: this.token}).then((res) => {
           if (res.code === 0) {
             this.openData = res.data
             // 盲盒动画
             this.openResult = true
+            if (res.data.goodsName) {
+              this.popupType = 3
+            }
             setTimeout(() => {
               this.monitorUno();
             }, 0)
