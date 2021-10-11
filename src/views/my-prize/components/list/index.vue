@@ -27,11 +27,11 @@ export default {
   methods: {
     getImgUrl,
     go() {
-      // 去确认订单页面
-      const { skuid, orderId, chanceId, memberId, orderType, activityId } = this.good;
-      const param = `?skuid=${skuid}&orderId=${orderId}&chanceId=${chanceId}&memberId=${memberId}&orderType=${orderType}&activityId=${activityId}`;
+      // 跳转到商品详情页面
+      const {  skuid, spuId, orderId, chanceId, memberId, orderType, activityId, objectId } = this.good;
+      const param = `?skuid=${skuid}&spuId=${spuId}&orderId=${orderId}&chanceId=${chanceId}&memberId=${memberId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
       console.log('param', param);
-      goToApp(appBaseUrl, '/shopping/confirmOrder', param, this.$bridge);
+      goToApp(appBaseUrl, '/shopping/detail', param, this.$bridge)
     }
   }
 }

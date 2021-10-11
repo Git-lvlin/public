@@ -416,8 +416,8 @@ export default {
           break
         case 3:
           // 跳转到商品详情页面
-          const {  skuid, spuId, orderId, chanceId, memberId, orderType, activityId } = this.openData;
-          const param = `?skuid=${skuid}&spuId=${spuId}&orderId=${orderId}&chanceId=${chanceId}&memberId=${memberId}&orderType=${orderType}&activityId=${activityId}`;
+          const {  skuid, spuId, orderId, chanceId, memberId, orderType, activityId, objectId } = this.openData;
+          const param = `?skuid=${skuid}&spuId=${spuId}&orderId=${orderId}&chanceId=${chanceId}&memberId=${memberId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
           console.log('param', param);
           goToApp(appBaseUrl, '/shopping/detail', param, this.$bridge)
           break
