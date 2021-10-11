@@ -462,6 +462,7 @@ export default {
       this.bubbleShow = false
     },
     goMyPrize() {
+      console.log('goMyPrize-start')
       goToApp(meBaseUrl, '/web/my-prize', '', this.$bridge)
     },
     showPopupQa() {
