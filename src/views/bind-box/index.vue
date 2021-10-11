@@ -525,7 +525,7 @@ export default {
       if (this.openFlag&&!this.selectFlag) {
         this.openFlag = false
         console.log('拆盒子', this.phone)
-        teamApi.openBox({phone: this.phone}).then((res) => {
+        teamApi.openBox({phone: this.phone}, {token: this.token}).then((res) => {
           if (res.code === 0) {
             this.openData = res.data
             // 盲盒动画
