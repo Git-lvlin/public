@@ -20,7 +20,6 @@
         :key="item.id"
         :good="item"
         :random="random"
-        :selectFlag="selectFlag"
         v-on:selectBox="selectBox"
       />
     </div>
@@ -448,7 +447,6 @@ export default {
     },
     selectBox(id) {
       this.selectFlag = false
-      console.log('id', id)
       if (id) {
         this.random = 0
         this.interval('stop')

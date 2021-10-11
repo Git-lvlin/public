@@ -2,7 +2,7 @@
   <div :class="'lead-box-item '+'index'+good.id" @click="selectBox(good.id)">
     <van-image class="img all" width="90px" height="90px" :src="getImgUrl('publicMobile/bindbox/box.png')" />
     <van-image class="img" :class="random==good.id&&!good.in?'out':''" width="90px" height="90px" :src="getImgUrl('publicMobile/bindbox/center-box.png')" />
-    <van-image class="img" :class="indexBox==good.id?'in':''" width="92px" height="92px" :src="getImgUrl('publicMobile/bindbox/selected.png')" />
+    <van-image class="img other" :class="indexBox==good.id?'in':''" width="92px" height="92px" :src="getImgUrl('publicMobile/bindbox/selected.png')" />
   </div>
 </template>
 
@@ -21,10 +21,6 @@ export default {
       type: Number,
       default: 5,
     },
-    selectFlag: {
-      type: Boolean,
-      dafault: true,
-    }
   },
   data() {
     return {
@@ -34,10 +30,10 @@ export default {
   methods: {
     getImgUrl,
     selectBox(id) {
-      if (!this.selectFlag) {
-        console.log('已经选中！')
-        return
-      }
+      let other = document.querySelectorAll('.other')
+      other.forEach((item)=> {
+        item.classList.remove('in')
+      })
       this.indexBox = id
       this.$emit('selectBox', this.indexBox)
     }
