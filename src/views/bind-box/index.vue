@@ -464,7 +464,7 @@ export default {
       this.show = true
     },
     init() {
-      teamApi.getTaskInfo().then((res) => {
+      teamApi.getTaskInfo({},{token: this.token}).then((res) => {
         if (res.code === 0) {
           const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum } = res.data;
           this.prizeNotice = prizeNotice
