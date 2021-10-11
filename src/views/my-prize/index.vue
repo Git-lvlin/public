@@ -14,7 +14,6 @@
 import { getImgUrl } from '@/utils/tools';
 import prize from './components/prize';
 import teamApi from '@/apis/bindbox';
-import { timestampToTime } from '@/utils/util';
 export default {
   data() {
     return {
@@ -26,13 +25,21 @@ export default {
     prize,
   },
   async created () {
-    console.log("created")
     await this.getUserInfo()
     this.init()
-    console.log("inited")
   },
   methods: {
     getImgUrl,
+    timestampToTime(timestamp) {
+      var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + '.';
+      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
+      var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+      var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+      var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
+      strDate = Y+M+D+h+m;
+      return strDate;
+    },
     getUserInfo() {
       return new Promise((resolve) => {
         this.$bridge.callHandler('getUserInfo',{},(res) => {
@@ -44,12 +51,11 @@ export default {
     },
     init() {
       teamApi.getPrizeList({size:100,next:0}, {token: this.token}).then((res) => {
-        console.log('res', res)
         if(res.code === 0) {
-          this.prizeList = res.data.records
-          this.prizeList.forEach((item) => {
-            item.createTime = timestampToTime(item.createTime*1000)
-            item.expireTime = timestampToTime(item.expireTime*1000)
+          this.prizeList = res.data.records.map((item) => {
+            item.createTime = this.timestampToTime(item.createTime)
+            item.expireTime = this.timestampToTime(item.expireTime)
+            return item
           })
         }
       })

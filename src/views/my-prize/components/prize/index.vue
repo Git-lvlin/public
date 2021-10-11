@@ -1,6 +1,6 @@
 <template>
   <div class="prize">
-    <van-image width="89px" height="89px" :src="good.imageUrl" />
+    <van-image v-if="good.imageUrl" width="89px" height="89px" :src="good.imageUrl" />
     <div class="content">
       <p class="title">{{good.goodsName}}</p>
       <p class="time">获得时间：{{good.createTime}}</p>
