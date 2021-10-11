@@ -369,7 +369,7 @@ export default {
     box,
   },
   async created () {
-    this.getUserInfo();
+    await this.getUserInfo();
     this.init();
     this.sameDayHasSgin();
   },
