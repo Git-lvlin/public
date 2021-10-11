@@ -16,7 +16,7 @@ const env = {
   'uat': '-uat',
   'pro': '',
 }
-export const meBaseUrl = `https://publicmobile${env[process.env.VUE_APP_API_ENV]}.yeahgo.com/`;
+export const meBaseUrl = `https://publicmobile${env[process.env.VUE_APP_API_ENV]}.yeahgo.com`;
 export const refresToken = '/member/open/refreshToken';
 // 服务器接口域名
 export const HTTP_TIMEOUT = 5000;
