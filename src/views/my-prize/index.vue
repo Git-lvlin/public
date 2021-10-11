@@ -11,18 +11,14 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl } from "@/constant/index";
 import { list } from './components/list';
 import teamApi from '@/apis/bindbox';
-import QrcodeVue from 'qrcode.vue';
 
 export default {
   data() {
     return {
-      prizeList: null,
+      prizeList: [],
       token: null,
     };
   },
@@ -30,8 +26,10 @@ export default {
     list,
   },
   async created () {
+    console.log("created")
     await this.getUserInfo()
     this.init()
+    console.log("inited")
   },
   methods: {
     getImgUrl,
@@ -46,6 +44,7 @@ export default {
     },
     init() {
       teamApi.getPrizeList({size:100,next:0}, {token: this.token}).then((res) => {
+        console.log('res', res)
         if(res.code === 0) {
           this.prizeList = res.data.records
         }
