@@ -375,9 +375,6 @@ export default {
   },
   mounted() {
     this.interval();
-    setTimeout(() => {
-      this.monitorUno();
-    }, 0)
   },
   methods: {
     getImgUrl,
@@ -533,6 +530,9 @@ export default {
             this.openData = res.data
             // 盲盒动画
             this.openResult = true
+            setTimeout(() => {
+              this.monitorUno();
+            }, 0)
           }
         })
       }
