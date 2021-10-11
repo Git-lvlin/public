@@ -10,6 +10,13 @@ export const VERSION = '1.0.0';
 export const apiUrl = 'https://api-dev.yeahgo.com';
 // jsbridge 打开app配置域名 
 export const appBaseUrl = 'https://www.yeahgo.com';
+// jsbridge 打开本项目配置域名
+const env = {
+  'dev': '-dev',
+  'uat': '-uat',
+  'pro': '',
+}
+export const meBaseUrl = `https://publicmobile${env[process.env.VUE_APP_API_ENV]}.yeahgo.com/`;
 export const refresToken = '/member/open/refreshToken';
 // 服务器接口域名
 export const HTTP_TIMEOUT = 5000;

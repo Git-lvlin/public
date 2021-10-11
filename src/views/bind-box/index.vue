@@ -266,7 +266,7 @@
 import Vue from 'vue';
 import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl } from "@/constant/index";
+import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import list from './components/list';
 import box from './components/box';
 import teamApi from '@/apis/bindbox';
@@ -521,7 +521,8 @@ export default {
           goToApp(appBaseUrl, '/flutter/mine/sign_in/detail', '', this.$bridge)
           break
         case 'invitaion':
-          goToApp(appBaseUrl, '/web/invitation', '', this.$bridge)
+          console.log('meBaseUrl', meBaseUrl)
+          goToApp(meBaseUrl, '/web/invitation', '', this.$bridge)
           break
       }
     },
