@@ -491,7 +491,7 @@ export default {
       this.infoType = type
       const param = {
         size: 100,
-        next: 1,
+        next: 0,
       }
       if (type) {
         param.transferType = type

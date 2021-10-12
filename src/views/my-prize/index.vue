@@ -7,6 +7,7 @@
         :good="item"
       />
     </div>
+    <div class="null">没有更多了〜</div>
   </div>
 </template>
 
@@ -70,6 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 .my-prize {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -77,5 +79,17 @@ export default {
 }
 .list-box {
   padding: 12px;
+}
+.null {
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
+  width: 100%;
+  height: 17px;
+  font-size: 12px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 17px;
 }
 </style>
