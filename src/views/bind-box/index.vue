@@ -48,7 +48,7 @@
       <p>剩余次数：<span class="chance">{{unuseNum}}</span>次</p>
     </div>
 
-    <div class="look" @click="getInfo">查看明细</div>
+    <div class="look" @click="getInfo(1)">查看明细</div>
 
     <div class="open" @click="open"></div>
 
@@ -113,10 +113,8 @@
         </div>
         <div class="task-content">
           <p>每连续签到<span class="span">{{signIn.signInNum}}</span>天，获得<span class="span">{{signIn.signInChanceNum}}</span>次开盲盒机会。</p>
-          <p class="border-days">
-            <span class="index">1天</span>
-            <span class="index">2天</span>
-            <span class="index">3天</span>
+          <p class="border-days" v-if="signIn.arr">
+            <span class="index" v-for="(item,index) in signIn.arr" :key="index">{{index+1}}天</span>
           </p>
           <p v-if="!signIn.signInIsFinish">本次已连签<span class="span">{{signIn.signInFinishNum}}</span>天，还差<span class="span">{{signIn.signInUnNum}}</span>天。</p>
           <p v-else>已完成全部签到任务 棒~</p>
@@ -141,9 +139,8 @@
         </div>
         <div class="task-content">
           <p>每日首次消费<span class="span">{{orderConsume.consumeNum}}</span>笔订单，获得<span class="span">{{orderConsume.consumeChanceNum}}</span>次开盲盒机会。</p>
-          <p class="border-orders">
-            <span class="index">1单</span>
-            <span class="index">2单</span>
+          <p class="border-orders" v-if="orderConsume.arr">
+            <span class="index" v-for="(item,index) in orderConsume.arr" :key="index">{{index+1}}单</span>
           </p>
           <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{orderConsume.consumeFinishNum}}</span>笔订单，还差<span class="span">{{orderConsume.consumeUnNum}}</span>笔。</p>
           <p v-else>今天已获取1次开盲盒机会了，明天继续努力吧~</p>
@@ -202,12 +199,12 @@
         <div class="title">开盲盒明细</div>
         <div class="tips" v-if="bindBoxInfo.validTimeMsg">{{bindBoxInfo.validTimeMsg}}</div>
         <div class="tab-box">
-          <div v-if="infoType!==1" class='tab-button' @click="getInfo">全部明细</div>
-          <div v-else class='info-act' @click="getInfo">全部明细</div>
-          <div v-if="infoType!==2" class='tab-button' @click="getInfo(1)">仅看获得</div>
-          <div v-else class='info-act' @click="getInfo(1)">仅看获得</div>
-          <div v-if="infoType!==3" class='tab-button' @click="getInfo(2)">仅看使用</div>
-          <div v-else class='info-act' @click="getInfo(2)">仅看使用</div>
+          <div v-if="infoType!==1" class='tab-button' @click="getInfo(1)">全部明细</div>
+          <div v-else class='info-act' @click="getInfo(1)">全部明细</div>
+          <div v-if="infoType!==2" class='tab-button' @click="getInfo(2)">仅看获得</div>
+          <div v-else class='info-act' @click="getInfo(2)">仅看获得</div>
+          <div v-if="infoType!==3" class='tab-button' @click="getInfo(3)">仅看使用</div>
+          <div v-else class='info-act' @click="getInfo(3)">仅看使用</div>
         </div>
         <div class="tab-list-box" v-if="bindBoxInfo.records">
           <div class="info-item" v-for="(item,index) in bindBoxInfo.records" :key="index">
@@ -496,7 +493,15 @@ export default {
           this.unuseNum = unuseNum
           this.inviteFriends= inviteFriends
           this.signIn = signIn
+          this.signIn.arr = []
+          for(let i=0;i<signIn.signInNum;i++) {
+            this.signIn.arr.push({id:i})
+          }
           this.orderConsume = orderConsume
+          this.orderConsume.arr = []
+          for(let z=0;z<orderConsume.consumeNum;z++) {
+            this.orderConsume.arr.push({id:z})
+          }
           if (!unuseNum) {
             this.popupType = 1
           }
@@ -504,14 +509,17 @@ export default {
       })
     },
     getInfo(type) {
+      if (type === this.infoType) {
+        return
+      }
       this.info = true
       this.infoType = type
       const param = {
         size: 100,
         next: 0,
       }
-      if (type) {
-        param.transferType = type
+      if (type !== 1) {
+        param.transferType = type - 1
       }
       teamApi.getDetailList(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
