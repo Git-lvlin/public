@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <van-loading class="load" v-if="load" />
     <div class="winning-list" v-if="prizeWinMsg">
       <van-swipe class="my-swipe" :autoplay="2000" style="height: 26px;" :show-indicators="false" indicator-color="white" vertical>
         <van-swipe-item v-for="(item,index) in prizeWinMsg" :key="index">
@@ -11,7 +12,7 @@
     <van-image
       class="banner"
       width="100%"
-      :src="getImgUrl('publicMobile/bindbox/head-bg.png')"
+      :src="bgImgUrl"
     />
 
     <div class="lead-box">
@@ -264,7 +265,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup } from 'vant';
+import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup, Loading } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import list from './components/list';
@@ -274,6 +275,7 @@ import {
   goToApp,
 } from '@/utils/userInfo';
 
+Vue.use(Loading);
 Vue.use(VanImage);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
@@ -344,22 +346,20 @@ export default {
       inviteFriends: {},
       signIn: {},
       orderConsume: {},
-      validTimeMsg: '机会48小时内有效',
+      validTimeMsg: '',
       random: 5,
       intv: null,
       openFlag: true,
       selectFlag: true,
       openResult: false,
       popupType: 2, // 1-没机会 2-没中奖 3-中奖
-      openData: {
-        goodsName: '正品罗西尼情侣手表男款',
-        salePrice: '699.00',
-        imageUrl: `${getImgUrl('publicMobile/bindbox/center-box.png')}`,
-      },
+      openData: {},
       hasSgin: false,
       win: false,
       animationEnd: false,
       opened: false,
+      bgImgUrl: getImgUrl('publicMobile/bindbox/head-bg.png'),
+      load: true,
     };
   },
   components: {
@@ -372,11 +372,28 @@ export default {
     this.init();
     this.sameDayHasSgin();
   },
-  mounted() {
+  async mounted() {
+    await this.loadImg()
     this.interval();
   },
   methods: {
     getImgUrl,
+    loadImg() {
+      return new Promise((resolve, reject) => {
+        let bgImg = new Image();
+        bgImg.src = this.bgImgUrl; // 获取背景图片的url
+        bgImg.onerror = () => {
+          console.log('img onerror')
+          reject()
+        }
+        bgImg.onload = () => { // 等背景图片加载成功后 去除loading
+          setTimeout(() => {
+            this.load = false
+            resolve()
+          }, 1000)
+        }
+      })
+    },
     monitorUno() {
       let a = document.getElementById('uno');
       let b = document.getElementById('oed');
@@ -394,6 +411,7 @@ export default {
           light.style.opacity = 1
         }
         last.style.display = 'flex'
+        this.animationEnd = true
       });
     },
     closePopup(type) {
@@ -499,7 +517,6 @@ export default {
       teamApi.getDetailList(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
           this.bindBoxInfo = res.data
-          // this.popupType = res.data.goodsName?3:2
         }
       })
     },
@@ -507,7 +524,7 @@ export default {
       return new Promise((resolve) => {
         this.$bridge.callHandler('getUserInfo',{},(res) => {
           const d = JSON.parse(res)
-          this.phone = d.data.phone
+          this.phone = d.data.phoneNumber
           this.token = d.data.accessToken
           resolve()
         })
@@ -550,6 +567,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.load {
+  position: fixed;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d93d33;
+  margin: auto;
+  text-align: center;
+  z-index: 99999;
+}
   .main {
     display: flex;
     flex-direction: column;
