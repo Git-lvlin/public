@@ -48,7 +48,7 @@
       <p>剩余次数：<span class="chance">{{unuseNum}}</span>次</p>
     </div>
 
-    <div class="look" @click="getInfo(1)">查看明细</div>
+    <div class="look" @click="getInfo">查看明细</div>
 
     <div class="open" @click="open"></div>
 
@@ -202,12 +202,12 @@
         <div class="title">开盲盒明细</div>
         <div class="tips" v-if="bindBoxInfo.validTimeMsg">{{bindBoxInfo.validTimeMsg}}</div>
         <div class="tab-box">
-          <div v-if="infoType!==1" class='tab-button' @click="getInfo(1)">全部明细</div>
-          <div v-else class='info-act' @click="getInfo(1)">全部明细</div>
-          <div v-if="infoType!==2" class='tab-button' @click="getInfo(2)">仅看获得</div>
-          <div v-else class='info-act' @click="getInfo(2)">仅看获得</div>
-          <div v-if="infoType!==3" class='tab-button' @click="getInfo(3)">仅看使用</div>
-          <div v-else class='info-act' @click="getInfo(3)">仅看使用</div>
+          <div v-if="infoType!==1" class='tab-button' @click="getInfo">全部明细</div>
+          <div v-else class='info-act' @click="getInfo">全部明细</div>
+          <div v-if="infoType!==2" class='tab-button' @click="getInfo(1)">仅看获得</div>
+          <div v-else class='info-act' @click="getInfo(1)">仅看获得</div>
+          <div v-if="infoType!==3" class='tab-button' @click="getInfo(2)">仅看使用</div>
+          <div v-else class='info-act' @click="getInfo(2)">仅看使用</div>
         </div>
         <div class="tab-list-box" v-if="bindBoxInfo.records">
           <div class="info-item" v-for="(item,index) in bindBoxInfo.records" :key="index">

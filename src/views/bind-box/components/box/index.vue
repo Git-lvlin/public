@@ -27,14 +27,22 @@ export default {
       indexBox: 0,
     }
   },
+  updated() {
+
+  },
   methods: {
     getImgUrl,
     selectBox(id) {
       let other = document.querySelectorAll('.other')
-      other.forEach((item)=> {
-        item.classList.remove('in')
+      const indexId = id
+      other.forEach((item, index)=> {
+        if (index+1 !== indexId) {
+          item.classList.remove('in')
+        } else {
+          item.classList.add('in')
+        }
       })
-      this.indexBox = id
+      this.indexBox = indexId
       this.$emit('selectBox', this.indexBox)
     }
   },
