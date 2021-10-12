@@ -513,9 +513,6 @@ export default {
       })
     },
     getInfo(type) {
-      if (type === this.infoType) {
-        return
-      }
       this.info = true
       this.infoType = type
       const param = {
