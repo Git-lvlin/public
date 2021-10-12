@@ -186,7 +186,7 @@
     >
       <div class="rule-div">
         <div class="title">活动规则</div>
-        <div class="content" v-html="ruleText"></div>
+        <textarea class="content" readonly v-model="ruleText"></textarea>
       </div>
     </van-popup>
 
@@ -265,7 +265,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup, Loading } from 'vant';
+import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup, Loading, Field } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import list from './components/list';
@@ -274,7 +274,7 @@ import teamApi from '@/apis/bindbox';
 import {
   goToApp,
 } from '@/utils/userInfo';
-
+Vue.use(Field);
 Vue.use(Loading);
 Vue.use(VanImage);
 Vue.use(Swipe);
@@ -480,7 +480,6 @@ export default {
       this.bubbleShow = false
     },
     goMyPrize() {
-      console.log('goMyPrize-start')
       goToApp(meBaseUrl, '/web/my-prize', '', this.$bridge)
     },
     showPopupQa() {
@@ -569,6 +568,7 @@ export default {
 <style lang="scss" scoped>
 .load {
   position: fixed;
+  padding-top: 200px;
   width: 100%;
   min-height: 100vh;
   background-color: #d93d33;
@@ -1006,7 +1006,6 @@ export default {
     width: 100%;
     height: 482px;
     overflow: hidden;
-    overflow-y: auto;
     .title {
       padding-top: 24px;
       padding-bottom: 32px;
@@ -1019,6 +1018,9 @@ export default {
       text-align: center;
     }
     .content {
+      width: 100%;
+      height: 440px;
+      border: none;
       padding: 32px 16px 50px 16px;
       text-align: justify;
       font-size: 14px;
@@ -1026,6 +1028,8 @@ export default {
       font-weight: 500;
       color: #666666;
       line-height: 22px;
+      overflow: hidden;
+      overflow-y: auto;
     }
   }
   .info-div {
