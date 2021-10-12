@@ -338,7 +338,7 @@ export default {
       ruleText: null,
       bubbleShow: true,
       bindBoxInfo: false,
-      infoType: 1,
+      infoType: 0,
       unuseNum: 0,
       inviteFriends: {},
       signIn: {},
