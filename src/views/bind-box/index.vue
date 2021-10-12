@@ -114,7 +114,10 @@
         <div class="task-content">
           <p>每连续签到<span class="span">{{signIn.signInNum}}</span>天，获得<span class="span">{{signIn.signInChanceNum}}</span>次开盲盒机会。</p>
           <p class="border-days" v-if="signIn.arr">
-            <span class="index" v-for="(item,index) in signIn.arr" :key="index">{{index+1}}天</span>
+            <span class="index" :class="index<=signIn.signInFinishNum?'ed':''" v-for="(item,index) in signIn.arr" :key="index">
+              <span v-if="index>signIn.signInFinishNum">{{index+1}}天</span>
+              <span v-else class="finish">{{index+1}}天已签</span>
+            </span>
           </p>
           <p v-if="!signIn.signInIsFinish">本次已连签<span class="span">{{signIn.signInFinishNum}}</span>天，还差<span class="span">{{signIn.signInUnNum}}</span>天。</p>
           <p v-else>已完成全部签到任务 棒~</p>
@@ -971,6 +974,24 @@ export default {
       font-family: HelveticaNeue;
       color: #FFFFFF;
       line-height: 15px;
+      .finish {
+        height: 16px;
+        font-size: 11px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #F2CB33;
+        line-height: 16px;
+      }
+    }
+    .ed::after {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 6px;
+      width: 3px;
+      height: 3px;
+      background: #CC3720;
+      z-index: 11;
     }
     .index::after {
       content: '';
@@ -979,7 +1000,7 @@ export default {
       left: 6px;
       width: 3px;
       height: 3px;
-      background: #CC3720;
+      background: rgba(234, 87, 55, 0.51);
       z-index: 11;
     }
   }
