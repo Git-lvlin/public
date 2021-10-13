@@ -253,7 +253,7 @@
           <span v-else-if="popupType===3">免费收下</span>
         </div>
         <!-- 关闭按钮 -->
-        <div class="popup-x" v-if="animationEnd" @click="closePopup">
+        <div class="popup-x" v-if="animationEnd" @click="closePopup(1)">
           <van-image width="36px" height="36px" :src="getImgUrl('publicMobile/bindbox/popup-x.png')" />
         </div>
       </div>
@@ -439,6 +439,7 @@ export default {
           const param = `?skuId=${skuId}&spuId=${spuId}&orderId=${orderId}&chanceId=${chanceId}&memberId=${memberId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
           console.log('param', param);
           goToApp(appBaseUrl, '/shopping/detail', param, this.$bridge)
+          this.closePopup(1)
           break
       }
     },
@@ -553,7 +554,7 @@ export default {
       }
     },
     open() {
-      if (this.openFlag&&!this.selectFlag) {
+      if (this.openFlag&&!this.selectFlag&&this.unuseNum) {
         this.openFlag = false
         teamApi.openBox({phone: this.phone}, {token: this.token}).then((res) => {
           if (res.code === 0) {
