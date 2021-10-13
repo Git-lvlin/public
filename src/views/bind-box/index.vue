@@ -575,6 +575,8 @@ export default {
             this.openResult = true
             if (res.data.goodsName) {
               this.popupType = 3
+            } else {
+              this.popupType = 2
             }
             setTimeout(() => {
               this.monitorUno();
