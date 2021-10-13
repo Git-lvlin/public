@@ -118,6 +118,22 @@ const routes = [
     }
   },
   {
+    path: '/web/bind-box',
+    name: 'BindBox',
+    component: () => import('@/views/bind-box'),
+    meta: {
+      title: '盲盒',
+    }
+  },
+  {
+    path: '/web/my-prize',
+    name: 'MyPrize',
+    component: () => import('@/views/my-prize'),
+    meta: {
+      title: '我的奖品',
+    }
+  },
+  {
     path: '/web/license',
     name: 'License',
     component: () => import('@/views/license'),

@@ -72,7 +72,6 @@ const operation = (a, b, op) => {
       return 0;
   }
 };
-
 export default {
   // 加
   add(a, b) {
@@ -91,3 +90,4 @@ export default {
     return operation(a, b, 'divide');
   },
 };
+

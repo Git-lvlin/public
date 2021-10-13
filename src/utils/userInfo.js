@@ -29,6 +29,24 @@ export const savePicShare = (src, bridge) => {
   )
 }
 
+export const setNavigationBarRightContent = (url, num, bridge) => {
+  const data = {
+    code: 0,
+    msg: 'success',
+    data: {
+      link: `${url}`,
+      color: '#EE7D30',
+      content: `已邀${num}人＞`
+    }
+  }
+  const zero = JSON.stringify(data);
+  bridge.callHandler(
+    'setNavigationBarRightContent',
+    zero,
+  )
+}
+
+
 export const judgeVersionIsNew = (v) => {
   const breakPointVersion = 103
   if (v.includes('-')) {
@@ -41,7 +59,7 @@ export const judgeVersionIsNew = (v) => {
 }
 
 export const judgeVersionIsNewShare = (v) => {
-  const breakPointVersion = 104
+  const breakPointVersion = 199
   if (v.includes('-')) {
     const numVersion = v.split('-')[0];
     const version = numVersion.replace(/\./g, '')
