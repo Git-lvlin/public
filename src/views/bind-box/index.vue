@@ -1091,6 +1091,7 @@ export default {
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: flex-start;
           .info-title {
             margin-bottom: 2px;
             height: 20px;
