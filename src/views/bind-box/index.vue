@@ -236,7 +236,7 @@
           <van-image v-else-if="popupType===2" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/sorry-bg.png')" />
           <van-image v-else-if="popupType===3" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/prize-bg.png')" />
           <div class="popup-prize-box" v-if="popupType===3">
-            <div class="popup-title">{{openData.goodsName}}</div>
+            <div class="popup-title van-ellipsis">{{openData.goodsName}}</div>
             <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
             <div class="popup-price">¥{{openData.salePrice/100}}</div>
           </div>
@@ -1303,11 +1303,14 @@ export default {
         align-items: center;
         text-align: center;
         .popup-title {
+          width: 200px;
+          height: 25px;
           font-size: 18px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: #333333;
           line-height: 25px;
+          overflow: hidden;
         }
         .popup-img {
           width: 100%;
