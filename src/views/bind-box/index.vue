@@ -144,7 +144,11 @@
         <div class="task-content">
           <p>每日首次消费<span class="span">{{orderConsume.consumeNum}}</span>笔订单，获得<span class="span">{{orderConsume.consumeChanceNum}}</span>次开盲盒机会。</p>
           <p class="border-orders" v-if="orderConsume.arr">
-            <span class="index" v-for="(item,index) in orderConsume.arr" :key="index">{{index+1}}单</span>
+            <span :class="index+1<=orderConsume.consumeFinishNum?'ed':'index'" class="index" v-for="(item,index) in orderConsume.arr" :key="index">
+              <span v-if="orderConsume.consumeFinishNum==0">{{index+1}}单</span>
+              <span v-else-if="index+1<=orderConsume.consumeFinishNum" class="finish">已完成</span>
+              <span v-else>{{index+1}}单</span>
+            </span>
           </p>
           <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{orderConsume.consumeFinishNum}}</span>笔订单，还差<span class="span">{{orderConsume.consumeUnNum}}</span>笔。</p>
           <p v-else>今天已获取1次开盲盒机会了，明天继续努力吧~</p>
@@ -391,7 +395,7 @@ export default {
           setTimeout(() => {
             this.load = false
             resolve()
-          }, 1000)
+          }, 200)
         }
       })
     },
@@ -937,6 +941,39 @@ export default {
       font-family: HelveticaNeue;
       color: #FFFFFF;
       line-height: 15px;
+      .finish {
+        height: 16px;
+        font-size: 11px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #F2CB33;
+        line-height: 16px;
+      }
+    }
+    .ed {
+      position: relative;
+      font-size: 13px;
+      font-family: HelveticaNeue;
+      color: #FFFFFF;
+      line-height: 15px;
+      .finish {
+        height: 16px;
+        font-size: 11px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #F2CB33;
+        line-height: 16px;
+      }
+    }
+    .ed::after {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 6px;
+      width: 3px;
+      height: 3px;
+      background: #CC3720;
+      z-index: 11;
     }
     .index::after {
       content: '';
@@ -945,7 +982,7 @@ export default {
       left: 6px;
       width: 3px;
       height: 3px;
-      background: #CC3720;
+      background: rgba(234, 87, 55, 0.51);
       z-index: 11;
     }
   }
