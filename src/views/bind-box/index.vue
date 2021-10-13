@@ -116,7 +116,7 @@
           <p class="border-days" v-if="signIn.arr">
             <span :class="index+1<=signIn.signInFinishNum?'ed':'index'" v-for="(item,index) in signIn.arr" :key="index">
               <span v-if="signIn.signInFinishNum==0">{{index+1}}天</span>
-              <span v-else-if="index+1<=signIn.signInFinishNum" class="finish">{{index+1}}天已签</span>
+              <span v-else-if="index+1<=signIn.signInFinishNum" class="finish">已完成</span>
               <span v-else>{{index+1}}天</span>
             </span>
           </p>
@@ -213,7 +213,7 @@
         <div class="tab-list-box" v-if="bindBoxInfo.records">
           <div class="info-item" v-for="(item,index) in bindBoxInfo.records" :key="index">
             <div class="left">
-              <p class="info-title">{{item.title}}</p>
+              <p class="info-title van-ellipsis">{{item.title}}</p>
               <p class="info-time">{{item.createTime}}</p>
             </div>
             <div class="right">{{item.transferType===1?'+'+item.num:'-'+item.num}}</div>
@@ -1084,17 +1084,20 @@ export default {
       background: #FAFAFA;
       border-radius: 4px;
       overflow: hidden;
+      overflow-y: auto;
       .info-item {
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid #EEEEEE;
         .left {
+          width: 140px;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
           .info-title {
             margin-bottom: 2px;
+            width: 100%;
             height: 20px;
             font-size: 14px;
             font-family: PingFangSC-Medium, PingFang SC;
@@ -1103,6 +1106,7 @@ export default {
             line-height: 20px;
           }
           .info-time {
+            width: 100%;
             height: 14px;
             font-size: 10px;
             font-family: PingFangSC-Regular, PingFang SC;
