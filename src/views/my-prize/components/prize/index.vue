@@ -2,7 +2,7 @@
   <div class="prize">
     <van-image class="img" width="89px" height="89px" :src="good.imageUrl" />
     <div class="content">
-      <p class="title">{{good.goodsName}}</p>
+      <p class="title van-multi-ellipsis--l2">{{good.goodsName}}</p>
       <p class="time">获得时间：{{good.createTime}}</p>
       <p class="time">失效时间：{{good.expireTime}}</p>
     </div>
