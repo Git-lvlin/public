@@ -84,7 +84,7 @@
         <div class="task-title">
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
-            <span class="text-more">任务一：</span>
+            <!-- <span class="text-more">任务一：</span> -->
             <span>邀请好友</span>
           </div>
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
@@ -106,7 +106,7 @@
         <div class="task-title">
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
-            <span class="text-more">任务二：</span>
+            <!-- <span class="text-more">任务二：</span> -->
             <span>签到任务</span>
           </div>
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
@@ -136,7 +136,7 @@
         <div class="task-title">
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
-            <span class="text-more">任务三：</span>
+            <!-- <span class="text-more">任务三：</span> -->
             <span>订单消费</span>
           </div>
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
