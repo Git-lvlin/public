@@ -1,13 +1,17 @@
 <template>
   <div class="my-prize">
-    <div class="list-box">
+    <div class="null-box" v-if="!prizeList.length">
+      <van-image width="180px" height="180px" :src="getImgUrl('publicMobile/bindbox/null.png')" />
+      <div>暂无相关记录</div>
+    </div>
+    <div class="list-box" v-else>
       <prize
         v-for="item in prizeList"
         :key="item.id"
         :good="item"
       />
     </div>
-    <div class="null">没有更多了〜</div>
+    <div v-if="prizeList.length" class="null">没有更多了〜</div>
   </div>
 </template>
 
@@ -76,6 +80,17 @@ export default {
   flex-direction: column;
   min-height: 100vh;
   background-color: #F5F5F5;
+}
+.null-box {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
 }
 .list-box {
   padding: 12px;

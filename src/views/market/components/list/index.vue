@@ -26,7 +26,7 @@ export default {
         return console.log(this.good)
       }
       const query = getQueryObj(this.good.actionUrl)
-      const paramStr = `?&spuId=${query.spuId || ''}&skuId=${query.skuId || ''}&orderType=${query.orderType || '2'}`
+      const paramStr = `?spuId=${query.spuId || ''}&skuId=${query.skuId || ''}&orderType=${query.orderType || '2'}`
 
       if (this.$store.state.appInfo.isApp) {
         const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
