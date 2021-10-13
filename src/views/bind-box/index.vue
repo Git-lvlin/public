@@ -558,7 +558,15 @@ export default {
       }
     },
     open() {
-      if (this.openFlag&&!this.selectFlag&&this.unuseNum) {
+      if (!this.unuseNum) {
+        this.openResult = true
+        this.popupType = 1
+        setTimeout(() => {
+          this.monitorUno();
+        }, 0)
+        return
+      }
+      if (this.openFlag&&!this.selectFlag) {
         this.openFlag = false
         teamApi.openBox({phone: this.phone}, {token: this.token}).then((res) => {
           if (res.code === 0) {
