@@ -399,6 +399,7 @@ export default {
         }
       })
     },
+    // 开盒动画
     monitorUno() {
       let a = document.getElementById('uno');
       let b = document.getElementById('oed');
@@ -424,6 +425,9 @@ export default {
       if (type) {
         this.init()
       }
+      // 初始化选中
+      this.selectFlag = true
+      // 关闭弹窗
       this.openResult = false
     },
     onPopup() {
@@ -578,6 +582,7 @@ export default {
             } else {
               this.popupType = 2
             }
+            this.openFlag = true
             setTimeout(() => {
               this.monitorUno();
             }, 0)
