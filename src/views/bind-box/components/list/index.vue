@@ -44,6 +44,7 @@ export default {
   }
   .text {
     position: absolute;
+    padding-left: 3px;
     bottom: 3px;
     left: 50%;
     transform: translateX(-50%);
