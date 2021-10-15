@@ -114,7 +114,7 @@
         <div class="task-content">
           <p>每连续签到<span class="span">{{signIn.signInNum}}</span>天，获得<span class="span">{{signIn.signInChanceNum}}</span>次开盲盒机会。</p>
           <p class="border-days" v-if="signIn.arr">
-            <span :class="index+1<=signIn.signInFinishNum?'ed':'index'" v-for="(item,index) in signIn.arr" :key="index">
+            <span :class="(signIn.signInFinishNum===0&&signIn.signInNum===1)||index+1<=signIn.signInFinishNum?'ed':'index'" v-for="(item,index) in signIn.arr" :key="index">
               <span v-if="signIn.signInFinishNum==0">{{index+1}}天</span>
               <span v-else-if="index+1<=signIn.signInFinishNum" class="finish">已完成</span>
               <span v-else>{{index+1}}天</span>
@@ -144,7 +144,7 @@
         <div class="task-content">
           <p>每日首次消费<span class="span">{{orderConsume.consumeNum}}</span>笔订单，获得<span class="span">{{orderConsume.consumeChanceNum}}</span>次开盲盒机会。</p>
           <p class="border-orders" v-if="orderConsume.arr">
-            <span :class="index+1<=orderConsume.consumeFinishNum?'ed':'index'" class="index" v-for="(item,index) in orderConsume.arr" :key="index">
+            <span :class="(orderConsume.consumeFinishNum===0&&orderConsume.consumeNum==1)||index+1<=orderConsume.consumeFinishNum?'ed':'index'" class="index" v-for="(item,index) in orderConsume.arr" :key="index">
               <span v-if="orderConsume.consumeFinishNum==0">{{index+1}}单</span>
               <span v-else-if="index+1<=orderConsume.consumeFinishNum" class="finish">已完成</span>
               <span v-else>{{index+1}}单</span>
