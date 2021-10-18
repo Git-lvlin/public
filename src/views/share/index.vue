@@ -135,7 +135,9 @@ export default {
     }
   },
   mounted() {
-    this.nowUpdata()
+    setTimeout(() => {
+      this.nowUpdata()
+    }, 1000)
   },
 };
 </script>

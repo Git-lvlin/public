@@ -22,8 +22,8 @@ export default {
     getImgUrl,
     onToDetail() {
       console.log('...', this.good)
-      if (!this.good || !this.good.actionUrl) {
-        return console.log(this.good)
+      if (!this.good.actionUrl || !this.good) {
+        return
       }
       const query = getQueryObj(this.good.actionUrl)
       const paramStr = `?spuId=${query.spuId || ''}&skuId=${query.skuId || ''}&orderType=${query.orderType || '2'}`
