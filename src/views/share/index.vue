@@ -94,6 +94,11 @@ export default {
     a.type = 'text/javascript';
     a.src = 'https://web.cdn.openinstall.io/openinstall.js';
     document.body.appendChild(a);
+    a.onload = () => {
+      setTimeout(() => {
+        this.nowUpdata()
+      }, 0)
+    }
   },
   methods: {
     getImgUrl,
@@ -133,11 +138,6 @@ export default {
             }
           }, data);
     }
-  },
-  mounted() {
-    setTimeout(() => {
-      this.nowUpdata()
-    }, 1000)
   },
 };
 </script>
