@@ -170,6 +170,7 @@
 <p>&nbsp;10.6 com.tencent.bugly(腾讯Bugly&nbsp;SDK)：崩溃日志收集；</p>
 <p>&nbsp;10.7 com.amap.api（高德地图SDK）：高德地图功能；</p>
 <p>&nbsp;10.8 cn.rongcloud.sdk（融云SDK）：融云即时通讯功能；</p>
+<p>&nbsp;10.9 com.mobile.auth(阿里一键登录) ：方便用户使用当前手机号码快捷登录</p>
 <ol start="11">
 <li>11. 获取用户设备信息的说明：</li>
 </ol>
