@@ -77,7 +77,6 @@
 import Vue from 'vue';
 import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-// import { OpenInstall } from 'OpenInstall';
 Vue.use(VanImage);
 export default {
   props: {
@@ -96,7 +95,6 @@ export default {
     document.body.appendChild(a);
     a.onload = () => {
       setTimeout(() => {
-        console.log('111',)
         this.nowUpdata()
       }, 0)
     }
@@ -104,40 +102,39 @@ export default {
   methods: {
     getImgUrl,
     nowUpdata() {
-      console.log('OpenInstall', OpenInstall)
       const data = OpenInstall.parseUrlParams();///openinstall.js中提供的工具函数，解析url中的所有查询参数
       new OpenInstall({
-            /*appKey必选参数，openinstall平台为每个应用分配的ID*/
-            appKey : "sh7yz9",
-            preferWakeup:true,
-            /*自定义遮罩的html*/
-            //mask:function(){
-            //  return "<div id='_shadow' style='position:fixed;left:0;top:0;background:rgba(0,255,0,0.5);filter:alpha(opacity=50);width:100%;height:100%;z-index:10000;'></div>"
-            //},
-            /*OpenInstall初始化完成的回调函数，可选*/
-            onready : function() {
-                /*在app已安装的情况尝试拉起app*/
-                this.schemeWakeup();
-                
-                /*用户点击某个按钮时(假定按钮id为downloadButton)，安装app*/
-                var m = this,
-                button = document.getElementById("downloadButton"),
-                button2 = document.getElementById("downloadButton2"),
-                button3 = document.getElementById("downloadButton3");
-                button.onclick = function() {
-                    m.wakeupOrInstall();
-                    return false;
-                }
-                button2.onclick = function() {
-                    m.wakeupOrInstall();
-                    return false;
-                }
-                button3.onclick = function() {
-                    m.wakeupOrInstall();
-                    return false;
-                }
-            }
-          }, data);
+        /*appKey必选参数，openinstall平台为每个应用分配的ID*/
+        appKey : "sh7yz9",
+        preferWakeup:true,
+        /*自定义遮罩的html*/
+        //mask:function(){
+        //  return "<div id='_shadow' style='position:fixed;left:0;top:0;background:rgba(0,255,0,0.5);filter:alpha(opacity=50);width:100%;height:100%;z-index:10000;'></div>"
+        //},
+        /*OpenInstall初始化完成的回调函数，可选*/
+        onready : function() {
+          /*在app已安装的情况尝试拉起app*/
+          this.schemeWakeup();
+          
+          /*用户点击某个按钮时(假定按钮id为downloadButton)，安装app*/
+          var m = this,
+          button = document.getElementById("downloadButton"),
+          button2 = document.getElementById("downloadButton2"),
+          button3 = document.getElementById("downloadButton3");
+          button.onclick = function() {
+            m.wakeupOrInstall();
+            return false;
+          }
+          button2.onclick = function() {
+            m.wakeupOrInstall();
+            return false;
+          }
+          button3.onclick = function() {
+            m.wakeupOrInstall();
+            return false;
+          }
+        }
+      }, data);
     }
   },
 };
