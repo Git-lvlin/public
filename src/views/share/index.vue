@@ -96,6 +96,7 @@ export default {
     document.body.appendChild(a);
     a.onload = () => {
       setTimeout(() => {
+        console.log('111',)
         this.nowUpdata()
       }, 0)
     }
