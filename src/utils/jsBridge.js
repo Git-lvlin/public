@@ -33,7 +33,7 @@ const setupWebViewJavascriptBridge = (callback) => {
       );
     }
   }
-  if (isiOS) {
+  if (isiOS && window.location.href.indexOf('web/share') == -1) {
     if (window.WKWebViewJavascriptBridge) {
       return callback(window.WKWebViewJavascriptBridge);
     }
