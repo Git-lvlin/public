@@ -162,15 +162,76 @@
 <li>未经您的明确同意，我们不会削减您按照本隐私政策所享有的权利。如无特殊说明，修订后的隐私权政策自公布之日起生效。</li>
 </ol>
 <p>10.对系统中集成第三方SDK的使用说明</p>
-<p>&nbsp;10.1 com.huawei.hms(华为SDK)：用于华为手机的系统通道推送功能；</p>
-<p>&nbsp;10.2 com.umeng(友盟SDK)：使用友盟统计、分享、推送SDK，统计用户日活量、第三方分享功能、消息推送功能；</p>
-<p>&nbsp;10.3 com.huawei.agconnect(华为联运应用SDK) ：用于华为应用市场发布</p>
-<p>&nbsp;10.4 com.alipay(支付宝SDK)：支付宝支付功能；</p>
-<p>&nbsp;10.5 com.tencent.mm.opensdk（微信支付SDK）：微信支付功能</p>
-<p>&nbsp;10.6 com.tencent.bugly(腾讯Bugly&nbsp;SDK)：崩溃日志收集；</p>
-<p>&nbsp;10.7 com.amap.api（高德地图SDK）：高德地图功能；</p>
-<p>&nbsp;10.8 cn.rongcloud.sdk（融云SDK）：融云即时通讯功能；</p>
-<p>&nbsp;10.9 com.mobile.auth(阿里一键登录) ：方便用户使用当前手机号码快捷登录</p>
+<div class="box h80">
+  <span class="s1">第三方名称</span>
+  <span class="s1">使用目的</span>
+  <span class="s1">功能类型</span>
+  <span class="s1">涉及个人信息</span>
+  <span class="s1">第三方官网链接</span>
+</div>
+<div class="box">
+  <span>com.huawei.hms(华为SDK)</span>
+  <span>用于华为手机的系统通道推送功能</span>
+  <span>推送消息通知SDK</span>
+  <span>设备信息</span>
+  <span>https://consumer.huawei.com/cn/privacy/</span>
+</div>
+<div class="box h200">
+  <span>com.umeng(友盟SDK)</span>
+  <span>使用友盟统计、分享、推送SDK，统计用户日活量、第三方分享功能、消息推送功能</span>
+  <span>推送消息通知SDK</span>
+  <span>设备信息</span>
+  <span>https://www.umeng.com/</span>
+</div>
+<div class="box">
+  <span>com.huawei.agconnect(华为联运应用SDK) </span>
+  <span>用于华为应用市场发布</span>
+  <span>华为联运</span>
+  <span>设备信息</span>
+  <span>https://developer.huawei.com/cn/</span>
+</div>
+<div class="box">
+  <span>com.alipay(支付宝SDK)</span>
+  <span>支付宝支付功能</span>
+  <span>支付方式SDK</span>
+  <span>设备信息</span>
+  <span>https://www.alipay.com/</span>
+</div>
+<div class="box">
+  <span>com.tencent.mm.opensdk（微信支付SDK）</span>
+  <span>微信支付功能</span>
+  <span>支付方式SDK</span>
+  <span>设备信息</span>
+  <span>https://pay.weixin.qq.com/</span>
+</div>
+<div class="box">
+  <span>com.tencent.bugly(腾讯Bugly SDK)</span>
+  <span>崩溃日志收集</span>
+  <span>日志消息SDK</span>
+  <span>设备信息</span>
+  <span>https://bugly.qq.com/v2/</span>
+</div>
+<div class="box">
+  <span>com.amap.api（高德地图SDK）</span>
+  <span>高德地图功能</span>
+  <span>高德地图SDK</span>
+  <span>设备信息</span>
+  <span>https://lbs.amap.com/</span>
+</div>
+<div class="box">
+  <span>cn.rongcloud.sdk（融云SDK）</span>
+  <span>融云即时通讯功能</span>
+  <span>融云通讯SDK</span>
+  <span>设备信息</span>
+  <span>http://www.rongcloud.cn/</span>
+</div>
+<div class="box bottom-last">
+  <span>com.mobile.auth(阿里一键登录) </span>
+  <span>方便用户使用当前手机号码快捷登录</span>
+  <span>一键登录SDK</span>
+  <span>设备信息</span>
+  <span>https://www.aliyun.com/</span>
+</div>
 <ol start="11">
 <li>11. 获取用户设备信息的说明：</li>
 </ol>
@@ -274,6 +335,7 @@
 <p>联系人：约购客户服务保障团队</p>
 </div>
 </template>
+
 <style lang="scss" scoped>
 p {
   text-indent:2em;
@@ -284,4 +346,38 @@ p:nth-child(1) {
   text-align: center;
   text-indent:0
 }
+.box {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000000;
+  border-bottom: none;
+  border-right: none;
+  overflow: hidden;
+  text-align: center;
+  word-wrap:break-word;
+  font-size: 14px;
+  span {
+    width: 20%;
+    height: 100%;
+    border-right: 1px solid #000;
+  }
+  .s1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.bottom-last {
+  border-bottom: 1px solid #000000;
+}
+.h80 {
+  height: 80px;
+}
+.h200 {
+  height: 200px;
+}
+
 </style>
