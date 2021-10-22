@@ -16,7 +16,7 @@
         <p class="subtitle">每日首单领红包,天天连续红包金额更大哦~</p>
         <div class="reds-box">
           <div class="red-box" :class="item.status?'index':''" v-for="(item, index) in redBoxData" :key="index">
-            <p class="p1">{{item.name}}</p>
+            <p class="p1" :class="item.status?'p1-index':''">{{item.name}}</p>
             <van-image
               class="center-icon"
               width="24px"
@@ -303,9 +303,6 @@ export default {
       .index {
         background: rgba(229, 53, 47, 0.1);
         border: 1px solid #E5352F;
-        .p1 {
-          color: #E5352F;
-        }
       }
       .red-box {
         margin-right: 10px;
@@ -317,6 +314,9 @@ export default {
         align-items: center;
         background: #F5F5F5;
         border-radius: 8px;
+        .p1-index {
+          color: #E5352F;
+        }
         .p1 {
           font-size: 15px;
           font-family: PingFangSC-Semibold, PingFang SC;

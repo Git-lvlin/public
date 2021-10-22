@@ -66,9 +66,7 @@ export default {
     getImgUrl,
     onToDetail() {
       // 跳转到商品详情页面
-      const { skuId, spuId, orderId, chanceId, memberId, orderType, activityId, objectId } = this.good;
-      const param = `?skuId=${skuId}&spuId=${spuId}&orderId=${orderId}&chanceId=${chanceId}&memberId=${memberId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
-      goToApp(appBaseUrl, '/shopping/detail', param, this.$bridge)
+      goToApp(this.good.actionUrl, '', '', this.$bridge)
     }
   }
 }
