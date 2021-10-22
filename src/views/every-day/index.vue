@@ -247,6 +247,8 @@ export default {
     height: 36px;
     background: linear-gradient(180deg, #ED773E 0%, #EA3E2B 23%, #E33628 100%);
     border-radius: 4px 0px 0px 4px;
+    border: 1px solid #FFFFFF;
+    border-right: none;
     display: flex;
     justify-content: center;
     align-items: center;
