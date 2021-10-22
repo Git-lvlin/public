@@ -82,38 +82,7 @@ export default {
   props: {
     list: {
       type: Array,
-      default: [
-        {
-          image: '',
-          title: '第撒所大所大所多',
-          salePrice: '10000',
-          tags: [
-            '满12减3',
-            '满12减4',
-          ],
-          imgs: [
-            getImgUrl('publicMobile/everyday/red.png'),
-            getImgUrl('publicMobile/everyday/red.png'),
-            getImgUrl('publicMobile/everyday/red.png'),
-            getImgUrl('publicMobile/everyday/red.png'),
-          ]
-        },
-        {
-          image: '',
-          title: '第撒所大所大所多第撒所大所大所多第撒所大所大所多第撒所大所大所多第撒所大所大所多',
-          salePrice: '10000',
-          tags: [
-            '满12减1',
-          ],
-          imgs: [
-            getImgUrl('publicMobile/everyday/red.png'),
-            getImgUrl('publicMobile/everyday/red.png'),
-            getImgUrl('publicMobile/everyday/red.png'),
-            getImgUrl('publicMobile/everyday/red.png'),
-            getImgUrl('publicMobile/everyday/red.png'),
-          ]
-        },
-      ],
+      default: [],
     },
   },
   data() {
@@ -155,7 +124,7 @@ export default {
     list,
   },
   async created () {
-    // await this.getUserInfo()
+    await this.getUserInfo()
     this.getIndex()
     this.getListData()
   },
