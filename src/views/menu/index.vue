@@ -78,6 +78,11 @@
         is-link
         to="/web/license-pc"
       />
+      <van-cell
+        title="天天领红包"
+        is-link
+        to="/web/every-day"
+      />
     </van-cell-group>
   </div>
 </template>

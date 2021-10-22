@@ -148,6 +148,14 @@ const routes = [
     meta: {
       title: '资质证照',
     }
+  },
+  {
+    path: '/web/every-day',
+    name: 'EveryDay',
+    component: () => import('@/views/every-day'),
+    meta: {
+      title: '天天领红包',
+    }
   }
 ];
 
