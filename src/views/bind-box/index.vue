@@ -42,7 +42,7 @@
 
     <div class="title-one">开盲盒</div>
     <div class="title-two">赢超级大奖</div>
-    <div class="subtitle">拼手气 玩大的 惊喜盲盒等你来开</div>
+    <div class="subtitle">QTQ太空舱按摩椅、罗西尼手表等你来开</div>
 
     <div class="num">
       <p>剩余次数：<span class="chance">{{unuseNum}}</span>次</p>
@@ -68,6 +68,7 @@
             :good="item"
           />
         </div>
+        <div class="list-box-text">话费中奖后，将在7个工作日内充值到您的收货手机号中。（水平滚动）</div>
       </div>
     </div>
 
@@ -91,7 +92,7 @@
         </div>
         <div class="task-content">
           <div class="task-flex">
-            <p>每成功邀请<span class="span">{{inviteFriends.inviteNum}}</span>位新用户注册约购APP，获得<span class="span">{{inviteFriends.chanceNum}}</span>次开盲盒机会，每天前{{inviteFriends.dayMemberNum}}人有效。</p>
+            <p>每成功邀请<span class="span">{{inviteFriends.inviteNum}}</span>位新用户注册约购APP，获得<span class="span">{{inviteFriends.chanceNum}}</span>次开盲盒机会，每天最多获得{{inviteFriends.inviteDayMaxNum}}次开盒机会。</p>
             <p v-if="!inviteFriends.inviteIsFinish">本次已邀请<span class="span">{{inviteFriends.inviteFinishNum}}</span>人，还差<span class="span">{{inviteFriends.inviteUnNum}}</span>人。</p>
             <p v-else>今天已经圆满完成任务，明天再继续努力吧~</p>
           </div>
@@ -254,7 +255,7 @@
         >
           <span v-if="popupType===1">查看任务</span>
           <span v-else-if="popupType===2">知道了</span>
-          <span v-else-if="popupType===3">免费收下</span>
+          <span v-else-if="popupType===3">免费兑换</span>
         </div>
         <!-- 关闭按钮 -->
         <div class="popup-x" v-if="animationEnd" @click="closePopup(1)">
@@ -767,6 +768,7 @@ export default {
   }
   .tab2 {
     top: 139px;
+    z-index: 9;
   }
   .winning-list {
     position: absolute;
@@ -810,14 +812,14 @@ export default {
   }
   .subtitle {
     position: absolute;
-    top: 157px;
+    top: 159px;
     width: 100%;
-    height: 22px;
-    font-size: 16px;
+    height: 20px;
+    font-size: 14px;
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #FFFFFF;
-    line-height: 22px;
+    line-height: 20px;
     text-shadow: 0px 2px 2px #6F9BE5;
     text-align: center;
   }
@@ -826,13 +828,23 @@ export default {
     background-color: #EA5737;
     border-bottom: 8px solid #B64030;
     .list-box {
-      padding: 19px 0 27px 16px;
+      padding: 19px 0 10px 16px;
       overflow: hidden;
       white-space: nowrap;
       overflow-x: auto;
       .list-box-index {
         position: relative;
         height: 71px;
+      }
+      .list-box-text {
+        margin-top: 3px;
+        width: 100%;
+        height: 14px;
+        font-size: 10px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FBF0BB;
+        line-height: 14px;
       }
     }
   }
