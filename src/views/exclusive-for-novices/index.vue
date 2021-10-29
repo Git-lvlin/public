@@ -126,6 +126,7 @@ export default {
       this.getAppInfo()
     } else if (this.$store.state.appInfo.isMiniprogram) {
       this.getMiniprogramInfo()
+      this.getListData()
     } else {
       console.log('不是App内')
     }
