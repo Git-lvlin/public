@@ -83,6 +83,11 @@
         is-link
         to="/web/every-day"
       />
+      <van-cell
+        title="五星店主限时抢"
+        is-link
+        to="/web/five-star"
+      />
     </van-cell-group>
   </div>
 </template>

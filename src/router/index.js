@@ -156,6 +156,14 @@ const routes = [
     meta: {
       title: '天天领红包',
     }
+  },
+  {
+    path: '/web/five-star',
+    name: 'FiveStar',
+    component: () => import('@/views/five-star'),
+    meta: {
+      title: '五星店主限时抢',
+    }
   }
 ];
 
