@@ -9,13 +9,14 @@
         :src="bgType?edImg:initImg"
       />
       <van-image
+        v-if="!bgType"
         class="btn-img"
         width="290"
         height="123px"
         lazy-load
         :src="getImgUrl('publicMobile/fivestar/five-star-btn.png')"
       />
-      <div class="tips">活动规则</div>
+      <div class="tips" @click="showPopupQa">活动规则</div>
     </div>
     <div class="content-box">
       <div class="item" v-for="(item, index) in content" v-bind:key="index">
@@ -36,7 +37,8 @@
         </div>
         <div class="content">
           <div class="p1">{{item.title}}</div>
-          <div class="p2">{{item.subtitle}}</div>
+          <div class="p2" v-if="!item.type">{{item.subtitle}}</div>
+          <div class="p3" v-else>已完成</div>
           <div class="btn-box">
             <van-image
               class="btn-left"
@@ -72,12 +74,25 @@
         :src="getImgUrl('publicMobile/fivestar/logo.png')"
       />
     </div>
+    <!-- 活动规则弹窗 -->
+    <van-popup
+      v-model="show"
+      closeable
+      position="bottom"
+      round
+      :style="{ height: '506px' }"
+    >
+      <div class="rule-div">
+        <div class="title">活动规则</div>
+        <textarea class="content" readonly v-model="ruleText"></textarea>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
+import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/appointment';
@@ -93,13 +108,17 @@ Vue.use(VanImage);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(Lazyload);
+Vue.use(Popup);
 export default {
   data() {
     return {
+      ruleText: null,
+      show: false,
       token: null,
       bgType: 0,
       initImg: getImgUrl('publicMobile/fivestar/five-star-bg.png'),
       edImg: getImgUrl('publicMobile/fivestar/five-star-bg.png'),
+      endImg: getImgUrl('publicMobile/fivestar/five-star-bg-end.png'),
       content: [
         {
           topTitle: '任务一',
@@ -135,6 +154,9 @@ export default {
   },
   methods: {
     getImgUrl,
+    showPopupQa() {
+      this.show = true
+    },
   },
 };
 </script>
@@ -180,6 +202,7 @@ export default {
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
       color: #E72C25;
+      z-index: 2;
     }
     .tips::after {
       content: "";
@@ -244,6 +267,15 @@ export default {
           color: #88685C;
           line-height: 20px;
         }
+        .p3 {
+          margin: 0 0 64px 16px;
+          height: 20px;
+          font-size: 14px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #FD1601;
+          line-height: 20px;
+        }
       }
       .btn-box {
         margin-left: 20px;
@@ -271,5 +303,36 @@ export default {
     padding: 8px 0 34px 0;
     display: flex;
     justify-content: center;
+  }
+  .element::-webkit-scrollbar {display:none}
+  .rule-div {
+    width: 100%;
+    height: 482px;
+    overflow: hidden;
+    .title {
+      padding-top: 24px;
+      padding-bottom: 32px;
+      height: 26px;
+      font-size: 19px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #333333;
+      line-height: 26px;
+      text-align: center;
+    }
+    .content {
+      width: 100%;
+      height: 440px;
+      border: none;
+      padding: 32px 16px 50px 16px;
+      text-align: justify;
+      font-size: 14px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
+      color: #666666;
+      line-height: 22px;
+      overflow: hidden;
+      overflow-y: auto;
+    }
   }
 </style>

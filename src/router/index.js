@@ -164,6 +164,30 @@ const routes = [
     meta: {
       title: '五星店主限时抢',
     }
+  },
+  {
+    path: '/web/invitation-list',
+    name: 'InvitationList',
+    component: () => import('@/views/invitation-list'),
+    meta: {
+      title: '邀请列表',
+    }
+  },
+  {
+    path: '/web/partake-list',
+    name: 'PartakeList',
+    component: () => import('@/views/partake-list'),
+    meta: {
+      title: '参与记录',
+    }
+  },
+  {
+    path: '/web/open-shop-list',
+    name: 'OpenShopList',
+    component: () => import('@/views/open-shop-list'),
+    meta: {
+      title: '开店记录',
+    }
   }
 ];
 

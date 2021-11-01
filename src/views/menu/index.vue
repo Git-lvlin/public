@@ -88,6 +88,21 @@
         is-link
         to="/web/five-star"
       />
+      <van-cell
+        title="邀请列表"
+        is-link
+        to="/web/invitation-list"
+      />
+      <van-cell
+        title="参与记录"
+        is-link
+        to="/web/partake-list"
+      />
+      <van-cell
+        title="开店记录"
+        is-link
+        to="/web/open-shop-list"
+      />
     </van-cell-group>
   </div>
 </template>

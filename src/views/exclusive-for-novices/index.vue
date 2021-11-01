@@ -124,11 +124,9 @@ export default {
       }
       console.log('兼容低版本逻辑')
       this.getAppInfo()
-    } else if (this.$store.state.appInfo.isMiniprogram) {
+    } else {
       this.getMiniprogramInfo()
       this.getListData()
-    } else {
-      console.log('不是App内')
     }
   },
   methods: {
