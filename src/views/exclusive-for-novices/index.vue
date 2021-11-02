@@ -167,9 +167,13 @@ export default {
       })
     },
     getMiniprogramInfo() {
-      this.indexVersion = this.$router.history.current.indexVersion
-      this.token = this.$router.history.current.token
-      this.isNew = this.$router.history.current.isNew
+      const {
+        query,
+      } = this.$router.history.current;
+      console.log('query', query)
+      this.indexVersion = query.indexVersion
+      this.token = query.token
+      this.isNew = query.isNew
     },
     getImgUrl,
     getListData() {
