@@ -188,6 +188,14 @@ const routes = [
     meta: {
       title: '开店记录',
     }
+  },
+  {
+    path: '/web/new-share',
+    name: 'NewShare',
+    component: () => import('@/views/new-share'),
+    meta: {
+      title: '约购APP',
+    }
   }
 ];
 

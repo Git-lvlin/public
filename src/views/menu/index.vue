@@ -103,6 +103,11 @@
         is-link
         to="/web/open-shop-list"
       />
+      <van-cell
+        title="约购APP"
+        is-link
+        to="/web/new-share"
+      />
     </van-cell-group>
   </div>
 </template>

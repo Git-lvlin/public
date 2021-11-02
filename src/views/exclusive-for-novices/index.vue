@@ -114,21 +114,6 @@ export default {
     Hot,
     [Dialog.Component.name]: Dialog.Component,
   },
-  async created () {
-    if (this.$store.state.appInfo.isApp) {
-      const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
-      if (isNewVersion) {
-        await this.getUserInfo();
-        this.getListData()
-        return
-      }
-      console.log('兼容低版本逻辑')
-      this.getAppInfo()
-    } else {
-      this.getMiniprogramInfo()
-      this.getListData()
-    }
-  },
   methods: {
     async getCoupon() {
       if (!this.flag) {
@@ -211,7 +196,20 @@ export default {
     onBottomReach() {
     },
   },
-  mounted() {
+  async mounted() {
+    if (this.$store.state.appInfo.isApp) {
+      const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
+      if (isNewVersion) {
+        await this.getUserInfo();
+        this.getListData()
+        return
+      }
+      console.log('兼容低版本逻辑')
+      this.getAppInfo()
+    } else {
+      this.getMiniprogramInfo()
+      this.getListData()
+    }
     this.onLoad()
   }
 };
