@@ -44,7 +44,7 @@ function requestRefreshToken() {
 let isRefreshing = false
 let requestHistory = []
 
-axios.interceptors.response.use(response => {
+axios.interceptors.response.use(async response => {
   // const { code } = response.data
   return response.data;
 
@@ -78,9 +78,9 @@ axios.interceptors.response.use(response => {
   //   }
   // }
 }, 
-// error => {
-//   return Promise.reject(error)
-// }
+error => {
+  return Promise.reject(error)
+}
 )
 
 /* eslint-enable */
