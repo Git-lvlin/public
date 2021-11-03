@@ -47,7 +47,7 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
   response => {
   // const { code } = response.data
-  return response
+  return response.data
 
   // if (code == 0 || code == -1) {
   //   return response.data;
@@ -127,12 +127,11 @@ const request = async ({
   }
   console.log('all', all)
   return axios(all).then((res) => {
+    console.log('res!!!!!!!!!', res)
     if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
-      console.log('this.$bridge', this.$bridge)
-      console.log('this.$store.state.appInfo', this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
+        console.log('调用refreshToken-start')
         this.$bridge.callHandler('refreshToken',{})
-        console.log('调用refreshToken')
         return
       }
       if (this.$store.state.appInfo.isMiniprogram) {
