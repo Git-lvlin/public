@@ -49,7 +49,7 @@ axios.interceptors.response.use(
   const { code } = response.data
 
   if (code == 0 || code == -1) {
-    return response.data;
+    return Promise.resolve(response.data);
   }
   if (code == REFRESH_TOKEN_INVALID || code === ACCESS_TOKEN_INVALID) {
     Toast('登录过期，重新登录')
