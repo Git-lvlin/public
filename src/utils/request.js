@@ -128,7 +128,7 @@ const request = async ({
           data: {}
         }
         const zero = JSON.stringify(data);
-        bridge.callHandler(
+        this.$bridge.callHandler(
           'refreshToken',
           zero,
         )
