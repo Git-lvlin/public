@@ -120,9 +120,18 @@ const request = async ({
     }
   }
   return axios(all).then((res) => {
-    if (res.code === 10014 || res.code === 10010) {
+    if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
       if (this.$store.state.appInfo.isApp) {
-        this.$bridge&&goToApp(appBaseUrl, '/login/index', '', this.$bridge)
+        const data = {
+          code: 0,
+          msg: 'success',
+          data: {}
+        }
+        const zero = JSON.stringify(data);
+        bridge.callHandler(
+          'refreshToken',
+          zero,
+        )
         return
       }
       if (this.$store.state.appInfo.isMiniprogram) {
