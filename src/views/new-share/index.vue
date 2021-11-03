@@ -192,11 +192,11 @@ export default {
       this.codeErr = ''
       teamApi.getReg(param).then((res) => {
         console.log('res', res)
-        if (res.code == 0) {
+        if (res.data) {
           this.type = 1
           return
         }
-        if (res.code == 200232) {
+        if (!res.data) {
           this.show = 1
         }
       }).catch(() => {
