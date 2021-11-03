@@ -45,49 +45,8 @@ axios.interceptors.request.use((config) => {
 // let requestHistory = []
 
 axios.interceptors.response.use(
-  async response => {
-  const { code } = response.data
-
-  if (code == 0 || code == -1) {
-    return Promise.resolve(response.data);
-  }
-  if (code == REFRESH_TOKEN_INVALID || code === ACCESS_TOKEN_INVALID) {
-    Toast('登录过期，重新登录')
-    if (this.$store.state.appInfo.isMiniprogram) {
-      wx.miniProgram.navigateTo({
-        url: '/pages/login/mobile/index'
-      })
-      return null
-    }
-    if (this.$store.state.appInfo.isApp) {
-      console.log('调用refreshToken-start')
-      this.$bridge.callHandler('refreshToken',{})
-      return null
-    }
-    console.log('1111111111111')
-    return null;
-  }
-  // if (code === ACCESS_TOKEN_INVALID) {
-  //   const config = response.config
-  //   if (!isRefreshing) {
-  //     isRefreshing = true
-  //     var res = await requestRefreshToken();
-  //     const { accessToken } = res.data
-  //     axios.defaults.headers['accessToken'] = accessToken
-  //     config.headers['accessToken'] = accessToken
-  //     //恢复历史请求
-  //     requestHistory.forEach(cb => cb(accessToken))
-  //     requestHistory = []
-  //     return axios(config)
-  //   } else {
-  //     return new Promise((resolve) => {
-  //       requestHistory.push((token) => {
-  //         config.headers['accessToken'] = token
-  //         resolve(axios(config))
-  //       })
-  //     })
-  //   }
-  // }
+  response => {
+  return Promise.resolve(response.data);
 }, error => {
   return Promise.reject(error)
 })
@@ -102,7 +61,6 @@ const request = async ({
   console.log(process);
   const { showLoading = true, showError = true } = options;
   console.log('options', options)
-  console.log('this.$bridge', 1)
   if (showLoading && requestCount === 0) {
     Toast.loading({
       message: '加载中...',
@@ -137,14 +95,20 @@ const request = async ({
   return axios(all).then((res) => {
     console.log('res!!!!!!!!!', res)
     console.log('this.$store.state', this.$store.state)
-    // if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
-    //   if (this.$store.state.appInfo.isApp) {
-    //     console.log('调用refreshToken-start')
-    //     this.$bridge.callHandler('refreshToken',{})
-    //     return
-    //   }
-    //   return
-    // }
+    if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
+      console.log('this.$store', this.$store)
+      if (this.$store.state.appInfo.isApp) {
+        console.log('调用refreshToken-start')
+        this.$bridge.callHandler('refreshToken',{})
+        return
+      }
+      if (this.$store.state.appInfo.isMiniprogram) {
+        wx.miniProgram.navigateTo({
+          url: '/pages/login/mobile/index'
+        })
+        return
+      }
+    }
     if (res.code !== 0 && showError) {
       setTimeout(() => {
         Dialog({ message: res.msg });

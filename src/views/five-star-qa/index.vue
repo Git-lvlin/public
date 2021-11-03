@@ -68,8 +68,6 @@ export default {
         if (res?.code == 0) {
           this.info = res.data
         }
-      }).catch(err=>{
-        console.log('err-getStoreShopInfo', err)
       })
     },
   },
