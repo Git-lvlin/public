@@ -45,18 +45,28 @@ axios.interceptors.request.use((config) => {
 // let requestHistory = []
 
 axios.interceptors.response.use(
-  response => {
-  // const { code } = response.data
-  return response.data
+  async response => {
+  const { code } = response.data
 
-  // if (code == 0 || code == -1) {
-  //   return response.data;
-  // }
-  // if (code == REFRESH_TOKEN_INVALID) {
-  //   // refreshToken过期退出登录
-  //   Toast('登录过期，请重新登录')
-  //   return null;
-  // }
+  if (code == 0 || code == -1) {
+    return response.data;
+  }
+  if (code == REFRESH_TOKEN_INVALID || code === ACCESS_TOKEN_INVALID) {
+    Toast('登录过期，重新登录')
+    if (this.$store.state.appInfo.isMiniprogram) {
+      wx.miniProgram.navigateTo({
+        url: '/pages/login/mobile/index'
+      })
+      return null
+    }
+    if (this.$store.state.appInfo.isApp) {
+      console.log('调用refreshToken-start')
+      this.$bridge.callHandler('refreshToken',{})
+      return null
+    }
+    console.log('1111111111111')
+    return null;
+  }
   // if (code === ACCESS_TOKEN_INVALID) {
   //   const config = response.config
   //   if (!isRefreshing) {
@@ -78,11 +88,9 @@ axios.interceptors.response.use(
   //     })
   //   }
   // }
-}, 
-error => {
+}, error => {
   return Promise.reject(error)
-}
-)
+})
 
 /* eslint-enable */
 
@@ -108,9 +116,9 @@ const request = async ({
 
   let params = 'data';
 
-  // if (method === 'get') {
-  //   params = 'params';
-  // }
+  if (method === 'get') {
+    params = 'params';
+  }
 
   let all = {
     url,
@@ -128,21 +136,15 @@ const request = async ({
   console.log('all', all)
   return axios(all).then((res) => {
     console.log('res!!!!!!!!!', res)
-    if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
-      if (this.$store.state.appInfo.isApp) {
-        console.log('调用refreshToken-start')
-        this.$bridge.callHandler('refreshToken',{})
-        return
-      }
-      if (this.$store.state.appInfo.isMiniprogram) {
-        wx.miniProgram.navigateTo({
-          url: '/pages/login/mobile/index'
-        })
-        return
-      }
-      console.log('不是App内')
-      return
-    }
+    console.log('this.$store.state', this.$store.state)
+    // if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
+    //   if (this.$store.state.appInfo.isApp) {
+    //     console.log('调用refreshToken-start')
+    //     this.$bridge.callHandler('refreshToken',{})
+    //     return
+    //   }
+    //   return
+    // }
     if (res.code !== 0 && showError) {
       setTimeout(() => {
         Dialog({ message: res.msg });

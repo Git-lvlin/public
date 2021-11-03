@@ -60,6 +60,7 @@ export default {
     },
     getInfo() {
       teamApi.getStoreShopInfo({}, {showError:false, token: this.token}).then((res) => {
+        console.log('店铺信息-res', res)
         if (res?.code == 10110) {
           this.info = null
           return
