@@ -191,7 +191,7 @@ export default {
       this.phoneErr = ''
       this.codeErr = ''
       teamApi.getReg(param, {showError: false}).then((res) => {
-        if (res.code == 0) {
+        if (res&&res.code == 0) {
           if (res.data.toString() == 'true') {
             this.type = 1
             return

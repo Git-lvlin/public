@@ -132,6 +132,7 @@ const request = async ({
           'refreshToken',
           zero,
         )
+        console.log('调用refreshToken')
         return
       }
       if (this.$store.state.appInfo.isMiniprogram) {
