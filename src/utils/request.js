@@ -123,6 +123,8 @@ const request = async ({
   }
   return axios(all).then((res) => {
     if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
+      console.log('this.$bridge', this.$bridge)
+      console.log('this.$store.state.appInfo', this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
         const data = {
           code: 0,
