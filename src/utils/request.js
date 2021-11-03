@@ -33,20 +33,21 @@ axios.interceptors.request.use((config) => {
 
 /* eslint-disable */
 
-function requestRefreshToken() {
-  //获取原生用户信息
-  return post({
-    url: refresToken,
-    data: { 'id': '1395631517728378881', 'refreshToken': 'eyJhbGciOiJIUzUxMiJ9.eyJNRU1CRVJOQU1FIjoiMTgxMjIyNTI3NDUiLCJjcmVhdGVkIjoxNjIyNTM3NTA1MzE5LCJ0b2tlblR5cGUiOiJyZWZyZXNoVG9rZW4iLCJleHAiOjE2MjMxNDIzMDV9.0hf2BejooKMcLiPq-DasHWuiaYKg0BrSPaN-0m1b-KwoKRn1xjj3bYqgKlei1fk3ugcCBs9hv5vBqZ2vTe-XpA' },
-  }).then(res => res.data);
-}
+// function requestRefreshToken() {
+//   //获取原生用户信息
+//   return post({
+//     url: refresToken,
+//     data: { 'id': '1395631517728378881', 'refreshToken': 'eyJhbGciOiJIUzUxMiJ9.eyJNRU1CRVJOQU1FIjoiMTgxMjIyNTI3NDUiLCJjcmVhdGVkIjoxNjIyNTM3NTA1MzE5LCJ0b2tlblR5cGUiOiJyZWZyZXNoVG9rZW4iLCJleHAiOjE2MjMxNDIzMDV9.0hf2BejooKMcLiPq-DasHWuiaYKg0BrSPaN-0m1b-KwoKRn1xjj3bYqgKlei1fk3ugcCBs9hv5vBqZ2vTe-XpA' },
+//   }).then(res => res.data);
+// }
 
-let isRefreshing = false
-let requestHistory = []
+// let isRefreshing = false
+// let requestHistory = []
 
-axios.interceptors.response.use(async response => {
+axios.interceptors.response.use(
+  response => {
   // const { code } = response.data
-  return response.data;
+  return response
 
   // if (code == 0 || code == -1) {
   //   return response.data;
@@ -85,7 +86,7 @@ error => {
 
 /* eslint-enable */
 
-const resolveArr = [];
+// const resolveArr = [];
 
 const request = async ({
   url, method, data, options = {},
@@ -93,7 +94,7 @@ const request = async ({
   console.log(process);
   const { showLoading = true, showError = true } = options;
   console.log('options', options)
-  console.log('this.$bridge', this.$bridge)
+  console.log('this.$bridge', 1)
   if (showLoading && requestCount === 0) {
     Toast.loading({
       message: '加载中...',
@@ -107,9 +108,9 @@ const request = async ({
 
   let params = 'data';
 
-  if (method === 'get') {
-    params = 'params';
-  }
+  // if (method === 'get') {
+  //   params = 'params';
+  // }
 
   let all = {
     url,
@@ -124,21 +125,13 @@ const request = async ({
       token: options.token
     }
   }
+  console.log('all', all)
   return axios(all).then((res) => {
     if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
       console.log('this.$bridge', this.$bridge)
       console.log('this.$store.state.appInfo', this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
-        const data = {
-          code: 0,
-          msg: 'success',
-          data: {}
-        }
-        const zero = JSON.stringify(data);
-        this.$bridge.callHandler(
-          'refreshToken',
-          zero,
-        )
+        this.$bridge.callHandler('refreshToken',{})
         console.log('调用refreshToken')
         return
       }
