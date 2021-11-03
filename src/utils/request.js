@@ -45,36 +45,38 @@ let isRefreshing = false
 let requestHistory = []
 
 axios.interceptors.response.use(async response => {
-  const { code } = response.data
-  if (code == 0 || code == -1) {
-    return response.data;
-  }
-  if (code == REFRESH_TOKEN_INVALID) {
-    // refreshToken过期退出登录
-    Toast('登录过期，请重新登录')
-    return null;
-  }
-  if (code === ACCESS_TOKEN_INVALID) {
-    const config = response.config
-    if (!isRefreshing) {
-      isRefreshing = true
-      var res = await requestRefreshToken();
-      const { accessToken } = res.data
-      axios.defaults.headers['accessToken'] = accessToken
-      config.headers['accessToken'] = accessToken
-      //恢复历史请求
-      requestHistory.forEach(cb => cb(accessToken))
-      requestHistory = []
-      return axios(config)
-    } else {
-      return new Promise((resolve) => {
-        requestHistory.push((token) => {
-          config.headers['accessToken'] = token
-          resolve(axios(config))
-        })
-      })
-    }
-  }
+  // const { code } = response.data
+  return response.data;
+
+  // if (code == 0 || code == -1) {
+  //   return response.data;
+  // }
+  // if (code == REFRESH_TOKEN_INVALID) {
+  //   // refreshToken过期退出登录
+  //   Toast('登录过期，请重新登录')
+  //   return null;
+  // }
+  // if (code === ACCESS_TOKEN_INVALID) {
+  //   const config = response.config
+  //   if (!isRefreshing) {
+  //     isRefreshing = true
+  //     var res = await requestRefreshToken();
+  //     const { accessToken } = res.data
+  //     axios.defaults.headers['accessToken'] = accessToken
+  //     config.headers['accessToken'] = accessToken
+  //     //恢复历史请求
+  //     requestHistory.forEach(cb => cb(accessToken))
+  //     requestHistory = []
+  //     return axios(config)
+  //   } else {
+  //     return new Promise((resolve) => {
+  //       requestHistory.push((token) => {
+  //         config.headers['accessToken'] = token
+  //         resolve(axios(config))
+  //       })
+  //     })
+  //   }
+  // }
 }, error => {
   return Promise.reject(error)
 })
