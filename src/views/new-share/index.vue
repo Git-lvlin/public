@@ -11,12 +11,12 @@
     </div>
     <div class="register-box" v-if="!type">
       <div class="phone">
-        <input class="input phone-input" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机账号">
+        <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机账号">
       </div>
       <div class="phone-err">{{phoneErr}}</div>
       <div class="code-box">
         <div class="code">
-          <input class="input code-input" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
+          <input class="input code-input" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
         </div>
         <div class="code-btn" @click="getCode" v-if="countDown">{{codeText}}</div>
         <div class="code-btn" v-else v-html="time"></div>
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom-box">
+    <div class="bottom-box" v-if="flag">
       <van-image
         class="logo"
         width="54px"
@@ -122,6 +122,8 @@ export default {
       codeText: '获取验证码',
       time: 60,
       countDown: 1,
+      inviteCode: null,
+      flag: 1
     };
   },
   components: {
@@ -137,7 +139,23 @@ export default {
       }, 0)
     }
   },
+  mounted() {
+    this.getInviteCode()
+  },
   methods: {
+    getInviteCode() {
+      const {
+        query,
+      } = this.$router.history.current;
+      console.log('query', query)
+      this.inviteCode = query.inviteCode
+    },
+    focus() {
+      this.flag = 0
+    },
+    blur() {
+      this.flag = 1
+    },
     getCode() {
       if (!this.phone) {
         this.phoneErr='请输入手机号'
@@ -166,6 +184,7 @@ export default {
       const param = {
         authCode: this.code,
         phoneNumber: this.phone,
+        inviteCode: this.inviteCode,
       }
       this.phoneErr = ''
       this.codeErr = ''
