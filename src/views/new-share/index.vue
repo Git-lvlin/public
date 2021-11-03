@@ -9,7 +9,7 @@
       <div id="downloadButton" v-if="type" class="button">立即下载</div>
       <p id="downloadButton2" v-if="type" class="p">已安装？点这里打开约购</p>
     </div>
-    <div class="register-box">
+    <div class="register-box" v-if="!type">
       <div class="phone">
         <input class="input phone-input" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机账号">
       </div>
@@ -167,6 +167,8 @@ export default {
         authCode: this.code,
         phoneNumber: this.phone,
       }
+      this.phoneErr = ''
+      this.codeErr = ''
       teamApi.getReg(param).then((res) => {
         console.log('res', res)
         if (res.code == 0) {
@@ -176,6 +178,8 @@ export default {
         if (res.code == 200232) {
           this.show = 1
         }
+      }).catch(() => {
+        this.codeErr = '验证码错误'
       })
     },
     getImgUrl,

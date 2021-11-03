@@ -2,7 +2,7 @@ import { post, get } from '@/utils/request';
 
 const url = {
   code: '/member/open/getAuthCode',
-  reg: '/member/auth/memberInvite/doInvite',
+  reg: '/member/open/memberInvite/doInvite',
 };
 
 export default {
