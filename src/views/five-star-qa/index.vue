@@ -60,8 +60,12 @@ export default {
     },
     getInfo() {
       teamApi.getStoreShopInfo({}, {token: this.token}).then((res) => {
-        console.log('res', res)
-        this.info = res.data
+        if (res.code == 10110) {
+          this.info = null
+        }
+        if (res.code == 0) {
+          this.info = res.data
+        }
       })
     },
   },

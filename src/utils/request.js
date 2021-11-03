@@ -134,6 +134,9 @@ const request = async ({
       console.log('不是App内')
       return
     }
+    if (res.code == 10110) {
+      return res;
+    }
     if (res.code !== 0 && showError) {
       setTimeout(() => {
         Dialog({ message: res.msg });
