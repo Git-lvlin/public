@@ -10,12 +10,6 @@ const ACCESS_TOKEN_INVALID = 10014;
 // refreshToken过期
 const REFRESH_TOKEN_INVALID = 10015;
 
-console.log('11111111', this.$bridge)
-console.log('22222222', this.$store)
-
-let appInfo = this.$store.state.appInfo
-let bridge = this.$bridge
-
 let requestCount = 0;
 
 let appToken = '';
@@ -65,7 +59,7 @@ const request = async ({
   url, method, data, options = {},
 }) => {
   console.log(process);
-  const { showLoading = true, showError = true } = options;
+  const { showLoading = true, showError = true, appInfo={}, bridge={}} = options;
   console.log('options', options)
   if (showLoading && requestCount === 0) {
     Toast.loading({
