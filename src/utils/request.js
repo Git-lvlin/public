@@ -10,6 +10,12 @@ const ACCESS_TOKEN_INVALID = 10014;
 // refreshToken过期
 const REFRESH_TOKEN_INVALID = 10015;
 
+console.log('11111111', this.$bridge)
+console.log('22222222', this.$store)
+
+let appInfo = this.$store.state.appInfo
+let bridge = this.$bridge
+
 let requestCount = 0;
 
 let appToken = '';
@@ -91,18 +97,17 @@ const request = async ({
       token: options.token
     }
   }
-  console.log('all', all)
   return axios(all).then((res) => {
-    console.log('res!!!!!!!!!', res)
-    console.log('this.$store.state', this.$store.state)
+    console.log('axios-res', res)
+    console.log('appInfo', appInfo)
+    console.log('bridge', bridge)
     if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
-      console.log('this.$store', this.$store)
-      if (this.$store.state.appInfo.isApp) {
+      if (appInfo.isApp) {
         console.log('调用refreshToken-start')
-        this.$bridge.callHandler('refreshToken',{})
+        bridge.callHandler('refreshToken',{})
         return
       }
-      if (this.$store.state.appInfo.isMiniprogram) {
+      if (appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({
           url: '/pages/login/mobile/index'
         })
