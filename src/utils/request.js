@@ -95,19 +95,6 @@ const request = async ({
     console.log('axios-res', res)
     console.log('appInfo', appInfo)
     console.log('bridge', bridge)
-    if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
-      if (appInfo.isApp) {
-        console.log('调用refreshToken-start')
-        bridge.callHandler('refreshToken',{})
-        return
-      }
-      if (appInfo.isMiniprogram) {
-        wx.miniProgram.navigateTo({
-          url: '/pages/login/mobile/index'
-        })
-        return
-      }
-    }
     if (res.code !== 0 && showError) {
       setTimeout(() => {
         Dialog({ message: res.msg });
@@ -115,7 +102,24 @@ const request = async ({
     }
     return res;
   }).catch((error) => {
+    console.log('11', this.$store)
+    console.log('22', this.$bridge)
     console.log('axios-err', error)
+    if (error) {
+      if (error.code === 10014 || error.code === 10015 || error.code === 10010) {
+        if (this.$store.state.appInfo.isApp) {
+          console.log('调用refreshToken-start')
+          this.$bridge.callHandler('refreshToken',{})
+          return
+        }
+        if (this.$store.state.appInfo.isMiniprogram) {
+          wx.miniProgram.navigateTo({
+            url: '/pages/login/mobile/index'
+          })
+          return
+        }
+      }
+    }
     if (showError) {
       setTimeout(() => {
         if (error.message === 'timeout of 10000ms exceeded') {
