@@ -283,7 +283,7 @@ export default {
     .btn-img {
       position: absolute;
       left: 50%;
-      top: 362px;
+      top: 370px;
       transform: translate(-50%);
       width: 290px;
       height: 123px;
@@ -319,7 +319,7 @@ export default {
   }
 
   .content-box {
-    padding: 24px 12px 0;
+    padding: 32px 12px 0 12px;
     display: flex;
     flex-direction: column;
     .item {

@@ -44,7 +44,7 @@ function requestRefreshToken() {
 let isRefreshing = false
 let requestHistory = []
 
-axios.interceptors.response.use(async response => {
+axios.interceptors.response.use(response => {
   // const { code } = response.data
   return response.data;
 
@@ -77,9 +77,11 @@ axios.interceptors.response.use(async response => {
   //     })
   //   }
   // }
-}, error => {
-  return Promise.reject(error)
-})
+}, 
+// error => {
+//   return Promise.reject(error)
+// }
+)
 
 /* eslint-enable */
 
@@ -91,6 +93,7 @@ const request = async ({
   console.log(process);
   const { showLoading = true, showError = true } = options;
   console.log('options', options)
+  console.log('this.$bridge', this.$bridge)
   if (showLoading && requestCount === 0) {
     Toast.loading({
       message: '加载中...',
