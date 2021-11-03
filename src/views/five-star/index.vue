@@ -283,7 +283,7 @@ export default {
     .btn-img {
       position: absolute;
       left: 50%;
-      bottom: -45px;
+      top: 362px;
       transform: translate(-50%);
       width: 290px;
       height: 123px;
