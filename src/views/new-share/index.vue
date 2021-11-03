@@ -190,17 +190,18 @@ export default {
       }
       this.phoneErr = ''
       this.codeErr = ''
-      teamApi.getReg(param).then((res) => {
-        console.log('res', res)
-        if (res.data) {
-          this.type = 1
-          return
+      teamApi.getReg(param, {showError: false}).then((res) => {
+        if (res.code == 0) {
+          if (res.data) {
+            this.type = 1
+            return
+          }
+          if (!res.data) {
+            this.show = 1
+          }
+        } else {
+          this.codeErr = res.msg || '验证码错误'
         }
-        if (!res.data) {
-          this.show = 1
-        }
-      }).catch(() => {
-        this.codeErr = '验证码错误'
       })
     },
     getImgUrl,

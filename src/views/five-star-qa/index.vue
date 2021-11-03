@@ -59,7 +59,7 @@ export default {
       })
     },
     getInfo() {
-      teamApi.getStoreShopInfo({}, {token: this.token}).then((res) => {
+      teamApi.getStoreShopInfo({}, {showError:false, token: this.token}).then((res) => {
         if (res.code == 10110) {
           this.info = null
         }
