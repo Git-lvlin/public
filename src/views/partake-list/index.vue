@@ -7,10 +7,10 @@
       <div>下单时间</div>
     </div>
     <div class="item" v-for="(item, index) in listData" v-bind:key="index">
-      <div>{{item.phoneNumber}}</div>
-      <div>{{item.type}}</div>
-      <div>{{item.msg}}</div>
-      <div>{{item.sign}}</div>
+      <div>{{item.wholesaleName}}</div>
+      <div>{{item.goodsName}}</div>
+      <div>{{item.paymentNum}}</div>
+      <div>{{item.finalPaymentTime}}</div>
     </div>
   </div>
 </template>
@@ -38,35 +38,32 @@ export default {
       show: false,
       token: null,
       bgType: 0,
-      listData: [
-        {
-          phoneNumber: '1111112123',
-          type: 0,
-          msg: '啊实打实大师大师大师的GV暗示法规把电饭锅VB',
-          sign: 0
-        },
-        {
-          phoneNumber: '1111112123',
-          type: 0,
-          msg: 'dasdasd',
-          sign: 0
-        },
-        {
-          phoneNumber: '1111112123',
-          type: 0,
-          msg: 'dasdasd',
-          sign: 0
-        }
-      ]
+      listData: []
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
   async created () {
+    await this.getUserInfo()
+    this.getList()
   },
   methods: {
     getImgUrl,
+    getList() {
+      teamApi.getstoreransList({next:0,size:99}, {token:this.token}).then((res) => {
+        this.listData = res.data.records
+      })
+    },
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          resolve()
+        })
+      })
+    },
   },
 };
 </script>

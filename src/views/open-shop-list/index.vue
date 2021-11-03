@@ -4,11 +4,13 @@
       <div>注册手机号</div>
       <div>绑定状态</div>
       <div>开店状态</div>
+      <div>开店时间</div>
     </div>
     <div class="item" v-for="(item, index) in listData" v-bind:key="index">
-      <div>{{item.phoneNumber}}</div>
-      <div>{{item.bindType}}</div>
-      <div>{{item.shopType}}</div>
+      <div>{{item.mobile}}</div>
+      <div>{{item.inviteStatus==1?'已绑定':'未绑定'}}</div>
+      <div>{{item.status?'已开店':'未开店'}}</div>
+      <div>{{item.createTime}}</div>
     </div>
   </div>
 </template>
@@ -33,32 +35,32 @@ export default {
   data() {
     return {
       token: null,
-      listData: [
-        {
-          phoneNumber: '1111112123',
-          bindType: 0,
-          shopType: 0
-        },
-        {
-          phoneNumber: '1111112123',
-          bindType: 0,
-          shopType: 0
-        },
-        {
-          phoneNumber: '1111112123',
-          bindType: 0,
-          shopType: 0
-        }
-      ]
+      listData: []
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
   async created () {
+    await this.getUserInfo()
+    this.getList
   },
   methods: {
     getImgUrl,
+    getList() {
+      teamApi.getInventstoreList({page:1,size:99}, {token:this.token}).then((res) => {
+        this.listData = res.data.records
+      })
+    },
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          resolve()
+        })
+      })
+    },
   },
 };
 </script>
@@ -80,7 +82,7 @@ export default {
     background: rgba(216, 0, 16, .59);
     div {
       text-align: center;
-      width: 117px;
+      width: 88px;
       height: 20px;
       font-size: 14px;
       font-family: PingFangSC-Medium, PingFang SC;
@@ -100,7 +102,7 @@ export default {
     height: 40px;
     div {
       text-align: center;
-      width: 117px;
+      width: 88px;
       height: 17px;
       font-size: 12px;
       font-family: PingFangSC-Regular, PingFang SC;

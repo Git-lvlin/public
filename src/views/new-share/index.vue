@@ -11,17 +11,18 @@
     </div>
     <div class="register-box">
       <div class="phone">
-        <input class="input phone-input" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机账号">
+        <input class="input phone-input" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机账号">
       </div>
-      <div class="phone-err">手机号错误</div>
+      <div class="phone-err">{{phoneErr}}</div>
       <div class="code-box">
         <div class="code">
-          <input class="input code-input" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
+          <input class="input code-input" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
         </div>
-        <div class="code-btn">获取验证码</div>
+        <div class="code-btn" @click="getCode" v-if="countDown">{{codeText}}</div>
+        <div class="code-btn" v-else v-html="time"></div>
       </div>
-      <div class="code-err">手机号错误</div>
-      <div class="button">提交</div>
+      <div class="code-err">{{codeErr}}</div>
+      <div class="button" @click="reg">提交</div>
     </div>
     <div class="title"><span class="red">约购</span>APP 1件也享批发价</div>
     <div class="subtitle">有温度的 低价电商平台</div>
@@ -85,23 +86,42 @@
         id="downloadButton3"
       />
     </div>
+    <!-- 活动规则弹窗 -->
+    <van-popup
+      v-model="show"
+      round
+      :style="{ height: '203px' }"
+    >
+      <div class="popup-box">
+        <div class="title">温馨提示</div>
+        <div class="subtitle">此手机号已经注册过啦，点击下载约购APP体验吧~ </div>
+        <div id="downloadButton4" class="btn">下载约购APP</div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage } from 'vant';
+import { Image as VanImage, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import teamApi from '@/apis/newshare';
 Vue.use(VanImage);
+Vue.use(Popup);
 export default {
-  props: {
-
-  },
   data() {
     return {
+      show: 0,
       edImg: getImgUrl('publicMobile/newshare/new-share-bg-ed.png'),
       img: getImgUrl('publicMobile/newshare/new-share-bg.png'),
       type: 0,
+      phone: '',
+      code:'',
+      phoneErr: '',
+      codeErr: '',
+      codeText: '获取验证码',
+      time: 60,
+      countDown: 1,
     };
   },
   components: {
@@ -118,6 +138,46 @@ export default {
     }
   },
   methods: {
+    getCode() {
+      if (!this.phone) {
+        this.phoneErr='请输入手机号'
+        return
+      }
+      if (this.phone.length !== 11) {
+        this.phoneErr='手机号格式错误'
+        return
+      }
+      this.countDown = 0
+      teamApi.getCode({phoneNumber: this.phone})
+      let interval = setInterval(() => {
+        if (this.time>0) {
+          this.time -= 1
+        } else {
+          this.countDown = 1
+          this.time = 60
+          clearInterval(interval)
+        }
+      }, 1000)
+    },
+    reg() {
+      if (!this.code || !this.phone) {
+        return
+      }
+      const param = {
+        authCode: this.code,
+        phoneNumber: this.phone,
+      }
+      teamApi.getReg(param).then((res) => {
+        console.log('res', res)
+        if (res.code == 0) {
+          this.type = 1
+          return
+        }
+        if (res.code == 200232) {
+          this.show = 1
+        }
+      })
+    },
     getImgUrl,
     nowUpdata() {
       const data = OpenInstall.parseUrlParams();///openinstall.js中提供的工具函数，解析url中的所有查询参数
@@ -138,18 +198,31 @@ export default {
           var m = this,
           button = document.getElementById("downloadButton"),
           button2 = document.getElementById("downloadButton2"),
-          button3 = document.getElementById("downloadButton3");
-          button.onclick = function() {
-            m.wakeupOrInstall();
-            return false;
+          button3 = document.getElementById("downloadButton3"),
+          button4 = document.getElementById("downloadButton4");
+          if (button) {
+            button.onclick = function() {
+              m.wakeupOrInstall();
+              return false;
+            }
           }
-          button2.onclick = function() {
-            m.wakeupOrInstall();
-            return false;
+          if (button2) {
+            button2.onclick = function() {
+              m.wakeupOrInstall();
+              return false;
+            }
           }
-          button3.onclick = function() {
-            m.wakeupOrInstall();
-            return false;
+          if (button3) {
+            button3.onclick = function() {
+              m.wakeupOrInstall();
+              return false;
+            }
+          }
+          if (button4) {
+            button4.onclick = function() {
+              m.wakeupOrInstall();
+              return false;
+            }
           }
         }
       }, data);
@@ -374,7 +447,53 @@ export default {
     font-size: 18px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
-    color: #CCCCCC;
+    color: #000;
+  }
+}
+.popup-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 295px;
+  height: 203px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  overflow: hidden;
+  .title {
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: center;
+    width: 100%;
+    height: 25px;
+    font-size: 18px;
+    font-family: PingFangSC-Semibold, PingFang SC;
+    font-weight: 600;
+    color: #333333;
+    line-height: 25px;
+  }
+  .subtitle {
+    text-align: left;
+    width: 228px;
+    height: 42px;
+    font-size: 16px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #333333;
+    line-height: 21px;
+  }
+  .btn {
+    text-align: center;
+    margin-top: 24px;
+    width: 216px;
+    height: 48px;
+    background: #E5352F;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 48px;
   }
 }
 </style>

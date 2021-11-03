@@ -15,10 +15,11 @@
         height="123px"
         lazy-load
         :src="getImgUrl('publicMobile/fivestar/five-star-btn.png')"
+        @click="intoView"
       />
       <div class="tips" @click="showPopupQa">活动规则</div>
     </div>
-    <div class="content-box">
+    <div class="content-box" id="anchor">
       <div class="item" v-for="(item, index) in content" v-bind:key="index">
         <div class="title">
           <van-image
@@ -46,6 +47,7 @@
               height="30px"
               lazy-load
               :src="item.btnLeft"
+              @click="leftBtn(index)"
             />
             <van-image
               class="btn-right"
@@ -53,6 +55,7 @@
               height="30px"
               lazy-load
               :src="item.btnRight"
+              @click="rightBtn(index)"
             />
           </div>
           <van-image
@@ -94,11 +97,9 @@
 import Vue from 'vue';
 import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl } from "@/constant/index";
-import teamApi from '@/apis/appointment';
+import { appBaseUrl, meBaseUrl } from "@/constant/index";
+import teamApi from '@/apis/fivestar';
 import {
-  judgeVersionIsNew,
-  judgeVersionIsNewShare,
   goToApp,
   savePicShare,
   setNavigationBarRightContent
@@ -112,7 +113,10 @@ Vue.use(Popup);
 export default {
   data() {
     return {
-      ruleText: null,
+      storeInSrc: null,
+      newShareSrc: null,
+      initData: null, 
+      ruleText: '一、活动时间：\n2021年11月6日10:00至11月30日18:00\n二、活动对象：\n一至四星社区店主均可参与。\n三、活动内容：\n活动期间，一至四星店主完成所有任务即可直升为五星店\n四、任务条件：\n1、活动期间，1-2星店主成功邀请 40 个新用户注册并完成一次登录签到；3-4星店主成功邀请 20 个新用户注册并完成一次登录签到；\n2、活动期间，1-2星店主成功邀约5名用户成为店主；3-4星店主成功邀约3名用户成为店主；\n3、活动期间，本店主参与集约下单3次；\n五、活动升星规则仅限于本次活动期内有效，活动结束以后恢复原升星规则\n六、本活动解释权归深圳前海汇能科技产业有限公司所有',
       show: false,
       token: null,
       bgType: 0,
@@ -152,8 +156,88 @@ export default {
   },
   async created () {
   },
+  async mounted() {
+    await this.getUserInfo()
+    this.getData()
+  },
   methods: {
+    leftBtn(index) {
+      switch(index) {
+        case 0:
+          // 分享注册页面 new-share
+          this.goto(this.newShareSrc)
+          break
+        case 1:
+          // 分享社区店入驻页面 store-in
+          this.goto(this.storeInSrc)
+          break
+        case 2:
+          goToApp(appBaseUrl, '/tab/index?index=2', '', this.$bridge)
+          // 参与集约下单-跳转集约页面
+          break
+      }
+    },
+    goto(src) {
+      const data = {
+        code: 0,
+        msg: 'success',
+        data: {
+          imgSrc: `${src}`,
+        }
+      }
+      const zero = JSON.stringify(data);
+      this.$bridge.callHandler(
+        'inviteFriend',
+        zero,
+      )
+    },
+    rightBtn(index) {
+      switch(index) {
+        case 0:
+          goToApp(meBaseUrl, '/web/invitation-list', '', this.$bridge)
+          break
+        case 1:
+          goToApp(meBaseUrl, '/web/open-shop-list', '', this.$bridge)
+          break
+        case 2:
+          goToApp(meBaseUrl, '/web/partake-list', '', this.$bridge)
+          break
+      }
+    },
+    intoView() {
+      document.getElementById("anchor").scrollIntoView()
+    },
+    getData() {
+      teamApi.getList({}, {token: this.token}).then((res) => {
+        console.log('res', res.data)
+        // this.initData = res.data
+        this.setText(res.data)
+      })
+    },
     getImgUrl,
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          resolve()
+        })
+      })
+    },
+    setText(data) {
+      const { inventUser, openStore, storeTrans } = data;
+      this.content[0].title = `成功邀约${inventUser.confNum}名新用户并登录签到`;
+      this.content[0].subtitle = `未完成（${inventUser.activeNum}/${inventUser.confNum}）`
+      this.content[0].type = inventUser.status;
+
+      this.content[1].title = `邀约${openStore.confNum}名用户成功开店`;
+      this.content[1].subtitle = `未完成（${openStore.activeNum}/${openStore.confNum}）`
+      this.content[1].type = openStore.status;
+
+      this.content[2].title = `参与集约下单${storeTrans.confNum}次`;
+      this.content[2].subtitle = `未完成（${storeTrans.activeNum}/${storeTrans.confNum}）`
+      this.content[2].type = storeTrans.status;
+    },
     showPopupQa() {
       this.show = true
     },

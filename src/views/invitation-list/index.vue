@@ -8,9 +8,9 @@
     </div>
     <div class="item" v-for="(item, index) in listData" v-bind:key="index">
       <div>{{item.phoneNumber}}</div>
-      <div>{{item.type}}</div>
-      <div>{{item.msg}}</div>
-      <div>{{item.sign}}</div>
+      <div>{{item.inviteStatus==1?'成功':'失败'}}</div>
+      <div>{{item.inviteStatus==0?'已绑定其他人':''}}</div>
+      <div>{{item.inviteStatus==2?'已签到':'未签到'}}</div>
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@ import Vue from 'vue';
 import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
-import teamApi from '@/apis/appointment';
+import teamApi from '@/apis/fivestar';
 import {
   goToApp,
   savePicShare,
@@ -38,35 +38,32 @@ export default {
       show: false,
       token: null,
       bgType: 0,
-      listData: [
-        {
-          phoneNumber: '1111112123',
-          type: 0,
-          msg: '啊实打实大师大师大师的GV暗示法规把电饭锅VB',
-          sign: 0
-        },
-        {
-          phoneNumber: '1111112123',
-          type: 0,
-          msg: 'dasdasd',
-          sign: 0
-        },
-        {
-          phoneNumber: '1111112123',
-          type: 0,
-          msg: 'dasdasd',
-          sign: 0
-        }
-      ]
+      listData: [],
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
   async created () {
+    await this.getUserInfo()
+    this.getList()
   },
   methods: {
     getImgUrl,
+    getList() {
+      teamApi.getInvitationList({page:1,size:99}, {token:this.token}).then((res) => {
+        this.listData = res.data.records
+      })
+    },
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          resolve()
+        })
+      })
+    },
   },
 };
 </script>

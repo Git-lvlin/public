@@ -196,7 +196,7 @@
 import Vue from "vue";
 import { Image as VanImage } from "vant";
 import { getImgUrl } from "@/utils/tools";
-import { appBaseUrl } from "@/constant/index";
+import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp, judgeVersionIsNew } from "@/utils/userInfo";
 Vue.use(VanImage);
 export default {
@@ -206,6 +206,7 @@ export default {
       isShow: false,
       hasToken: false,
       isNewVersion: false,
+      newShare: 0,
     };
   },
   components: {},
@@ -224,6 +225,15 @@ export default {
       });
     }
   },
+  mounted() {
+    const {
+      query
+    } = this.$router.history.current;
+    if(query.newShare) {
+      // 5星店主活动
+      this.newShare = 1
+    }
+  },
   methods: {
     getImgUrl,
     getUserInfo() {
@@ -236,6 +246,11 @@ export default {
       });
     },
     async onToDetail() {
+      if (this.newShare) {
+        // 5星店主活动特殊跳转
+        goToApp(meBaseUrl, '/web/new-share', '', this.$bridge)
+        return
+      }
       console.log("onToDetail");
       if (this.isNewVersion) {
         await this.getUserInfo();

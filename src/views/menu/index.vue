@@ -84,6 +84,11 @@
         to="/web/every-day"
       />
       <van-cell
+        title="五星店主"
+        is-link
+        to="/web/five-star-qa"
+      />
+      <van-cell
         title="五星店主限时抢"
         is-link
         to="/web/five-star"

@@ -158,6 +158,14 @@ const routes = [
     }
   },
   {
+    path: '/web/five-star-qa',
+    name: 'FiveStarQa',
+    component: () => import('@/views/five-star-qa'),
+    meta: {
+      title: '五星店主',
+    }
+  },
+  {
     path: '/web/five-star',
     name: 'FiveStar',
     component: () => import('@/views/five-star'),
