@@ -157,6 +157,7 @@ export default {
       this.flag = 1
     },
     getCode() {
+      this.blur()
       if (!this.phone) {
         this.phoneErr='请输入手机号'
         return
@@ -178,6 +179,7 @@ export default {
       }, 1000)
     },
     reg() {
+      this.blur()
       if (!this.code || !this.phone) {
         return
       }
