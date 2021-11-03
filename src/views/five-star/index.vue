@@ -99,6 +99,7 @@ import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup } from 'va
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/fivestar';
+import teamApis from '@/apis/appointment';
 import {
   goToApp,
   savePicShare,
@@ -161,14 +162,31 @@ export default {
     this.getData()
   },
   methods: {
-    leftBtn(index) {
+    getImg(id) {
+      return new Promise((reject) => {
+        teamApis.getShareImg({paramId: id}, {token: this.token}).then((res) => {
+          if (res && res.code === 0 && res.data) {
+            if (id == 4) {
+              this.newShareSrc = res.data.appDownLoadUrl
+            } else {
+              this.storeInSrc = res.data.appDownLoadUrl
+            }
+            reject()
+          }
+        })
+      })
+
+    },
+    async leftBtn(index) {
       switch(index) {
         case 0:
           // 分享注册页面 new-share
+          await this.getImg(4)
           this.goto(this.newShareSrc)
           break
         case 1:
           // 分享社区店入驻页面 store-in
+          await this.getImg(5)
           this.goto(this.storeInSrc)
           break
         case 2:
