@@ -39,11 +39,11 @@ export default {
   methods: {
     getImgUrl,
     go() {
-      if (!info.storeAccount) {
+      if (!this.info.storeAccount) {
         Dialog({ message: '本活动仅限店主参与，请先申请开店，成为店主后再参与' });
         return
       }
-      if (info?.memberShop?.level?.gradeLevel == 5) {
+      if (this.info?.memberShop?.level?.gradeLevel == 5) {
         Dialog({ message: '您已是五星店主，请参与其他活动吧~' });
         return 
       }
