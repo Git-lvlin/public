@@ -179,7 +179,13 @@ export default {
     },
     reg() {
       this.blur()
-      if (!this.code || !this.phone) {
+      if (!this.code) {
+        return
+      }
+      if (!this.phone) {
+        return
+      }
+      if (this.phone.length !== 11) {
         return
       }
       const param = {
