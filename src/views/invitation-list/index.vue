@@ -8,7 +8,7 @@
     </div>
     <div class="item" v-for="(item, index) in listData" v-bind:key="index">
       <div>{{item.phoneNumber}}</div>
-      <div>{{item.inviteStatus==1?'成功':'失败'}}</div>
+      <div>{{item.inviteStatus>=1?'成功':'失败'}}</div>
       <div>{{item.inviteStatus==0?'已绑定其他人':''}}</div>
       <div>{{item.inviteStatus==2?'已签到':'未签到'}}</div>
     </div>
