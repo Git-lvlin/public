@@ -34,7 +34,7 @@ export default {
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  mounted() {
+  async mounted() {
     console.log('mounted-star')
     await this.getUserInfo()
     this.getInfo()
