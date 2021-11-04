@@ -19,17 +19,14 @@
 import Vue from 'vue';
 import { Image as VanImage, Dialog, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import teamApi from '@/apis/appointment';
+import teamApi from '@/apis/fivestar';
 
 Vue.use(VanImage);
 Vue.use(Lazyload);
 export default {
   data() {
     return {
-      ruleText: null,
-      show: false,
       token: null,
-      bgType: 0,
       listData: []
     };
   },
@@ -50,13 +47,15 @@ export default {
       return Y+M+D;
     },
     getList() {
-      teamApi.getstoreransList({next:0,size:99}, {token:this.token}).then((res) => {
-        this.listData = res.data.records.map(item => {
-          return {
-            ...item,
-            finalPaymentTime: this.timestampToTime(item.finalPaymentTime)
-          }
-        })
+      teamApi.getStoreransList({next:'',size:99}, {token:this.token}).then((res) => {
+        if (res && res.data && res.data.records) {
+          this.listData = res.data.records.map(item => {
+            return {
+              ...item,
+              finalPaymentTime: this.timestampToTime(item.finalPaymentTime)
+            }
+          })
+        }
       })
     },
     getUserInfo() {

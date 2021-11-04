@@ -37,7 +37,7 @@ export default {
       options,
     });
   },
-  getstoreransList(params = {}, options = {}) {
+  getStoreransList(params = {}, options = {}) {
     return post({
       url: url.storetranslist,
       data: params,
