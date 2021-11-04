@@ -10,7 +10,7 @@ let vconsole = null;
 if(process.env.VUE_APP_API_ENV != "pro") {
   vconsole = new VConsole();
 }
-console.log("jsBridge", jsBridge);
+
 Vue.prototype.$bridge = jsBridge;
 Vue.config.productionTip = false;
 Vue.filter('price', (value) => new Big(value).div(new Big(100)));

@@ -170,7 +170,6 @@ export default {
       const {
         query,
       } = this.$router.history.current;
-      console.log('query', query)
       this.indexVersion = query.indexVersion
       this.token = query.token
       this.isNew = query.isNew

@@ -153,8 +153,6 @@ export default {
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  async created () {
-  },
   async mounted() {
     await this.getUserInfo()
     this.getData()
@@ -224,11 +222,7 @@ export default {
       document.getElementById("anchor").scrollIntoView()
     },
     getData() {
-      teamApi.getList({}, {
-          token: this.token,
-          appInfo: this.$store.state.appInfo,
-          bridge: this.$bridge
-        }).then((res) => {
+      teamApi.getList({}, {token: this.token}).then((res) => {
           this.setText(res.data)
         })
     },

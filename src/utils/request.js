@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { Toast, Dialog } from 'vant';
-// import { refresToken } from '@/constant/index';
-// import { appBaseUrl } from "@/constant/index";
-// import { goToApp } from "@/utils/userInfo";
+import jsBridge from '@/utils/jsBridge';
+import store from '@/store';
 Toast.setDefaultOptions('loading', { forbidClick: true });
 
 // accessToken过期
@@ -16,15 +15,12 @@ let appToken = '';
 axios.defaults.timeout = 10 * 1000;
 
 axios.interceptors.request.use((config) => {
-  // config.headers.Authorization = 'Bearer 427fac7140961c7cb59dc71a218ec35d';
   if (appToken) {
     config.headers.Authorization = `Bearer ${appToken}`;
   }
   config.headers.p = "H5";
   config.headers.v = "1.0.0";
 
-  console.log('process.env --- ', process.env);
-  console.log('window', window);
   if (process.env.NODE_ENV === 'production') {
     config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
   }
@@ -32,17 +28,6 @@ axios.interceptors.request.use((config) => {
 }, (error) => Promise.reject(error));
 
 /* eslint-disable */
-
-// function requestRefreshToken() {
-//   //获取原生用户信息
-//   return post({
-//     url: refresToken,
-//     data: { 'id': '1395631517728378881', 'refreshToken': 'eyJhbGciOiJIUzUxMiJ9.eyJNRU1CRVJOQU1FIjoiMTgxMjIyNTI3NDUiLCJjcmVhdGVkIjoxNjIyNTM3NTA1MzE5LCJ0b2tlblR5cGUiOiJyZWZyZXNoVG9rZW4iLCJleHAiOjE2MjMxNDIzMDV9.0hf2BejooKMcLiPq-DasHWuiaYKg0BrSPaN-0m1b-KwoKRn1xjj3bYqgKlei1fk3ugcCBs9hv5vBqZ2vTe-XpA' },
-//   }).then(res => res.data);
-// }
-
-// let isRefreshing = false
-// let requestHistory = []
 
 axios.interceptors.response.use(
   response => {
@@ -57,14 +42,10 @@ axios.interceptors.response.use(
 
 /* eslint-enable */
 
-// const resolveArr = [];
-
 const request = async ({
   url, method, data, options = {},
 }) => {
-  console.log(process);
-  const { showLoading = true, showError = true, token, appInfo={}, bridge={}} = options;
-  console.log('options', options)
+  const { showLoading = true, showError = true, token} = options;
   if (showLoading && requestCount === 0) {
     Toast.loading({
       message: '加载中...',
@@ -96,12 +77,12 @@ const request = async ({
     }
   }
   return axios(all).then((res) => {
-    if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
-      if (appInfo.isApp) {
-        bridge.callHandler('refreshToken',{})
+    if (res.code === ACCESS_TOKEN_INVALID || res.code === REFRESH_TOKEN_INVALID || res.code === 10010) {
+      if (store.state.appInfo.isApp) {
+        jsBridge.callHandler('refreshToken',{})
         return
       }
-      if (appInfo.isMiniprogram) {
+      if (store.state.appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({
           url: '/pages/login/mobile/index'
         })

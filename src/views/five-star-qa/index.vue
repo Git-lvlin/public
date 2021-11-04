@@ -66,8 +66,6 @@ export default {
         {
           showError: false,
           token: this.token,
-          appInfo: this.$store.state.appInfo,
-          bridge: this.$bridge,
         })
         .then((res) => {
           if (res&&res.code == 0) {

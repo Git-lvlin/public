@@ -147,7 +147,6 @@ export default {
       const {
         query,
       } = this.$router.history.current;
-      console.log('query', query)
       this.inviteCode = query.inviteCode
     },
     focus() {
@@ -190,11 +189,7 @@ export default {
       }
       this.phoneErr = ''
       this.codeErr = ''
-      teamApi.getReg(param, {
-          showError: false,
-          appInfo: this.$store.state.appInfo,
-          bridge: this.$bridge,
-        })
+      teamApi.getReg(param, {showError: false})
         .then((res) => {
           if (res&&res.code == 0) {
             if (res.data.toString() == 'true') {
