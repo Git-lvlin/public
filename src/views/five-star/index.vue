@@ -224,9 +224,13 @@ export default {
       document.getElementById("anchor").scrollIntoView()
     },
     getData() {
-      teamApi.getList({}, {token: this.token}).then((res) => {
-        this.setText(res.data)
-      })
+      teamApi.getList({}, {
+          token: this.token,
+          appInfo: this.$store.state.appInfo,
+          bridge: this.$bridge
+        }).then((res) => {
+          this.setText(res.data)
+        })
     },
     getImgUrl,
     getUserInfo() {
