@@ -6,10 +6,10 @@
         'height': `${type?'450px':'351px'}`
       }"
     >
-      <div id="downloadButton" v-if="type" class="button">立即下载</div>
-      <p id="downloadButton2" v-if="type" class="p">已安装？点这里打开约购</p>
+      <div id="downloadButton" v-show="type" class="button">立即下载</div>
+      <p id="downloadButton2" v-show="type" class="p">已安装？点这里打开约购</p>
     </div>
-    <div class="register-box" v-if="!type">
+    <div class="register-box" v-show="!type">
       <div class="phone">
         <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机账号">
       </div>
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom-box" v-if="flag">
+    <div class="bottom-box" v-show="flag">
       <van-image
         class="logo"
         width="54px"
