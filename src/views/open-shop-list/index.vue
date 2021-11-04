@@ -17,19 +17,12 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload } from 'vant';
+import { Image as VanImage, Dialog, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/appointment';
-import {
-  goToApp,
-  savePicShare,
-  setNavigationBarRightContent
-} from '@/utils/userInfo';
+
 
 Vue.use(VanImage);
-Vue.use(Swipe);
-Vue.use(SwipeItem);
 Vue.use(Lazyload);
 export default {
   data() {
