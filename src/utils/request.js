@@ -63,7 +63,7 @@ const request = async ({
   url, method, data, options = {},
 }) => {
   console.log(process);
-  const { showLoading = true, showError = true, appInfo={}, bridge={}} = options;
+  const { showLoading = true, showError = true, token, appInfo={}, bridge={}} = options;
   console.log('options', options)
   if (showLoading && requestCount === 0) {
     Toast.loading({
@@ -90,15 +90,12 @@ const request = async ({
       platform: 'web_app',
     },
   }
-  if (options.token) {
+  if (token) {
     all.headers = {
-      token: options.token
+      token: token
     }
   }
   return axios(all).then((res) => {
-    if (!res) {
-      return
-    }
     if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
       if (appInfo.isApp) {
         console.log('调用refreshToken-start')

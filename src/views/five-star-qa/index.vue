@@ -34,10 +34,9 @@ export default {
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  async created() {
-    await this.getUserInfo()
-  },
   mounted() {
+    console.log('mounted-star')
+    await this.getUserInfo()
     this.getInfo()
   },
   methods: {
@@ -62,7 +61,11 @@ export default {
         })
       })
     },
-    getInfo() {
+    async getInfo() {
+      if (!this.token) {
+        await this.getUserInfo()
+        this.getInfo()
+      }
       teamApi.getStoreShopInfo(
         {},
         {
@@ -72,7 +75,6 @@ export default {
           bridge: this.$bridge,
         })
         .then((res) => {
-          console.log('店铺信息-res', res)
           if (res&&res.code == 0) {
             this.storeAccount = res.data.storeAccount
             this.gradeLevel = res.data.memberShop.level.gradeLevel
