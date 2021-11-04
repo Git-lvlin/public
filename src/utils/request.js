@@ -98,7 +98,6 @@ const request = async ({
   return axios(all).then((res) => {
     if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
       if (appInfo.isApp) {
-        console.log('调用refreshToken-start')
         bridge.callHandler('refreshToken',{})
         return
       }

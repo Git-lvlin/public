@@ -35,7 +35,6 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   async mounted() {
-    console.log('mounted-star')
     await this.getUserInfo()
     this.getInfo()
   },
@@ -61,11 +60,7 @@ export default {
         })
       })
     },
-    async getInfo() {
-      if (!this.token) {
-        await this.getUserInfo()
-        this.getInfo()
-      }
+    getInfo() {
       teamApi.getStoreShopInfo(
         {},
         {
