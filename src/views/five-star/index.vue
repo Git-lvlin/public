@@ -186,7 +186,7 @@ export default {
           this.goto(this.storeInSrc)
           break
         case 2:
-          goToApp(appBaseUrl, '/store/member/index', '', this.$bridge)
+          goToApp(appBaseUrl, '/flutter/store/member/index', '', this.$bridge)
           // 参与集约下单-跳转集约页面
           break
       }
