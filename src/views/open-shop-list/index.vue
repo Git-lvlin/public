@@ -19,8 +19,7 @@
 import Vue from 'vue';
 import { Image as VanImage, Dialog, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import teamApi from '@/apis/appointment';
-
+import teamApi from '@/apis/fivestar';
 
 Vue.use(VanImage);
 Vue.use(Lazyload);
