@@ -123,7 +123,7 @@ export default {
       time: 60,
       countDown: 1,
       inviteCode: null,
-      flag: 1
+      flag: 1,
     };
   },
   components: {

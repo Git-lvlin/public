@@ -198,7 +198,7 @@ export default {
       )
     },
     getImg() {
-      teamApi.getShareImg({paramId: 4}, {token: this.token}).then((res) => {
+      teamApi.getShareImg({paramId: 4, sourceType: 2}, {token: this.token}).then((res) => {
         if (res && res.code === 0 && res.data) {
           this.memberQrCode = res.data.memberQrCode
           this.appDownLoadUrl = res.data.appDownLoadUrl

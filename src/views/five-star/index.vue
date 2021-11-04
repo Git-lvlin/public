@@ -162,7 +162,7 @@ export default {
   methods: {
     getImg(id) {
       return new Promise((reject) => {
-        teamApis.getShareImg({paramId: id}, {token: this.token}).then((res) => {
+        teamApis.getShareImg({paramId: id,sourceType: 5}, {token: this.token}).then((res) => {
           if (res && res.code === 0 && res.data) {
             if (id == 4) {
               this.newShareSrc = res.data.appDownLoadUrl
