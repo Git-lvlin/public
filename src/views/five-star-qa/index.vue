@@ -27,19 +27,23 @@ export default {
     return {
       token: null,
       info: null,
+      storeAccount: null,
+      gradeLevel: null,
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  async mounted() {
+  async created() {
     await this.getUserInfo()
+  },
+  mounted() {
     this.getInfo()
   },
   methods: {
     getImgUrl,
     go() {
-      if (!this.info.storeAccount) {
+      if (!this.storeAccount) {
         Dialog({ message: '本活动仅限店主参与，请先申请开店，成为店主后再参与' });
         return
       }
@@ -62,19 +66,16 @@ export default {
       teamApi.getStoreShopInfo(
         {},
         {
-          showError:false,
+          showError: false,
           token: this.token,
           appInfo: this.$store.state.appInfo,
           bridge: this.$bridge,
         })
         .then((res) => {
           console.log('店铺信息-res', res)
-          if (res?.code == 10110) {
-            this.info = null
-            return
-          }
           if (res?.code == 0) {
-            this.info = res.data
+            this.storeAccount = res.data.storeAccount
+            this.gradeLevel = res.data.memberShop.level.gradeLevel
           }
         })
     },
