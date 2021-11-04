@@ -102,8 +102,6 @@ import teamApi from '@/apis/fivestar';
 import teamApis from '@/apis/appointment';
 import {
   goToApp,
-  savePicShare,
-  setNavigationBarRightContent
 } from '@/utils/userInfo';
 
 Vue.use(VanImage);
@@ -227,8 +225,6 @@ export default {
     },
     getData() {
       teamApi.getList({}, {token: this.token}).then((res) => {
-        console.log('res', res.data)
-        // this.initData = res.data
         this.setText(res.data)
       })
     },

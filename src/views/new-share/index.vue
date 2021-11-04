@@ -190,19 +190,24 @@ export default {
       }
       this.phoneErr = ''
       this.codeErr = ''
-      teamApi.getReg(param, {showError: false}).then((res) => {
-        if (res&&res.code == 0) {
-          if (res.data.toString() == 'true') {
-            this.type = 1
-            return
+      teamApi.getReg(param, {
+          showError: false,
+          appInfo: this.$store.state.appInfo,
+          bridge: this.$bridge,
+        })
+        .then((res) => {
+          if (res&&res.code == 0) {
+            if (res.data.toString() == 'true') {
+              this.type = 1
+              return
+            }
+            if (res.data.toString() == 'false') {
+              this.show = 1
+            }
+          } else {
+            this.codeErr = res.msg || '验证码错误'
           }
-          if (res.data.toString() == 'false') {
-            this.show = 1
-          }
-        } else {
-          this.codeErr = res.msg || '验证码错误'
-        }
-      })
+        })
     },
     getImgUrl,
     nowUpdata() {

@@ -46,7 +46,11 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
   response => {
-  return Promise.resolve(response.data);
+    if (response.data) {
+      return Promise.resolve(response.data);
+    } else {
+      return Promise.resolve({code:null,data:null,msg:response})
+    }
 }, error => {
   return Promise.reject(error)
 })
@@ -92,6 +96,9 @@ const request = async ({
     }
   }
   return axios(all).then((res) => {
+    if (!res) {
+      return
+    }
     if (res.code === 10014 || res.code === 10015 || res.code === 10010) {
       if (appInfo.isApp) {
         console.log('调用refreshToken-start')

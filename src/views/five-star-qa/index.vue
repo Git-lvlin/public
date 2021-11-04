@@ -47,7 +47,7 @@ export default {
         Dialog({ message: '本活动仅限店主参与，请先申请开店，成为店主后再参与' });
         return
       }
-      if (this.info?.memberShop?.level?.gradeLevel == 5) {
+      if (this.gradeLevel == 5) {
         Dialog({ message: '您已是五星店主，请参与其他活动吧~' });
         return 
       }
@@ -73,7 +73,7 @@ export default {
         })
         .then((res) => {
           console.log('店铺信息-res', res)
-          if (res?.code == 0) {
+          if (res&&res.code == 0) {
             this.storeAccount = res.data.storeAccount
             this.gradeLevel = res.data.memberShop.level.gradeLevel
           }

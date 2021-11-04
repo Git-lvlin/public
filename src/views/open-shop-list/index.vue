@@ -43,7 +43,7 @@ export default {
   },
   async created () {
     await this.getUserInfo()
-    this.getList
+    this.getList()
   },
   methods: {
     getImgUrl,
