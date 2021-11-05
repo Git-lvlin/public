@@ -68,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div class="logo">
+    <div class="logo" :class="bgType?'logo-null':''">
       <van-image
         class="logo-img"
         width="190px"
@@ -120,7 +120,7 @@ export default {
       ruleText: '一、活动时间：\n2021年11月6日10:00至11月30日18:00\n二、活动对象：\n一至四星社区店主均可参与。\n三、活动内容：\n活动期间，一至四星店主完成所有任务即可直升为五星店\n四、任务条件：\n1、活动期间，1-2星店主成功邀请 40 个新用户注册并完成一次登录签到；3-4星店主成功邀请 20 个新用户注册并完成一次登录签到；\n2、活动期间，1-2星店主成功邀约5名用户成为店主；3-4星店主成功邀约3名用户成为店主；\n3、活动期间，本店主参与集约下单3次；\n五、活动升星规则仅限于本次活动期内有效，活动结束以后恢复原升星规则\n六、本活动解释权归深圳前海汇能科技产业有限公司所有',
       show: false,
       token: null,
-      bgType: 0,
+      bgType: 1,
       initImg: getImgUrl('publicMobile/fivestar/five-star-bg.png'),
       edImg: getImgUrl('publicMobile/fivestar/five-star-bg-end.png'),
       endImg: getImgUrl('publicMobile/fivestar/five-star-bg-end.png'),
@@ -423,6 +423,15 @@ export default {
 
   .logo {
     padding: 8px 0 34px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .logo-null {
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    bottom: 38px;
+    width: 100%;
     display: flex;
     justify-content: center;
   }
