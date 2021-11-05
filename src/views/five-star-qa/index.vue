@@ -28,13 +28,13 @@ export default {
       token: null,
       info: null,
       storeAccount: null,
-      gradeLevel: null,
+      // gradeLevel: null,
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  async mounted() {
+  async created() {
     await this.getUserInfo()
     this.getInfo()
   },
@@ -44,12 +44,9 @@ export default {
       if (!this.storeAccount) {
         Dialog({ message: '本活动仅限店主参与，请先申请开店，成为店主后再参与' });
         return
+      } else {
+        goToApp(meBaseUrl, '/web/five-star', '', this.$bridge)
       }
-      if (this.gradeLevel == 5) {
-        Dialog({ message: '您已是五星店主，请参与其他活动吧~' });
-        return 
-      }
-      goToApp(meBaseUrl, '/web/five-star', '', this.$bridge)
     },
     getUserInfo() {
       return new Promise((resolve) => {
@@ -70,7 +67,7 @@ export default {
         .then((res) => {
           if (res&&res.code == 0) {
             this.storeAccount = res.data.storeAccount
-            this.gradeLevel = res.data.memberShop.level.gradeLevel
+            // this.gradeLevel = res.data.memberShop.level.gradeLevel
           }
         })
     },

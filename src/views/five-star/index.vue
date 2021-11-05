@@ -19,7 +19,7 @@
       />
       <div class="tips" @click="showPopupQa">活动规则</div>
     </div>
-    <div class="content-box" id="anchor">
+    <div class="content-box" id="anchor" v-if="!bgType">
       <div class="item" v-for="(item, index) in content" v-bind:key="index">
         <div class="title">
           <van-image
@@ -122,7 +122,7 @@ export default {
       token: null,
       bgType: 0,
       initImg: getImgUrl('publicMobile/fivestar/five-star-bg.png'),
-      edImg: getImgUrl('publicMobile/fivestar/five-star-bg.png'),
+      edImg: getImgUrl('publicMobile/fivestar/five-star-bg-end.png'),
       endImg: getImgUrl('publicMobile/fivestar/five-star-bg-end.png'),
       content: [
         {
@@ -157,8 +157,8 @@ export default {
   },
   async mounted() {
     await this.getUserInfo()
+    await this.getInfo()
     this.getData()
-    // this.getInfo()
   },
   methods: {
     getImg(id) {
@@ -225,6 +225,9 @@ export default {
       document.getElementById("anchor").scrollIntoView()
     },
     getData() {
+      if (this.bgType) {
+        return
+      }
       teamApi.getList({}, {token: this.token}).then((res) => {
         if (res && res.data) {
           this.setText(res.data)
@@ -241,23 +244,26 @@ export default {
         })
       })
     },
-    // getInfo() {
-    //   teamApi.getStoreShopInfo(
-    //     {},
-    //     {
-    //       showError: false,
-    //       token: this.token,
-    //     })
-    //     .then((res) => {
-    //       if (res&&res.code == 0) {
-    //         this.storeAccount = res.data.storeAccount
-    //         this.gradeLevel = res.data.memberShop.level.gradeLevel
-    //         if (this.gradeLevel == 5) {
-    //           this.bgType = 1
-    //         }
-    //       }
-    //     })
-    // },
+    getInfo() {
+      return Promise((resolve) => {
+        teamApi.getStoreShopInfo(
+          {},
+          {
+            showError: false,
+            token: this.token,
+          })
+          .then((res) => {
+            if (res&&res.code == 0) {
+              this.storeAccount = res.data?.storeAccount
+              this.gradeLevel = res.data?.memberShop?.level?.gradeLevel
+              if (this.gradeLevel == 5) {
+                this.bgType = 1
+              }
+            }
+            resolve()
+          })
+      })
+    },
     setText(data) {
       const { inventUser, openStore, storeTrans } = data;
       this.content[0].title = `成功邀约${inventUser.confNum}名新用户并登录签到`;
@@ -271,9 +277,9 @@ export default {
       this.content[2].title = `参与集约下单${storeTrans.confNum}次`;
       this.content[2].subtitle = `未完成（${storeTrans.activeNum}/${storeTrans.confNum}）`
       this.content[2].type = storeTrans.status;
-      if (inventUser.status&&openStore.status&&storeTrans.status) {
-        this.bgType = 1
-      }
+      // if (inventUser.status&&openStore.status&&storeTrans.status) {
+      //   this.bgType = 1
+      // }
     },
     showPopupQa() {
       this.show = true
