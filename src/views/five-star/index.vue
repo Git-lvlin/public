@@ -112,6 +112,8 @@ Vue.use(Popup);
 export default {
   data() {
     return {
+      storeAccount: null,
+      gradeLevel: null,
       storeInSrc: null,
       newShareSrc: null,
       initData: null, 
@@ -235,6 +237,23 @@ export default {
           resolve()
         })
       })
+    },
+    getInfo() {
+      teamApi.getStoreShopInfo(
+        {},
+        {
+          showError: false,
+          token: this.token,
+        })
+        .then((res) => {
+          if (res&&res.code == 0) {
+            this.storeAccount = res.data.storeAccount
+            this.gradeLevel = res.data.memberShop.level.gradeLevel
+            if (this.gradeLevel == 5) {
+              this.bgType = 1
+            }
+          }
+        })
     },
     setText(data) {
       const { inventUser, openStore, storeTrans } = data;
