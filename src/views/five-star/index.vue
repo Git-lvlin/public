@@ -158,7 +158,7 @@ export default {
   async mounted() {
     await this.getUserInfo()
     this.getData()
-    this.getInfo()
+    // this.getInfo()
   },
   methods: {
     getImg(id) {
@@ -241,23 +241,23 @@ export default {
         })
       })
     },
-    getInfo() {
-      teamApi.getStoreShopInfo(
-        {},
-        {
-          showError: false,
-          token: this.token,
-        })
-        .then((res) => {
-          if (res&&res.code == 0) {
-            this.storeAccount = res.data.storeAccount
-            this.gradeLevel = res.data.memberShop.level.gradeLevel
-            if (this.gradeLevel == 5) {
-              this.bgType = 1
-            }
-          }
-        })
-    },
+    // getInfo() {
+    //   teamApi.getStoreShopInfo(
+    //     {},
+    //     {
+    //       showError: false,
+    //       token: this.token,
+    //     })
+    //     .then((res) => {
+    //       if (res&&res.code == 0) {
+    //         this.storeAccount = res.data.storeAccount
+    //         this.gradeLevel = res.data.memberShop.level.gradeLevel
+    //         if (this.gradeLevel == 5) {
+    //           this.bgType = 1
+    //         }
+    //       }
+    //     })
+    // },
     setText(data) {
       const { inventUser, openStore, storeTrans } = data;
       this.content[0].title = `成功邀约${inventUser.confNum}名新用户并登录签到`;
