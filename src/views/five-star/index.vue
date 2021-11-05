@@ -158,6 +158,7 @@ export default {
   async mounted() {
     await this.getUserInfo()
     this.getData()
+    this.getInfo()
   },
   methods: {
     getImg(id) {
@@ -225,8 +226,10 @@ export default {
     },
     getData() {
       teamApi.getList({}, {token: this.token}).then((res) => {
+        if (res && res.data) {
           this.setText(res.data)
-        })
+        }
+      })
     },
     getImgUrl,
     getUserInfo() {
@@ -268,6 +271,9 @@ export default {
       this.content[2].title = `参与集约下单${storeTrans.confNum}次`;
       this.content[2].subtitle = `未完成（${storeTrans.activeNum}/${storeTrans.confNum}）`
       this.content[2].type = storeTrans.status;
+      if (inventUser.status&&openStore.status&&storeTrans.status) {
+        this.bgType = 1
+      }
     },
     showPopupQa() {
       this.show = true
