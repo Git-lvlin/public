@@ -245,13 +245,8 @@ export default {
       })
     },
     getInfo() {
-      return Promise((resolve) => {
-        teamApi.getStoreShopInfo(
-          {},
-          {
-            showError: false,
-            token: this.token,
-          })
+      return new Promise((resolve) => {
+        teamApi.getStoreShopInfo({}, {showError: false,token: this.token})
           .then((res) => {
             if (res&&res.code == 0) {
               this.storeAccount = res.data?.storeAccount
