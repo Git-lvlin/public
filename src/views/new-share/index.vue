@@ -89,7 +89,7 @@
     <!-- 活动规则弹窗 -->
     <van-popup
       v-model="show"
-      lazy-render="false"
+      :lazy-render="false"
       round
       :style="{ height: '203px' }"
     >
