@@ -204,6 +204,14 @@ const routes = [
     meta: {
       title: '约购APP',
     }
+  },
+  {
+    path: '/web/404',
+    name: '404',
+    component: () => import('@/views/404'),
+    meta: {
+      title: '404',
+    }
   }
 ];
 

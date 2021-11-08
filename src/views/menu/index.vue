@@ -113,6 +113,11 @@
         is-link
         to="/web/new-share"
       />
+      <van-cell
+        title="404"
+        is-link
+        to="/web/404"
+      />
     </van-cell-group>
   </div>
 </template>
