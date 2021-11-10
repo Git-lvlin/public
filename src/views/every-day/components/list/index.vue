@@ -48,6 +48,14 @@ export default {
       type: Object,
       default: () => {},
     },
+    hasToken: {
+      type: Boolean,
+      default: false,
+    },
+    inviteCode: {
+      type: String,
+      default: '',
+    }
   },
   data () {
     return {
@@ -65,6 +73,11 @@ export default {
   methods: {
     getImgUrl,
     onToDetail() {
+      if (!this.hasToken) {
+        // 没有token 跳转注册页面
+        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        return
+      }
       // 跳转到商品详情页面
       goToApp(this.good.actionUrl, '', '', this.$bridge)
     }

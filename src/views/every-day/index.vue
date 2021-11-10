@@ -44,7 +44,7 @@
           finished-text="没有更多了"
           @load="onBottomReach"
         >
-          <list v-for="item in list" :key="item" :good="item" />
+          <list v-for="item in list" :key="item" :good="item" :inviteCode="inviteCode" :hasToken="token"/>
         </van-list>
       </div>
     </div>
@@ -119,6 +119,7 @@ export default {
       indexData: null,
       token: null,
       ruleText: null,
+      inviteCode: '',
     }
   },
   components: {
@@ -127,6 +128,12 @@ export default {
   async created () {
     await this.getUserInfo()
     this.getIndex()
+  },
+  mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode
     this.getListData()
   },
   methods: {
