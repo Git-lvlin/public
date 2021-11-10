@@ -1,4 +1,6 @@
 
+import jsBridge from '@/utils/jsBridge';
+
 export const goToApp = (baseUrl, router, param, bridge) => {
   const data = {
     code: 0,
@@ -45,6 +47,40 @@ export const setNavigationBarRightContent = (url, num, bridge) => {
     zero,
   )
 }
+
+export const setNavigationBar = (immersive, backgroundColor='', {type=1, imageUrl='', title='', url='', color="#EE7D30", num=0}, {color, font, text}) => {
+  const data = {
+    code: 0,
+    msg: 'success',
+    data: {
+      navigatorBar: {
+        immersive: immersive,
+        backgroundColor: backgroundColor,
+        rightButton: {
+          type: type,
+          imageUrl: imageUrl,
+          title: title,
+          data: {
+            link: url,
+            color: color,
+            content: `已邀${num}人＞`
+          }
+        },
+        titleLabel: {
+          color: color,
+          font: font,
+          text: text,
+        }
+      }
+    }
+  }
+  const param = JSON.stringify(data);
+  jsBridge.callHandler(
+    'Setting',
+    param,
+  )
+}
+
 
 
 export const judgeVersionIsNew = (v) => {

@@ -60,66 +60,6 @@
       </div>
 
     </div>
-    <div class="content-box">
-      <!-- <van-image
-        class="img-title"
-        width="246px"
-        height="30px"
-        :src="getImgUrl('publicMobile/invitation/t.png')"
-      />
-    <div class="item-box">
-      <van-image
-        class="link-l"
-        width="10px"
-        :src="getImgUrl('publicMobile/invitation/border.png')"
-      />
-      <van-image
-        class="link-r"
-        width="10px"
-        :src="getImgUrl('publicMobile/invitation/border.png')"
-      />
-      <div class="title-box">
-        <van-image
-          class="title-img"
-          width="196px"
-          height="33px"
-          :src="getImgUrl('publicMobile/invitation/item-title.png')"
-        />
-        <span class="span-text">邀请好友奖励</span>
-      </div>
-      <div class="content">
-        <div class="item-img-box">
-          <van-image
-            class="item-img"
-            width="100%"
-            lazy-load
-            :src="getImgUrl('publicMobile/invitation/item.png')"
-          />
-        </div>
-      </div>
-    </div> -->
-    <!-- <div class="item-box item-box3">
-      <div class="content3">
-        <div class="center-box">
-          <div class="sub-title">
-            <div class="left-text">我的邀请</div>
-            <div class="right-top-btn-box" @click="onToDetail('all')">
-              <p>查看全部</p>
-              <van-image
-                class="right-img"
-                width="12px"
-                height="12px"
-                :src="getImgUrl('publicMobile/invitation/r.png')"
-              />
-            </div>
-          </div>
-          <p class="price"><span class="span">{{totalCommission?totalCommission/100:0}}</span>元</p>
-          <p class="num">已邀请<span>{{inviteNum || 0}}</span>位新用户，累计获得佣金</p>
-          <div class="now-button" @click="onToDetail">邀请好友一起领取</div>
-        </div>
-      </div>
-    </div> -->
-    </div>
 
   </div>
 </template>
@@ -295,16 +235,6 @@ export default {
       line-height:36px;
       text-align:center;
       overflow: hidden;
-    }
-    .content-box {
-      position: relative;
-      width: 100%;
-      top: -90px;
-      .img-title {
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-      }
     }
   }
   .banner {
