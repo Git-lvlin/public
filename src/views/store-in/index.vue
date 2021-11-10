@@ -50,7 +50,7 @@
           :src="getImgUrl('publicMobile/store/item-img1.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>一件直批</div>
+          <div class="li"><span class="sort">01</span>集中采购</div>
           <div class="li"><span class="sort">02</span>利润直返</div>
           <div class="li"><span class="sort">03</span>众多知名品牌</div>
           <div class="li"><span class="sort">04</span>限量低价抢购</div>
@@ -126,7 +126,7 @@
           :src="getImgUrl('publicMobile/store/item-img3.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>零投入 零囤货 零风险</div>
+          <div class="li"><span class="sort">01</span>低投入 囤货少 低风险</div>
           <div class="li"><span class="sort">02</span>高提成 高补贴 高收入</div>
         </div>
       </div>
