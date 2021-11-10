@@ -8,6 +8,7 @@
       :src="getImgUrl('publicMobile/fivestarqa/qabg.png')"
     />
     <div class="btn" @click="go"></div>
+  </div>
 </template>
 
 <script>

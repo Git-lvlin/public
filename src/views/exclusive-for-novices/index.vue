@@ -200,6 +200,7 @@ export default {
     },
   },
   async mounted() {
+    this.onLoad()
     if (this.$store.state.appInfo.isApp) {
       const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)
       if (isNewVersion) {
@@ -213,7 +214,6 @@ export default {
       this.getMiniprogramInfo()
       this.getListData()
     }
-    this.onLoad()
   }
 };
 </script>
