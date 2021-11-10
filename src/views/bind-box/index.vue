@@ -349,6 +349,7 @@ export default {
       bindBoxInfo: false,
       infoType: 0,
       unuseNum: 0,
+      blindboxStatus: 0,
       inviteFriends: {},
       signIn: {},
       orderConsume: {},
@@ -499,7 +500,7 @@ export default {
     init() {
       teamApi.getTaskInfo({},{token: this.token}).then((res) => {
         if (res.code === 0) {
-          const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum } = res.data;
+          const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus } = res.data;
           this.prizeNotice = prizeNotice
           this.prizeWinMsg = prizeWinMsg
           this.ruleText = ruleText
@@ -507,6 +508,7 @@ export default {
           this.unuseNum = unuseNum
           this.inviteFriends= inviteFriends
           this.signIn = signIn
+          this.blindboxStatus = blindboxStatus
           this.signIn.arr = []
           for(let i=0;i<signIn.signInNum;i++) {
             this.signIn.arr.push({id:i})
@@ -518,6 +520,9 @@ export default {
           }
           if (!unuseNum) {
             this.popupType = 1
+          }
+          if (!blindboxStatus) {
+            Dialog({ message: '活动已结束，谢谢您的参与。' });
           }
         }
       })
@@ -549,6 +554,10 @@ export default {
       })
     },
     go(type) {
+      if (!this.blindboxStatus) {
+        Dialog({ message: '活动已结束，谢谢您的参与。' });
+        return
+      }
       switch(type) {
         case 'home':
           goToApp(appBaseUrl, '/tab/index?index=0', '', this.$bridge)
@@ -563,6 +572,10 @@ export default {
       }
     },
     open() {
+      if (!this.blindboxStatus) {
+        Dialog({ message: '活动已结束，谢谢您的参与。' });
+        return
+      }
       if (!this.unuseNum) {
         this.openResult = true
         this.popupType = 1
