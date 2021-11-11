@@ -381,8 +381,6 @@ export default {
     await this.getUserInfo();
     const rightButton = {
       type: 'share',
-      imageUrl: '',
-      title: '',
       data: {
         contentType: 3,
         paramId: 7,
