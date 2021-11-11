@@ -358,12 +358,12 @@ export default {
     left: 50%;
     transform: translate(-50%);
     width: 255px;
-    height: 35.3px;
+    height: 36px;
     text-align: center;
     .span-text {
       position: absolute;
       top: 0;
-      left: 0;
+      left: 4px;
       width: 100%;
       height: 100%;
       line-height: 35.3px;
@@ -371,7 +371,7 @@ export default {
       font-family: PingFang SC;
       font-weight: 600;
       color: #ffffff;
-      font-size: 16px;
+      font-size: 15px;
       letter-spacing: 0.89px;
       text-align: center;
     }
