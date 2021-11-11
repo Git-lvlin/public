@@ -88,7 +88,7 @@
           <div class="li"><span class="sort">01</span>品牌厂家</div>
           <div class="li"><span class="sort">02</span>直供好货</div>
           <div class="li"><span class="sort">03</span>品质保证</div>
-          <div class="li"><span class="sort">04</span>买的放心</div>
+          <div class="li"><span class="sort">04</span>买得放心</div>
         </div>
       </div>
     </div>
@@ -117,7 +117,7 @@
           width="255px"
           :src="getImgUrl('publicMobile/store/title.png')"
         />
-        <span class="span-text">优势三:零成本 赚得多</span>
+        <span class="span-text">优势三:低成本 赚得多</span>
       </div>
       <div class="content">
         <van-image
@@ -126,7 +126,7 @@
           :src="getImgUrl('publicMobile/store/item-img3.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>低投入 囤货少 低风险</div>
+          <div class="li"><span class="sort">01</span>低成本 囤货少 低风险</div>
           <div class="li"><span class="sort">02</span>高提成 高补贴 高收入</div>
         </div>
       </div>
@@ -153,8 +153,8 @@
           :src="getImgUrl('publicMobile/store/item-img4.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>社区集约，免费加盟</div>
-          <div class="li"><span class="sort">02</span>专业服务，无忧入驻</div>
+          <div class="li"><span class="sort">01</span>社区集约、免费加盟</div>
+          <div class="li"><span class="sort">02</span>专业服务、无忧入驻</div>
         </div>
       </div>
     </div>
@@ -373,6 +373,7 @@ export default {
       color: #ffffff;
       font-size: 16px;
       letter-spacing: 0.89px;
+      text-align: center;
     }
   }
   .content {
