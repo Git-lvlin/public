@@ -133,7 +133,9 @@ export default {
     const {
       query,
     } = this.$router.history.current;
-    this.inviteCode = query.inviteCode
+    if (query && query.inviteCode) {
+      this.inviteCode = query.inviteCode
+    }
     this.getListData()
   },
   methods: {
@@ -217,8 +219,6 @@ export default {
         this.loading = false;
       });
     },
-  },
-  mounted() {
   },
 }
 
