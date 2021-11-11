@@ -48,10 +48,10 @@ export const setNavigationBarRightContent = (url, num, bridge) => {
   )
 }
 
-export const setNavigationBar = (backgroundColor='', {type='share', imageUrl=`https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/common/share-icon.png`, data, title='', url='', color="#EE7D30", num=0}, {titleLabelColor, font, text}) => {
-  
-  if (type!=='invitation') {
-    data = {
+export const setNavigationBar = (backgroundColor='', {type='share', imageUrl=`https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/common/share-icon.png`, object={}, title='', url='', color="#EE7D30", num=0}, {titleLabelColor, font, text}) => {
+  const info = object
+  if (type=='invitation') {
+    info = {
       link: url,
       color: color,
       content: `已邀${num}人＞`
@@ -67,7 +67,7 @@ export const setNavigationBar = (backgroundColor='', {type='share', imageUrl=`ht
           type: type,
           imageUrl: imageUrl,
           title: title,
-          data: data
+          data: info
         },
         titleLabel: {
           color: titleLabelColor,
