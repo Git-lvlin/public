@@ -277,8 +277,10 @@ import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import list from './components/list';
 import box from './components/box';
 import teamApi from '@/apis/bindbox';
+import teamApis from '@/apis/appointment';
 import {
   goToApp,
+  setNavigationBar,
 } from '@/utils/userInfo';
 Vue.use(Field);
 Vue.use(Loading);
@@ -367,6 +369,7 @@ export default {
       opened: false,
       bgImgUrl: getImgUrl('publicMobile/bindbox/head-bg.png'),
       load: true,
+      shareData: null,
     };
   },
   components: {
@@ -376,6 +379,23 @@ export default {
   },
   async created () {
     await this.getUserInfo();
+    const rightButton = {
+      type: 'share',
+      imageUrl: '',
+      title: '',
+      data: {
+        contentType: 3,
+        paramId: 7,
+        shareType: 3,
+        sourceType: 3,
+      }
+    };
+    const titleLabel = {
+      titleLabelColor: '', // 暂时不会传
+      font: '', // 暂时不会传
+      text: '', // 默认documenttitle
+    };
+    setNavigationBar('#FFFFFF', rightButton, titleLabel);
     this.init();
     this.sameDayHasSgin();
   },
@@ -385,6 +405,21 @@ export default {
   },
   methods: {
     getImgUrl,
+    // getShareData() {
+    //   return new Promise((reject) => {
+    //     teamApis.getShareImg({
+    //       contentType: 3,
+    //       paramId: 7,
+    //       shareType: 3,
+    //       sourceType: 3,
+    //     }, {token: this.token}).then((res) => {
+    //       if (res && res.code === 0 && res.data) {
+    //         this.shareData = res.data
+    //         reject()
+    //       }
+    //     })
+    //   })
+    // },
     loadImg() {
       return new Promise((resolve, reject) => {
         let bgImg = new Image();

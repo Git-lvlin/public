@@ -117,7 +117,7 @@
           width="255px"
           :src="getImgUrl('publicMobile/store/title.png')"
         />
-        <span class="span-text">优势三:低成本 赚得多</span>
+        <span class="span-text">优势三:低成本 赚更多</span>
       </div>
       <div class="content">
         <van-image
