@@ -515,14 +515,24 @@ export default {
     },
     goMyPrize() {
       if (!this.token) {
-        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        this.$router.push({
+          path: '/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
         return
       }
       goToApp(meBaseUrl, '/web/my-prize', '', this.$bridge)
     },
     showPopupQa() {
       if (!this.token) {
-        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        this.$router.push({
+          path: '/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
         return
       }
       this.show = true
@@ -621,7 +631,12 @@ export default {
     },
     open() {
       if (!this.token) {
-        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        this.$router.push({
+          path: '/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
         return
       }
       if (!this.blindboxStatus) {

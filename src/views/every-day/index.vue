@@ -132,7 +132,7 @@ export default {
   async created () {
     const rightButton = {
       type: 'share',
-      data: {
+      object: {
         contentType: 8,
         paramId: 10,
         shareType: 3,

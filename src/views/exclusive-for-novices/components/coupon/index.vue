@@ -48,8 +48,12 @@ export default {
     getImgUrl,
     onToDetail() {
       if (!this.token) {
-        // 没有token 跳转注册页面
-        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        this.$router.push({
+          path: '/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
         return
       }
       const {
