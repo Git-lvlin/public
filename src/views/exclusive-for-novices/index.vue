@@ -62,7 +62,7 @@
           finished-text=""
           @load="onBottomReach"
         >
-          <hot v-for="item in list" :key="item" :good="item" />
+          <hot v-for="item in list" :key="item" :inviteCode="inviteCode" :token="token" :good="item" />
         </van-list>
         <!-- <div class="no" v-show="finished">没有更多了</div> -->
       </div>
@@ -74,7 +74,7 @@
 import Vue from 'vue';
 import { Image as VanImage, List, Dialog } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { judgeVersionIsNew } from '@/utils/userInfo';
+import { judgeVersionIsNew, setNavigationBar } from '@/utils/userInfo';
 import Save from './components/goods-list';
 import Hot from './components/coupon';
 import teamApi from '@/apis/appointment';
@@ -107,12 +107,30 @@ export default {
       isNew: false,
       info: {},
       flag: true,
+      inviteCode: null,
     };
   },
   components: {
     Save,
     Hot,
     [Dialog.Component.name]: Dialog.Component,
+  },
+  created() {
+    const rightButton = {
+      type: 'share',
+      data: {
+        contentType: 7,
+        paramId: 9,
+        shareType: 3,
+        sourceType: 7,
+      }
+    };
+    const titleLabel = {
+      titleLabelColor: '', // 暂时不会传
+      font: '', // 暂时不会传
+      text: '', // 默认documenttitle
+    };
+    setNavigationBar('#FFFFFF', rightButton, titleLabel);
   },
   methods: {
     async getCoupon() {
@@ -200,6 +218,10 @@ export default {
     },
   },
   async mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode
     this.onLoad()
     if (this.$store.state.appInfo.isApp) {
       const isNewVersion = judgeVersionIsNew(this.$store.state.appInfo.appVersion)

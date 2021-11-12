@@ -27,7 +27,7 @@
 
 <script>
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl } from "@/constant/index";
+import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp, judgeVersionIsNew } from "@/utils/userInfo";
 export default {
   props: {
@@ -35,10 +35,23 @@ export default {
       type: Object,
       default: () => {},
     },
+    inviteCode: {
+      type: String,
+      default: ''
+    },
+    token: {
+      type: String,
+      default: ''
+    },
   },
   methods: {
     getImgUrl,
     onToDetail() {
+      if (!this.token) {
+        // 没有token 跳转注册页面
+        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        return
+      }
       const {
         good,
       } = this;
