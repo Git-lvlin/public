@@ -516,7 +516,7 @@ export default {
     goMyPrize() {
       if (!this.token) {
         this.$router.push({
-          path: '/new-share',
+          path: 'new-share',
           query: {
             inviteCode: this.inviteCode
           },
@@ -632,7 +632,7 @@ export default {
     open() {
       if (!this.token) {
         this.$router.push({
-          path: '/new-share',
+          path: '/web/new-share',
           query: {
             inviteCode: this.inviteCode
           },

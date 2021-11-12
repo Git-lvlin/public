@@ -49,7 +49,7 @@ export default {
     onToDetail() {
       if (!this.token) {
         this.$router.push({
-          path: '/new-share',
+          path: '/web/new-share',
           query: {
             inviteCode: this.inviteCode
           },
