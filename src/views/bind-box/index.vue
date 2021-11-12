@@ -527,10 +527,19 @@ export default {
       }
       this.show = true
     },
+    timestampToTime(timestamp) {
+      var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + '.';
+      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
+      var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+      var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+      var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
+      return Y+M+D+h+m;
+    },
     init() {
       teamApi.getTaskInfo({},{token: this.token}).then((res) => {
         if (res.code === 0) {
-          const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus } = res.data;
+          const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
           this.prizeNotice = prizeNotice
           this.prizeWinMsg = prizeWinMsg
           this.ruleText = ruleText
@@ -539,6 +548,8 @@ export default {
           this.inviteFriends= inviteFriends
           this.signIn = signIn
           this.blindboxStatus = blindboxStatus
+          this.activityStartTime = this.timestampToTime(activityStartTime)
+          this.activityEndTime = this.timestampToTime(activityEndTime)
           this.signIn.arr = []
           for(let i=0;i<signIn.signInNum;i++) {
             this.signIn.arr.push({id:i})
@@ -553,6 +564,9 @@ export default {
           }
           if (!blindboxStatus) {
             Dialog({ message: '活动已结束，谢谢您的参与。' });
+          }
+          if (blindboxStatus == 2) {
+            Dialog({ message: `活动未开始${this.activityStartTime}-${this.activityEndTime}` });
           }
         }
       })
@@ -588,6 +602,10 @@ export default {
         Dialog({ message: '活动已结束，谢谢您的参与。' });
         return
       }
+      if (this.blindboxStatus == 2) {
+        Dialog({ message: `活动未开始${this.activityStartTime}-${this.activityEndTime}` });
+        return
+      }
       switch(type) {
         case 'home':
           goToApp(appBaseUrl, '/tab/index?index=0', '', this.$bridge)
@@ -608,6 +626,10 @@ export default {
       }
       if (!this.blindboxStatus) {
         Dialog({ message: '活动已结束，谢谢您的参与。' });
+        return
+      }
+      if (this.blindboxStatus == 2) {
+        Dialog({ message: `活动未开始${this.activityStartTime}-${this.activityEndTime}` });
         return
       }
       if (!this.unuseNum) {
