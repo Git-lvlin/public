@@ -516,19 +516,19 @@ export default {
     goMyPrize() {
       if (!this.token) {
         this.$router.push({
-          path: 'new-share',
+          path: '/web/new-share',
           query: {
             inviteCode: this.inviteCode
           },
         });
         return
       }
-      goToApp(meBaseUrl, '/web/my-prize', '', this.$bridge)
+      goToApp(meBaseUrl, '/web/my-prize?_immersive=0', '', this.$bridge)
     },
     showPopupQa() {
       if (!this.token) {
         this.$router.push({
-          path: '/new-share',
+          path: '/web/new-share',
           query: {
             inviteCode: this.inviteCode
           },
