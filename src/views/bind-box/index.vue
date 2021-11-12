@@ -243,7 +243,7 @@
           <div class="popup-prize-box" v-if="popupType===3">
             <div class="popup-title van-ellipsis">{{openData.goodsName}}</div>
             <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
-            <div class="popup-price">价值¥{{openData.salePrice/100}}</div>
+            <div class="popup-price"><text class="text">价值</text>¥{{openData.salePrice/100}}</div>
           </div>
         </div>
 
@@ -1460,6 +1460,10 @@ export default {
           font-weight: 500;
           color: #333333;
           line-height: 22px;
+          .text {
+            font-size: 14px;
+            margin-right: 4px;
+          }
         }
       }
     }
