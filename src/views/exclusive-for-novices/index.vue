@@ -118,7 +118,7 @@ export default {
   created() {
     const rightButton = {
       type: 'share',
-      data: {
+      object: {
         contentType: 7,
         paramId: 9,
         shareType: 3,
