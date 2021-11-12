@@ -52,6 +52,7 @@ export const setNavigationBar = (backgroundColor='', {type='share', imageUrl=`ht
   const info = object
   if (type=='invitation') {
     info = {
+      ...object,
       link: url,
       color: color,
       content: `已邀${num}人＞`

@@ -243,7 +243,7 @@
           <div class="popup-prize-box" v-if="popupType===3">
             <div class="popup-title van-ellipsis">{{openData.goodsName}}</div>
             <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
-            <div class="popup-price">¥{{openData.salePrice/100}}</div>
+            <div class="popup-price">价值¥{{openData.salePrice/100}}</div>
           </div>
         </div>
 
@@ -369,6 +369,7 @@ export default {
       bgImgUrl: getImgUrl('publicMobile/bindbox/head-bg.png'),
       load: true,
       shareData: null,
+      inviteCode: null,
     };
   },
   components: {
@@ -377,7 +378,6 @@ export default {
     box,
   },
   async created () {
-    await this.getUserInfo();
     const rightButton = {
       type: 'share',
       object: {
@@ -393,10 +393,15 @@ export default {
       text: '', // 默认documenttitle
     };
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
+    await this.getUserInfo();
     this.init();
     this.sameDayHasSgin();
   },
   async mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode
     await this.loadImg()
     this.interval();
   },
@@ -509,9 +514,17 @@ export default {
       this.bubbleShow = false
     },
     goMyPrize() {
+      if (!this.token) {
+        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        return
+      }
       goToApp(meBaseUrl, '/web/my-prize', '', this.$bridge)
     },
     showPopupQa() {
+      if (!this.token) {
+        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        return
+      }
       this.show = true
     },
     init() {
@@ -589,6 +602,10 @@ export default {
       }
     },
     open() {
+      if (!this.token) {
+        goToApp(meBaseUrl, `/web/new-share?inviteCode=${this.inviteCode}`, '', this.$bridge)
+        return
+      }
       if (!this.blindboxStatus) {
         Dialog({ message: '活动已结束，谢谢您的参与。' });
         return
