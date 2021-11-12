@@ -566,7 +566,7 @@ export default {
             Dialog({ message: '活动已结束，谢谢您的参与。' });
           }
           if (blindboxStatus == 2) {
-            Dialog({ message: `活动未开始${this.activityStartTime}-${this.activityEndTime}` });
+            Dialog({ title: `活动未开始`,message: `活动时间：${this.activityStartTime}-${this.activityEndTime}` });
           }
         }
       })
@@ -603,7 +603,7 @@ export default {
         return
       }
       if (this.blindboxStatus == 2) {
-        Dialog({ message: `活动未开始${this.activityStartTime}-${this.activityEndTime}` });
+        Dialog({ title: `活动未开始`,message: `活动时间：${this.activityStartTime}-${this.activityEndTime}` });
         return
       }
       switch(type) {
@@ -629,7 +629,7 @@ export default {
         return
       }
       if (this.blindboxStatus == 2) {
-        Dialog({ message: `活动未开始${this.activityStartTime}-${this.activityEndTime}` });
+        Dialog({ title: `活动未开始`,message: `活动时间：${this.activityStartTime}-${this.activityEndTime}` });
         return
       }
       if (!this.unuseNum) {
