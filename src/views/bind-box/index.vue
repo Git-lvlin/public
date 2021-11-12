@@ -277,7 +277,6 @@ import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import list from './components/list';
 import box from './components/box';
 import teamApi from '@/apis/bindbox';
-import teamApis from '@/apis/appointment';
 import {
   goToApp,
   setNavigationBar,
@@ -381,7 +380,7 @@ export default {
     await this.getUserInfo();
     const rightButton = {
       type: 'share',
-      data: {
+      object: {
         contentType: 3,
         paramId: 7,
         shareType: 3,
@@ -403,21 +402,6 @@ export default {
   },
   methods: {
     getImgUrl,
-    // getShareData() {
-    //   return new Promise((reject) => {
-    //     teamApis.getShareImg({
-    //       contentType: 3,
-    //       paramId: 7,
-    //       shareType: 3,
-    //       sourceType: 3,
-    //     }, {token: this.token}).then((res) => {
-    //       if (res && res.code === 0 && res.data) {
-    //         this.shareData = res.data
-    //         reject()
-    //       }
-    //     })
-    //   })
-    // },
     loadImg() {
       return new Promise((resolve, reject) => {
         let bgImg = new Image();
