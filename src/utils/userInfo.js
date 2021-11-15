@@ -16,6 +16,19 @@ export const goToApp = (baseUrl, router, param, bridge) => {
   )
 }
 
+export const share = (shareParam) => {
+  const data = {
+    code: 0,
+    msg: 'success',
+    data: shareParam,
+  }
+  const zero = JSON.stringify(data);
+  bridge.callHandler(
+    'share',
+    zero,
+  )
+}
+
 export const savePicShare = (src, bridge) => {
   const data = {
     code: 0,

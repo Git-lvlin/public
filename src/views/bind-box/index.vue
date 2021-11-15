@@ -280,6 +280,7 @@ import teamApi from '@/apis/bindbox';
 import {
   goToApp,
   setNavigationBar,
+  share,
 } from '@/utils/userInfo';
 Vue.use(Field);
 Vue.use(Loading);
@@ -624,8 +625,13 @@ export default {
           goToApp(appBaseUrl, '/flutter/mine/sign_in/detail', '', this.$bridge)
           break
         case 'invitaion':
-          console.log('meBaseUrl', meBaseUrl)
-          goToApp(meBaseUrl, '/web/invitation', '', this.$bridge)
+          share({
+            contentType: 3,
+            paramId: 7,
+            shareType: 3,
+            sourceType: 3,
+          })
+          // goToApp(meBaseUrl, '/web/invitation', '', this.$bridge)
           break
       }
     },
