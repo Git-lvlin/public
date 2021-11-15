@@ -23,7 +23,7 @@ export const share = (shareParam) => {
     data: shareParam,
   }
   const zero = JSON.stringify(data);
-  bridge.callHandler(
+  jsBridge.callHandler(
     'share',
     zero,
   )
