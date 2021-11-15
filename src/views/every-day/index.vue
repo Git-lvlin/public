@@ -121,7 +121,7 @@ export default {
       ],
       show: false,
       indexData: null,
-      token: null,
+      token: false,
       ruleText: null,
       inviteCode: '',
     }
@@ -220,6 +220,16 @@ export default {
       })
     },
     popupSwitch() {
+      console.log('this.token', this.token)
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       this.show = true
     },
     onBottomReach() {
