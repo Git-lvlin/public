@@ -134,6 +134,15 @@ export default {
   },
   methods: {
     async getCoupon() {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       if (!this.flag) {
         return
       }
