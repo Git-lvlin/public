@@ -207,7 +207,7 @@ export default {
         if (res.code === 0) {
           this.hold = res?.data?.pLqStatus
           this.listData = res?.data?.couponInfo?.records
-          if (this.hold == 1) {
+          if (this.hold == 1 && this.token) {
             this.getCoupon()
           }
         }
