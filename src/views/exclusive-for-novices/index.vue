@@ -150,8 +150,8 @@ export default {
             this.flag = true
           })
       } else {
-        Dialog({ message: '未登录' });
-        console.log('token is null', this.token)
+        // Dialog({ message: '未登录' });
+        // console.log('token is null', this.token)
       }
     },
     getUserInfo() {
