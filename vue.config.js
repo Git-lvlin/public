@@ -10,11 +10,11 @@ module.exports = {
   publicPath: '/',
   devServer: {
     proxy: {
-      '/activity': {
-        target: 'https://api-dev.yeahgo.com',
-        ws: true,
-        changeOrigin: true,
-      },
+      // '/activity': {
+      //   target: 'https://api-dev.yeahgo.com',
+      //   ws: true,
+      //   changeOrigin: true,
+      // },
       '/member': {
         target: 'http://dev-yeahgo-gateway.waiad.icu',
         ws: true,
@@ -25,13 +25,13 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
-      // '/activity': {
-      //   target: 'http://local.yeahgo.com',
-      //   ws: true,
-      //   changeOrigin: true,
-      // },
+      '/activity': {
+        target: 'http://local.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
     },
-    https: true,
+    // https: true,
     disableHostCheck: true
   },
   css: {
