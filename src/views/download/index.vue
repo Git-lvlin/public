@@ -68,25 +68,25 @@ export default {
     return {
       isAndroid: 0,
       isIOS: 0,
-      isWeixin: false
+      isWeixin: 0
     };
   },
   created () {
-    this.isWeixin();
+
   },
   mounted() {
-
+    this.isWeixin();
   },
   methods: {
     getImgUrl,
     isWeixin() {
-      const user = navigator.userAgent.toLowerCase();
-      if (user.match(/MicroMessenger/i) == "micromessenger") {
-        this.isWeixin = true
+      const ua = window.navigator.userAgent.toLowerCase();
+      if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+        this.isWeixin = 1
       }
     },
     download() {
-      const u = navigator.userAgent;
+      const u = window.navigator.userAgent;
       console.log('u', u)
       const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
       const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
