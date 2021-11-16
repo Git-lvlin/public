@@ -212,6 +212,14 @@ const routes = [
     meta: {
       title: '404',
     }
+  },
+  {
+    path: '/web/download',
+    name: 'DownLoad',
+    component: () => import('@/views/download'),
+    meta: {
+      title: '下载',
+    }
   }
 ];
 
