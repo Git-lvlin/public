@@ -31,7 +31,7 @@ module.exports = {
         changeOrigin: true,
       },
     },
-    https: true,
+    https: false,
     disableHostCheck: true
   },
   css: {

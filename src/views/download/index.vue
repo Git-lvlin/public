@@ -61,13 +61,8 @@ import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 Vue.use(VanImage);
 export default {
-  props: {
-
-  },
   data() {
     return {
-      isAndroid: 0,
-      isIOS: 0,
       isWeixin: 0
     };
   },
@@ -75,16 +70,15 @@ export default {
 
   },
   mounted() {
-    this.isWeixin();
+    const ua = window.navigator.userAgent.toLowerCase();
+    console.log('ua', ua)
+    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+      this.isWeixin = 1
+    }
+    console.log('this.isWeixin', this.isWeixin)
   },
   methods: {
     getImgUrl,
-    isWeixin() {
-      const ua = window.navigator.userAgent.toLowerCase();
-      if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        this.isWeixin = 1
-      }
-    },
     download() {
       const u = window.navigator.userAgent;
       console.log('u', u)
