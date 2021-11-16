@@ -5,7 +5,8 @@
         'background-image': `url('${getImgUrl('publicMobile/share/bg.png')}')`
       }"
     >
-      <div class="button" @click="download">立即下载</div>
+      <div class="button" @click="download" v-if="!isWeixin">立即下载</div>
+      <div class="tt" v-else>点击右上角..., 选择在默认浏览器打开</div>
       <!-- <p class="p">已安装？点这里打开约购</p> -->
     </div>
     <div class="title"><span class="red">约购</span>APP 1件也享批发价</div>
@@ -67,18 +68,23 @@ export default {
     return {
       isAndroid: 0,
       isIOS: 0,
+      isWeixin: false
     };
   },
-  components: {
-  },
   created () {
-
+    this.isWeixin();
   },
   mounted() {
 
   },
   methods: {
     getImgUrl,
+    isWeixin() {
+      const user = navigator.userAgent.toLowerCase();
+      if (user.match(/MicroMessenger/i) == "micromessenger") {
+        this.isWeixin = true
+      }
+    },
     download() {
       const u = navigator.userAgent;
       console.log('u', u)
@@ -108,6 +114,7 @@ export default {
     width:100%;
     height: 450px;
     background-size: 100% 100%;
+    position: relative;
     .button {
       width:250px;
       height:50px;
@@ -123,6 +130,14 @@ export default {
       margin: 0 auto;
       margin-top: 279px;
       z-index: 2;
+    }
+    .tt {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #ffffff;
+      font-size: 14px;
+      text-align: right;
     }
     .p {
       margin-top: 25px;
