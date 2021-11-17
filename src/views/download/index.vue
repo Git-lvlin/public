@@ -57,6 +57,7 @@
       width="100%"
       :src="getImgUrl('publicMobile/share/wxtx.png')"
     />
+    <div class="mark"></div>
   </div>
 </template>
 
@@ -68,7 +69,7 @@ Vue.use(VanImage);
 export default {
   data() {
     return {
-      isWeixin: 0
+      isWeixin: 1
     };
   },
   created () {
@@ -211,5 +212,12 @@ export default {
       }
     }
   }
+}
+.mark {
+  width: 100%;
+  height: 60px;
+  position: relative;
+  top: -60px;
+  background-color: #ffffff;
 }
 </style>
