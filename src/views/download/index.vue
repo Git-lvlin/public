@@ -185,7 +185,7 @@ export default {
       align-items: center;
       margin-bottom: 24px;
       .right-box {
-        width: 117px;
+        width: 140px;
         margin-left: 21px;
         display: flex;
         flex-direction: column;
