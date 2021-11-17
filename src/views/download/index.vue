@@ -1,13 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="!isWeixin">
     <div class="head"
       :style="{
         'background-image': `url('${getImgUrl('publicMobile/share/bg.png')}')`
       }"
     >
-      <div class="button" @click="download" v-if="!isWeixin">立即下载</div>
-      <div class="tt" v-else>点击右上角..., 选择在默认浏览器打开</div>
-      <!-- <p class="p">已安装？点这里打开约购</p> -->
+      <div class="button" @click="download">立即下载</div>
     </div>
     <div class="title"><span class="red">约购</span>APP 1件也享批发价</div>
     <div class="subtitle">有温度的 低价电商平台</div>
@@ -53,6 +51,13 @@
       </div>
     </div>
   </div>
+  <div class="container" v-else>
+    <van-image
+      class="wxtx"
+      width="100%"
+      :src="getImgUrl('publicMobile/share/wxtx.png')"
+    />
+  </div>
 </template>
 
 <script>
@@ -71,11 +76,9 @@ export default {
   },
   mounted() {
     const ua = window.navigator.userAgent.toLowerCase();
-    console.log('ua', ua)
     if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
       this.isWeixin = 1
     }
-    console.log('this.isWeixin', this.isWeixin)
   },
   methods: {
     getImgUrl,
