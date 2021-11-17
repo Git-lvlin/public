@@ -1,12 +1,11 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="!isWeixin">
     <div class="head"
       :style="{
         'background-image': `url('${getImgUrl('publicMobile/share/bg.png')}')`
       }"
     >
       <div class="button" @click="download">立即下载</div>
-      <!-- <p class="p">已安装？点这里打开约购</p> -->
     </div>
     <div class="title"><span class="red">约购</span>APP 1件也享批发价</div>
     <div class="subtitle">有温度的 低价电商平台</div>
@@ -52,6 +51,14 @@
       </div>
     </div>
   </div>
+  <div class="container" v-else>
+    <van-image
+      class="wxtx"
+      width="100%"
+      :src="getImgUrl('publicMobile/share/wxtx.png')"
+    />
+    <div class="mark"></div>
+  </div>
 </template>
 
 <script>
@@ -60,27 +67,24 @@ import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 Vue.use(VanImage);
 export default {
-  props: {
-
-  },
   data() {
     return {
-      isAndroid: 0,
-      isIOS: 0,
+      isWeixin: 0
     };
-  },
-  components: {
   },
   created () {
 
   },
   mounted() {
-
+    const ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+      this.isWeixin = 1
+    }
   },
   methods: {
     getImgUrl,
     download() {
-      const u = navigator.userAgent;
+      const u = window.navigator.userAgent;
       console.log('u', u)
       const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
       const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -108,6 +112,7 @@ export default {
     width:100%;
     height: 450px;
     background-size: 100% 100%;
+    position: relative;
     .button {
       width:250px;
       height:50px;
@@ -123,6 +128,14 @@ export default {
       margin: 0 auto;
       margin-top: 279px;
       z-index: 2;
+    }
+    .tt {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: #ffffff;
+      font-size: 14px;
+      text-align: right;
     }
     .p {
       margin-top: 25px;
@@ -172,7 +185,7 @@ export default {
       align-items: center;
       margin-bottom: 24px;
       .right-box {
-        width: 117px;
+        width: 140px;
         margin-left: 21px;
         display: flex;
         flex-direction: column;
@@ -199,5 +212,12 @@ export default {
       }
     }
   }
+}
+.mark {
+  width: 100%;
+  height: 60px;
+  position: relative;
+  top: -60px;
+  background-color: #ffffff;
 }
 </style>
