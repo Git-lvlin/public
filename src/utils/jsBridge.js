@@ -41,7 +41,7 @@ const setupWebViewJavascriptBridge = (callback) => {
       return window.WKWVJBCallbacks.push(callback);
     }
     window.WKWVJBCallbacks = [callback];
-    window.webkit?.messageHandlers?.iOS_Native_InjectJavascript.postMessage(null)
+    window.webkit?.messageHandlers?.iOS_Native_InjectJavascript?.postMessage?.(null)
     // const WVJBIframe = document.createElement('iframe');
     // WVJBIframe.style.display = 'none';
     // // WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
