@@ -234,7 +234,7 @@ const routes = [
     name: 'BinGous',
     component: () => import('@/views/bingous'),
     meta: {
-      title: '',
+      title: '协议',
     }
   }
 ];
