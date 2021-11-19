@@ -220,6 +220,14 @@ const routes = [
     meta: {
       title: '下载',
     }
+  },
+  {
+    path: '/web/video',
+    name: 'Video',
+    component: () => import('@/views/video'),
+    meta: {
+      title: '',
+    }
   }
 ];
 
