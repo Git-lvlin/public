@@ -34,8 +34,8 @@
           :src="getImgUrl('publicMobile/share/img2.png')"
         />
         <div class="right-box">
-          <p class="p1">开新店 <span class="red">零成本</span></p>
-          <p class="p2">海量商品 一键代发</p>
+          <p class="p1">开新店 <span class="red">低成本</span></p>
+          <p class="p2">海量商品 一件代发</p>
         </div>
       </div>
       <div class="item">
