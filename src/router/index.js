@@ -228,6 +228,14 @@ const routes = [
     meta: {
       title: '',
     }
+  },
+  {
+    path: '/web/bingous',
+    name: 'BinGous',
+    component: () => import('@/views/bingous'),
+    meta: {
+      title: '',
+    }
   }
 ];
 
