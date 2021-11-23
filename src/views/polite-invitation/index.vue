@@ -213,6 +213,7 @@ export default {
       couponInviteId: 15,
       show: 0,
       time: null,
+      inviteCode: null,
     };
   },
   components: {
@@ -225,6 +226,10 @@ export default {
     this.getGoodsList();
   },
   mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode
   },
   methods: {
     getImgUrl,
