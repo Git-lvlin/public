@@ -6,6 +6,7 @@
         class="hot-good-img"
         width="117px"
         height="117px"
+        lazy-load
         :src="good.image"
       />
     </div>
@@ -48,6 +49,14 @@ export default {
       type: Object,
       default: () => {},
     },
+    hasToken: {
+      type: Number,
+      default: 0,
+    },
+    inviteCode: {
+      type: String,
+      default: '',
+    }
   },
   data () {
     return {
@@ -65,8 +74,19 @@ export default {
   methods: {
     getImgUrl,
     onToDetail() {
-      // 跳转到商品详情页面
-      goToApp(this.good.actionUrl, '', '', this.$bridge)
+      console.log('this.hasToken', this.hasToken)
+      if (!this.hasToken) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      } else {
+        // 跳转到商品详情页面
+        goToApp(this.good.actionUrl, '', '', this.$bridge)
+      }
     }
   }
 }

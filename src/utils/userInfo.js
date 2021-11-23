@@ -1,4 +1,6 @@
 
+import jsBridge from '@/utils/jsBridge';
+
 export const goToApp = (baseUrl, router, param, bridge) => {
   const data = {
     code: 0,
@@ -8,8 +10,21 @@ export const goToApp = (baseUrl, router, param, bridge) => {
     }
   }
   const zero = JSON.stringify(data);
-  bridge.callHandler(
+  jsBridge.callHandler(
     'router',
+    zero,
+  )
+}
+
+export const share = (shareParam) => {
+  const data = {
+    code: 0,
+    msg: 'success',
+    data: shareParam,
+  }
+  const zero = JSON.stringify(data);
+  jsBridge.callHandler(
+    'share',
     zero,
   )
 }
@@ -45,6 +60,45 @@ export const setNavigationBarRightContent = (url, num, bridge) => {
     zero,
   )
 }
+
+export const setNavigationBar = (backgroundColor='', {type='share',selectedImageUrl='https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/common/share-icon-black.png', normalImageUrl=`https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/common/share-icon.png`, object={}, title='', url='', color="#EE7D30", num=0}, {titleLabelColor, font, text}) => {
+  const info = object
+  if (type=='invitation') {
+    info = {
+      ...object,
+      link: url,
+      color: color,
+      content: `已邀${num}人＞`
+    }
+  }
+  const data = {
+    code: 0,
+    msg: 'success',
+    data: {
+      navigatorBar: {
+        backgroundColor: backgroundColor,
+        rightButton: {
+          type: type,
+          normalImageUrl: normalImageUrl,
+          selectedImageUrl: selectedImageUrl,
+          title: title,
+          data: info
+        },
+        titleLabel: {
+          color: titleLabelColor,
+          font: font,
+          text: text,
+        }
+      }
+    }
+  }
+  const param = JSON.stringify(data);
+  jsBridge.callHandler(
+    'setting',
+    param,
+  )
+}
+
 
 
 export const judgeVersionIsNew = (v) => {

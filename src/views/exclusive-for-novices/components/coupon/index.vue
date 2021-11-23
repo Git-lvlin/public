@@ -27,7 +27,7 @@
 
 <script>
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl } from "@/constant/index";
+import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp, judgeVersionIsNew } from "@/utils/userInfo";
 export default {
   props: {
@@ -35,10 +35,27 @@ export default {
       type: Object,
       default: () => {},
     },
+    inviteCode: {
+      type: String,
+      default: ''
+    },
+    token: {
+      type: String,
+      default: ''
+    },
   },
   methods: {
     getImgUrl,
     onToDetail() {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       const {
         good,
       } = this;

@@ -93,7 +93,7 @@
         <div class="task-content">
           <div class="task-flex">
             <p>每成功邀请<span class="span">{{inviteFriends.inviteNum}}</span>位新用户注册约购APP，获得<span class="span">{{inviteFriends.chanceNum}}</span>次开盲盒机会，每天最多获得{{inviteFriends.inviteDayMaxNum}}次开盒机会。</p>
-            <p v-if="!inviteFriends.inviteIsFinish">本次已邀请<span class="span">{{inviteFriends.inviteFinishNum}}</span>人，还差<span class="span">{{inviteFriends.inviteUnNum}}</span>人。</p>
+            <p v-if="!inviteFriends.inviteIsFinish">本次已邀请<span class="span">{{blindboxStatus?inviteFriends.inviteFinishNum:'x'}}</span>人，还差<span class="span">{{blindboxStatus?inviteFriends.inviteUnNum:'x'}}</span>人。</p>
             <p v-else>今天已经圆满完成任务，明天再继续努力吧~</p>
           </div>
         </div>
@@ -121,7 +121,7 @@
               <span v-else>{{index+1}}天</span>
             </span>
           </p>
-          <p v-if="!signIn.signInIsFinish">本次已连签<span class="span">{{signIn.signInFinishNum}}</span>天，还差<span class="span">{{signIn.signInUnNum}}</span>天。</p>
+          <p v-if="!signIn.signInIsFinish">本次已连签<span class="span">{{blindboxStatus?signIn.signInFinishNum:'x'}}</span>天，还差<span class="span">{{blindboxStatus?signIn.signInUnNum:'x'}}</span>天。</p>
           <p v-else>已完成全部签到任务 棒~</p>
         </div>
         <div class="btn-yellow" v-if="!hasSgin">
@@ -151,7 +151,7 @@
               <span v-else>{{index+1}}单</span>
             </span>
           </p>
-          <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{orderConsume.consumeFinishNum}}</span>笔订单，还差<span class="span">{{orderConsume.consumeUnNum}}</span>笔。</p>
+          <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{blindboxStatus?orderConsume.consumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?orderConsume.consumeUnNum:'x'}}</span>笔。</p>
           <p v-else>今天已获取1次开盲盒机会了，明天继续努力吧~</p>
         </div>
         <div class="btn-yellow">
@@ -243,7 +243,7 @@
           <div class="popup-prize-box" v-if="popupType===3">
             <div class="popup-title van-ellipsis">{{openData.goodsName}}</div>
             <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
-            <div class="popup-price">¥{{openData.salePrice/100}}</div>
+            <div class="popup-price"><div class="text">价值</div>¥{{openData.salePrice/100}}</div>
           </div>
         </div>
 
@@ -279,6 +279,8 @@ import box from './components/box';
 import teamApi from '@/apis/bindbox';
 import {
   goToApp,
+  setNavigationBar,
+  share,
 } from '@/utils/userInfo';
 Vue.use(Field);
 Vue.use(Loading);
@@ -349,6 +351,7 @@ export default {
       bindBoxInfo: false,
       infoType: 0,
       unuseNum: 0,
+      blindboxStatus: 0,
       inviteFriends: {},
       signIn: {},
       orderConsume: {},
@@ -366,6 +369,8 @@ export default {
       opened: false,
       bgImgUrl: getImgUrl('publicMobile/bindbox/head-bg.png'),
       load: true,
+      shareData: null,
+      inviteCode: null,
     };
   },
   components: {
@@ -374,11 +379,30 @@ export default {
     box,
   },
   async created () {
+    const rightButton = {
+      type: 'share',
+      object: {
+        contentType: 3,
+        paramId: 7,
+        shareType: 3,
+        sourceType: 3,
+      }
+    };
+    const titleLabel = {
+      titleLabelColor: '', // 暂时不会传
+      font: '', // 暂时不会传
+      text: '', // 默认documenttitle
+    };
+    setNavigationBar('#FFFFFF', rightButton, titleLabel);
     await this.getUserInfo();
     this.init();
     this.sameDayHasSgin();
   },
   async mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode
     await this.loadImg()
     this.interval();
   },
@@ -491,15 +515,42 @@ export default {
       this.bubbleShow = false
     },
     goMyPrize() {
-      goToApp(meBaseUrl, '/web/my-prize', '', this.$bridge)
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
+      goToApp(meBaseUrl, '/web/my-prize?_immersive=0', '', this.$bridge)
     },
     showPopupQa() {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       this.show = true
+    },
+    timestampToTime(timestamp) {
+      var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + '.';
+      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
+      var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+      var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+      var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
+      return Y+M+D+h+m;
     },
     init() {
       teamApi.getTaskInfo({},{token: this.token}).then((res) => {
         if (res.code === 0) {
-          const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum } = res.data;
+          const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
           this.prizeNotice = prizeNotice
           this.prizeWinMsg = prizeWinMsg
           this.ruleText = ruleText
@@ -507,6 +558,9 @@ export default {
           this.unuseNum = unuseNum
           this.inviteFriends= inviteFriends
           this.signIn = signIn
+          this.blindboxStatus = blindboxStatus
+          this.activityStartTime = this.timestampToTime(activityStartTime)
+          this.activityEndTime = this.timestampToTime(activityEndTime)
           this.signIn.arr = []
           for(let i=0;i<signIn.signInNum;i++) {
             this.signIn.arr.push({id:i})
@@ -518,6 +572,12 @@ export default {
           }
           if (!unuseNum) {
             this.popupType = 1
+          }
+          if (!blindboxStatus) {
+            Dialog({ message: '活动已结束，谢谢您的参与。' });
+          }
+          if (blindboxStatus == 2) {
+            Dialog({ title: `活动未开始`,message: `活动时间：${this.activityStartTime}-${this.activityEndTime}` });
           }
         }
       })
@@ -549,6 +609,14 @@ export default {
       })
     },
     go(type) {
+      if (!this.blindboxStatus) {
+        Dialog({ message: '活动已结束，谢谢您的参与。' });
+        return
+      }
+      if (this.blindboxStatus == 2) {
+        Dialog({ title: `活动未开始`,message: `活动时间：${this.activityStartTime}-${this.activityEndTime}` });
+        return
+      }
       switch(type) {
         case 'home':
           goToApp(appBaseUrl, '/tab/index?index=0', '', this.$bridge)
@@ -557,12 +625,34 @@ export default {
           goToApp(appBaseUrl, '/flutter/mine/sign_in/detail', '', this.$bridge)
           break
         case 'invitaion':
-          console.log('meBaseUrl', meBaseUrl)
-          goToApp(meBaseUrl, '/web/invitation', '', this.$bridge)
+          share({
+            contentType: 3,
+            paramId: 7,
+            shareType: 3,
+            sourceType: 3,
+          })
+          // goToApp(meBaseUrl, '/web/invitation', '', this.$bridge)
           break
       }
     },
     open() {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
+      if (!this.blindboxStatus) {
+        Dialog({ message: '活动已结束，谢谢您的参与。' });
+        return
+      }
+      if (this.blindboxStatus == 2) {
+        Dialog({ title: `活动未开始`,message: `活动时间：${this.activityStartTime}-${this.activityEndTime}` });
+        return
+      }
       if (!this.unuseNum) {
         this.openResult = true
         this.popupType = 1
@@ -1391,6 +1481,11 @@ export default {
           font-weight: 500;
           color: #333333;
           line-height: 22px;
+          .text {
+            display: inline-block;
+            font-size: 14px;
+            margin-right: 4px;
+          }
         }
       }
     }
