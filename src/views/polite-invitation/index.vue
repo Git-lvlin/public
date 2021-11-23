@@ -209,7 +209,7 @@ export default {
       records: null,
       popupData: null,
       info: null,
-      token: 'AQIAAAAAYZu4PhOAy9b071ABnjm4omb3Cj5mqEfiDagTYeFGJdBKw0BQ_FtvZmAxhHs=',
+      token: null,
       couponInviteId: 15,
       show: 0,
       time: null,
@@ -219,7 +219,7 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   async created () {
-    // await this.getUserInfo();
+    await this.getUserInfo();
     this.getInfo();
     this.getPopup();
     this.getGoodsList();
@@ -241,6 +241,15 @@ export default {
       })
     },
     btn() {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       if (this.info.activityStatus == 4) {
         Dialog({ message: '活动已结束，谢谢您的参与。' });
         return
