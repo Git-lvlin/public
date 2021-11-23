@@ -24,8 +24,8 @@
       <div class="code-err">{{codeErr}}</div>
       <div class="button" @click="reg">提交</div>
     </div>
-    <div class="title"><span class="red">约购</span>APP 1件也享批发价</div>
-    <div class="subtitle">有温度的 低价电商平台</div>
+    <div class="title"><span class="red">约购</span>APP 约着买 更便宜</div>
+    <div class="subtitle">物美价廉有温度</div>
     <van-image
       class="border"
       width="26px"
@@ -40,8 +40,8 @@
           :src="getImgUrl('publicMobile/share/img1.png')"
         />
         <div class="right-box">
-          <p class="p1">约着买 <span class="red">更舒心</span></p>
-          <p class="p2">厂家直供 正品保障</p>
+          <p class="p1">约着买 <span class="red">更省心</span></p>
+          <p class="p2">品牌直供 质量保障</p>
         </div>
       </div>
       <div class="item">
@@ -51,8 +51,8 @@
           :src="getImgUrl('publicMobile/share/img2.png')"
         />
         <div class="right-box">
-          <p class="p1">开新店 <span class="red">低成本</span></p>
-          <p class="p2">海量商品 一件代发</p>
+          <p class="p1">轻创业 <span class="red">低成本</span></p>
+          <p class="p2">约购模式 创富首选</p>
         </div>
       </div>
       <div class="item">
