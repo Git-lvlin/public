@@ -153,8 +153,8 @@
           :src="getImgUrl('publicMobile/store/item-img4.png')"
         />
         <div class="r-box">
-          <div class="li"><span class="sort">01</span>社区集约、免费加盟</div>
-          <div class="li"><span class="sort">02</span>专业服务、无忧入驻</div>
+          <div class="li"><span class="sort">01</span>社区集约 免费加盟</div>
+          <div class="li"><span class="sort">02</span>专业服务 无忧入驻</div>
         </div>
       </div>
     </div>
