@@ -51,7 +51,7 @@
       </div> -->
     </div>
   </div>
-  <div class="container" v-else>
+  <div class="container2" v-else>
     <van-image
       class="wxtx"
       width="100%"
