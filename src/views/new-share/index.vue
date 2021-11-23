@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="!isWeixin">
     <div class="head"
       :style="{
         'background-image': `url('${type?edImg:img}')`,
@@ -55,7 +55,7 @@
           <p class="p2">约购模式 创富首选</p>
         </div>
       </div>
-      <div class="item">
+      <!-- <div class="item">
         <van-image
           width="60px"
           height="60px"
@@ -65,7 +65,7 @@
           <p class="p1">邻里互动 <span class="red">更高效</span></p>
           <p class="p2">即时分享新动态 邻里更亲密</p>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="bottom-box" v-show="flag">
       <van-image
@@ -100,6 +100,13 @@
       </div>
     </van-popup>
   </div>
+  <div class="container2" v-else>
+    <van-image
+      class="wxtx"
+      width="100%"
+      :src="getImgUrl('publicMobile/common/transfer-wx.png')"
+    />
+  </div>
 </template>
 
 <script>
@@ -112,6 +119,7 @@ Vue.use(Popup);
 export default {
   data() {
     return {
+      isWeixin: 0,
       show: 0,
       edImg: getImgUrl('publicMobile/newshare/new-share-bg-ed.png'),
       img: getImgUrl('publicMobile/newshare/new-share-bg.png'),
@@ -142,6 +150,10 @@ export default {
   },
   mounted() {
     this.getInviteCode()
+    const ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+      this.isWeixin = 1
+    }
   },
   methods: {
     getInviteCode() {
@@ -265,6 +277,13 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.container2 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #FFFCFC;
+  padding-bottom: 30px;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -330,6 +349,7 @@ export default {
     margin: 0 auto;
   }
   .detail {
+    padding-bottom: 40px;
     margin-top: 23px;
     display: flex;
     flex-direction: column;
