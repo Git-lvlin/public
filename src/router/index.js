@@ -220,6 +220,30 @@ const routes = [
     meta: {
       title: '下载',
     }
+  },
+  {
+    path: '/web/limit-list',
+    name: 'LimitList',
+    component: () => import('@/views/limit-list'),
+    meta: {
+      title: '邀请列表',
+    }
+  },
+  {
+    path: '/web/time-limit',
+    name: 'TimeLimit',
+    component: () => import('@/views/time-limit'),
+    meta: {
+      title: '限时优惠',
+    }
+  },
+  {
+    path: '/web/polite-invitation',
+    name: 'PoliteInvitation',
+    component: () => import('@/views/polite-invitation'),
+    meta: {
+      title: '推荐有礼',
+    }
   }
 ];
 

@@ -10,7 +10,7 @@ export const goToApp = (baseUrl, router, param, bridge) => {
     }
   }
   const zero = JSON.stringify(data);
-  bridge.callHandler(
+  jsBridge.callHandler(
     'router',
     zero,
   )
