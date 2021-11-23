@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="!isWeixin">
+  <div class="container">
     <div class="head"
       :style="{
         'background-image': `url('${type?edImg:img}')`,
@@ -100,13 +100,13 @@
       </div>
     </van-popup>
   </div>
-  <div class="container2" v-else>
+  <!-- <div class="container2" v-else>
     <van-image
       class="wxtx"
       width="100%"
       :src="getImgUrl('publicMobile/common/transfer-wx.png')"
     />
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -150,10 +150,10 @@ export default {
   },
   mounted() {
     this.getInviteCode()
-    const ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-      this.isWeixin = 1
-    }
+    // const ua = window.navigator.userAgent.toLowerCase();
+    // if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+    //   this.isWeixin = 1
+    // }
   },
   methods: {
     getInviteCode() {
@@ -277,13 +277,13 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.container2 {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #FFFCFC;
-  padding-bottom: 30px;
-}
+// .container2 {
+//   display: flex;
+//   flex-direction: column;
+//   min-height: 100vh;
+//   background-color: #FFFCFC;
+//   padding-bottom: 30px;
+// }
 .container {
   display: flex;
   flex-direction: column;
