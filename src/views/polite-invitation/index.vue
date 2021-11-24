@@ -6,7 +6,7 @@
       :src="getImgUrl('publicMobile/limit/invitation-bg.png')"
     />
     <div class="content">
-      <div class="record" @click="lookRecord">邀请记录</div>
+      <div class="record" v-if="time" @click="lookRecord">邀请记录</div>
       <div class="time" v-if="time">活动时间:{{time}}</div>
       <div class="top-title">仅在当前活动页面分享邀请成功的用户才算有效用户!</div>
       <div class="title" v-if="info">

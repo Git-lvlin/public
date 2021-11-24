@@ -21,6 +21,7 @@
         class="null-img"
         width="160px"
         height="160px"
+        lazy-load
         :src="getImgUrl('publicMobile/limit/record-null.png')"
       />
       <div class="null-text">暂无相关记录~</div>
@@ -30,19 +31,20 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage } from 'vant';
+import { Image as VanImage, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import teamApi from '@/apis/limit';
 Vue.use(VanImage);
+Vue.use(Lazyload);
 export default {
   data() {
     return {
       listData: [],
-      token: 'AQIAAAAAYZzR5hOAy9b071ABXtDQFXYAfrgICGIjVfnxL7Ax-oNzv7bwMszUPpGt7VE=',
+      token: null,
     };
   },
   async created () {
-    // await this.getUserInfo();
+    await this.getUserInfo();
     this.getRecords();
   },
   mounted() {
