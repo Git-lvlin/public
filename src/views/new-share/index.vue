@@ -113,8 +113,6 @@
 import Vue from 'vue';
 import { Image as VanImage, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl, meBaseUrl } from "@/constant/index";
-import { goToApp } from '@/utils/userInfo';
 import teamApi from '@/apis/newshare';
 Vue.use(VanImage);
 Vue.use(Popup);
@@ -161,7 +159,7 @@ export default {
         this.isWeixin = 1;
         return
       }
-      goToApp(meBaseUrl, '/web/transfer', '', this.$bridge);
+      window.location.href = `https://publicmobile.yeahgo.com/web/transfer`;
     },
     getInviteCode() {
       const {

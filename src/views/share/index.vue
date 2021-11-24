@@ -84,8 +84,6 @@
 import Vue from 'vue';
 import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl, meBaseUrl } from "@/constant/index";
-import { goToApp } from '@/utils/userInfo';
 Vue.use(VanImage);
 export default {
   props: {
@@ -119,7 +117,7 @@ export default {
         this.isWeixin = 1;
         return
       }
-      goToApp(meBaseUrl, '/web/transfer', '', this.$bridge);
+      window.location.href = `https://publicmobile.yeahgo.com/web/transfer`;
     },
     // nowUpdata() {
     //   const data = OpenInstall.parseUrlParams();///openinstall.js中提供的工具函数，解析url中的所有查询参数
