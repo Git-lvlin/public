@@ -24,7 +24,7 @@
             使用条件:<span class="sp1">{{info.useInfo}}</span>
           </div>
           <div class="fk">
-            <span class="sp1">有效期:</span>2020年11月15日 18:00至2021年11月16日 24:00{{info.time}}
+            <span class="sp1">有效期:</span>{{time}}
           </div>
           <div class="text">
             <span>距过期:</span>
@@ -55,9 +55,10 @@
           />
           <div class="item-right-box">
             <div class="item-title van-ellipsis">{{item.goodsName}}</div>
-            <div class="tag-box" v-for="(tagItem,tagIndex) in item.couponList" :key="tagIndex">
+            <div class="item-tag">{{item.couponList[0].couponDesc}}</div>
+            <!-- <div class="tag-box" v-for="(tagItem,tagIndex) in item.couponList" :key="tagIndex">
               <div class="item-tag" v-if="tagItem">{{tagItem.couponDesc}}</div>
-            </div>
+            </div> -->
             <div class="item-o-price">销售价:¥{{item.salePrice/100}}</div>
             <div class="item-price">到手价¥<span class="price-num">{{item.finalPrice/100}}</span></div>
           </div>
@@ -91,29 +92,23 @@ Vue.use(CountDown);
 export default {
   data() {
     return {
-      type: [
-        '会员领取券',
-        '系',
-        '',
-        '',
-      ],
-      cd: 112349,
-      info: null,
-      token: "AQIAAAAAYZ4OJBOAy9b071ABlNtbBFwVc3SOa8lTFmRdZJQLhnuBtqohtmvdv4wrBME=",
-      memberCouponId: 26,
+      cd: 99999,
+      info: {},
+      token: null,
+      memberCouponId: null,
     };
   },
   async created () {
-    // await this.getUserInfo();
-    this.getInfo();
+    await this.getUserInfo();
   },
   mounted() {
     this.getMemberCouponId();
+    this.getInfo();
   },
   methods: {
     getImgUrl,
     timestampToTime(timestamp) {
-      var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + '年';
       var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '月';
       var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + '日 ';
@@ -140,16 +135,18 @@ export default {
       })
     },
     getInfo() {
+      if (!this.memberCouponId || !this.token) {
+        return
+      }
       const param = {
         memberCouponId: this.memberCouponId
       }
       teamApi.getTimeLimit(param, {token: this.token}).then(res => {
         this.info = res.data
-        this.cd = this.info.deadlineTime - this.info.currentTime
-        const start = this.timestampToTime(this.info.activityStartTime)
-        const end = this.timestampToTime(this.info.activityEndTime)
-        this.time = start + '至' + end
-        this.info.issueType = this.type[this.info.issueType-1];
+        this.cd = res.data.deadlineTime - res.data.currentTime
+        const start = this.timestampToTime(res.data.activityStartTime)
+        const end = this.timestampToTime(res.data.activityEndTime)
+        this.time = start + '至' + end;
       })
     }
   },
@@ -301,6 +298,7 @@ export default {
         margin-bottom: 27px;
       }
       .item-tag {
+        margin-bottom: 27px;
         margin-right: 4px;
         padding: 0 6px;
         height: 13px;
@@ -353,6 +351,7 @@ export default {
 
 }
 .null-box {
+  margin-top: 12px;
   padding-top: 48px;
   width: 351px;
   height: 559px;

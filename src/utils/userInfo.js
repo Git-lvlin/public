@@ -99,8 +99,6 @@ export const setNavigationBar = (backgroundColor='', {type='share',selectedImage
   )
 }
 
-
-
 export const judgeVersionIsNew = (v) => {
   const breakPointVersion = 103
   if (v.includes('-')) {
