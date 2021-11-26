@@ -250,6 +250,7 @@ export default {
       })
     },
     btn() {
+      console.log('inviteCode', this.inviteCode)
       if (!this.token) {
         this.$router.push({
           path: '/web/new-share',
