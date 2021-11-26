@@ -219,17 +219,19 @@ export default {
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  async created () {
+  created () {
+
+  },
+  async mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode;
+    this.couponInviteId = query.couponInviteId;
     await this.getUserInfo();
     this.getInfo();
     this.getPopup();
     this.getGoodsList();
-  },
-  mounted() {
-    const {
-      query,
-    } = this.$router.history.current;
-    this.inviteCode = query.inviteCode
   },
   methods: {
     getImgUrl,
@@ -278,7 +280,7 @@ export default {
     },
     // 邀请列表
     lookRecord() {
-      goToApp(meBaseUrl, '/web/limit-list', '');
+      goToApp(meBaseUrl, `/web/limit-list?couponInviteId=${this.couponInviteId}`, '');
     },
     toShop(url) {
       goToApp(appBaseUrl, url);

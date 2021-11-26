@@ -43,11 +43,16 @@ export default {
       token: null,
     };
   },
-  async created () {
+  created () {
+
+  },
+  async mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.couponInviteId = query.couponInviteId;
     await this.getUserInfo();
     this.getRecords();
-  },
-  mounted() {
   },
   methods: {
     getImgUrl,
