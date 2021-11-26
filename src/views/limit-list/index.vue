@@ -43,15 +43,14 @@ export default {
       token: null,
     };
   },
-  created () {
-
+  async created () {
+    await this.getUserInfo();
   },
-  async mounted() {
+  mounted() {
     const {
       query,
     } = this.$router.history.current;
     this.couponInviteId = query.couponInviteId;
-    await this.getUserInfo();
     this.getRecords();
   },
   methods: {

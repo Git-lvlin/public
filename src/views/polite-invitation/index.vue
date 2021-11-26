@@ -219,16 +219,17 @@ export default {
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  created () {
-
+  async created () {
+    await this.getUserInfo();
   },
-  async mounted() {
+  mounted() {
     const {
       query,
     } = this.$router.history.current;
+    console.log('query', query)
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
-    await this.getUserInfo();
+    console.log('couponInviteId', this.couponInviteId)
     this.getInfo();
     this.getPopup();
     this.getGoodsList();
