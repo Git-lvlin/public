@@ -282,7 +282,7 @@ export default {
     },
     // 邀请列表
     lookRecord() {
-      goToApp(meBaseUrl, `/web/limit-list?couponInviteId=${this.couponInviteId}`, '');
+      goToApp(meBaseUrl, `/web/limit-list?couponInviteId=${this.couponInviteId}&_immersive=0`, '');
     },
     toShop(url) {
       goToApp(url);
