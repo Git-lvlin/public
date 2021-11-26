@@ -285,7 +285,7 @@ export default {
       goToApp(meBaseUrl, `/web/limit-list?couponInviteId=${this.couponInviteId}`, '');
     },
     toShop(url) {
-      goToApp(appBaseUrl, url);
+      goToApp(url);
     },
     timestampToTime(timestamp, type) {
       var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000

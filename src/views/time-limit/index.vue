@@ -123,7 +123,7 @@ export default {
       this.memberCouponId = query.memberCouponId
     },
     buy(url) {
-      goToApp(appBaseUrl, url);
+      goToApp(url);
     },
     getUserInfo() {
       return new Promise((resolve) => {
