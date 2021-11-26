@@ -219,10 +219,11 @@ export default {
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
-  async created () {
-    await this.getUserInfo();
+  created () {
+    
   },
-  mounted() {
+  async mounted() {
+    await this.getUserInfo();
     const {
       query,
     } = this.$router.history.current;

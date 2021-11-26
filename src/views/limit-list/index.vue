@@ -43,10 +43,11 @@ export default {
       token: null,
     };
   },
-  async created () {
-    await this.getUserInfo();
+  created () {
+    
   },
-  mounted() {
+  async mounted() {
+    await this.getUserInfo();
     const {
       query,
     } = this.$router.history.current;
