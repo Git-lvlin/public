@@ -273,7 +273,7 @@ export default {
       }
       // 邀请好友
       share({
-        shareObjectNo: 15,
+        shareObjectNo: this.couponInviteId,
         contentType: 10,
         paramId: 12,
         shareType: 3,

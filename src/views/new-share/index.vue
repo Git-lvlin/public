@@ -141,15 +141,12 @@ export default {
     }
   },
   mounted() {
-    this.getInviteCode()
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode
   },
   methods: {
-    getInviteCode() {
-      const {
-        query,
-      } = this.$router.history.current;
-      this.inviteCode = query.inviteCode
-    },
     focus() {
       this.flag = 0
     },
