@@ -118,11 +118,6 @@
         is-link
         to="/web/404"
       />
-      <van-cell
-        title="下载"
-        is-link
-        to="/web/download"
-      />
     </van-cell-group>
   </div>
 </template>

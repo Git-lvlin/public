@@ -214,11 +214,27 @@ const routes = [
     }
   },
   {
-    path: '/web/download',
-    name: 'DownLoad',
+    path: '/web/transfer',
+    name: 'Rransfer',
     component: () => import('@/views/download'),
     meta: {
-      title: '下载',
+      title: '',
+    }
+  },
+  {
+    path: '/web/download',
+    name: 'DownLoad',
+    component: () => import('@/views/transfer'),
+    meta: {
+      title: '',
+    }
+  },
+  {
+    path: '/web/bingous',
+    name: 'BinGous',
+    component: () => import('@/views/bingous'),
+    meta: {
+      title: '协议',
     }
   },
   {

@@ -7,8 +7,8 @@
     >
       <div class="button" @click="download">立即下载</div>
     </div>
-    <div class="title"><span class="red">约购</span>APP 1件也享批发价</div>
-    <div class="subtitle">有温度的 低价电商平台</div>
+    <div class="title"><span class="red">约购</span>APP 约着买 更便宜</div>
+    <div class="subtitle">物美价廉有温度</div>
     <van-image
       class="border"
       width="26px"
@@ -23,8 +23,8 @@
           :src="getImgUrl('publicMobile/share/img1.png')"
         />
         <div class="right-box">
-          <p class="p1">约着买 <span class="red">更舒心</span></p>
-          <p class="p2">厂家直供 正品保障</p>
+          <p class="p1">约着买 <span class="red">更省心</span></p>
+          <p class="p2">品牌直供 质量保障</p>
         </div>
       </div>
       <div class="item">
@@ -34,11 +34,11 @@
           :src="getImgUrl('publicMobile/share/img2.png')"
         />
         <div class="right-box">
-          <p class="p1">开新店 <span class="red">零成本</span></p>
-          <p class="p2">海量商品 一键代发</p>
+          <p class="p1">轻创业 <span class="red">低成本</span></p>
+          <p class="p2">约购模式 创富首选</p>
         </div>
       </div>
-      <div class="item">
+      <!-- <div class="item">
         <van-image
           width="60px"
           height="60px"
@@ -48,16 +48,15 @@
           <p class="p1">邻里互动 <span class="red">更高效</span></p>
           <p class="p2">即时分享新动态 邻里更亲密</p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
-  <div class="container" v-else>
+  <div class="container2" v-else>
     <van-image
       class="wxtx"
       width="100%"
-      :src="getImgUrl('publicMobile/share/wxtx.png')"
+      :src="getImgUrl('publicMobile/common/transfer-wx.png')"
     />
-    <div class="mark"></div>
   </div>
 </template>
 
@@ -69,7 +68,7 @@ Vue.use(VanImage);
 export default {
   data() {
     return {
-      isWeixin: 0
+      isWeixin: 0,
     };
   },
   created () {
@@ -101,12 +100,18 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.container2 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #FFFCFC;
+  padding-bottom: 30px;
+}
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: #ffffff;
-  padding-bottom: 111px;
   .head {
     width:100%;
     height: 450px;
@@ -175,6 +180,7 @@ export default {
     margin: 0 auto;
   }
   .detail {
+    padding-bottom: 40px;
     margin-top: 23px;
     display: flex;
     flex-direction: column;
