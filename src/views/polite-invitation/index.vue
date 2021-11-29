@@ -223,12 +223,12 @@ export default {
     
   },
   async mounted() {
-    await this.getUserInfo();
     const {
       query,
     } = this.$router.history.current;
-    console.log('query', query)
+    console.log('query-po', query)
     this.inviteCode = query.inviteCode;
+    await this.getUserInfo();
     this.couponInviteId = query.couponInviteId;
     console.log('couponInviteId', this.couponInviteId)
     this.getInfo();
