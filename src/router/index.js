@@ -268,6 +268,14 @@ const routes = [
     meta: {
       title: '',
     }
+  },
+  {
+    path: '/web/star',
+    name: 'Star',
+    component: () => import('@/views/star'),
+    meta: {
+      title: '双心',
+    }
   }
 ];
 
