@@ -26,6 +26,7 @@
       />
       <div class="null-text">暂无相关记录~</div>
     </div>
+    <div class="ft">提示：获得的红包可在「约购」APP"我的-红包"页面中查看</div>
   </div>
 </template>
 
@@ -93,6 +94,20 @@ export default {
   padding-left: 16px;
   display: flex;
   flex-direction: column;
+}
+.ft {
+  padding-top: 10px;
+  padding-bottom: 44px;
+  position: fixed;
+  width: 100%;
+  height: 17px;
+  background-color: #FFFFFF;
+  text-align: center;
+  font-size: 12px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  line-height: 17px;
 }
 .item {
   display: flex;
