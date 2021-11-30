@@ -102,7 +102,11 @@ export default {
     
   },
   async mounted() {
-    this.getMemberCouponId();
+    const {
+      query,
+    } = this.$router.history.current;
+    this.memberCouponId = query.memberCouponId
+    console.log('this.memberCouponId', this.memberCouponId)
     await this.getUserInfo();
     this.getInfo();
   },
@@ -118,10 +122,7 @@ export default {
       return Y+M+D+h+m
     },
     getMemberCouponId() {
-      const {
-        query,
-      } = this.$router.history.current;
-      this.memberCouponId = query.memberCouponId
+
     },
     buy(url) {
       goToApp(url);
@@ -139,6 +140,7 @@ export default {
       const param = {
         memberCouponId: this.memberCouponId
       }
+      console.log('param', param, this.token)
       teamApi.getTimeLimit(param, {token: this.token}).then(res => {
         this.info = res.data
         this.cd = res.data.deadlineTime - res.data.currentTime
