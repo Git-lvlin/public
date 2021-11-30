@@ -92,6 +92,7 @@ export default {
 }
 .box {
   padding-left: 16px;
+  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
 }
@@ -99,6 +100,7 @@ export default {
   padding-top: 10px;
   padding-bottom: 44px;
   position: fixed;
+  bottom: 0;
   width: 100%;
   height: 17px;
   background-color: #FFFFFF;
