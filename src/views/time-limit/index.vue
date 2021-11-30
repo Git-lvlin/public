@@ -62,7 +62,7 @@
             <div class="item-o-price">销售价:¥{{item.salePrice/100}}</div>
             <div class="item-price">到手价¥<span class="price-num">{{item.finalPrice/100}}</span></div>
           </div>
-          <div class="item-btn" @click="buy">抢购</div>
+          <div class="item-btn" @click="buy(item.actionUrl)">抢购</div>
         </div>
       </div>
       <div class="null-box" v-else>
