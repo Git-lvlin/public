@@ -47,11 +47,13 @@ export default {
     
   },
   async mounted() {
-    await this.getUserInfo();
     const {
       query,
     } = this.$router.history.current;
     this.couponInviteId = query.couponInviteId;
+    await this.getUserInfo();
+    console.log('couponInviteId', this.couponInviteId)
+    console.log('token', this.token)
     this.getRecords();
   },
   methods: {
