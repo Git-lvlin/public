@@ -236,6 +236,14 @@ const routes = [
     meta: {
       title: '协议',
     }
+  },
+  {
+    path: '/web/star',
+    name: 'Star',
+    component: () => import('@/views/star'),
+    meta: {
+      title: '双心',
+    }
   }
 ];
 
