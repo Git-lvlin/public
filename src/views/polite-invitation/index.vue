@@ -223,14 +223,14 @@ export default {
     
   },
   async mounted() {
+    console.log('wwww', window.location.href)
     const {
       query,
     } = this.$router.history.current;
     console.log('query-po', query)
     this.inviteCode = query.inviteCode;
-    await this.getUserInfo();
     this.couponInviteId = query.couponInviteId;
-    console.log('couponInviteId', this.couponInviteId)
+    await this.getUserInfo();
     this.getInfo();
     this.getPopup();
     this.getGoodsList();
