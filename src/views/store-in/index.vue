@@ -155,6 +155,7 @@
         <div class="r-box">
           <div class="li"><span class="sort">01</span>社区集约 免费加盟</div>
           <div class="li"><span class="sort">02</span>专业服务 无忧入驻</div>
+          <div class="li"><span class="sort">03</span>秒建超级群 最高2000人</div>
         </div>
       </div>
     </div>
@@ -384,7 +385,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 153px;
+      width: 160px;
       height: 96px;
       margin-left: 18px;
       .li {
