@@ -51,7 +51,7 @@ export default {
   .btn {
     position: absolute;
     top: 942px;
-    right: 69px;
+    right: 92px;
     width: 88px;
     height: 80px;
   }
