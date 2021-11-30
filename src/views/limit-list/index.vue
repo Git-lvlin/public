@@ -70,7 +70,7 @@ export default {
     // 获取邀请记录
     getRecords() {
       const param = {
-        couponInviteId: 15,
+        couponInviteId: this.couponInviteId,
         size: 99,
         next: 0,
       }

@@ -98,11 +98,12 @@ export default {
       memberCouponId: null,
     };
   },
-  async created () {
-    await this.getUserInfo();
+  created () {
+    
   },
-  mounted() {
+  async mounted() {
     this.getMemberCouponId();
+    await this.getUserInfo();
     this.getInfo();
   },
   methods: {
@@ -135,9 +136,6 @@ export default {
       })
     },
     getInfo() {
-      if (!this.memberCouponId || !this.token) {
-        return
-      }
       const param = {
         memberCouponId: this.memberCouponId
       }
