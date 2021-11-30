@@ -242,7 +242,7 @@ const routes = [
     name: 'Star',
     component: () => import('@/views/star'),
     meta: {
-      title: '双心',
+      title: '双心节',
     }
   }
 ];
