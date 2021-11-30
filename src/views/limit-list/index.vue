@@ -124,7 +124,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 253px;
+  width: 240px;
 }
 .title {
   margin-bottom: 3px;
@@ -152,6 +152,7 @@ export default {
   font-weight: 500;
   color: #EF8537;
   line-height: 20px;
+  text-align: left;
 }
 .user-img {
   width: 41px;
