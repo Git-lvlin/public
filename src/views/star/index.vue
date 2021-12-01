@@ -5,7 +5,7 @@
       width="100%"
       height="100%"
       lazy-load
-      :src="getImgUrl('publicMobile/star/yasuotup.jpg')"
+      :src="getImgUrl('publicMobile/star/yasuotup.jpg?v=1')"
     />
     <van-image
       class="btn"
