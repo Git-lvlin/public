@@ -5,7 +5,7 @@
       width="100%"
       height="100%"
       lazy-load
-      :src="getImgUrl('publicMobile/star/bg.png')"
+      :src="getImgUrl('publicMobile/star/yasuotup.jpg')"
     />
     <van-image
       class="btn"
@@ -50,8 +50,8 @@ export default {
   }
   .btn {
     position: absolute;
-    top: 942px;
-    right: 92px;
+    top: 795.75px;
+    right: 20.75px;
     width: 88px;
     height: 80px;
   }
