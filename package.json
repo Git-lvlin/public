@@ -27,6 +27,7 @@
     "swiper": "5.x",
     "vant": "2.12.1",
     "vconsole": "^3.7.0",
+    "video.js": "^7.17.0",
     "vue": "^2.6.12",
     "vue-awesome-swiper": "^4.1.1",
     "vue-pdf": "^4.3.0",

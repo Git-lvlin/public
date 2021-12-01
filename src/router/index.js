@@ -244,6 +244,14 @@ const routes = [
     meta: {
       title: '双心节',
     }
+  },
+  {
+    path: '/web/video',
+    name: 'Video',
+    component: () => import('@/views/video'),
+    meta: {
+      title: '',
+    }
   }
 ];
 

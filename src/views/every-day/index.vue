@@ -44,7 +44,7 @@
           finished-text="没有更多了"
           @load="onBottomReach"
         >
-          <list v-for="item in list" :key="item" :good="item" />
+          <list v-for="item in list" :key="item" :good="item" :inviteCode="inviteCode" :hasToken="token"/>
         </van-list>
       </div>
     </div>
@@ -70,6 +70,10 @@ import { Image as VanImage, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, L
 import { getImgUrl } from '@/utils/tools';
 import list from './components/list';
 import teamApi from '@/apis/everyday';
+import {
+  goToApp,
+  setNavigationBar,
+} from '@/utils/userInfo';
 Vue.use(Field);
 Vue.use(Loading);
 Vue.use(VanImage);
@@ -117,16 +121,40 @@ export default {
       ],
       show: false,
       indexData: null,
-      token: null,
+      token: false,
       ruleText: null,
+      inviteCode: '',
     }
   },
   components: {
     list,
   },
   async created () {
+    const rightButton = {
+      type: 'share',
+      object: {
+        contentType: 8,
+        paramId: 10,
+        shareType: 3,
+        sourceType: 8,
+      }
+    };
+    const titleLabel = {
+      titleLabelColor: '', // 暂时不会传
+      font: '', // 暂时不会传
+      text: '', // 默认documenttitle
+    };
+    setNavigationBar('#FFFFFF', rightButton, titleLabel);
     await this.getUserInfo()
     this.getIndex()
+  },
+  mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    if (query && query.inviteCode) {
+      this.inviteCode = query.inviteCode
+    }
     this.getListData()
   },
   methods: {
@@ -192,6 +220,16 @@ export default {
       })
     },
     popupSwitch() {
+      console.log('this.token', this.token)
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       this.show = true
     },
     onBottomReach() {
@@ -210,8 +248,6 @@ export default {
         this.loading = false;
       });
     },
-  },
-  mounted() {
   },
 }
 
