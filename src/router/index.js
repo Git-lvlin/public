@@ -276,6 +276,14 @@ const routes = [
     meta: {
       title: '双心节',
     }
+  },
+  {
+    path: '/web/action-center',
+    name: 'ActionCenter',
+    component: () => import('@/views/action-center'),
+    meta: {
+      title: '活动中心',
+    }
   }
 ];
 
