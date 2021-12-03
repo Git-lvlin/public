@@ -252,6 +252,14 @@ const routes = [
     meta: {
       title: '',
     }
+  },
+  {
+    path: '/web/xy',
+    name: 'Xy',
+    component: () => import('@/views/xy'),
+    meta: {
+      title: '协议',
+    }
   }
 ];
 
