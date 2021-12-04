@@ -25,7 +25,7 @@
               <span class="left-text2">{{info.freeAmount/100}}</span>
               <span class="left-text3">(抵扣红包)</span>
             </div>
-            <div class="left-text4">{{time}}</div>
+            <div class="left-text4">使用期限:{{time}}</div>
           </div>
           <div class="right-red-box"
             :style="{
@@ -102,7 +102,7 @@ export default {
       var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
       var Y = date.getFullYear() + '.';
       var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
-      var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + '日 ';
+      var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate());
       return Y+M+D
     },
     getMemberCouponId() {
