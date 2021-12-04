@@ -6,7 +6,36 @@
   >
     <div class="content">
       <div class="top-box">
-        <div class="top-left-box">
+        <van-image
+          class="top-img-icon"
+          width="351px"
+          height="32px"
+          lazy-load
+          :src="getImgUrl('publicMobile/limit/top-img.png')"
+        />
+        <div class="top-img-text">（红包仅在此页面有效）</div>
+        <div class="top-red-box">
+          <div class="left-red-box"
+            :style="{
+              'background-image': `url('${getImgUrl('publicMobile/limit/red-left.png')}')`
+            }"
+          >
+            <div>
+              <span class="left-text1">¥ </span>
+              <span class="left-text2">{{info.freeAmount/100}}</span>
+              <span class="left-text3">(抵扣红包)</span>
+            </div>
+            <div class="left-text4">{{time}}</div>
+          </div>
+          <div class="right-red-box"
+            :style="{
+              'background-image': `url('${getImgUrl('publicMobile/limit/red-right.png')}')`
+            }"
+          >
+            <div class="right-text">限时红包</div>
+          </div>
+        </div>
+        <!-- <div class="top-left-box">
           <van-image
             class="top-img"
             width="101px"
@@ -42,7 +71,7 @@
               </van-count-down>
             </span>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="item-box" v-if="info.goodsList">
         <div class="item" v-for="(item, index) in info.goodsList" :key="index">
@@ -170,90 +199,159 @@ export default {
   align-items: center;
 }
 .top-box {
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   width: 351px;
-  height: 144px;
+  height: 131px;
   background: #FFFFFF;
   border-radius: 12px;
   overflow: hidden;
-  .top-left-box {
-    margin-right: 19px;
-    position: relative;
-    width: 101px;
-    height: 120px;
-    .top-img {
-      position: absolute;
-      top: 0;
-      width: 101px;
-      height: 120px;
-      z-index: 1;
-    }
-    .left-content {
-      position: absolute;
-      top: 0;
-      z-index: 2;
+  .top-img-icon {
+    margin-bottom: 20px;
+    width: 351px;
+    height: 32px;
+    overflow: hidden;
+  }
+  .top-img-text {
+    position: absolute;
+    top: 8px;
+    left: 93px;
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #EC6B4E;
+  }
+  .top-red-box {
+    display: flex;
+    justify-content: center;
+    .left-red-box {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      width: 195px;
+      height: 62px;
+      background-size: 195px 62px;
+      .left-text1 {
+        padding-left: 16px;
+        font-size: 16px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+      }
+      .left-text2 {
+        font-size: 32px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+      }
+      .left-text3 {
+        margin-left: 4px;
+        font-size: 12px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFEDC5;
+      }
+      .left-text4 {
+        margin-top: 1px;
+        padding-left: 16px;
+        font-size: 11px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.85);
+      }
+    }
+    .right-red-box {
+      display: flex;
       align-items: center;
-      width: 100%;
-      height: 100%;
-      .left-price {
-        height: 56px;
-        font-size: 40px;
+      justify-content: flex-end;
+      width: 124px;
+      height: 62px;
+      background-size: 124px 62px;
+      .right-text {
+        margin-right: 18px;
+        font-size: 16px;
         font-family: PingFangSC-Medium, PingFang SC;
         font-weight: 500;
-        color: #EB483F;
-        line-height: 56px;
-        .lp {
-          font-size: 16px;
-        }
-      }
-      .left-text {
-        margin-top: 20px;
-        height: 20px;
-        font-size: 14px;
-        font-family: PingFangSC-Medium, PingFang SC;
-        font-weight: 500;
-        color: #FCEFC5;
-        line-height: 20px;
+        color: #FFFFFF;
       }
     }
+  }
+  // .top-left-box {
+  //   margin-right: 19px;
+  //   position: relative;
+  //   width: 101px;
+  //   height: 120px;
+  //   .top-img {
+  //     position: absolute;
+  //     top: 0;
+  //     width: 101px;
+  //     height: 120px;
+  //     z-index: 1;
+  //   }
+  //   .left-content {
+  //     position: absolute;
+  //     top: 0;
+  //     z-index: 2;
+  //     display: flex;
+  //     flex-direction: column;
+  //     justify-content: center;
+  //     align-items: center;
+  //     width: 100%;
+  //     height: 100%;
+  //     .left-price {
+  //       height: 56px;
+  //       font-size: 40px;
+  //       font-family: PingFangSC-Medium, PingFang SC;
+  //       font-weight: 500;
+  //       color: #EB483F;
+  //       line-height: 56px;
+  //       .lp {
+  //         font-size: 16px;
+  //       }
+  //     }
+  //     .left-text {
+  //       margin-top: 20px;
+  //       height: 20px;
+  //       font-size: 14px;
+  //       font-family: PingFangSC-Medium, PingFang SC;
+  //       font-weight: 500;
+  //       color: #FCEFC5;
+  //       line-height: 20px;
+  //     }
+  //   }
 
-  }
-  .top-right-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    .fk {
-      margin: 4px 0;
-      width: 200px;
-      height: 40px;
-      font-size: 14px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #999999;
-      line-height: 20px;
-      overflow: hidden;
-      .sp1 {
-        margin-right: 6px;
-        color: #666666;
-      }
-    }
-    .text {
-      font-size: 14px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
-      color: #666666;
-      line-height: 20px;
-      .sp1 {
-        margin-left: 6px;
-        color: #999999;
-      }
-    }
-  }
+  // }
+  // .top-right-box {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: flex-start;
+  //   .fk {
+  //     margin: 4px 0;
+  //     width: 200px;
+  //     height: 40px;
+  //     font-size: 14px;
+  //     font-family: PingFangSC-Regular, PingFang SC;
+  //     font-weight: 400;
+  //     color: #999999;
+  //     line-height: 20px;
+  //     overflow: hidden;
+  //     .sp1 {
+  //       margin-right: 6px;
+  //       color: #666666;
+  //     }
+  //   }
+  //   .text {
+  //     font-size: 14px;
+  //     font-family: PingFangSC-Regular, PingFang SC;
+  //     font-weight: 400;
+  //     color: #666666;
+  //     line-height: 20px;
+  //     .sp1 {
+  //       margin-left: 6px;
+  //       color: #999999;
+  //     }
+  //   }
+  // }
 }
 .item-box {
   display: flex;
