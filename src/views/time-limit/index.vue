@@ -35,43 +35,6 @@
             <div class="right-text">限时红包</div>
           </div>
         </div>
-        <!-- <div class="top-left-box">
-          <van-image
-            class="top-img"
-            width="101px"
-            height="120px"
-            lazy-load
-            :src="getImgUrl('publicMobile/limit/red-box.png')"
-          />
-          <div class="left-content">
-            <div class="left-price"><span class="lp">¥</span>{{info.freeAmount/100}}</div>
-            <div class="left-text">抵扣红包</div>
-          </div>
-        </div>
-        <div class="top-right-box">
-          <div class="text">
-            使用条件:<span class="sp1">{{info.useInfo}}</span>
-          </div>
-          <div class="fk">
-            <span class="sp1">有效期:</span>{{time}}
-          </div>
-          <div class="text">
-            <span>距过期:</span>
-            <span class="dc">
-              <van-count-down :time="cd">
-                <template #default="timeData">
-                  <span class="block">{{ timeData.days }}</span>
-                  天
-                  <span class="block">{{ timeData.hours }}</span>
-                  <span class="colon">:</span>
-                  <span class="block">{{ timeData.minutes }}</span>
-                  <span class="colon">:</span>
-                  <span class="block">{{ timeData.seconds }}</span>
-                </template>
-              </van-count-down>
-            </span>
-          </div>
-        </div> -->
       </div>
       <div class="item-box" v-if="info.goodsList">
         <div class="item" v-for="(item, index) in info.goodsList" :key="index">
@@ -85,9 +48,6 @@
           <div class="item-right-box">
             <div class="item-title van-ellipsis">{{item.goodsName}}</div>
             <div class="item-tag">{{item.couponList[0].couponDesc}}</div>
-            <!-- <div class="tag-box" v-for="(tagItem,tagIndex) in item.couponList" :key="tagIndex">
-              <div class="item-tag" v-if="tagItem">{{tagItem.couponDesc}}</div>
-            </div> -->
             <div class="item-o-price">销售价:¥{{item.salePrice/100}}</div>
             <div class="item-price">到手价¥<span class="price-num">{{item.finalPrice/100}}</span></div>
           </div>
@@ -110,14 +70,12 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Lazyload, CountDown } from 'vant';
+import { Image as VanImage, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import teamApi from '@/apis/limit';
 import { goToApp } from '@/utils/userInfo';
-import { appBaseUrl, meBaseUrl } from "@/constant/index";
 Vue.use(Lazyload);
 Vue.use(VanImage);
-Vue.use(CountDown);
 export default {
   data() {
     return {
@@ -135,7 +93,6 @@ export default {
       query,
     } = this.$router.history.current;
     this.memberCouponId = query.memberCouponId
-    console.log('this.memberCouponId', this.memberCouponId)
     await this.getUserInfo();
     this.getInfo();
   },
@@ -143,12 +100,10 @@ export default {
     getImgUrl,
     timestampToTime(timestamp) {
       var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      var Y = date.getFullYear() + '年';
-      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '月';
+      var Y = date.getFullYear() + '.';
+      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
       var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + '日 ';
-      var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
-      var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes());
-      return Y+M+D+h+m
+      return Y+M+D
     },
     getMemberCouponId() {
 
@@ -169,13 +124,12 @@ export default {
       const param = {
         memberCouponId: this.memberCouponId
       }
-      console.log('param', param, this.token)
       teamApi.getTimeLimit(param, {token: this.token}).then(res => {
         this.info = res.data
         this.cd = res.data.deadlineTime - res.data.currentTime
         const start = this.timestampToTime(res.data.activityStartTime)
         const end = this.timestampToTime(res.data.activityEndTime)
-        this.time = start + '至' + end;
+        this.time = start + '-' + end;
       })
     }
   },
@@ -276,82 +230,6 @@ export default {
       }
     }
   }
-  // .top-left-box {
-  //   margin-right: 19px;
-  //   position: relative;
-  //   width: 101px;
-  //   height: 120px;
-  //   .top-img {
-  //     position: absolute;
-  //     top: 0;
-  //     width: 101px;
-  //     height: 120px;
-  //     z-index: 1;
-  //   }
-  //   .left-content {
-  //     position: absolute;
-  //     top: 0;
-  //     z-index: 2;
-  //     display: flex;
-  //     flex-direction: column;
-  //     justify-content: center;
-  //     align-items: center;
-  //     width: 100%;
-  //     height: 100%;
-  //     .left-price {
-  //       height: 56px;
-  //       font-size: 40px;
-  //       font-family: PingFangSC-Medium, PingFang SC;
-  //       font-weight: 500;
-  //       color: #EB483F;
-  //       line-height: 56px;
-  //       .lp {
-  //         font-size: 16px;
-  //       }
-  //     }
-  //     .left-text {
-  //       margin-top: 20px;
-  //       height: 20px;
-  //       font-size: 14px;
-  //       font-family: PingFangSC-Medium, PingFang SC;
-  //       font-weight: 500;
-  //       color: #FCEFC5;
-  //       line-height: 20px;
-  //     }
-  //   }
-
-  // }
-  // .top-right-box {
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: flex-start;
-  //   .fk {
-  //     margin: 4px 0;
-  //     width: 200px;
-  //     height: 40px;
-  //     font-size: 14px;
-  //     font-family: PingFangSC-Regular, PingFang SC;
-  //     font-weight: 400;
-  //     color: #999999;
-  //     line-height: 20px;
-  //     overflow: hidden;
-  //     .sp1 {
-  //       margin-right: 6px;
-  //       color: #666666;
-  //     }
-  //   }
-  //   .text {
-  //     font-size: 14px;
-  //     font-family: PingFangSC-Regular, PingFang SC;
-  //     font-weight: 400;
-  //     color: #666666;
-  //     line-height: 20px;
-  //     .sp1 {
-  //       margin-left: 6px;
-  //       color: #999999;
-  //     }
-  //   }
-  // }
 }
 .item-box {
   display: flex;
