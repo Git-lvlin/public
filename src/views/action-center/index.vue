@@ -56,10 +56,10 @@ export default {
       let url = '';
       switch(actionType) {
         case 1:
-          url=`/web/bind-box?couponInviteId=${id}`
+          url=`/web/polite-invitation?couponInviteId=${id}`
           break
         case 2:
-          url=`/web/polite-invitation?couponInviteId=${id}`
+          url=`/web/bind-box?couponInviteId=${id}`
       }
       goToApp(meBaseUrl, url)
     },
