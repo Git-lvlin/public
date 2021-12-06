@@ -600,6 +600,9 @@ export default {
           if (blindboxStatus == 2) {
             Dialog({ title: `活动未开始`,message: `活动时间：${this.activityStartTime}-${this.activityEndTime}` });
           }
+          if (blindboxStatus == 4) {
+            Dialog({ message: '活动已终止，谢谢您的参与。' });
+          }
         }
       })
     },
