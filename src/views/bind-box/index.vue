@@ -383,9 +383,22 @@ export default {
     box,
   },
   async created () {
+
+    await this.getUserInfo();
+    this.init();
+    this.sameDayHasSgin();
+  },
+  async mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode;
+    this.couponInviteId = query.couponInviteId;
+    console.log('query', query);
     const rightButton = {
       type: 'share',
       object: {
+        shareObjectNo: this.couponInviteId,
         contentType: 3,
         paramId: 7,
         shareType: 3,
@@ -398,17 +411,6 @@ export default {
       text: '', // 默认documenttitle
     };
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
-    await this.getUserInfo();
-    this.init();
-    this.sameDayHasSgin();
-  },
-  async mounted() {
-    const {
-      query,
-    } = this.$router.history.current;
-    this.inviteCode = query.inviteCode
-    this.couponInviteId = query.couponInviteId;
-    console.log('query', query)
     await this.loadImg()
     this.interval();
   },
