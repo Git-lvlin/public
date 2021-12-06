@@ -52,7 +52,7 @@ export default {
   methods: {
     getImgUrl,
     goDetail(item) {
-      const {actionType, id} = item;
+      const { actionType, id } = item;
       let url = '';
       switch(actionType) {
         case 1:
@@ -61,6 +61,7 @@ export default {
         case 2:
           url=`/web/bind-box?couponInviteId=${id}`
       }
+      console.log('url', url)
       goToApp(meBaseUrl, url)
     },
     timestampToTime(timestamp) {

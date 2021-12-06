@@ -408,6 +408,7 @@ export default {
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode
     this.couponInviteId = query.couponInviteId;
+    console.log('query', query)
     await this.loadImg()
     this.interval();
   },
