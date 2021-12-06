@@ -52,17 +52,19 @@ export default {
   methods: {
     getImgUrl,
     goDetail(item) {
+      console.log('item', item)
       const { actionType, id } = item;
       let url = '';
+      const param = `?couponInviteId=${id}`
       switch(actionType) {
         case 1:
-          url=`/web/polite-invitation?couponInviteId=${id}`
+          url='/web/polite-invitation'
           break
         case 2:
-          url=`/web/bind-box?couponInviteId=${id}`
+          url='/web/bind-box'
       }
-      console.log('url', url)
-      goToApp(meBaseUrl, url)
+      console.log('param', param)
+      goToApp(meBaseUrl, url, param)
     },
     timestampToTime(timestamp) {
       var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
