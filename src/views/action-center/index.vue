@@ -81,6 +81,9 @@ export default {
       teamApi.getActionList(param).then(res => {
         this.list = res.data.records.map((item) => {
           item.time = this.timestampToTime(item.activityStartTime) + ' 至 ' + this.timestampToTime(item.activityEndTime)
+          if (!item.bannerImage) {
+            item.bannerImage = getImgUrl('publicMobile/center/banner.png');
+          }
           return item
         })
         console.log('list', this.list)
