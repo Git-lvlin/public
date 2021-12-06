@@ -415,8 +415,10 @@ export default {
     getImgUrl,
     getTask(num) {
       const param = {
-        configId: this.couponInviteId,
         type: num,
+      }
+      if (this.couponInviteId) {
+        param.configId = this.couponInviteId
       }
       teamApi.getTask(param, {token: this.token}).then(() => {
         Toast('领取成功');
@@ -562,7 +564,11 @@ export default {
       return Y+M+D+h+m;
     },
     init() {
-      teamApi.getTaskInfo({configId: this.couponInviteId}, {token: this.token}).then((res) => {
+      const param = {}
+      if (this.couponInviteId) {
+        param.configId = this.couponInviteId
+      }
+      teamApi.getTaskInfo(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
           const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
           this.prizeNotice = prizeNotice
@@ -602,7 +608,9 @@ export default {
       const param = {
         size: 100,
         next: 0,
-        configId: this.couponInviteId,
+      }
+      if (this.couponInviteId) {
+        param.configId = this.couponInviteId
       }
       if (type !== 1) {
         param.transferType = type - 1
