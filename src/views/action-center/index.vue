@@ -3,7 +3,7 @@
     <div class="box">
       <div class="item-box" v-for="(item, index) in list" :key="index" @click="goDetail(item)">
         <van-image
-          class="img"
+          class="banner-img"
           width="335px"
           height="142px"
           lazy-load
@@ -124,14 +124,14 @@ export default {
   height: 217px;
   background: #FFFFFF;
   border-radius: 8px;
-}
-.img {
-  margin-top: 8px;
-  margin-bottom: 12px;
-  width: 335px;
-  height: 142px;
-  border-radius: 8px 8px 0px 0px;
-  overflow: hidden;
+  .banner-img {
+    margin-top: 8px;
+    margin-bottom: 12px;
+    width: 335px;
+    height: 142px;
+    border-radius: 8px 8px 0px 0px;
+    overflow: hidden;
+  }
 }
 .title {
   padding-left: 16px;
