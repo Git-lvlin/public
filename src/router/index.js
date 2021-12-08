@@ -260,6 +260,14 @@ const routes = [
     meta: {
       title: '协议',
     }
+  },
+  {
+    path: '/web/shop-pk',
+    name: 'ShopPk',
+    component: () => import('@/views/shop-pk'),
+    meta: {
+      title: '店主PK赛排行榜',
+    }
   }
 ];
 
