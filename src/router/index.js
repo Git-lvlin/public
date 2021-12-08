@@ -284,6 +284,22 @@ const routes = [
     meta: {
       title: '活动中心',
     }
+  },
+  {
+    path: '/web/xy',
+    name: 'Xy',
+    component: () => import('@/views/xy'),
+    meta: {
+      title: '协议',
+    }
+  },
+  {
+    path: '/web/intensive',
+    name: 'Intensive',
+    component: () => import('@/views/intensive'),
+    meta: {
+      title: '集约是什么',
+    }
   }
 ];
 
