@@ -260,6 +260,14 @@ const routes = [
     meta: {
       title: '协议',
     }
+  },
+  {
+    path: '/web/intensive',
+    name: 'Intensive',
+    component: () => import('@/views/intensive'),
+    meta: {
+      title: '集约是什么',
+    }
   }
 ];
 
