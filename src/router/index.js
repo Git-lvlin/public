@@ -300,6 +300,14 @@ const routes = [
     meta: {
       title: '集约是什么',
     }
+  },
+  {
+    path: '/web/shop-pk',
+    name: 'ShopPk',
+    component: () => import('@/views/shop-pk'),
+    meta: {
+      title: '店主PK赛排行榜',
+    }
   }
 ];
 
