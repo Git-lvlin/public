@@ -375,6 +375,7 @@ export default {
       shareData: null,
       inviteCode: null,
       couponInviteId: null,
+      clicked:false,
     };
   },
   components: {
@@ -417,6 +418,10 @@ export default {
   methods: {
     getImgUrl,
     getTask(num) {
+      if (this.clicked) {
+        return
+      }
+      this.clicked = true
       const param = {
         type: num,
       }
@@ -424,6 +429,8 @@ export default {
         param.configId = this.couponInviteId
       }
       teamApi.getTask(param, {token: this.token}).then(() => {
+        this.clicked = false
+        this.init();
         Toast('领取成功');
       })
     },
@@ -771,14 +778,8 @@ export default {
         position: absolute;
         animation: 14s rowup linear infinite normal;
       }
-      .msg {
-        // position: absolute;
-        // animation: 10s rowup linear infinite normal;
-      }
     }
   }
-
-
 
   .lead-box {
     position: absolute;
