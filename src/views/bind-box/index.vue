@@ -384,6 +384,7 @@ export default {
     box,
   },
   async created () {
+
     await this.getUserInfo();
     this.init();
     this.sameDayHasSgin();
@@ -394,6 +395,7 @@ export default {
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
+    console.log('query', query);
     const rightButton = {
       type: 'share',
       object: {
@@ -1014,7 +1016,7 @@ export default {
       margin: 0 auto;
       margin-bottom: 18px;
       width: 345px;
-      height: 230px;
+      height: 215px;
       background: linear-gradient(180deg, #D63C24 0%, #C3331D 100%);
       border-radius: 8px;
     }
@@ -1045,7 +1047,7 @@ export default {
     .task-content {
       margin: 13px auto;
       width: 306px;
-      height: 85px;
+      height: 100px;
       color: #FBE5C4;
       font-size: 14px;
       line-height: 19px;
