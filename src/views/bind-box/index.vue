@@ -1052,10 +1052,10 @@ export default {
       font-size: 14px;
       line-height: 19px;
       .new-p {
-        font-size: 14px;
+        font-size: 12px;
         font-family: PingFangSC-Regular, PingFang SC;
         font-weight: 400;
-        color: #FBE5C4;
+        color: #F2CB33;
       }
       .span {
         color: #F7FD95;
@@ -1067,10 +1067,10 @@ export default {
         flex-direction: column;
         justify-content: space-between;
         .new-p {
-          font-size: 14px;
+          font-size: 12px;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
-          color: #FBE5C4;
+          color: #F2CB33;
         }
       }
     }
