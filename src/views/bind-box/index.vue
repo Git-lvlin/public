@@ -384,7 +384,6 @@ export default {
     box,
   },
   async created () {
-
     await this.getUserInfo();
     this.init();
     this.sameDayHasSgin();
@@ -395,7 +394,6 @@ export default {
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
-    console.log('query', query);
     const rightButton = {
       type: 'share',
       object: {
@@ -1016,7 +1014,7 @@ export default {
       margin: 0 auto;
       margin-bottom: 18px;
       width: 345px;
-      height: 199px;
+      height: 230px;
       background: linear-gradient(180deg, #D63C24 0%, #C3331D 100%);
       border-radius: 8px;
     }
