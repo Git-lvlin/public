@@ -1016,7 +1016,7 @@ export default {
       margin: 0 auto;
       margin-bottom: 18px;
       width: 345px;
-      height: 215px;
+      height: 245px;
       background: linear-gradient(180deg, #D63C24 0%, #C3331D 100%);
       border-radius: 8px;
     }
@@ -1047,7 +1047,7 @@ export default {
     .task-content {
       margin: 13px auto;
       width: 306px;
-      height: 100px;
+      height: 130px;
       color: #FBE5C4;
       font-size: 14px;
       line-height: 19px;
