@@ -1,7 +1,7 @@
 
 import jsBridge from '@/utils/jsBridge';
 
-export const goToApp = (baseUrl, router, param, bridge) => {
+export const goToApp = (baseUrl, router, param='', bridge) => {
   const data = {
     code: 0,
     msg: 'success',
@@ -14,6 +14,10 @@ export const goToApp = (baseUrl, router, param, bridge) => {
     'router',
     zero,
   )
+}
+
+export const backOff = () => {
+  jsBridge.callHandler('pop')
 }
 
 export const share = (shareParam) => {
