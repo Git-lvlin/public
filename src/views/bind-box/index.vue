@@ -580,8 +580,9 @@ export default {
       }
       teamApi.getTaskInfo(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
-          const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
+          const { prizeNotice, configId, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
           this.prizeNotice = prizeNotice
+          this.couponInviteId = configId
           this.prizeWinMsg = prizeWinMsg
           this.ruleText = ruleText
           this.validTimeMsg = validTimeMsg
