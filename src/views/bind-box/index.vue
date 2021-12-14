@@ -93,7 +93,7 @@
         <div class="task-content">
           <div class="task-flex">
             <p>每成功邀请<span class="span">{{inviteFriends.inviteNum}}</span>位新用户注册约购APP，获得<span class="span">{{inviteFriends.chanceNum}}</span>次开盲盒机会，每天最多获得{{inviteFriends.inviteDayMaxNum}}次开盒机会。</p>
-            <p v-if="!inviteFriends.inviteIsFinish">本次已邀请<span class="span">{{blindboxStatus?inviteFriends.inviteFinishNum:'x'}}</span>人，还差<span class="span">{{blindboxStatus?inviteFriends.inviteUnNum:'x'}}</span>人。(此任务已获取{{inviteFriends.inviteActivityChanceNum}}次机会)</p>
+            <p v-if="!inviteFriends.inviteIsFinish">本次已邀请<span class="span">{{blindboxStatus?inviteFriends.inviteFinishNum:'x'}}</span>人，还差<span class="span">{{blindboxStatus?inviteFriends.inviteUnNum:'x'}}</span>人。(已获取{{inviteFriends.inviteActivityChanceNum}}次机会)</p>
             <p v-else>今天已经圆满完成任务，明天再继续努力吧~</p>
             <p class="new-p">邀请新用户仅限当前页面的分享邀请有效。</p>
           </div>
@@ -122,7 +122,7 @@
               <span v-else>{{index+1}}天</span>
             </span>
           </p>
-          <p v-if="!signIn.signInIsFinish">本次已连签<span class="span">{{blindboxStatus?signIn.signInFinishNum:'x'}}</span>天，还差<span class="span">{{blindboxStatus?signIn.signInUnNum:'x'}}</span>天。(此任务已获取{{signIn.signInActivityChanceNum}}次机会)</p>
+          <p v-if="!signIn.signInIsFinish">本次已连签<span class="span">{{blindboxStatus?signIn.signInFinishNum:'x'}}</span>天，还差<span class="span">{{blindboxStatus?signIn.signInUnNum:'x'}}</span>天。(已获取{{signIn.signInActivityChanceNum}}次机会)</p>
           <p v-else>已完成全部签到任务 棒~</p>
         </div>
         <div class="btn-yellow" v-if="!hasSgin">
@@ -152,7 +152,7 @@
               <span v-else>{{index+1}}单</span>
             </span>
           </p>
-          <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{blindboxStatus?orderConsume.consumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?orderConsume.consumeUnNum:'x'}}</span>笔。(此任务已获取{{orderConsume.consumeActivityChanceNum}}次机会)</p>
+          <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{blindboxStatus?orderConsume.consumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?orderConsume.consumeUnNum:'x'}}</span>笔。(已获取{{orderConsume.consumeActivityChanceNum}}次机会)</p>
           <p v-else>今天已获取1次开盲盒机会了，明天继续努力吧~</p>
           <p class="new-p">完成消费任务后退款，将取消盲盒活动奖品发放。</p>
         </div>
