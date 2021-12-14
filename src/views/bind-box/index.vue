@@ -152,7 +152,8 @@
               <span v-else>{{index+1}}单</span>
             </span>
           </p>
-          <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{blindboxStatus?orderConsume.consumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?orderConsume.consumeUnNum:'x'}}</span>笔。(已获取{{orderConsume.consumeActivityChanceNum}}次机会)</p>
+          <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{blindboxStatus?orderConsume.consumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?orderConsume.consumeUnNum:'x'}}</span>笔。</p>
+          <p v-if="!orderConsume.consumeIsFinish">(已获取{{orderConsume.consumeActivityChanceNum}}次机会)</p>
           <p v-else>今天已获取1次开盲盒机会了，明天继续努力吧~</p>
           <p class="new-p">完成消费任务后退款，将取消盲盒活动奖品发放。</p>
         </div>
@@ -1053,7 +1054,7 @@ export default {
       margin-top: 18px;
       height: 219px;
       .task-content {
-        height: 137px;
+        height: 150px;
       }
       .btn-yellow {
         top: -34px;
