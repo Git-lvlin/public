@@ -1052,7 +1052,7 @@ export default {
     }
     .box-three {
       margin-top: 18px;
-      height: 219px;
+      height: 226px;
       .task-content {
         height: 150px;
       }
