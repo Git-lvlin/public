@@ -1016,7 +1016,7 @@ export default {
       margin: 0 auto;
       margin-bottom: 18px;
       width: 345px;
-      height: 245px;
+      height: 199px;
       background: linear-gradient(180deg, #D63C24 0%, #C3331D 100%);
       border-radius: 8px;
     }
@@ -1037,12 +1037,27 @@ export default {
     }
     .box-one {
       margin-top: 12px;
+      height: 199px;
+      .task-content {
+        height: 85px;
+      }
     }
     .box-two {
       margin-top: 18px;
+      height: 199px;
+      .task-content {
+        height: 85px;
+      }
     }
     .box-three {
       margin-top: 18px;
+      height: 219px;
+      .task-content {
+        height: 137px;
+      }
+      .btn-yellow {
+        top: -34px;
+      }
     }
     .task-content {
       margin: 13px auto;
@@ -1065,7 +1080,7 @@ export default {
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        // justify-content: space-between;
         .new-p {
           font-size: 12px;
           font-family: PingFangSC-Regular, PingFang SC;
