@@ -23,7 +23,7 @@
             height="12px"
             :src="getImgUrl('publicMobile/limit/text-star.png')"
           />
-          <div class="right-box">累计推荐1-3人，每成功推荐1人奖励<span class="price">{{info.firstAmount/100}}</span>元红包。</div>
+          <div class="right-box">累计推荐{{info.inviteFirst}}-{{info.inviteSecond}}人，每成功推荐1人奖励<span class="price">{{info.firstAmount/100}}</span>元红包。</div>
         </div>
         <div class="one-item">
           <van-image
@@ -32,7 +32,7 @@
             height="12px"
             :src="getImgUrl('publicMobile/limit/text-star.png')"
           />
-          <div class="right-box">累计推荐4-9人，每成功推荐1人奖励<span class="price">{{info.secondAmount/100}}</span>元红包。</div>
+          <div class="right-box">累计推荐{{info.inviteThird}}-{{info.inviteFour}}人，每成功推荐1人奖励<span class="price">{{info.secondAmount/100}}</span>元红包。</div>
         </div>
         <div class="one-item">
            <van-image
@@ -41,7 +41,7 @@
             height="12px"
             :src="getImgUrl('publicMobile/limit/text-star.png')"
           />
-          <div class="right-box">累计推荐10人以上，每成功推荐1人奖励<span class="price">{{info.thirdAmount/100}}</span>元红包。</div>
+          <div class="right-box">累计推荐{{info.inviteFive}}人以上，每成功推荐1人奖励<span class="price">{{info.thirdAmount/100}}</span>元红包。</div>
         </div>
         <div class="detail">
           当前活动已累计邀请<span class="red">{{info.inviteNum}}</span>人,共获得红包<span class="red">{{info.inviteCouponAmount/100}}</span>元，红包可在下方 “好货推荐”列表的商品中使用。
