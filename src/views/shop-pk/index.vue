@@ -339,11 +339,11 @@ export default {
       goToApp(appBaseUrl, '/flutter/store/member/index')
     },
     getMonth() {
-      var date = new Date();//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      var Y = date.getFullYear();
-      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1);
+      // var date = new Date();//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      // var Y = date.getFullYear();
+      // var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1);
       // return Y+''+M;
-      return 202111
+      return 202112
     },
     getList() {
       const m = this.getMonth();
