@@ -184,8 +184,12 @@ export default {
   methods: {
     getImgUrl,
     toDetail(item) {
-      bury('web_new_year_click_to_shopping_detail', item)
       const {  defaultSkuId, spuId, orderType, activityId, objectId } = item;
+      bury('web_new_year_click_to_shopping_detail', {
+        spuId,
+        skuId: defaultSkuId,
+        orderType
+      })
       const param = `?skuId=${defaultSkuId}&spuId=${spuId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
       goToApp(appBaseUrl, '/shopping/detail', param)
     },
