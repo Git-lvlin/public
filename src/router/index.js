@@ -268,6 +268,14 @@ const routes = [
     meta: {
       title: '集约是什么',
     }
+  },
+  {
+    path: '/web/new-year',
+    name: 'NewYear',
+    component: () => import('@/views/new-year'),
+    meta: {
+      title: '约购年货节',
+    }
   }
 ];
 
