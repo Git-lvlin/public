@@ -308,6 +308,14 @@ const routes = [
     meta: {
       title: '店主PK赛排行榜',
     }
+  },
+  {
+    path: '/web/new-year',
+    name: 'NewYear',
+    component: () => import('@/views/new-year'),
+    meta: {
+      title: '约购年货节',
+    }
   }
 ];
 
