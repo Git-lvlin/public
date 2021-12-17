@@ -165,10 +165,10 @@ export default {
     const rightButton = {
       type: 'share',
       object: {
-        contentType: 3,
-        paramId: 7,
+        contentType: 11,
+        paramId: 13,
         shareType: 3,
-        sourceType: 3,
+        sourceType: 11,
       }
     };
     const titleLabel = {
