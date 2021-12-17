@@ -54,7 +54,7 @@
             <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
               <van-image
                 class="goods-img"
-                width="169px"
+                width="100%"
                 height="169px"
                 :src="goods.goodsImageUrl"
               />
