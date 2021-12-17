@@ -16,11 +16,7 @@ export const goToApp = (baseUrl, router, param='', bridge) => {
   )
 }
 
-export const backOff = () => {
-  jsBridge.callHandler('pop')
-}
-
-export const bury = (id, param={}) => {
+export const bury = (id, param=null) => {
   const data = {
     code: 0,
     msg: 'success',

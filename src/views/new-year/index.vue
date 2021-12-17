@@ -56,7 +56,6 @@
                 class="goods-img"
                 width="169px"
                 height="169px"
-                fit="fill"
                 :src="goods.goodsImageUrl"
               />
               <div class="goods-content">
@@ -358,7 +357,7 @@ export default {
         border-radius: 8px;
         overflow: hidden;
         .goods-img {
-          width: 169px;
+          width: 100%;
           height: 169px;
         }
         .goods-content {
