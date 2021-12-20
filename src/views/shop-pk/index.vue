@@ -390,7 +390,7 @@ export default {
           //   item.totalFee /= 100
           // }
           if (item.totalFee > 9999999) {
-            const a = item.totalFee/100
+            const a = (item.totalFee/100).toString();
             item.totalFee = a.indexOf('.')>-1?a.split('.')[0]:a
           } else {
             item.totalFee /= 100
