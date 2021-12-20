@@ -306,7 +306,7 @@ export default {
       rank: null,
       storeLogo: null,
       storeName: null,
-      showPopup: true,
+      showPopup: false,
     };
   },
   components: {
