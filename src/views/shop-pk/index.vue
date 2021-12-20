@@ -28,8 +28,8 @@
           </div>
         </div>
         <div class="ranking-now" v-if="rank!=='1000+'&&rank<101&&rank>1">当前排名第<span class="ss">{{rank}}</span>名</div>
-        <div class="disparity" v-if="rank!==1">超越上1名仅需集约<span class="s">{{rank==='1000+'?'1':beforeTotalFee}}</span>元</div>
-        <div class="disparity" v-if="rank==1">集约更多商品,保持领先优势!</div>
+        <div class="disparity" v-if="rank!=1">超越上1名仅需集约<span class="s">{{rank==='1000+'?'1':beforeTotalFee}}</span>元</div>
+        <div class="disparity" v-if="rank=1">集约更多商品,保持领先优势!</div>
         <div class="intensive-btn">
           <van-image
             class="intensive-btn-bg"
@@ -55,8 +55,8 @@
       <div class="list-bg-box">
         <van-image
           class="list-bg"
-          width="357px"
-          height="742.5px"
+          width="100%"
+          height="100%"
           :src="getImgUrl('publicMobile/shopkeeperpk/content-bg.png')"
         />
         <div class="list-bg-content">
