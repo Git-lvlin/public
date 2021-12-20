@@ -27,7 +27,7 @@
             />
           </div>
         </div>
-        <div class="ranking-now" v-if="rank!=='1000+'&&rank<101">当前排名第<span class="ss">{{rank}}</span>名</div>
+        <div class="ranking-now" v-if="rank!=='1000+'&&rank<101&&rank>1">当前排名第<span class="ss">{{rank}}</span>名</div>
         <div class="disparity" v-if="rank!==1">超越上1名仅需集约<span class="s">{{rank==='1000+'?'1':beforeTotalFee}}</span>元</div>
         <div class="disparity" v-if="rank==1">集约更多商品,保持领先优势!</div>
         <div class="intensive-btn">
@@ -135,7 +135,7 @@
                 </div>
               </div>
               <div class="user-name-box">
-                <div class="name">{{item.nickname}}</div>
+                <div class="name">{{item.storeName}}</div>
                 <div class="phone" v-if="item.memberPhone">{{item.memberPhone}}</div>
               </div>
               <div class="user-price">¥{{item.totalFee}}</div>
@@ -266,7 +266,7 @@
                 <div>店主C端社群</div>
                 <div>运营帮扶</div>
               </div>
-              <div class="right-item">·店主专业技能培训·</div>
+              <div class="right-item">·店主技能培训·</div>
             </div>
           </div>
           <div class="text5">3、店主集约金额一致以取得该排名的时间先后顺序排名</div>
@@ -306,7 +306,7 @@ export default {
       rank: null,
       storeLogo: null,
       storeName: null,
-      showPopup: false,
+      showPopup: true,
     };
   },
   components: {
@@ -382,13 +382,14 @@ export default {
             default:
               item.price=500
           }
-          if (item.totalFee>99999999) {
-            item.totalFee='99.99万+'
-          } else if (item.totalFee<=99999999&&item.totalFee>999999) {
-            item.totalFee = item.totalFee/1000000 + '万'
-          } else {
-            item.totalFee /= 100
-          }
+          // if (item.totalFee>99999999) {
+          //   item.totalFee='99.99万+'
+          // } else if (item.totalFee<=99999999&&item.totalFee>999999) {
+          //   item.totalFee = item.totalFee/1000000 + '万'
+          // } else {
+          //   item.totalFee /= 100
+          // }
+          item.totalFee /= 100
           return item
         })
       })
@@ -560,11 +561,8 @@ export default {
     .list-bg {
       position: absolute;
       top: 0;
-      width: 357px;
-      height: 742.5px;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-      overflow: hidden;
+      width: 100%;
+      height: 100%;
     }
     .list-bg-content {
       position: absolute;
@@ -815,12 +813,13 @@ export default {
 .popup-title-text {
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translate(-50%);
-  line-height: 31,5px;
+  width: 100%;
+  height: 100%;
+  line-height: 31.5px;
+  text-align: center;
 }
 .popup-content {
-  box-sizing: border-box;
+  // box-sizing: border-box;
   padding: 12px;
   width: 343px;
   height: 500px;
