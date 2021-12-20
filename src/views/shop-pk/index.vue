@@ -28,8 +28,8 @@
           </div>
         </div>
         <div class="ranking-now" v-if="rank!=='1000+'&&rank<101&&rank>1">当前排名第<span class="ss">{{rank}}</span>名</div>
-        <div class="disparity" v-if="rank!=1">超越上1名仅需集约<span class="s">{{rank==='1000+'?'1':beforeTotalFee}}</span>元</div>
-        <div class="disparity" v-if="rank=1">集约更多商品,保持领先优势!</div>
+        <div class="disparity" v-if="rank!==1">超越上1名仅需集约<span class="s">{{rank==='1000+'?'1':beforeTotalFee}}</span>元</div>
+        <div class="disparity" v-if="rank===1">集约更多商品,保持领先优势!</div>
         <div class="intensive-btn">
           <van-image
             class="intensive-btn-bg"
@@ -362,7 +362,11 @@ export default {
           });
           return
         }
-        this.rank = rank;
+        if (rank !== '1000+') {
+          this.rank = rank + 0;
+        } else {
+          this.rank = rank
+        }
         this.storeLogo = storeLogo;
         this.storeName = storeName
 
@@ -558,7 +562,7 @@ export default {
     position: relative;
     top: -36px;
     width: 357px;
-    height: 742.5px;
+    height: 760px;
     z-index: 1;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -574,7 +578,7 @@ export default {
       top: 0;
       z-index: 99;
       width: 357px;
-      height: 742.5px;
+      height: 760px;
       display: flex;
       flex-direction: column;
       align-items: center;
