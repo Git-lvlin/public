@@ -34,15 +34,50 @@
       /> 
     </div>
     <div class="content-box">
-      <div class="tab-box">
+      <!-- <div class="tab-box">
         <div class="tab-show-box">
           <div :class="item.type?'tab tab-index':'tab'" v-for="(item, index) in tabData" :key="index" @click="onTab(index)">{{item.text}}</div>
         </div>
-      </div>
-      <div v-for="(data, index) in info" :key="index">
+      </div> -->
+
+      <!-- <van-tabs background="#E1230D" line-width="0" title-active-color="#F8382E" title-inactive-color="#FFFFFF" v-model="active" scrollspy sticky> -->
+      <van-tabs background="#E1230D" line-width="0" line-height="0" v-model="active" scrollspy sticky>
+        <van-tab :title-style="index===active?'margin-top: 10px;width: 100px;height: 25px;border-radius: 13px;text-align: center;line-height: 25px;font-size: 14px;color: #F8382E;background: #FFFFFF;':'margin-top: 10px;width: 100px;height: 25px;border-radius: 13px;text-align: center;line-height: 25px;font-size: 14px;color: #FFFFFF;background: #E1230D;'" v-for="(data, index) in info" :title="info[index].name" :key="index">
+          <div class="item-box">
+            <van-image
+              v-if="index!==0&&data.goodsInfo.length"
+              class="title"
+              width="211px"
+              height="34px"
+              lazy-load
+              :src="getImgUrl(`publicMobile/happynewyear/title${index}.png`)"
+            />
+            <div :id="index" class="goods-box" v-if="data.goodsInfo.length">
+              <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
+                <van-image
+                  class="goods-img"
+                  width="100%"
+                  height="169px"
+                  :src="goods.goodsImageUrl"
+                />
+                <div class="goods-content">
+                  <div class="goods-name van-multi-ellipsis--l2">{{goods.goodsName}}</div>
+                  <div class="goods-tag" v-if="goods.redPacket">红包可抵扣{{goods.redPacket/100}}元</div>
+                  <div class="price-box">
+                    <div class="price">福利价 <span class="price-icon">¥</span></div>
+                    <div class="price-num">{{goods.wealPrice/100}}</div>
+                  </div>
+                  <div class="old-price">销售价:¥{{goods.goodsSaleMinPrice/100}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </van-tab>
+      </van-tabs>
+
+      <!-- <div v-for="(data, index) in info" :key="index">
         <div class="item-box" v-if="data.goodsInfo.length">
           <van-image
-            :id="index"
             v-if="index!==0&&data.goodsInfo.length"
             class="title"
             width="211px"
@@ -50,7 +85,7 @@
             lazy-load
             :src="getImgUrl(`publicMobile/happynewyear/title${index}.png`)"
           />
-          <div class="goods-box" v-if="data.goodsInfo.length">
+          <div :id="index" ref="{{'abc' + index}}" class="goods-box" v-if="data.goodsInfo.length">
             <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
               <van-image
                 class="goods-img"
@@ -70,7 +105,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="tail">
         <van-image
           class="tail-left"
@@ -112,7 +147,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Lazyload, Popup } from 'vant';
+import { Image as VanImage, Lazyload, Popup, Tab, Tabs } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import api from '@/apis/year';
@@ -124,38 +159,15 @@ import {
 Vue.use(VanImage);
 Vue.use(Lazyload);
 Vue.use(Popup);
+Vue.use(Tab);
+Vue.use(Tabs);
 export default {
   data() {
     return {
       info: null,
       show: false,
-      tabData: [],
-      // tabData: [
-      //   {
-      //     text: '爆款年货',
-      //     type: true,
-      //   },
-      //   {
-      //     text: '日用好货',
-      //     type: false,
-      //   },
-      //   {
-      //     text: '新年送礼',
-      //     type: false,
-      //   },
-      //   {
-      //     text: '暖心家具',
-      //     type: false,
-      //   },
-      //   {
-      //     text: '家电焕新',
-      //     type: false,
-      //   },
-      //   {
-      //     text: '美丽过年',
-      //     type: false,
-      //   }
-      // ]
+      // tabData: [],
+      active: 0,
     };
   },
   components: {
@@ -179,7 +191,17 @@ export default {
   },
   
   async mounted() {
+    window.addEventListener("scroll", (e) => {
+      console.log('e',e)
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      console.log('scrollTop', scrollTop)
+    });
     this.getNewYearInfo()
+     this.$nextTick(()=>{ // 页面渲染完成后的回调
+        setTimeout(() => {
+          console.log('abc', this.$refs.abc1.offsetTop)
+        }, 1000)
+    })
   },
   methods: {
     getImgUrl,
@@ -202,15 +224,15 @@ export default {
         goToApp(meBaseUrl, '/web/bind-box')
       }
     },
-    onTab(index) {
-      this.tabData.map((item) => {
-        item.type = false
-        return item
-      })
-      this.tabData[index].type = true
-      // 定位到index锚点
-      document.getElementById(index+'').scrollIntoView()
-    },
+    // onTab(index) {
+    //   this.tabData.map((item) => {
+    //     item.type = false
+    //     return item
+    //   })
+    //   this.tabData[index].type = true
+    //   // 定位到index锚点
+    //   document.getElementById(index+'').scrollIntoView()
+    // },
     showPopup() {
       this.show = true
       bury('web_new_year_click_show_rule')
@@ -218,16 +240,16 @@ export default {
     getNewYearInfo() {
       api.getHappy().then(res => {
         this.info = res.data
-        this.tabData = this.info.map((item, index) => {
-          let d = {}
-          if (item.goodsInfo.length) {
-            d = {
-              text: item.name,
-              type: index==0?true:false
-            }
-          }
-          return d
-        })
+        // this.tabData = this.info.map((item, index) => {
+        //   let d = {}
+        //   if (item.goodsInfo.length) {
+        //     d = {
+        //       text: item.name,
+        //       type: index==0?true:false
+        //     }
+        //   }
+        //   return d
+        // })
       })
     } 
   },
@@ -298,47 +320,67 @@ export default {
   }
   .content-box {
     position: relative;
-    top: -32px;
+    top: -38px;
     display: flex;
     flex-direction: column;
   }
-  .tab-box {
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    box-sizing: border-box;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 3px;
-    width: 100%;
-    height: 37px;
-    overflow: hidden;
-    overflow-x: auto;
-    z-index: 9999;
+  .tab {
+    width: 100px;
+    height: 25px;
     background: #E1230D;
-    .tab-show-box {
-      display: flex;
-      justify-content: flex-start;
-      width: 603px;
-      height: 100%;
-      .tab {
-        width: 100px;
-        height: 25px;
-        background: #E1230D;
-        border-radius: 13px;
-        text-align: center;
-        line-height: 25px;
-        font-size: 14px;
-        font-family: PingFangSC-Medium, PingFang SC;
-        font-weight: 500;
-        color: #FFFFFF;
-      }
-      .tab-index {
-        color: #F8382E;
-        background: #FFFFFF;
-      }
-    }
+    border-radius: 13px;
+    text-align: center;
+    line-height: 25px;
+    font-size: 14px;
+    color: #FFFFFF;
   }
+  .tab-index {
+    width: 100px;
+    height: 25px;
+    border-radius: 13px;
+    text-align: center;
+    line-height: 25px;
+    font-size: 14px;
+    color: #F8382E;
+    background: #FFFFFF;
+  }
+  // .tab-box {
+  //   position: sticky;
+  //   position: -webkit-sticky;
+  //   top: 0;
+  //   box-sizing: border-box;
+  //   padding-top: 6px;
+  //   padding-bottom: 6px;
+  //   padding-left: 3px;
+  //   width: 100%;
+  //   height: 37px;
+  //   overflow: hidden;
+  //   overflow-x: auto;
+  //   z-index: 9;
+  //   background: #E1230D;
+  //   .tab-show-box {
+  //     display: flex;
+  //     justify-content: flex-start;
+  //     width: 603px;
+  //     height: 100%;
+  //     .tab {
+  //       width: 100px;
+  //       height: 25px;
+  //       background: #E1230D;
+  //       border-radius: 13px;
+  //       text-align: center;
+  //       line-height: 25px;
+  //       font-size: 14px;
+  //       font-family: PingFangSC-Medium, PingFang SC;
+  //       font-weight: 500;
+  //       color: #FFFFFF;
+  //     }
+  //     .tab-index {
+  //       color: #F8382E;
+  //       background: #FFFFFF;
+  //     }
+  //   }
+  // }
   .item-box {
     box-sizing: border-box;
     padding: 12px;
