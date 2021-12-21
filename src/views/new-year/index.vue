@@ -60,14 +60,22 @@
                   height="169px"
                   :src="goods.goodsImageUrl"
                 />
-                <div class="goods-content">
+                <div class="goods-content" v-if="goods.redPacket">
                   <div class="goods-name van-multi-ellipsis--l2">{{goods.goodsName}}</div>
-                  <div class="goods-tag" v-if="goods.redPacket">红包可抵扣{{goods.redPacket/100}}元</div>
+                  <div class="goods-tag">红包可抵扣{{goods.redPacket/100}}元</div>
                   <div class="price-box">
                     <div class="price">福利价 <span class="price-icon">¥</span></div>
                     <div class="price-num">{{goods.wealPrice/100}}</div>
                   </div>
                   <div class="old-price">销售价:¥{{goods.goodsSaleMinPrice/100}}</div>
+                </div>
+                <div class="goods-content" v-else>
+                  <div class="goods-name2 van-multi-ellipsis--l3">{{goods.goodsName}}</div>
+                  <div class="price-box">
+                    <div class="price">销售价 <span class="price-icon">¥</span></div>
+                    <div class="price-num">{{goods.goodsSaleMinPrice/100}}</div>
+                  </div>
+                  <div class="old-price">市场价:¥<span class="no-red-last-price">{{goods.goodsMarketPrice/100}}</span></div>
                 </div>
               </div>
             </div>
@@ -257,6 +265,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.no-red-last-price {
+  text-decoration: line-through;
+}
 .rule-div {
   width: 100%;
   height: 482px;
@@ -416,6 +427,17 @@ export default {
         .goods-content {
           padding: 8px;
           .goods-name {
+            height: 36px;
+            margin-bottom: 6px;
+            // height: 36px;
+            font-size: 13px;
+            font-family: PingFangSC-Medium, PingFang SC;
+            font-weight: 500;
+            color: #333333;
+            line-height: 18px;
+          }
+          .goods-name2 {
+            height: 54px;
             margin-bottom: 6px;
             // height: 36px;
             font-size: 13px;
