@@ -385,7 +385,6 @@ export default {
     box,
   },
   async created () {
-
     await this.getUserInfo();
     this.init();
     this.sameDayHasSgin();
@@ -396,11 +395,9 @@ export default {
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
-    console.log('query', query);
     const rightButton = {
       type: 'share',
       object: {
-        shareObjectNo: this.couponInviteId,
         contentType: 3,
         paramId: 7,
         shareType: 3,
@@ -412,6 +409,9 @@ export default {
       font: '', // 暂时不会传
       text: '', // 默认documenttitle
     };
+    if (this.couponInviteId) {
+      rightButton.object.shareObjectNo = this.couponInviteId
+    } 
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
     await this.loadImg()
     this.interval();
