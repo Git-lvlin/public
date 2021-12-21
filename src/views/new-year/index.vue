@@ -70,6 +70,96 @@
             </div>
           </div>
         </div>
+        <div class="item-box" v-if="data.goodsInfo.length">
+          <van-image
+            :id="index"
+            v-if="index!==0&&data.goodsInfo.length"
+            class="title"
+            width="211px"
+            height="34px"
+            lazy-load
+            :src="getImgUrl(`publicMobile/happynewyear/title${index}.png`)"
+          />
+          <div class="goods-box" v-if="data.goodsInfo.length">
+            <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
+              <van-image
+                class="goods-img"
+                width="100%"
+                height="169px"
+                :src="goods.goodsImageUrl"
+              />
+              <div class="goods-content">
+                <div class="goods-name van-multi-ellipsis--l2">{{goods.goodsName}}</div>
+                <div class="goods-tag" v-if="goods.redPacket">红包可抵扣{{goods.redPacket/100}}元</div>
+                <div class="price-box">
+                  <div class="price">福利价 <span class="price-icon">¥</span></div>
+                  <div class="price-num">{{goods.wealPrice/100}}</div>
+                </div>
+                <div class="old-price">销售价:¥{{goods.goodsSaleMinPrice/100}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item-box" v-if="data.goodsInfo.length">
+          <van-image
+            :id="index"
+            v-if="index!==0&&data.goodsInfo.length"
+            class="title"
+            width="211px"
+            height="34px"
+            lazy-load
+            :src="getImgUrl(`publicMobile/happynewyear/title${index}.png`)"
+          />
+          <div class="goods-box" v-if="data.goodsInfo.length">
+            <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
+              <van-image
+                class="goods-img"
+                width="100%"
+                height="169px"
+                :src="goods.goodsImageUrl"
+              />
+              <div class="goods-content">
+                <div class="goods-name van-multi-ellipsis--l2">{{goods.goodsName}}</div>
+                <div class="goods-tag" v-if="goods.redPacket">红包可抵扣{{goods.redPacket/100}}元</div>
+                <div class="price-box">
+                  <div class="price">福利价 <span class="price-icon">¥</span></div>
+                  <div class="price-num">{{goods.wealPrice/100}}</div>
+                </div>
+                <div class="old-price">销售价:¥{{goods.goodsSaleMinPrice/100}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item-box" v-if="data.goodsInfo.length">
+          <van-image
+            :id="index"
+            v-if="index!==0&&data.goodsInfo.length"
+            class="title"
+            width="211px"
+            height="34px"
+            lazy-load
+            :src="getImgUrl(`publicMobile/happynewyear/title${index}.png`)"
+          />
+          <div class="goods-box" v-if="data.goodsInfo.length">
+            <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
+              <van-image
+                class="goods-img"
+                width="100%"
+                height="169px"
+                :src="goods.goodsImageUrl"
+              />
+              <div class="goods-content">
+                <div class="goods-name van-multi-ellipsis--l2">{{goods.goodsName}}</div>
+                <div class="goods-tag" v-if="goods.redPacket">红包可抵扣{{goods.redPacket/100}}元</div>
+                <div class="price-box">
+                  <div class="price">福利价 <span class="price-icon">¥</span></div>
+                  <div class="price-num">{{goods.wealPrice/100}}</div>
+                </div>
+                <div class="old-price">销售价:¥{{goods.goodsSaleMinPrice/100}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="tail">
         <van-image
@@ -303,12 +393,19 @@ export default {
     flex-direction: column;
   }
   .tab-box {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
     box-sizing: border-box;
+    padding-top: 6px;
+    padding-bottom: 6px;
     padding-left: 3px;
     width: 100%;
-    height: 25px;
+    height: 37px;
     overflow: hidden;
     overflow-x: auto;
+    z-index: 9999;
+    background: #E1230D;
     .tab-show-box {
       display: flex;
       justify-content: flex-start;
