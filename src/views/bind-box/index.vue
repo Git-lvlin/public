@@ -42,7 +42,7 @@
 
     <div class="title-one">开盲盒</div>
     <div class="title-two">赢超级大奖</div>
-    <div class="subtitle">QTQ太空舱按摩椅、罗西尼手表等你来开</div>
+    <div class="subtitle">华为mate40手机、海信电视机等你来开</div>
 
     <div class="num">
       <p>剩余次数：<span class="chance">{{unuseNum}}</span>次</p>
