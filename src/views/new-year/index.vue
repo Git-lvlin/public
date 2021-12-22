@@ -41,7 +41,7 @@
       </div> -->
 
       <!-- <van-tabs background="#E1230D" line-width="0" title-active-color="#F8382E" title-inactive-color="#FFFFFF" v-model="active" scrollspy sticky> -->
-      <van-tabs background="#E1230D" line-width="0" line-height="0" v-model="active" scrollspy sticky>
+      <van-tabs background="#E1230D" line-width="0" line-height="0" duration="0" v-model="active" scrollspy sticky>
         <van-tab :title-style="index===active?'margin-top: 10px;width: 100px;height: 25px;border-radius: 13px;text-align: center;line-height: 25px;font-size: 14px;color: #F8382E;background: #FFFFFF;':'margin-top: 10px;width: 100px;height: 25px;border-radius: 13px;text-align: center;line-height: 25px;font-size: 14px;color: #FFFFFF;background: #E1230D;'" v-for="(data, index) in info" :title="info[index].name" :key="index">
           <div class="item-box">
             <van-image
