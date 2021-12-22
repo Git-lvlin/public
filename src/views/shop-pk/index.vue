@@ -28,8 +28,9 @@
           </div>
         </div>
         <div class="ranking-now" v-if="rank>0&&rank<101">当前排名第<span class="ss">{{rank}}</span>名</div>
-        <div class="disparity" v-if="rank!==1">超越上1名仅需集约<span class="s">{{rank===0?'1':beforeTotalFee}}</span>元</div>
+        <div class="disparity" v-if="rank!==1&&rank<101">超越上1名仅需集约<span class="s">{{rank===0?'1':beforeTotalFee}}</span>元</div>
         <div class="disparity" v-if="rank===1">集约更多商品,保持领先优势!</div>
+        <div class="disparity" v-if="rank>100">快去发起集约</div>
         <div class="intensive-btn">
           <van-image
             class="intensive-btn-bg"
@@ -55,8 +56,8 @@
       <div class="list-bg-box">
         <van-image
           class="list-bg"
-          width="357px"
-          height="742.5px"
+          width="100%"
+          height="100%"
           :src="getImgUrl('publicMobile/shopkeeperpk/content-bg.png')"
         />
         <div class="list-bg-content">
@@ -362,7 +363,11 @@ export default {
           });
           return
         }
-        this.rank = rank;
+        if (rank !== '1000+') {
+          this.rank = rank + 0;
+        } else {
+          this.rank = rank
+        }
         this.storeLogo = storeLogo;
         this.storeName = storeName
 
@@ -390,7 +395,7 @@ export default {
           //   item.totalFee /= 100
           // }
           if (item.totalFee > 9999999) {
-            const a = item.totalFee/100
+            const a = (item.totalFee/100).toString();
             item.totalFee = a.indexOf('.')>-1?a.split('.')[0]:a
           } else {
             item.totalFee /= 100
@@ -558,7 +563,7 @@ export default {
     position: relative;
     top: -36px;
     width: 357px;
-    height: 742.5px;
+    height: 760px;
     z-index: 1;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -574,7 +579,7 @@ export default {
       top: 0;
       z-index: 99;
       width: 357px;
-      height: 742.5px;
+      height: 760px;
       display: flex;
       flex-direction: column;
       align-items: center;
