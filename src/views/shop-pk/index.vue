@@ -233,7 +233,7 @@
           :src="getImgUrl('publicMobile/shopkeeperpk/popup-subtitle.png')"
         />
         <div class="popup-content">
-          <div class="text1">1、活动时间：2021年12月1日-12月31日</div>
+          <div class="text1">1、活动时间：2021年12月1日-12月31日。</div>
           <div class="text2">2、活动期间店主发起集约，集约金额达到3000元以上，即可参加“店主集约PK赛”活动，PK赛根据店主集约金额从高到低排名，活动结束后对排名前10的店主，给予现金奖励并加入约购优秀店主扶持计划，具体如下：</div>
           <div class="text3">
             <div class="head1">集约金额 排名</div>
@@ -270,12 +270,12 @@
               <div class="right-item">·店主技能培训·</div>
             </div>
           </div>
-          <div class="text5">3、店主集约金额一致以取得该排名的时间先后顺序排名</div>
-          <div class="text6">4、获奖店主须承担获奖现金7%的代缴税，由约购平台完成代扣后将剩余现金交付给获奖店主</div>
-          <div class="text7">5、获得现金奖励的店主须出席参加线上或线下颁奖仪式（时间、地点、方式待定）</div>
-          <div class="text8">6、获奖店主须在7个工作日内配合约购工作人员完成获奖资格登记确认，逾期视为弃奖</div>
-          <div class="text9">7、活动相关信息将通过“约购快讯”微信公众号发布，未尽事宜以“约购快讯”微信公众号发布的信息为准</div>
-          <div class="text10">8、本活动最终解释权归约购所有</div>
+          <div class="text5">3、店主集约金额相同时以取得该排名的时间先后顺序排名。</div>
+          <div class="text6">4、获奖店主须承担获奖现金7%的代缴税，由约购平台完成代扣后将剩余现金交付给获奖店主。</div>
+          <div class="text7">5、获得现金奖励的店主须出席参加线上或线下颁奖仪式（时间、地点、方式待定）。</div>
+          <div class="text8">6、获奖店主须在7个工作日内配合约购工作人员完成获奖资格登记确认，逾期视为弃奖。</div>
+          <div class="text9">7、活动相关信息将通过“约购快讯”微信公众号发布，未尽事宜以“约购快讯”微信公众号发布的信息为准。</div>
+          <div class="text10">8、本活动最终解释权归约购所有。</div>
         </div>
         <van-image
           class="popup-close"

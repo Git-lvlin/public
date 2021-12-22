@@ -68,7 +68,7 @@
             :good="item"
           />
         </div>
-        <div class="list-box-text">话费中奖后，将在7个工作日内充值到您的收货手机号中。</div>
+        <!-- <div class="list-box-text">话费中奖后，将在7个工作日内充值到您的收货手机号中。</div> -->
       </div>
     </div>
 

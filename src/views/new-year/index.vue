@@ -176,6 +176,8 @@ export default {
       show: false,
       // tabData: [],
       active: 0,
+      inviteCode: null,
+      token: null,
     };
   },
   components: {
@@ -196,24 +198,47 @@ export default {
       text: '', // 默认documenttitle
     };
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
+    await this.getUserInfo();
   },
   
   async mounted() {
-    window.addEventListener("scroll", (e) => {
-      console.log('e',e)
-      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-      console.log('scrollTop', scrollTop)
-    });
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode;
+    // window.addEventListener("scroll", (e) => {
+    //   console.log('e',e)
+    //   var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+    //   console.log('scrollTop', scrollTop)
+    // });
     this.getNewYearInfo()
-     this.$nextTick(()=>{ // 页面渲染完成后的回调
-        setTimeout(() => {
-          console.log('abc', this.$refs.abc1.offsetTop)
-        }, 1000)
-    })
+    //  this.$nextTick(()=>{ // 页面渲染完成后的回调
+    //     setTimeout(() => {
+    //       console.log('abc', this.$refs.abc1.offsetTop)
+    //     }, 1000)
+    // })
   },
   methods: {
     getImgUrl,
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          resolve()
+        })
+      })
+    },
     toDetail(item) {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       const {  defaultSkuId, spuId, orderType, activityId, objectId } = item;
       bury('web_new_year_click_to_shopping_detail', {
         spuId,
@@ -224,6 +249,15 @@ export default {
       goToApp(appBaseUrl, '/shopping/detail', param)
     },
     goto(type) {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       if (type==1) {
         bury('web_new_year_click_to_sign_in')
         goToApp(appBaseUrl, '/flutter/mine/sign_in/detail')
@@ -242,6 +276,15 @@ export default {
     //   document.getElementById(index+'').scrollIntoView()
     // },
     showPopup() {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       this.show = true
       bury('web_new_year_click_show_rule')
     },
