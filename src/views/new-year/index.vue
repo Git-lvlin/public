@@ -143,10 +143,13 @@
       <div class="rule-div">
         <div class="title">活动规则</div>
         <div class="content">
-          <p>1、玩法规则：</p>
-          <p>进入每开盲盒活动页面，点击活动弹窗拆开红包即参与成功。本活动以三天为一个活动周期。活动周期内，您每天可在特定的时间内拆开一个红包领取优惠券（具体优惠金额、类型、使用条件等以活动页面显示为准）。当天特定时间内未拆开红包的，则当天可拆的红包将自动失效。</p>
-          <p>2、活动说明：</p>
-          <p>您购买页面内展示的优惠商品时，符合优惠条件的，即会自动使用并立减相应金额。每天拆红包领取的优惠券均有有效期（具体以活动页面提示为准），逾期自动失效，请您领取后及时使用。红包仅可在约购APP每日红包栏目内使用；红包可直接抵扣订单金额，不支持提现，若经查实用户通过不正当行为获得奖励（约购）有权利撤销该用户的使用红包及优惠券的资格，情节严重则将追究其法律责任。</p>
+          <van-image
+            class="gz-content"
+            width="100%"
+            height="1490px"
+            lazy-load
+            :src="getImgUrl('publicMobile/happynewyear/gz-content.png')"
+          />
         </div>
       </div>
     </van-popup>
@@ -276,15 +279,15 @@ export default {
     //   document.getElementById(index+'').scrollIntoView()
     // },
     showPopup() {
-      if (!this.token) {
-        this.$router.push({
-          path: '/web/new-share',
-          query: {
-            inviteCode: this.inviteCode
-          },
-        });
-        return
-      }
+      // if (!this.token) {
+      //   this.$router.push({
+      //     path: '/web/new-share',
+      //     query: {
+      //       inviteCode: this.inviteCode
+      //     },
+      //   });
+      //   return
+      // }
       this.show = true
       bury('web_new_year_click_show_rule')
     },
