@@ -316,6 +316,14 @@ const routes = [
     meta: {
       title: '约购年货节',
     }
+  },
+  {
+    path: '/web/new-year-rule',
+    name: 'NewYearRule',
+    component: () => import('@/views/new-year-rule'),
+    meta: {
+      title: '约购年货节活动规则',
+    }
   }
 ];
 
