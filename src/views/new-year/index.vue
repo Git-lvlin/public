@@ -133,7 +133,7 @@
       </div>
     </div>
     <!-- 活动规则弹窗 -->
-    <van-popup
+    <!-- <van-popup
       v-model="show"
       closeable
       position="bottom"
@@ -151,7 +151,7 @@
           />
         </div>
       </div>
-    </van-popup>
+    </van-popup> -->
   </div>
 </template>
 
@@ -175,7 +175,7 @@ export default {
   data() {
     return {
       info: null,
-      show: false,
+      // show: false,
       // tabData: [],
       active: 0,
       inviteCode: null,
@@ -287,8 +287,9 @@ export default {
         });
         return
       }
-      this.show = true
+      // this.show = true
       bury('web_new_year_click_show_rule')
+      goToApp(meBaseUrl, '/web/new-year-rule?_immersive=0')
     },
     getNewYearInfo() {
       api.getHappy().then(res => {
