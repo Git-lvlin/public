@@ -72,7 +72,6 @@ export default {
     };
   },
   created () {
-
   },
   mounted() {
     const ua = window.navigator.userAgent.toLowerCase();

@@ -6,9 +6,18 @@ const url = {
   prize: '/activity/auth/blindBoxPrize',
   taskInfo: '/activity/option/blindboxInfo',
   sgin: '/public/auth/userSign/getSignNumber',
+  task: '/activity/auth/blindboxTask',
 };
 
 export default {
+  // 领取任务
+  getTask(params = {}, options = {}) {
+    return post({
+      url: url.task,
+      data: params,
+      options,
+    });
+  },
   openBox(params = {}, options = {}) {
     return post({
       url: url.openBox,

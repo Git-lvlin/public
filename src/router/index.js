@@ -238,11 +238,27 @@ const routes = [
     }
   },
   {
-    path: '/web/star',
-    name: 'Star',
-    component: () => import('@/views/star'),
+    path: '/web/limit-list',
+    name: 'LimitList',
+    component: () => import('@/views/limit-list'),
     meta: {
-      title: '双心节',
+      title: '邀请列表',
+    }
+  },
+  {
+    path: '/web/time-limit',
+    name: 'TimeLimit',
+    component: () => import('@/views/time-limit'),
+    meta: {
+      title: '限时优惠',
+    }
+  },
+  {
+    path: '/web/polite-invitation',
+    name: 'PoliteInvitation',
+    component: () => import('@/views/polite-invitation'),
+    meta: {
+      title: '推荐有礼',
     }
   },
   {
@@ -251,6 +267,22 @@ const routes = [
     component: () => import('@/views/video'),
     meta: {
       title: '',
+    }
+  },
+  {
+    path: '/web/star',
+    name: 'Star',
+    component: () => import('@/views/star'),
+    meta: {
+      title: '双心节',
+    }
+  },
+  {
+    path: '/web/action-center',
+    name: 'ActionCenter',
+    component: () => import('@/views/action-center'),
+    meta: {
+      title: '活动中心',
     }
   },
   {
@@ -267,6 +299,22 @@ const routes = [
     component: () => import('@/views/intensive'),
     meta: {
       title: '集约是什么',
+    }
+  },
+  {
+    path: '/web/shop-pk',
+    name: 'ShopPk',
+    component: () => import('@/views/shop-pk'),
+    meta: {
+      title: '店主PK赛排行榜',
+    }
+  },
+  {
+    path: '/web/new-year',
+    name: 'NewYear',
+    component: () => import('@/views/new-year'),
+    meta: {
+      title: '约购年货节',
     }
   }
 ];

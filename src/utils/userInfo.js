@@ -16,6 +16,22 @@ export const goToApp = (baseUrl, router, param='', bridge) => {
   )
 }
 
+export const bury = (id, param=null) => {
+  const data = {
+    code: 0,
+    msg: 'success',
+    data: {
+      eventID: id,
+      params: param
+    }
+  }
+  const zero = JSON.stringify(data);
+  jsBridge.callHandler(
+    'buriedPoint',
+    zero,
+  )
+}
+
 export const share = (shareParam) => {
   const data = {
     code: 0,
@@ -98,8 +114,6 @@ export const setNavigationBar = (backgroundColor='', {type='share',selectedImage
     param,
   )
 }
-
-
 
 export const judgeVersionIsNew = (v) => {
   const breakPointVersion = 103
