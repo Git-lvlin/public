@@ -22,8 +22,7 @@
         <div class="item">1.活动期间用户完成每日首单消费、连续3天签到、邀请好友下载注册约购APP均可以获得盲盒开盒机会，具体如下:</div>
         <van-image
           class="rule-img"
-          width="345px"
-          height="153px"
+          width="100%"
           lazy-load
           :src="getImgUrl(`publicMobile/happynewyear/rule-detail.png`)"
         />
@@ -94,7 +93,10 @@ export default {
       color: #666666;
       font-size: 14px;
       line-height: 22px;
-      margin-bottom: 12px;
+      margin-bottom: 22px;
     }
+  }
+  .rule-img {
+    margin-top: 8px;
   }
 </style>
