@@ -146,9 +146,23 @@
           <van-image
             class="gz-content"
             width="100%"
-            height="1490px"
+            height="510px"
             lazy-load
-            :src="getImgUrl('publicMobile/happynewyear/gz-content.png')"
+            :src="getImgUrl('publicMobile/happynewyear/gz1.png')"
+          />
+          <van-image
+            class="gz-content"
+            width="100%"
+            height="510px"
+            lazy-load
+            :src="getImgUrl('publicMobile/happynewyear/gz2.png')"
+          />
+          <van-image
+            class="gz-content"
+            width="100%"
+            height="470px"
+            lazy-load
+            :src="getImgUrl('publicMobile/happynewyear/gz3.png')"
           />
         </div>
       </div>
@@ -333,7 +347,7 @@ export default {
     width: 100%;
     height: 440px;
     border: none;
-    padding: 32px 16px 50px 16px;
+    padding: 32px 0px 50px 0px;
     text-align: justify;
     font-size: 14px;
     font-family: PingFangSC-Medium, PingFang SC;
