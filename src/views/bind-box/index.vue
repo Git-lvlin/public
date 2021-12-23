@@ -42,7 +42,7 @@
 
     <div class="title-one">开盲盒</div>
     <div class="title-two">赢超级大奖</div>
-    <div class="subtitle">QTQ太空舱按摩椅、罗西尼手表等你来开</div>
+    <div class="subtitle">华为mate40手机、海信电视机等你来开</div>
 
     <div class="num">
       <p>剩余次数：<span class="chance">{{unuseNum}}</span>次</p>
@@ -68,7 +68,7 @@
             :good="item"
           />
         </div>
-        <div class="list-box-text">话费中奖后，将在7个工作日内充值到您的收货手机号中。</div>
+        <!-- <div class="list-box-text">话费中奖后，将在7个工作日内充值到您的收货手机号中。</div> -->
       </div>
     </div>
 
@@ -93,13 +93,14 @@
         <div class="task-content">
           <div class="task-flex">
             <p>每成功邀请<span class="span">{{inviteFriends.inviteNum}}</span>位新用户注册约购APP，获得<span class="span">{{inviteFriends.chanceNum}}</span>次开盲盒机会，每天最多获得{{inviteFriends.inviteDayMaxNum}}次开盒机会。</p>
-            <p v-if="!inviteFriends.inviteIsFinish">本次已邀请<span class="span">{{blindboxStatus?inviteFriends.inviteFinishNum:'x'}}</span>人，还差<span class="span">{{blindboxStatus?inviteFriends.inviteUnNum:'x'}}</span>人。</p>
+            <p v-if="!inviteFriends.inviteIsFinish">本次已邀请<span class="span">{{blindboxStatus?inviteFriends.inviteFinishNum:'x'}}</span>人，还差<span class="span">{{blindboxStatus?inviteFriends.inviteUnNum:'x'}}</span>人。(已获取{{inviteFriends.inviteActivityChanceNum}}次机会)</p>
             <p v-else>今天已经圆满完成任务，明天再继续努力吧~</p>
+            <p class="new-p">邀请新用户仅限当前页面的分享邀请有效。</p>
           </div>
         </div>
         <div class="btn-yellow">
           <van-image width="225px" height="41px" :src="getImgUrl('publicMobile/bindbox/btn-yellow.png')" />
-          <span class="text" @click="go('invitaion')">立即邀请</span>
+          <span class="text" @click="go('invitaion')">{{inviteFriends.inviteIsTaskFinish?'立即邀请':'领取任务'}}</span>
         </div>
       </div>
 
@@ -121,12 +122,12 @@
               <span v-else>{{index+1}}天</span>
             </span>
           </p>
-          <p v-if="!signIn.signInIsFinish">本次已连签<span class="span">{{blindboxStatus?signIn.signInFinishNum:'x'}}</span>天，还差<span class="span">{{blindboxStatus?signIn.signInUnNum:'x'}}</span>天。</p>
+          <p v-if="!signIn.signInIsFinish">本次已连签<span class="span">{{blindboxStatus?signIn.signInFinishNum:'x'}}</span>天，还差<span class="span">{{blindboxStatus?signIn.signInUnNum:'x'}}</span>天。(已获取{{signIn.signInActivityChanceNum}}次机会)</p>
           <p v-else>已完成全部签到任务 棒~</p>
         </div>
         <div class="btn-yellow" v-if="!hasSgin">
           <van-image width="225px" height="41px" :src="getImgUrl('publicMobile/bindbox/btn-yellow.png')" />
-          <span class="text" @click="go('sign-in')">立即签到</span>
+          <span class="text" @click="go('sign-in')">{{signIn.signInIsTaskFinish?'立即签到':'领取任务'}}</span>
         </div>
         <div class="btn-disable" v-else>
           <span class="text-sgin">今日已签到</span>
@@ -152,11 +153,13 @@
             </span>
           </p>
           <p v-if="!orderConsume.consumeIsFinish">今日已消费<span class="span">{{blindboxStatus?orderConsume.consumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?orderConsume.consumeUnNum:'x'}}</span>笔。</p>
+          <p v-if="!orderConsume.consumeIsFinish">(已获取{{orderConsume.consumeActivityChanceNum}}次机会)</p>
           <p v-else>今天已获取1次开盲盒机会了，明天继续努力吧~</p>
+          <p class="new-p">完成消费任务后退款，将取消盲盒活动奖品发放。</p>
         </div>
         <div class="btn-yellow">
           <van-image width="225px" height="41px" :src="getImgUrl('publicMobile/bindbox/btn-yellow.png')" />
-          <span class="text" @click="go('home')">去首页逛逛</span>
+          <span class="text" @click="go('home')">{{orderConsume.consumeIsTaskFinish?'去首页逛逛':'领取任务'}}</span>
         </div>
       </div>
       <div class="tail">
@@ -271,7 +274,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup, Loading, Field } from 'vant';
+import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, Toast } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import list from './components/list';
@@ -282,6 +285,7 @@ import {
   setNavigationBar,
   share,
 } from '@/utils/userInfo';
+Vue.use(Toast);
 Vue.use(Field);
 Vue.use(Loading);
 Vue.use(VanImage);
@@ -371,6 +375,8 @@ export default {
       load: true,
       shareData: null,
       inviteCode: null,
+      couponInviteId: null,
+      clicked:false,
     };
   },
   components: {
@@ -379,6 +385,16 @@ export default {
     box,
   },
   async created () {
+    await this.getUserInfo();
+    this.init();
+    this.sameDayHasSgin();
+  },
+  async mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode;
+    this.couponInviteId = query.couponInviteId;
     const rightButton = {
       type: 'share',
       object: {
@@ -393,21 +409,32 @@ export default {
       font: '', // 暂时不会传
       text: '', // 默认documenttitle
     };
+    if (this.couponInviteId) {
+      rightButton.object.shareObjectNo = this.couponInviteId
+    } 
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
-    await this.getUserInfo();
-    this.init();
-    this.sameDayHasSgin();
-  },
-  async mounted() {
-    const {
-      query,
-    } = this.$router.history.current;
-    this.inviteCode = query.inviteCode
     await this.loadImg()
     this.interval();
   },
   methods: {
     getImgUrl,
+    getTask(num) {
+      if (this.clicked) {
+        return
+      }
+      this.clicked = true
+      const param = {
+        type: num,
+      }
+      if (this.couponInviteId) {
+        param.configId = this.couponInviteId
+      }
+      teamApi.getTask(param, {token: this.token}).then(() => {
+        this.clicked = false
+        this.init();
+        Toast('领取成功');
+      })
+    },
     loadImg() {
       return new Promise((resolve, reject) => {
         let bgImg = new Image();
@@ -548,10 +575,15 @@ export default {
       return Y+M+D+h+m;
     },
     init() {
-      teamApi.getTaskInfo({},{token: this.token}).then((res) => {
+      const param = {}
+      if (this.couponInviteId) {
+        param.configId = this.couponInviteId
+      }
+      teamApi.getTaskInfo(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
-          const { prizeNotice, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
+          const { prizeNotice, configId, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
           this.prizeNotice = prizeNotice
+          this.couponInviteId = configId
           this.prizeWinMsg = prizeWinMsg
           this.ruleText = ruleText
           this.validTimeMsg = validTimeMsg
@@ -589,6 +621,9 @@ export default {
         size: 100,
         next: 0,
       }
+      if (this.couponInviteId) {
+        param.configId = this.couponInviteId
+      }
       if (type !== 1) {
         param.transferType = type - 1
       }
@@ -619,19 +654,30 @@ export default {
       }
       switch(type) {
         case 'home':
-          goToApp(appBaseUrl, '/tab/index?index=0', '', this.$bridge)
+          if (this.orderConsume.consumeIsTaskFinish) {
+            goToApp(appBaseUrl, '/tab/index?index=0', '', this.$bridge)
+          } else {
+            this.getTask(3)
+          }
           break
         case 'sign-in':
-          goToApp(appBaseUrl, '/flutter/mine/sign_in/detail', '', this.$bridge)
+          if (this.signIn.signInIsTaskFinish) {
+            goToApp(appBaseUrl, '/flutter/mine/sign_in/detail', '', this.$bridge)
+          } else {
+            this.getTask(1)
+          }
           break
         case 'invitaion':
-          share({
-            contentType: 3,
-            paramId: 7,
-            shareType: 3,
-            sourceType: 3,
-          })
-          // goToApp(meBaseUrl, '/web/invitation', '', this.$bridge)
+          if (this.inviteFriends.inviteIsTaskFinish) {
+            share({
+              contentType: 3,
+              paramId: 7,
+              shareType: 3,
+              sourceType: 3,
+            })
+          } else {
+            this.getTask(2)
+          }
           break
       }
     },
@@ -734,14 +780,8 @@ export default {
         position: absolute;
         animation: 14s rowup linear infinite normal;
       }
-      .msg {
-        // position: absolute;
-        // animation: 10s rowup linear infinite normal;
-      }
     }
   }
-
-
 
   .lead-box {
     position: absolute;
@@ -998,20 +1038,41 @@ export default {
     }
     .box-one {
       margin-top: 12px;
+      height: 199px;
+      .task-content {
+        height: 85px;
+      }
     }
     .box-two {
       margin-top: 18px;
+      height: 199px;
+      .task-content {
+        height: 85px;
+      }
     }
     .box-three {
       margin-top: 18px;
+      height: 226px;
+      .task-content {
+        height: 150px;
+      }
+      .btn-yellow {
+        top: -34px;
+      }
     }
     .task-content {
       margin: 13px auto;
       width: 306px;
-      height: 85px;
+      height: 130px;
       color: #FBE5C4;
       font-size: 14px;
       line-height: 19px;
+      .new-p {
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #F2CB33;
+      }
       .span {
         color: #F7FD95;
         font-size: 18px;
@@ -1020,7 +1081,13 @@ export default {
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        // justify-content: space-between;
+        .new-p {
+          font-size: 12px;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #F2CB33;
+        }
       }
     }
     .btn-yellow {

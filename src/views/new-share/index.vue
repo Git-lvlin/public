@@ -149,7 +149,11 @@ export default {
     // }
   },
   mounted() {
-    this.getInviteCode()
+    const {
+      query,
+    } = this.$router.history.current;
+    console.log('query', query)
+    this.inviteCode = query.inviteCode
   },
   methods: {
     hasWx() {
@@ -213,6 +217,7 @@ export default {
       }
       this.phoneErr = ''
       this.codeErr = ''
+      console.log('param', param)
       teamApi.getReg(param, {showError: false})
         .then((res) => {
           if (res&&res.code == 0) {
