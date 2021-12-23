@@ -289,10 +289,7 @@ export default {
       }
       // this.show = true
       bury('web_new_year_click_show_rule')
-      this.$router.push({
-        path: '/web/new-year-rule?_immersive=0',
-        query: {},
-      });
+      goToApp(meBaseUrl, '/web/new-year-rule?_immersive=0')
     },
     getNewYearInfo() {
       api.getHappy().then(res => {
