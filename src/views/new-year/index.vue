@@ -278,15 +278,15 @@ export default {
     //   document.getElementById(index+'').scrollIntoView()
     // },
     showPopup() {
-      // if (!this.token) {
-      //   this.$router.push({
-      //     path: '/web/new-share',
-      //     query: {
-      //       inviteCode: this.inviteCode
-      //     },
-      //   });
-      //   return
-      // }
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       this.show = true
       bury('web_new_year_click_show_rule')
     },
@@ -472,7 +472,7 @@ export default {
         .goods-content {
           padding: 8px;
           .goods-name {
-            height: 36px;
+            // height: 36px;
             margin-bottom: 6px;
             // height: 36px;
             font-size: 13px;
@@ -482,7 +482,7 @@ export default {
             line-height: 18px;
           }
           .goods-name2 {
-            height: 54px;
+            // height: 54px;
             margin-bottom: 6px;
             // height: 36px;
             font-size: 13px;
