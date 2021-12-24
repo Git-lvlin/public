@@ -48,12 +48,12 @@
             />
             <div :id="index" class="goods-box" v-if="data.goodsInfo.length">
               <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
-                <van-image
-                  class="goods-img"
-                  width="100%"
-                  height="169px"
-                  :src="goods.goodsImageUrl"
-                />
+                <div class="goods-img">
+                  <van-image
+                    width="100%"
+                    :src="goods.goodsImageUrl"
+                  />
+                </div>
                 <div class="goods-content" v-if="goods.redPacket">
                   <div class="goods-name van-multi-ellipsis--l2">{{goods.goodsName}}</div>
                   <div class="goods-tag">红包可抵扣{{goods.redPacket/100}}元</div>
@@ -373,6 +373,7 @@ export default {
         .goods-img {
           width: 100%;
           height: 169px;
+          overflow: hidden;
         }
         .goods-content {
           .goods-name {
