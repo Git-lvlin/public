@@ -160,7 +160,9 @@ export default {
   methods: {
     getImgUrl,
     getTask() {
-      teamApi.getTask({}, {token: this.token})
+      teamApi.getTask({type: 1}, {token: this.token})
+      teamApi.getTask({type: 2}, {token: this.token})
+      teamApi.getTask({type: 3}, {token: this.token})
     },
     getUserInfo() {
       return new Promise((resolve) => {
