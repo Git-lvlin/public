@@ -48,12 +48,12 @@
             />
             <div :id="index" class="goods-box" v-if="data.goodsInfo.length">
               <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
-                <van-image
-                  class="goods-img"
-                  width="100%"
-                  height="169px"
-                  :src="goods.goodsImageUrl"
-                />
+                <div class="goods-img">
+                  <van-image
+                    width="100%"
+                    :src="goods.goodsImageUrl"
+                  />
+                </div>
                 <div class="goods-content" v-if="goods.redPacket">
                   <div class="goods-name van-multi-ellipsis--l2">{{goods.goodsName}}</div>
                   <div class="goods-tag">红包可抵扣{{goods.redPacket/100}}元</div>
@@ -108,6 +108,7 @@ import {
   bury,
   setNavigationBar,
 } from '@/utils/userInfo';
+import { shareGoToNewShare } from '@/utils/publicBusiness';
 Vue.use(VanImage);
 Vue.use(Lazyload);
 Vue.use(Loading);
@@ -166,15 +167,7 @@ export default {
       })
     },
     toDetail(item) {
-      if (!this.token) {
-        this.$router.push({
-          path: '/web/new-share',
-          query: {
-            inviteCode: this.inviteCode
-          },
-        });
-        return
-      }
+      shareGoToNewShare(this.inviteCode, this.token, this.$store.state, this.$router);
       const {  defaultSkuId, spuId, orderType, activityId, objectId } = item;
       bury('web_new_year_click_to_shopping_detail', {
         spuId,
@@ -201,15 +194,7 @@ export default {
       })
     },
     goto(type) {
-      if (!this.token) {
-        this.$router.push({
-          path: '/web/new-share',
-          query: {
-            inviteCode: this.inviteCode
-          },
-        });
-        return
-      }
+      shareGoToNewShare(this.inviteCode, this.token, this.$store.state, this.$router);
       if (type==1) {
         bury('web_new_year_click_to_sign_in')
         goToApp(appBaseUrl, '/flutter/mine/sign_in/detail')
@@ -219,15 +204,7 @@ export default {
       }
     },
     showPopup() {
-      if (!this.token) {
-        this.$router.push({
-          path: '/web/new-share',
-          query: {
-            inviteCode: this.inviteCode
-          },
-        });
-        return
-      }
+      shareGoToNewShare(this.inviteCode, this.token, this.$store.state, this.$router);
       bury('web_new_year_click_show_rule')
       goToApp(meBaseUrl, '/web/new-year-rule?_immersive=0')
     },
@@ -373,6 +350,7 @@ export default {
         .goods-img {
           width: 100%;
           height: 169px;
+          overflow: hidden;
         }
         .goods-content {
           .goods-name {
