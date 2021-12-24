@@ -385,9 +385,7 @@ export default {
     box,
   },
   async created () {
-    await this.getUserInfo();
-    this.init();
-    this.sameDayHasSgin();
+
   },
   async mounted() {
     const {
@@ -395,6 +393,7 @@ export default {
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
+
     const rightButton = {
       type: 'share',
       object: {
@@ -415,14 +414,20 @@ export default {
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
     await this.loadImg()
     this.interval();
+    await this.getUserInfo();
+    this.getTask(1);
+    this.getTask(2);
+    this.getTask(3);
+    this.init();
+    this.sameDayHasSgin();
   },
   methods: {
     getImgUrl,
     getTask(num) {
-      if (this.clicked) {
-        return
-      }
-      this.clicked = true
+      // if (this.clicked) {
+      //   return
+      // }
+      // this.clicked = true
       const param = {
         type: num,
       }
@@ -430,9 +435,9 @@ export default {
         param.configId = this.couponInviteId
       }
       teamApi.getTask(param, {token: this.token}).then(() => {
-        this.clicked = false
-        this.init();
-        Toast('领取成功');
+        // this.clicked = false
+        // this.init();
+        // Toast('领取成功');
       })
     },
     loadImg() {

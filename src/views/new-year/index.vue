@@ -103,6 +103,7 @@ import { Image as VanImage, Lazyload, Popup, Tab, Tabs, Loading } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import api from '@/apis/year';
+import teamApi from '@/apis/bindbox';
 import {
   goToApp,
   bury,
@@ -145,6 +146,7 @@ export default {
     };
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
     await this.getUserInfo();
+    this.getTask()
   },
   
   async mounted() {
@@ -157,6 +159,9 @@ export default {
   },
   methods: {
     getImgUrl,
+    getTask() {
+      teamApi.getTask({}, {token: this.token})
+    },
     getUserInfo() {
       return new Promise((resolve) => {
         this.$bridge.callHandler('getUserInfo',{},(res) => {
@@ -169,13 +174,13 @@ export default {
     toDetail(item) {
       shareGoToNewShare(this.inviteCode, this.token, this.$store.state, this.$router);
       const {  defaultSkuId, spuId, orderType, activityId, objectId } = item;
+      const param = `?skuId=${defaultSkuId}&spuId=${spuId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
+      goToApp(appBaseUrl, '/shopping/detail', param)
       bury('web_new_year_click_to_shopping_detail', {
         spuId,
         skuId: defaultSkuId,
         orderType
       })
-      const param = `?skuId=${defaultSkuId}&spuId=${spuId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
-      goToApp(appBaseUrl, '/shopping/detail', param)
     },
     loadImg() {
       return new Promise((resolve, reject) => {
@@ -196,17 +201,17 @@ export default {
     goto(type) {
       shareGoToNewShare(this.inviteCode, this.token, this.$store.state, this.$router);
       if (type==1) {
-        bury('web_new_year_click_to_sign_in')
         goToApp(appBaseUrl, '/flutter/mine/sign_in/detail')
+        bury('web_new_year_click_to_sign_in')
       } else {
-        bury('web_new_year_click_to_bind_box')
         goToApp(meBaseUrl, '/web/bind-box')
+        bury('web_new_year_click_to_bind_box')
       }
     },
     showPopup() {
       shareGoToNewShare(this.inviteCode, this.token, this.$store.state, this.$router);
-      bury('web_new_year_click_show_rule')
       goToApp(meBaseUrl, '/web/new-year-rule?_immersive=0')
+      bury('web_new_year_click_show_rule')
     },
     getNewYearInfo() {
       api.getHappy().then(res => {
