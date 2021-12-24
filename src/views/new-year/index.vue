@@ -1,5 +1,6 @@
 <template>
   <div class="new-year">
+    <van-loading class="load" v-if="load" />
     <van-image
       class="bg"
       width="100%"
@@ -34,13 +35,6 @@
       /> 
     </div>
     <div class="content-box">
-      <!-- <div class="tab-box">
-        <div class="tab-show-box">
-          <div :class="item.type?'tab tab-index':'tab'" v-for="(item, index) in tabData" :key="index" @click="onTab(index)">{{item.text}}</div>
-        </div>
-      </div> -->
-
-      <!-- <van-tabs background="#E1230D" line-width="0" title-active-color="#F8382E" title-inactive-color="#FFFFFF" v-model="active" scrollspy sticky> -->
       <van-tabs background="#E1230D" line-width="0" line-height="0" duration="0" v-model="active" scrollspy sticky>
         <van-tab :title-style="index===active?'margin-top: 10px;width: 100px;height: 25px;border-radius: 13px;text-align: center;line-height: 25px;font-size: 14px;color: #F8382E;background: #FFFFFF;':'margin-top: 10px;width: 100px;height: 25px;border-radius: 13px;text-align: center;line-height: 25px;font-size: 14px;color: #FFFFFF;background: #E1230D;'" v-for="(data, index) in info" :title="info[index].name" :key="index">
           <div class="item-box">
@@ -82,38 +76,6 @@
           </div>
         </van-tab>
       </van-tabs>
-
-      <!-- <div v-for="(data, index) in info" :key="index">
-        <div class="item-box" v-if="data.goodsInfo.length">
-          <van-image
-            v-if="index!==0&&data.goodsInfo.length"
-            class="title"
-            width="211px"
-            height="34px"
-            lazy-load
-            :src="getImgUrl(`publicMobile/happynewyear/title${index}.png`)"
-          />
-          <div :id="index" ref="{{'abc' + index}}" class="goods-box" v-if="data.goodsInfo.length">
-            <div class="goods-item" @click="toDetail(goods)" v-for="(goods, i) in data.goodsInfo" :key="i">
-              <van-image
-                class="goods-img"
-                width="100%"
-                height="169px"
-                :src="goods.goodsImageUrl"
-              />
-              <div class="goods-content">
-                <div class="goods-name van-multi-ellipsis--l2">{{goods.goodsName}}</div>
-                <div class="goods-tag" v-if="goods.redPacket">红包可抵扣{{goods.redPacket/100}}元</div>
-                <div class="price-box">
-                  <div class="price">福利价 <span class="price-icon">¥</span></div>
-                  <div class="price-num">{{goods.wealPrice/100}}</div>
-                </div>
-                <div class="old-price">销售价:¥{{goods.goodsSaleMinPrice/100}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="tail">
         <van-image
           class="tail-left"
@@ -132,32 +94,12 @@
         />
       </div>
     </div>
-    <!-- 活动规则弹窗 -->
-    <!-- <van-popup
-      v-model="show"
-      closeable
-      position="bottom"
-      round
-      :style="{ height: '506px' }"
-    >
-      <div class="rule-div">
-        <div class="title">活动规则</div>
-        <div class="content">
-          <van-image
-            class="gz-content"
-            width="100%"
-            lazy-load
-            :src="getImgUrl('publicMobile/happynewyear/gz-content.png')"
-          />
-        </div>
-      </div>
-    </van-popup> -->
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Lazyload, Popup, Tab, Tabs } from 'vant';
+import { Image as VanImage, Lazyload, Popup, Tab, Tabs, Loading } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import api from '@/apis/year';
@@ -168,6 +110,7 @@ import {
 } from '@/utils/userInfo';
 Vue.use(VanImage);
 Vue.use(Lazyload);
+Vue.use(Loading);
 Vue.use(Popup);
 Vue.use(Tab);
 Vue.use(Tabs);
@@ -175,11 +118,11 @@ export default {
   data() {
     return {
       info: null,
-      // show: false,
-      // tabData: [],
       active: 0,
       inviteCode: null,
       token: null,
+      bgImgUrl: getImgUrl('publicMobile/happynewyear/bg.png'),
+      load: true,
     };
   },
   components: {
@@ -208,17 +151,8 @@ export default {
       query,
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode;
-    // window.addEventListener("scroll", (e) => {
-    //   console.log('e',e)
-    //   var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-    //   console.log('scrollTop', scrollTop)
-    // });
     this.getNewYearInfo()
-    //  this.$nextTick(()=>{ // 页面渲染完成后的回调
-    //     setTimeout(() => {
-    //       console.log('abc', this.$refs.abc1.offsetTop)
-    //     }, 1000)
-    // })
+    await this.loadImg()
   },
   methods: {
     getImgUrl,
@@ -250,6 +184,22 @@ export default {
       const param = `?skuId=${defaultSkuId}&spuId=${spuId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
       goToApp(appBaseUrl, '/shopping/detail', param)
     },
+    loadImg() {
+      return new Promise((resolve, reject) => {
+        let bgImg = new Image();
+        bgImg.src = this.bgImgUrl; // 获取背景图片的url
+        bgImg.onerror = () => {
+          console.log('img onerror')
+          reject()
+        }
+        bgImg.onload = () => { // 等背景图片加载成功后 去除loading
+          setTimeout(() => {
+            this.load = false
+            resolve()
+          }, 200)
+        }
+      })
+    },
     goto(type) {
       if (!this.token) {
         this.$router.push({
@@ -268,15 +218,6 @@ export default {
         goToApp(meBaseUrl, '/web/bind-box')
       }
     },
-    // onTab(index) {
-    //   this.tabData.map((item) => {
-    //     item.type = false
-    //     return item
-    //   })
-    //   this.tabData[index].type = true
-    //   // 定位到index锚点
-    //   document.getElementById(index+'').scrollIntoView()
-    // },
     showPopup() {
       if (!this.token) {
         this.$router.push({
@@ -287,23 +228,12 @@ export default {
         });
         return
       }
-      // this.show = true
       bury('web_new_year_click_show_rule')
       goToApp(meBaseUrl, '/web/new-year-rule?_immersive=0')
     },
     getNewYearInfo() {
       api.getHappy().then(res => {
         this.info = res.data
-        // this.tabData = this.info.map((item, index) => {
-        //   let d = {}
-        //   if (item.goodsInfo.length) {
-        //     d = {
-        //       text: item.name,
-        //       type: index==0?true:false
-        //     }
-        //   }
-        //   return d
-        // })
       })
     } 
   },
@@ -311,6 +241,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.load {
+  position: fixed;
+  padding-top: 200px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d93d33;
+  margin: auto;
+  text-align: center;
+  z-index: 99999;
+}
 .no-red-last-price {
   text-decoration: line-through;
 }
@@ -401,43 +341,6 @@ export default {
     color: #F8382E;
     background: #FFFFFF;
   }
-  // .tab-box {
-  //   position: sticky;
-  //   position: -webkit-sticky;
-  //   top: 0;
-  //   box-sizing: border-box;
-  //   padding-top: 6px;
-  //   padding-bottom: 6px;
-  //   padding-left: 3px;
-  //   width: 100%;
-  //   height: 37px;
-  //   overflow: hidden;
-  //   overflow-x: auto;
-  //   z-index: 9;
-  //   background: #E1230D;
-  //   .tab-show-box {
-  //     display: flex;
-  //     justify-content: flex-start;
-  //     width: 603px;
-  //     height: 100%;
-  //     .tab {
-  //       width: 100px;
-  //       height: 25px;
-  //       background: #E1230D;
-  //       border-radius: 13px;
-  //       text-align: center;
-  //       line-height: 25px;
-  //       font-size: 14px;
-  //       font-family: PingFangSC-Medium, PingFang SC;
-  //       font-weight: 500;
-  //       color: #FFFFFF;
-  //     }
-  //     .tab-index {
-  //       color: #F8382E;
-  //       background: #FFFFFF;
-  //     }
-  //   }
-  // }
   .item-box {
     box-sizing: border-box;
     padding: 12px;
@@ -466,16 +369,18 @@ export default {
         box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.02);
         border-radius: 8px;
         overflow: hidden;
+        position: relative;
         .goods-img {
           width: 100%;
           height: 169px;
         }
         .goods-content {
-          padding: 8px;
           .goods-name {
-            // height: 36px;
-            margin-bottom: 6px;
-            // height: 36px;
+            position: absolute;
+            left: 8px;
+            top: 173px;
+            width: 153px;
+            height: 36px;
             font-size: 13px;
             font-family: PingFangSC-Medium, PingFang SC;
             font-weight: 500;
@@ -483,9 +388,11 @@ export default {
             line-height: 18px;
           }
           .goods-name2 {
-            // height: 54px;
-            margin-bottom: 6px;
-            // height: 36px;
+            position: absolute;
+            left: 8px;
+            top: 173px;
+            width: 153px;
+            height: 54px;
             font-size: 13px;
             font-family: PingFangSC-Medium, PingFang SC;
             font-weight: 500;
@@ -493,9 +400,12 @@ export default {
             line-height: 18px;
           }
           .goods-tag {
-            margin-bottom: 2px;
-            display: inline-block;
-            padding: 2px 4px;
+            padding: 0 4px;
+            position: absolute;
+            top: 215px;
+            left: 8px;
+            height: 13px;
+            text-align: center;
             line-height: 13px;
             background: rgba(235, 72, 63, 0.1);
             border-radius: 2px;
@@ -505,6 +415,9 @@ export default {
             color: #EB483F;
           }
           .price-box {
+            position: absolute;
+            top: 230px;
+            left: 8px;
             display: flex;
             justify-content: flex-start;
             .price {
@@ -513,16 +426,19 @@ export default {
               color: #E7532C;
               .price-icon {
                 font-size: 12px;
-                font-weight: 600px;
+                font-weight: 600;
               }
             }
             .price-num {
               font-size: 16px;
               color: #E7532C;
-              font-weight: 600px;
+              font-weight: 600;
             }
           }
           .old-price {
+            position: absolute;
+            top: 255px;
+            left: 8px;
             height: 14px;
             font-size: 10px;
             font-family: PingFangSC-Regular, PingFang SC;
