@@ -123,6 +123,7 @@ export default {
       token: null,
       bgImgUrl: getImgUrl('publicMobile/happynewyear/bg.png'),
       load: true,
+      isWeixin: 0,
     };
   },
   components: {
@@ -166,7 +167,13 @@ export default {
       })
     },
     toDetail(item) {
-      if (!this.token) {
+      console.log('this.$store.state.appInfo', this.$store.state.appInfo)
+      const ua = window.navigator.userAgent.toLowerCase();
+      if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+        this.isWeixin = 1
+      }
+      console.log('isWeixin', this.isWeixin)
+      if (this.isWeixin || (!this.token && !this.$store.state.appInfo.isApp)) {
         this.$router.push({
           path: '/web/new-share',
           query: {
