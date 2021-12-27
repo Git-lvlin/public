@@ -324,6 +324,14 @@ const routes = [
     meta: {
       title: '约购年货节活动规则',
     }
+  },
+  {
+    path: '/web/game',
+    name: 'Game',
+    component: () => import('@/views/game'),
+    meta: {
+      title: '盖房子',
+    }
   }
 ];
 
