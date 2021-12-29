@@ -1,5 +1,9 @@
 <template>
   <div class="game" @click="click">
+    <div class="music-play" @click="onMusic">
+      <MusicPlay ref='music' />
+    </div>
+
     <div class="beat-box">
       <div id="bt" class="beat" v-show="show"></div>
       <div class="border"></div>
@@ -16,6 +20,8 @@
 import Vue from 'vue';
 import { Image as VanImage, Dialog, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import MusicPlay from './components/music/index'
+
 Vue.use(VanImage);
 Vue.use(Lazyload);
 export default {
@@ -28,6 +34,7 @@ export default {
     };
   },
   components: {
+    MusicPlay,
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
@@ -87,31 +94,13 @@ export default {
       }
     },
     click() {
-      if (!this.show) {
-        return
-      }
-      this.currentFloor += 1;
-      let a = document.getElementById('bt');
-      let b = parseInt(a.getBoundingClientRect().width);
-      let c = parseInt(a.getBoundingClientRect().height);
-      this.show = false;
-      let indexBox = document.createElement('div');
-      indexBox.id = `move${this.currentFloor}`
-      let style = `position: absolute;top:0;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:blue;`
-      // if (this.currentFloor>3) {
-      //   style = `position: absolute;top:${this.lastTime}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:blue;`
-      // }
-      indexBox.setAttribute("style", style); //为元素设置新的属性
-      let currentDiv = document.getElementById("bottom");
-      currentDiv.appendChild(indexBox);
-      // this.arr.push({
-      //   width: b,
-      //   height: c,
-      // })
-      // 创建完楼层后 开始移动下落
-      this.myMove()
+      let a = document.getElementById('bt')
+      const b = document.defaultView.getComputedStyle(a, null);
+      console.log('b', b)
     },
-
+    onMusic() {
+      this.$refs.music.onPlayOrPaused();
+    },
   },
 };
 </script>
@@ -123,6 +112,13 @@ export default {
     min-height: 100vh;
     background-color:#FFFFFF;
     position: relative;
+  }
+  .music-play {
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    width: 36px;
+    height: 36px;
   }
   .beat-box {
     position: absolute;
