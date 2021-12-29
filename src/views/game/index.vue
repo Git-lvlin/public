@@ -1,5 +1,8 @@
 <template>
   <div class="game" @click="click">
+    <div class="music-play" @click="onMusic">
+      <MusicPlay ref='music' />
+    </div>
 
     <div class="beat-box">
       <div id="bt" class="beat"></div>
@@ -17,6 +20,8 @@
 import Vue from 'vue';
 import { Image as VanImage, Dialog, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import MusicPlay from './components/music/index'
+
 Vue.use(VanImage);
 Vue.use(Lazyload);
 export default {
@@ -25,6 +30,7 @@ export default {
     };
   },
   components: {
+    MusicPlay,
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
@@ -35,7 +41,10 @@ export default {
       let a = document.getElementById('bt')
       const b = document.defaultView.getComputedStyle(a, null);
       console.log('b', b)
-    }
+    },
+    onMusic() {
+      this.$refs.music.onPlayOrPaused();
+    },
   },
 };
 </script>
@@ -46,6 +55,13 @@ export default {
     flex-direction: column;
     min-height: 100vh;
     background-color:#FFFFFF;
+  }
+  .music-play {
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    width: 36px;
+    height: 36px;
   }
   .beat-box {
     margin-top: 100px;
