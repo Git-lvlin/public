@@ -332,6 +332,14 @@ const routes = [
     meta: {
       title: '盖房子',
     }
+  },
+  {
+    path: '/web/game-animation',
+    name: 'GameAnimation',
+    component: () => import('@/views/game-animation'),
+    meta: {
+      title: '盖房子',
+    }
   }
 ];
 
