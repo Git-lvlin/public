@@ -34,12 +34,15 @@ export default {
       if (this.currentFloor > 3) {
         sinkHeight = parseInt(dom.getBoundingClientRect().height) + parseInt(box.style.top)
       }
-      dom.addEventListener("transitionend", () => {
+      box.removeEventListener("transitionend", this.isShow)
+      dom.addEventListener("transitionend", (e) => {
         box.style.top = sinkHeight + 'px';
-        box.addEventListener("transitionend", () => {
-          this.show = true;
-        })
+        e.stopPropagation()
+        box.addEventListener("transitionend", this.isShow)
       })
+    },
+    isShow() {
+      this.show = true
     },
     down() {
       const dom = document.getElementById(`floor${this.currentFloor}`);
@@ -55,7 +58,8 @@ export default {
         this.sink()
         return 
       } else {
-        dom.addEventListener("transitionend", () => {
+        dom.addEventListener("transitionend", (e) => {
+          e.stopPropagation()
           this.show=true
         })
       }
