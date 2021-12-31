@@ -334,6 +334,13 @@ const routes = [
     }
   },
   {
+    path: '/web/create-download',
+    name: 'CreateDownload',
+    component: () => import('@/views/create-download'),
+    meta: {
+      title: '盖房子下载页',
+    }
+  }, {
     path: '/web/game-animation',
     name: 'GameAnimation',
     component: () => import('@/views/game-animation'),

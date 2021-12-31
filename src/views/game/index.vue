@@ -1,5 +1,8 @@
 <template>
   <div class="game" @click="click">
+    <div class="join-control">
+      <JoinUser />
+    </div>
     <div class="music-play" @click="onMusic">
       <MusicPlay ref='music' />
     </div>
@@ -20,6 +23,7 @@
 import Vue from 'vue';
 import { Image as VanImage, Dialog, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import JoinUser from './components/join-user/index'
 import MusicPlay from './components/music/index'
 
 Vue.use(VanImage);
@@ -35,6 +39,7 @@ export default {
   },
   components: {
     MusicPlay,
+    JoinUser,
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
@@ -113,10 +118,14 @@ export default {
     background-color:#FFFFFF;
     position: relative;
   }
+  .join-control {
+    width: 100%;
+  }
   .music-play {
     position: fixed;
-    top: 0;
-    z-index: 9;
+    top: 36px;
+    right: 10px;
+    z-index: 5;
     width: 36px;
     height: 36px;
   }
