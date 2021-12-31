@@ -1,11 +1,45 @@
 <template>
-  <div class="join-box" id="openAppBox">
-    <div :class="listClass">
-      <a @click="onOpenApp" >openAPP</a>
-      <a @click="onOpenAli" >openAli</a>
-      <div class="join-item" v-for="item in userList" key="item">
-        <van-image custom-class="avatar" width="20" height="20" :src="item.avatar" />
-        <div class="user-name" >{{item.name}}{{item.text}}</div>
+  <div class="create-downlaod" id="openAppBox">
+    <div class="down-box">
+      <!-- <div class="join-num">已有36510人参与</div> -->
+      <img class="down-back" :src="getImgUrl('publicMobile/build_download/create_down_back.png?v=20211231')" />
+      <div class="btn-box">
+        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/build_download/open_btn.png')" />
+        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/build_download/down_btn.png')" />
+        <div class="btn-title">
+          <span class="red_text">约购</span>APP&nbsp;约着买&nbsp;更便宜
+        </div>
+      </div>
+    </div>
+    <div class="down-desc text-center">物美价廉有温度</div>
+    <div class="line" />
+    <div class="info-list">
+      <div class="info-item">
+        <img class="info-icon" :src="getImgUrl('publicMobile/build_download/create_coupon.png')" />
+        <div class="info-text">
+          <div class="info-text-title">
+            <span>约着买&nbsp;</span>
+            <span class="red_text">更省心</span>
+          </div>
+          <div class="info-text-desc">品牌直供&nbsp;质量保障</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <img class="info-icon" :src="getImgUrl('publicMobile/build_download/create_money.png')" />
+        <div class="info-text">
+          <div class="info-text-title">
+            <span>轻创业&nbsp;</span>
+            <span class="red_text">低成本</span>
+          </div>
+          <div class="info-text-desc">约购模式&nbsp;创富首选</div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-down-back">
+      <div class="bottom-down">
+        <img class="logo" :src="getImgUrl('publicMobile/common/logo.png')" />
+        <div class="bottom-info">约购-约着买更便宜</div>
+        <img class="bottom-btn" :src="getImgUrl('publicMobile/build_download/create_down.png')" />
       </div>
     </div>
   </div>
@@ -21,36 +55,8 @@ import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 export default {
   data() {
     return {
-      userList: [{
-        avatar: getImgUrl('publicMobile/common/defaultIcon.png'),
-        name: '莫本溪阿萨',
-        text: '获取水电费改成'
-      }, {
-        avatar: getImgUrl('publicMobile/common/defaultIcon.png'),
-        name: '阿萨姆波哥',
-        text: '获取一元'
-      }, {
-        avatar: getImgUrl('publicMobile/common/defaultIcon.png'),
-        name: '哈尔德',
-        text: '获取XXXXXXX'
-      }, {
-        avatar: getImgUrl('publicMobile/common/defaultIcon.png'),
-        name: '莫本溪阿萨',
-        text: '获取水电费改成'
-      }, {
-        avatar: getImgUrl('publicMobile/common/defaultIcon.png'),
-        name: '阿萨姆波哥',
-        text: '获取一元'
-      }, {
-        avatar: getImgUrl('publicMobile/common/defaultIcon.png'),
-        name: '哈尔德',
-        text: '获取XXXXXXX'
-      }],
       listClass: {
         "join-list": true,
-        transition: true,
-        "transform-100": false,
-        "transform-0": false,
       }
     };
   },
@@ -98,90 +104,152 @@ export default {
         },
       })
     },
-    
-    onOpenAli() {
-      const options = {
-        scheme: {
-          //URL Scheme 的 scheme 字段，要打开的 APP 的标识
-          protocol: 'alipays'
-        },
-        //安卓原生谷歌浏览器必须传递 Intent 协议地址，才能唤起 APP
-        intent: {
-          // APP包名
-          package: 'com.eg.android.AlipayGphone',
-          scheme: 'alipays'
-        },
-        timeout: '5000',
-        //APP 的 App Store
-        // appstore: DOWNLOAD_IOS,
-        //APP 的应用宝地址，
-        // yingyongbao: DOWNLOAD_ANDROID,
-        //唤端失败后跳转的地址。
-        // fallback: ""
-      };
-      const callLib = new CallApp(options);
-      callLib.open({
-        path: "",
-        //要传递的参数
-        param: {
-          test: "测试参数"
-        },
-      })
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .join-box {
+  .create-downlaod {
+    min-height: 100vh;
+    background-color: #FFE0C1;
+  }
+
+  .down-box {
     position: relative;
-    z-index: 5;
     width: 100%;
-    height: 32px;
-    overflow: hidden;
-    background-color: rgba($color: #ff0000, $alpha: 0.5);
   }
-  
-  @keyframes translateAnimate {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-  .join-list {
+
+  .join-num {
     position: absolute;
+    top: 108px;
+    left: 0;
+    width: 100%;
+    font-size: 12px;
+    color: #FFE0C1;
+    text-align: center;
+  }
+
+  .down-back {
+    width: 100%;
+  }
+
+  .btn-box {
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    z-index: 2;
+    width: 100%;
     display: flex;
     align-items: center;
-    // animation: translateAnimate 8s linear infinite;
-  } 
-
-  .transition {
-    transition: translate 5s;
+    flex-direction: column;
   }
   
-  .transform-100 {
-    transform: translateX(-100);
-  }
-  
-  .transform-0 {
-    transform: translateX(0);
+  .btn-icon {
+    width: 193px;
+    height: 48px;
+    margin-bottom: 14px;
   }
 
-  .join-item {
+  .btn-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    line-height: 25px;
+    padding-top: 18px;
+  }
+
+  .red_text {
+    color: #FF1700;
+  }
+
+  .gray_text {
+    color: #8691A5;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .down-desc {
+    font-size: 12px;
+    color: #666666;
+    line-height: 17px;
+    margin-top: 5px;
+  }
+
+  .line {
+    width: 26px;
+    height: 4px;
+    margin: 28px auto 24px;
+    background: linear-gradient(90deg, #FA1400 0%, #FF784C 100%);
+  }
+
+  .info-list {
     display: flex;
     align-items: center;
+    flex-direction: column;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+    padding-bottom: 24px;
   }
 
-  .avatar {
-    flex-grow: 0;
-    flex-shrink: 0;
+  .info-icon {
+    width: 60px;
+    height: 60rpx;
+    margin-right: 22px;
   }
 
-  .user-name {
-    white-space: nowrap;
+  .info-text-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    line-height: 22px;
+    margin-bottom: 4px;
   }
 
+  .info-text-desc {
+    font-size: 14px;
+    color: #666666;
+    line-height: 20px;
+  }
+
+  .bottom-down-back {
+    height: 100px;
+  }
+  
+  .bottom-down {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    padding: 0 14px 24px;
+    background-color: #fff;
+  }
+
+  .logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .bottom-info {
+    flex: 1;
+    font-size: 17px;
+    font-weight: 600;
+    color: #000000;
+    line-height: 24px;
+    margin-left: 8px;
+  }
+
+  .bottom-btn {
+    width: 113px;
+    height: 42px;
+  }
 
 </style>
