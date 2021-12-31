@@ -39,7 +39,7 @@
       <div class="bottom-down">
         <img class="logo" :src="getImgUrl('publicMobile/common/logo.png')" />
         <div class="bottom-info">约购-约着买更便宜</div>
-        <img class="bottom-btn" :src="getImgUrl('publicMobile/build_download/create_down.png')" />
+        <img class="bottom-btn" @click="onOpenApp" :src="getImgUrl('publicMobile/build_download/create_down.png')" />
       </div>
     </div>
   </div>
