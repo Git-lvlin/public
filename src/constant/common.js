@@ -21,3 +21,7 @@ export const ORDER_TYPE = {
   6: '主动集约',
   15: '集约',
 };
+
+// 下载APP地址
+export const DOWNLOAD_ANDROID = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.hznt.yeahgo';
+export const DOWNLOAD_IOS = 'itms-apps://itunes.apple.com/app/id1556552939?action=write-review';

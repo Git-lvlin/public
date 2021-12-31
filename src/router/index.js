@@ -332,6 +332,14 @@ const routes = [
     meta: {
       title: '盖房子',
     }
+  },
+  {
+    path: '/web/create-download',
+    name: 'CreateDownload',
+    component: () => import('@/views/create-download'),
+    meta: {
+      title: '盖房子下载页',
+    }
   }
 ];
 
