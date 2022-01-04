@@ -2389,6 +2389,11 @@ call-me-maybe@^1.0.1:
   resolved "https://registry.npm.taobao.org/call-me-maybe/download/call-me-maybe-1.0.1.tgz#26d208ea89e37b5cbde60250a15f031c16a4d66b"
   integrity sha1-JtII6onje1y95gJQoV8DHBak1ms=
 
+callapp-lib@^3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/callapp-lib/-/callapp-lib-3.5.1.tgz#be8a4345c05978fd4688e468a417c01551fd3b5b"
+  integrity sha512-w0gkWE58+o6wyd7k7Cg7iq341ycs0Euuotf8moIHymXK/q74FAL315DI5rF6IshvF7X2vklQeLAIKz+FtIhAhQ==
+
 caller-callsite@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/caller-callsite/download/caller-callsite-2.0.0.tgz#847e0fce0a223750a9a027c54b33731ad3154134"
