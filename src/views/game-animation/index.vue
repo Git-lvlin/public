@@ -85,6 +85,13 @@
 
     <!-- 游戏时 -->
     <div class="in-game" v-if="star" @click="click">
+      <van-image
+        class="banner"
+        width="100%"
+        height="812px"
+        lazy-load
+        :src="getImgUrl('publicMobile/game/bg.png')"
+      />
       <!-- 游戏顶部固定区域 -->
       <div class="game-title">参与游戏赢大奖</div>
       <div class="user-box">
@@ -96,7 +103,7 @@
             :src="getImgUrl('publicMobile/game/floor1.png')"
           />
         </div>
-        <div class="data">1层</div>
+        <div class="data">{{currentFloor}}层</div>
       </div>
 
       <!-- 游戏活动区域 -->
@@ -105,7 +112,7 @@
           width="100%"
           height="100%"
           lazy-load
-          :src="getImgUrl('publicMobile/game/random2.png')"
+          :src="indexImg"
         />
       </div>
       <div id="floor-box">
@@ -142,23 +149,58 @@ export default {
     return {
       currentFloor: 0,
       show: true,
-      star: false,
+      star: true,
       demo: false,
       end: false,
+      imgs: [
+        'publicMobile/game/random1.png',
+        'publicMobile/game/random2.png',
+        'publicMobile/game/random3.png',
+      ],
+      indexImg: null,
+      lastTime: null,
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
   created () {
+    if (this.star) {
+      this.setRandom()
+    }
   },
   methods: {
     getImgUrl,
+    randomNum(minNum,maxNum){
+      const num = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10)
+      if (this.lastTime && this.lastTime === num) {
+        switch(num) {
+          case 1:
+            return 2;
+            break
+          case 2:
+            return 3;
+            break
+          case 3:
+            return 1;
+            break
+        }
+      } else {
+        this.lastTime = num
+        return num
+      }
+    },
     goDemo() {
       this.star = true
     },
     go() {
+      this.setRandom()
       this.star = true
+    },
+    setRandom() {
+      const img = this.randomNum(1, 3);
+      const url = getImgUrl(`publicMobile/game/random${img}.png`)
+      this.indexImg = url
     },
     sink() {
       const box = document.getElementById('floor-box');
@@ -175,7 +217,8 @@ export default {
       })
     },
     isShow(e) {
-      e.stopPropagation()
+      e&&e.stopPropagation()
+      this.setRandom()
       this.show = true
     },
     down() {
@@ -202,7 +245,7 @@ export default {
       } else {
         dom.addEventListener("transitionend", (e) => {
           e.stopPropagation()
-          this.show=true
+          this.isShow()
         })
       }
     },
@@ -210,7 +253,6 @@ export default {
       if (!this.show) {
         return
       }
-      console.log(1);
       this.show = false;
       this.currentFloor += 1;
       let a = document.getElementById('beat');
@@ -219,10 +261,10 @@ export default {
       const box = document.getElementById('floor-box');
       let indexBox = document.createElement('div');
       indexBox.id = `floor${this.currentFloor}`
-      let style = `position: absolute;top:0;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${getImgUrl('publicMobile/game/random1.png')}) 0 0 no-repeat;background-size:100%;transition: all 2s linear;`
+      let style = `position: absolute;top:188px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 2s linear;`
       if (this.currentFloor > 3) {
-        const top = parseInt(box.style.top);
-        style = `position: absolute;top:${-top}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${getImgUrl('publicMobile/game/random2.png')}) 0 0 no-repeat;background-size:100%;transition: all 2s linear;`
+        const top = parseInt(box.style.top) - 188;
+        style = `position: absolute;top:${-top}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 2s linear;`
       }
       indexBox.setAttribute("style", style); //为元素设置新的属性
       let currentDiv = document.getElementById("floor-box");
@@ -244,13 +286,13 @@ export default {
   }
   @keyframes scaleDraw {
     0% {transform: scale(1, 1);  /*开始为原始大小*/}
-    25% {transform: scale(4.8, 4.8);  /*开始为原始大小*/}
+    25% {transform: scale(4.2, 4.2);  /*开始为原始大小*/}
     50% {transform: scale(1, 1);  /*开始为原始大小*/}
-    75% {transform: scale(4.8, 4.8);  /*开始为原始大小*/}
+    75% {transform: scale(4.2, 4.2);  /*开始为原始大小*/}
   }
   #beat {
     position: absolute;
-    top: 0;
+    top: 188px;
     width: 60px;
     height: 24.5px;
     transform-origin: center top 0;
@@ -285,12 +327,18 @@ export default {
   }
 
   .in-game {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    .banner {
+      position: absolute;
+      top: 0;
+    }
   }
   .game-title {
+    margin-top: 53px;
     margin-bottom: 22px;
     text-align: center;
     width: 100%;
@@ -299,12 +347,15 @@ export default {
     font-weight: 500;
     color: #FFFFFF;
     line-height: 25px;
+    z-index: 2;
   }
   .user-box {
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
+    z-index: 2;
     .user-pic {
+      margin-left: 24px;
       margin-right: 14px;
       width: 64px;
       height: 64px;
