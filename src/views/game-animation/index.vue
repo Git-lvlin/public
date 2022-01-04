@@ -205,7 +205,7 @@ export default {
       const box = document.getElementById('floor-box');
       const dom = document.getElementById(`floor${this.currentFloor}`);
       let sinkHeight = parseInt(dom.getBoundingClientRect().height);
-      if (this.currentFloor > 3) {
+      if (this.currentFloor > 2) {
         sinkHeight = parseInt(dom.getBoundingClientRect().height) + parseInt(box.style.top)
       }
       box.removeEventListener("transitionend", this.isShow)
@@ -230,7 +230,7 @@ export default {
       const domWidth = parseInt(dom.getBoundingClientRect().width);
       const beforeWidth = parseInt(beforeDom.getBoundingClientRect().width)
       let h = parseInt(beforeDom.getBoundingClientRect().y) - parseInt(dom.getBoundingClientRect().height);
-      if (this.currentFloor > 3) {
+      if (this.currentFloor > 2) {
         h = h - parseInt(box.style.top);
       }
       dom.style.top = h + 'px';
@@ -241,8 +241,8 @@ export default {
         return Dialog({ message: 'game over' });
       }
       border.style.width = domWidth + 'px'
-      if (this.currentFloor > 2) {
-        // 第三层开始下沉
+      if (this.currentFloor > 1) {
+        // 第二层开始下沉
         this.sink()
         return 
       } else {
@@ -264,10 +264,10 @@ export default {
       const box = document.getElementById('floor-box');
       let indexBox = document.createElement('div');
       indexBox.id = `floor${this.currentFloor}`
-      let style = `position: absolute;top:188px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 2s linear;`
-      if (this.currentFloor > 3) {
+      let style = `z-index:2;position: absolute;top:188px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 2s linear;`
+      if (this.currentFloor > 2) {
         const top = parseInt(box.style.top) - 188;
-        style = `position: absolute;top:${-top}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 2s linear;`
+        style = `z-index:2;position: absolute;top:${-top}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 2s linear;`
       }
       indexBox.setAttribute("style", style); //为元素设置新的属性
       let currentDiv = document.getElementById("floor-box");
@@ -311,6 +311,7 @@ export default {
     transform-origin: center top 0;
     animation: scaleDraw 5s ease-in-out infinite;
     -webkit-animation: scaleDraw 5s ease-in-out infinite;
+    z-index: 3;
   }
   #floor-box {
     position: absolute;
@@ -319,6 +320,7 @@ export default {
     height: 100vh;
     // overflow: hidden;
     transition: all 1s linear;
+    background-color: #FFE0C1;
   }
   #floor0 {
     display: flex;
@@ -348,6 +350,7 @@ export default {
     .banner {
       position: absolute;
       top: 0;
+      z-index: 2;
     }
   }
   .game-title {
