@@ -324,6 +324,29 @@ const routes = [
     meta: {
       title: '约购年货节活动规则',
     }
+  },
+  {
+    path: '/web/game',
+    name: 'Game',
+    component: () => import('@/views/game'),
+    meta: {
+      title: '盖房子',
+    }
+  },
+  {
+    path: '/web/create-download',
+    name: 'CreateDownload',
+    component: () => import('@/views/create-download'),
+    meta: {
+      title: '盖房子下载页',
+    }
+  }, {
+    path: '/web/game-animation',
+    name: 'GameAnimation',
+    component: () => import('@/views/game-animation'),
+    meta: {
+      title: '盖房子',
+    }
   }
 ];
 
