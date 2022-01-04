@@ -85,6 +85,21 @@
 
     <!-- 游戏时 -->
     <div class="in-game" v-if="star" @click="click">
+      <!-- 游戏顶部固定区域 -->
+      <div class="game-title">参与游戏赢大奖</div>
+      <div class="user-box">
+        <div class="user-pic">
+          <van-image
+            width="64px"
+            height="64px"
+            lazy-load
+            :src="getImgUrl('publicMobile/game/floor1.png')"
+          />
+        </div>
+        <div class="data">1层</div>
+      </div>
+
+      <!-- 游戏活动区域 -->
       <div id="beat" v-if="show">
         <van-image
           width="100%"
@@ -129,7 +144,7 @@ export default {
       show: true,
       star: false,
       demo: false,
-      end: true,
+      end: false,
     };
   },
   components: {
@@ -275,6 +290,35 @@ export default {
     align-items: center;
     height: 100vh;
   }
+  .game-title {
+    margin-bottom: 22px;
+    text-align: center;
+    width: 100%;
+    font-size: 18px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+    line-height: 25px;
+  }
+  .user-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    .user-pic {
+      margin-right: 14px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .data {
+      font-size: 20px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #FFFFFF;
+      line-height: 28px;
+    }
+  }
 
   .init {
     display: flex;
@@ -320,6 +364,9 @@ export default {
     align-items: center;
     .star {
       margin-bottom: 24px;
+    }
+    .time {
+      z-index: 2;
     }
   }
   .btn-box-end {
