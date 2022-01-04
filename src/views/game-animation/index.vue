@@ -99,7 +99,6 @@
           <van-image
             width="64px"
             height="64px"
-            lazy-load
             :src="getImgUrl('publicMobile/game/floor1.png')"
           />
         </div>
@@ -107,11 +106,11 @@
       </div>
 
       <!-- 游戏活动区域 -->
+      <div id="border" v-show="currentFloor"></div>
       <div id="beat" v-if="show">
         <van-image
           width="100%"
           height="100%"
-          lazy-load
           :src="indexImg"
         />
       </div>
@@ -121,14 +120,12 @@
             class="one"
             width="274px"
             height="139px"
-            lazy-load
             :src="getImgUrl('publicMobile/game/floor1.png')"
           />
           <van-image
             class="base"
             width="100%"
             height="68px"
-            lazy-load
             :src="getImgUrl('publicMobile/game/base.png')"
           />
         </div>
@@ -149,7 +146,7 @@ export default {
     return {
       currentFloor: 0,
       show: true,
-      star: true,
+      star: false,
       demo: false,
       end: false,
       imgs: [
@@ -159,6 +156,8 @@ export default {
       ],
       indexImg: null,
       lastTime: null,
+      showBorder: false,
+      over: false,
     };
   },
   components: {
@@ -217,11 +216,14 @@ export default {
       })
     },
     isShow(e) {
-      e&&e.stopPropagation()
-      this.setRandom()
-      this.show = true
+      if (!this.over) {
+        e&&e.stopPropagation()
+        this.setRandom()
+        this.show = true
+      }
     },
     down() {
+      const border = document.getElementById(`border`);
       const dom = document.getElementById(`floor${this.currentFloor}`);
       const beforeDom = document.getElementById(`floor${this.currentFloor-1}`);
       const box = document.getElementById('floor-box');
@@ -232,12 +234,13 @@ export default {
         h = h - parseInt(box.style.top);
       }
       dom.style.top = h + 'px';
-
       // game over
       if (domWidth>beforeWidth) {
-        Dialog({ message: 'game over' });
-        return
+        border.style.width = beforeWidth + 'px'
+        this.over = true
+        return Dialog({ message: 'game over' });
       }
+      border.style.width = domWidth + 'px'
       if (this.currentFloor > 2) {
         // 第三层开始下沉
         this.sink()
@@ -276,6 +279,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  #border {
+    position: absolute;
+    top: 188px;
+    width: 200px;
+    height: 117px;
+    border: 1px dashed #FFFFFF;
+    border-top: none;
+    border-bottom: none;
+    z-index: 99;
+  }
   .game {
     display: flex;
     flex-direction: column;
