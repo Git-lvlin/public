@@ -228,7 +228,7 @@ export default {
       const beforeDom = document.getElementById(`floor${this.currentFloor-1}`);
       const box = document.getElementById('floor-box');
       const domWidth = parseInt(dom.getBoundingClientRect().width);
-      const beforeWidth = parseInt(beforeDom.getBoundingClientRect().width)
+      const beforeWidth = parseInt(beforeDom.getBoundingClientRect().width);
       let h = parseInt(beforeDom.getBoundingClientRect().y) - parseInt(dom.getBoundingClientRect().height);
       if (this.currentFloor > 2) {
         h = h - parseInt(box.style.top);
@@ -236,7 +236,8 @@ export default {
       dom.style.top = h + 'px';
       // game over
       if (domWidth>beforeWidth) {
-        border.style.width = beforeWidth + 'px'
+        border.style.width = beforeWidth + 'px';
+        border.style.top = h + 'px';
         this.over = true
         return Dialog({ message: 'game over' });
       }
@@ -279,6 +280,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @keyframes fade {
+    from {
+      opacity: 1;
+    }
+    50% {
+      opacity: .4;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   #border {
     position: absolute;
     top: 188px;
@@ -288,6 +300,7 @@ export default {
     border-top: none;
     border-bottom: none;
     z-index: 99;
+    animation: fade 600ms infinite;
   }
   .game {
     display: flex;
