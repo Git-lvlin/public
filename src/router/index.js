@@ -368,6 +368,13 @@ const routes = [
       title: '提现详情',
     }
   }, {
+    path: '/web/game-build-rule',
+    name: 'GameBuildRule',
+    component: () => import('@/views/game-build-rule'),
+    meta: {
+      title: '新年建新房活动规则',
+    }
+  }, {
     path: '/web/game-animation',
     name: 'GameAnimation',
     component: () => import('@/views/game-animation'),

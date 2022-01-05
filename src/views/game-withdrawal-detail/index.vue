@@ -1,22 +1,78 @@
 <template>
-  <div class="withdrawal-list">
+  <div class="withdrawal-detail">
     <div class="content-box">
-      <div class="list" >
-        <div class="item" @click="onToDetail(idx)">
-          <img
-            class="avatar flex-fix"
-            referrerpolicy="no-referrer"
-            src="https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng3737a564ccf0e7da452f0284f3de129a2bc5f59b859025866a8aefaebdd25978"
-          />
-          <div class="user-info">
-            <div class="info-title">账户提现-支付宝（6472）</div>
-            <div class="item-time">12月20日 19:58</div>
-          </div>
-          <div class="price flex-fix">¥3000.00</div>
-        </div>
+      <div class="price-box">
+        <img class="price-icon" :src="getImgUrl('publicMobile/withdrawal/withdrawal-icon.png')" />
+        <div class="price">¥ 8689.99</div>
+        <div class="account">账户提现到支付宝（6472）</div>
       </div>
-      <div class="desc">
-        仅展示所选月份交易数据，查看更多请选择时间
+
+      <div class="withdrawal-info">
+        <div class="progress-box">
+          <span class="flex-fix progress-title">当前状态</span>
+          <div class="flex-fix progress-list">
+            <div class="progress-item">
+              <div class="tap" />
+              <div class="line" />
+            </div>
+            <div class="progress-item">
+              <div class="tap" v-if="progress == 3" />
+              <img class="waiting-icon"  v-if="progress == 2" :src="getImgUrl('publicMobile/withdrawal/waiting.png')" />
+            </div>
+            <div class="progress-item" v-if="progress == 3">
+              <div class="line" />
+              <img class="success-icon" v-if="isOk" :src="getImgUrl('publicMobile/withdrawal/success.png')" />
+              <img class="waiting-icon" v-if="!isOk" :src="getImgUrl('publicMobile/withdrawal/lose.png')" />
+            </div>
+          </div>
+          <div class="progress-info">
+            <div class="progress-info-item">
+              <div>发起提现</div>
+              <div class="progress-info-time">2021-05-21 10:18:37</div>
+            </div>
+            <div
+              :class="`progress-info-item ${progress == 2 ? 'act-top act-bank' : ''}`"
+            >银行处理中</div>
+            <div
+              :class="`progress-info-item act-top ${isOk ? 'success-text' : 'lose-text'}`"
+              v-if="progress == 3"
+            >
+              <div>{{isOk ? '到账' : '提现失败'}}</div>
+              <div class="progress-info-time">2021-05-21 10:18:37</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-detail">
+          <div class="detail-item">
+            <div>提现金额</div>
+            <div class="detail-value">¥8689.99</div>
+          </div>
+          <div class="detail-item">
+            <div>服务费</div>
+            <div class="detail-value">¥8689.99</div>
+          </div>
+          <div class="detail-item">
+            <div>申请时间</div>
+            <div class="detail-value">2021-05-21 10:18:37</div>
+          </div>
+          <div class="detail-item">
+            <div>到账时间</div>
+            <div class="detail-value">-</div>
+          </div>
+          <div class="detail-item">
+            <div>提现银行</div>
+            <div class="detail-value">阿的说法是</div>
+          </div>
+          <div class="detail-item">
+            <div>提现单号</div>
+            <div class="detail-value">231564564564564</div>
+          </div>
+          <div class="detail-item">
+            <div>失败原因</div>
+            <div class="detail-value">系统升级原因</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -31,6 +87,8 @@ import { getImgUrl } from '@/utils/tools';
 export default {
   data() {
     return {
+      progress: 3,
+      isOk: true,
     };
   },
   components: {
@@ -49,67 +107,119 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .withdrawal-list {
+  .withdrawal-detail {
     min-height: 100vh;
+    font-size: 15px;
+    color: #999999;
+    line-height: 21px;
     padding: 12px;
     background-color: rgba(249, 249, 249, 1);
   }
   .content-box {
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 10px;
   }
   .flex-fix {
     flex-grow: 0;
     flex-shrink: 0;
   }
-  .list {
-    height: 70px;
-    padding-left: 13px;
-    padding-right: 16px;
-    margin-bottom: 5px;
-    background-color: rgba(249, 249, 249, 1);
+  .price-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 27px 0 26px 0;
+    margin-bottom: 10px;
+    background-color: #fff;
     border-radius: 10px;
   }
-  .item {
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
-  .avatar {
-    width: 32px;
+  .price-icon {
+    width: 40px;
     height: 32px;
-    margin-top: 5px;
-  }
-  .user-info {
-    flex: 1;
-    height: 46px;
-    margin-left: 3px;
-  }
-  .info-title {
-    color: rgba(90, 90, 90, 1);
-    font-size: 15px;
-    line-height: 21px;
-    white-space: nowrap;
-    margin-left: 2px;
-  }
-  .item-time {
-    color: rgba(153, 153, 153, 1);
-    font-size: 14px;
-    line-height: 20px;
-    margin-top: 5px;
+    margin-bottom: 10px;
   }
   .price {
-    color: rgba(255, 135, 24, 1);
-    font-size: 15px;
-    text-align: center;
-    line-height: 17px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+    line-height: 28px;
+    margin-bottom: 16px;
   }
   
-  .desc {
-    color: rgba(153, 153, 153, 1);
-    font-size: 15px;
-    line-height: 21px;
-    margin: 20px 0 0 2px;
+  .withdrawal-info {
+    padding: 12px;
+    background: #FFFFFF;
+    border-radius: 10px;
+  }
+  .progress-box {
+    display: flex;
+    padding-bottom: 27px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #D8D8D8;
+  }
+  .progress-title {
+    margin-top: 18px;
+  }
+  .progress-list {
+    margin-top: 18px;
+    margin-left: 11px;
+  }
+  .progress-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 22px;
+  }
+  .tap {
+    width: 8px;
+    height: 8px;
+    background: #D8D8D8;
+    margin-bottom: 4px;
+    border-radius: 50%;
+  }
+  .line {
+    width: 1px;
+    height: 28px;
+    margin-bottom: 4px;
+    border-left: 1px dotted #D8D8D8;
+  }
+  .waiting-icon {
+    width: 22px;
+    height: 22px;
+  }
+  .success-icon {
+    width: 22px;
+    height: 23px;
+  }
+  .progress-info {
+    margin-left: 32px;
+  }
+  .progress-info-item:not(:first-child) {
+    margin-top: 15px;
+  }
+  .act-bank {
+    color: #008CEF;
+  }
+  .act-top {
+    margin-top: 22px !important;
+  }
+  .progress-info-time {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .success-text {
+    color: #FF8718 !important;
+  }
+  .lose-text {
+    color: #EF1A00 !important;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .detail-value {
+    color: rgba(51, 51, 51, 1);
+    font-size: 16px;
+    line-height: 22px;
   }
 </style>
