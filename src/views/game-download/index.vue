@@ -217,7 +217,7 @@ export default {
   }
 
   .bottom-down-back {
-    height: 100px;
+    height: 90px;
   }
   
   .bottom-down {
@@ -228,8 +228,8 @@ export default {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 100px;
-    padding: 0 14px 24px;
+    height: 90px;
+    padding: 0 14px 14px;
     background-color: #fff;
   }
 
