@@ -66,7 +66,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, List } from 'vant';
+import { Image as VanImage, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, List, Dialog } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import list from './components/list';
 import teamApi from '@/apis/everyday';
@@ -127,6 +127,7 @@ export default {
     }
   },
   components: {
+    [Dialog.Component.name]: Dialog.Component,
     list,
   },
   async created () {
@@ -180,8 +181,11 @@ export default {
           firstDayStatus,
           secondDayStatus,
           thirdDayStatus,
+          status,
         } = this.indexData
-
+        if (status == 2) {
+          Dialog({ message: '该活动已结束，暂无可领取红包' });
+        }
         this.ruleText = activityRule
 
         if (firstDayStatus) {
