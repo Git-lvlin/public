@@ -1,5 +1,6 @@
 <template>
   <div class="game">
+
     <!-- <van-image
       class="banner"
       width="100%"
@@ -9,6 +10,44 @@
     /> -->
     <!-- 游戏未开始 -->
     <div class="init" v-if="!star">
+      <div class="top-right-box">
+        <van-image
+          class="share"
+          width="32px"
+          height="32px"
+          :src="getImgUrl('publicMobile/game/share.png')"
+        />
+        <van-image
+          class="skill"
+          width="32px"
+          height="32px"
+          :src="getImgUrl('publicMobile/game/skill.png')"
+        />
+        <van-image
+          class="opp"
+          width="32px"
+          height="32px"
+          :src="getImgUrl('publicMobile/game/opp.png')"
+        />
+        <van-image
+          class="rank"
+          width="32px"
+          height="32px"
+          :src="getImgUrl('publicMobile/game/rank.png')"
+        />
+        <van-image
+          class="red-box"
+          width="40px"
+          height="44px"
+          :src="getImgUrl('publicMobile/game/red-box.png')"
+        />
+      </div>
+
+      <div class="join-control">
+        <div class="index-swiper">
+          <JoinUser :prizeWinMsg="prizeWinMsg" />
+        </div>
+      </div>
       <van-image
         class="banner"
         width="100%"
@@ -23,8 +62,8 @@
         lazy-load
         :src="getImgUrl('publicMobile/game/title.png')"
       />
-      <div class="sub-title" v-if="!end">已有3660人参与，您今天还有3次参与机</div>
-      <div class="sub-title" v-else>已有3660人参与</div>
+      <div class="sub-title" v-if="!end">已有{{joinNum}}人参与，您今天还有{{chanceNum}}次参与机</div>
+      <div class="sub-title" v-else>已有{{joinNum}}人参与</div>
       <van-image
         class="main"
         width="309px"
@@ -50,7 +89,7 @@
           :src="getImgUrl('publicMobile/game/demo.png')"
         />
         <div class="demo-text">试玩游戏不消耗机会</div>
-        <div class="time">活动时间：2022.01.01-2022</div>
+        <div class="time">活动时间：{{actTime}}</div>
       </div>
       <div class="btn-box-no" v-if="!demo&&!end">
         <van-image
@@ -61,7 +100,7 @@
           @click="go"
           :src="getImgUrl('publicMobile/game/star.png')"
         />
-        <div class="time">活动时间：2022.01.01-2022</div>
+        <div class="time">活动时间：{{actTime}}</div>
       </div>
       <div class="btn-box-end" v-if="end">
         <van-image
@@ -78,13 +117,16 @@
           lazy-load
           :src="getImgUrl('publicMobile/game/tip.png')"
         />
-        <div class="time padding-b">活动时间：2022.01.01-2022</div>
+        <div class="time padding-b">活动时间：{{actTime}}</div>
       </div>
     </div>
 
 
     <!-- 游戏时 -->
     <div class="in-game" v-if="star" @click="click">
+      <div class="music-play" @click="onMusic">
+        <MusicPlay ref='music' />
+      </div>
       <van-image
         class="banner"
         width="100%"
@@ -139,37 +181,153 @@
 import Vue from 'vue';
 import { Image as VanImage, Dialog, Lazyload } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import teamApi from '@/apis/game';
+import JoinUser from './components/join-user/index';
+import MusicPlay from './components/music/index';
+import {
+  goToApp,
+  share,
+} from '@/utils/userInfo';
 Vue.use(VanImage);
 Vue.use(Lazyload);
 export default {
   data() {
     return {
-      currentFloor: 0,
+      currentFloor: 0, // 当前楼层
       show: true,
       star: false,
-      demo: false,
+      demo: false, // 是否有试玩机会
       end: false,
       imgs: [
         'publicMobile/game/random1.png',
         'publicMobile/game/random2.png',
         'publicMobile/game/random3.png',
       ],
+      inviteCode: null,
       indexImg: null,
       lastTime: null,
       showBorder: false,
       over: false,
+      token: 'AQIAAAAAYdcBHhO25RQlZuABaDCxUZP2UgJZxLlhbsXTYYDPa8Beu-9Zgf7dR9DIMuw=',
+      configId: null, // 不传默认取进行中的活动
+      chanceNum: null, // 机会
+      joinNum: null, // 参与人数
+      prizeWinMsg: null, // 中奖信息
+      ruleText: null, // 活动规则
+      activityStatus: null, // 活动规则 0-结束 1-进行中 2-未开始
+      activityStartTime: null,
+      activityEndTime: null,
+      actTime: null, // 活动时间段
+      couponInviteId: null, // 活动id 同configId、activityId
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
+    MusicPlay,
+    JoinUser,
   },
   created () {
-    if (this.star) {
-      this.setRandom()
-    }
+    this.getGame()
+  },
+  async methods() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode;
+    this.couponInviteId = query.couponInviteId;
+
+    // await this.getUserInfo()
+    this.getGame()
   },
   methods: {
     getImgUrl,
+    goShare() {
+      let param = {
+        contentType: 12,
+        paramId: 14,
+        shareType: 3,
+        sourceType: 12,
+      }
+      if (this.couponInviteId || this.configId) {
+        param.shareObjectNo = this.couponInviteId || this.configId
+      } 
+      share(param)
+    },
+    timestampToTime(timestamp) {
+      var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + '.';
+      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
+      var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+      return Y+M+D
+    },
+    gameInit() {
+      this.currentFloor = 0;
+      this.getGame();
+    },
+    getUserInfo() {
+      return new Promise((resolve) => {
+        this.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          this.token = d.data.accessToken
+          resolve()
+        })
+      })
+    },
+    //  获取游戏详情
+    getGame() {
+      teamApi.getGameInfo({}, {token: this.token}).then((res) => {
+        const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
+        this.configId = configId
+        this.chanceNum = chanceNum
+        this.joinNum = joinNum
+        this.demo = isTestPay
+        this.prizeWinMsg = prizeWinMsg
+        this.ruleText = ruleText
+        this.activityStatus = activityStatus
+        this.activityStartTime = activityStartTime
+        this.activityEndTime = activityEndTime
+        this.actTime = this.timestampToTime(activityStartTime) + '-' + this.timestampToTime(activityEndTime)
+      })
+    },
+    // 抽奖
+    getLuckDraw() {
+      const param = {
+        activityId: this.configId,
+        gameId: this.gameRecordId,
+        chanceId: this.chanceId,
+      }
+      teamApi.getAddRecord(param, {token: this.token}).then((res) => {
+        this.gameRecordId = res.data.gameId;
+      })
+    },
+    // 添加游戏记录
+    getPushRecord() {
+      const param = {
+        chanceId: this.chanceId,
+        activityId: this.configId,
+        floor: this.currentFloor,
+      }
+      teamApi.getAddRecord(param, {token: this.token}).then((res) => {
+        this.gameRecordId = res.data.gameId;
+      })
+    },
+    // 使用试玩机会
+    getConsumeUsageTimes() {
+      const param = {
+        configId: this.configId
+      }
+      teamApi.getConsume(param, {token: this.token})
+    },
+    // 使用盖楼机会
+    getUseBuilding() {
+      const param = {
+        configId: this.configId
+      }
+      teamApi.getUseBuildingNum(param, {token: this.token}).then((res) => {
+        const { id, configId, memberId } = res.data;
+        this.chanceId = id;
+      })
+    },
     randomNum(minNum,maxNum){
       const num = parseInt(Math.random()*(maxNum-minNum+1)+minNum,10)
       if (this.lastTime && this.lastTime === num) {
@@ -195,6 +353,7 @@ export default {
     go() {
       this.setRandom()
       this.star = true
+      this.getUseBuilding()
     },
     setRandom() {
       const img = this.randomNum(1, 3);
@@ -280,6 +439,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .top-right-box {
+    position: absolute;
+    top: 84px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+    .share {
+      margin-bottom: 12px;
+    }
+    .opp {
+      margin-top: 12px;
+    }
+    .rank {
+      margin-top: 12px;
+      margin-bottom: 10px;
+    }
+
+  }
+  .join-control {
+    position: absolute;
+    top: 157px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    .index-swiper {
+      width: 310px;
+      height: 23px;
+    }
+  }
+  .music-play {
+    position: fixed;
+    top: 36px;
+    right: 10px;
+    z-index: 5;
+    width: 36px;
+    height: 36px;
+  }
   @keyframes fade {
     from {
       opacity: 1;
