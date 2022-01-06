@@ -2,10 +2,10 @@
   <div class="create-downlaod" id="openAppBox">
     <div class="down-box">
       <!-- <div class="join-num">已有36510人参与</div> -->
-      <img class="down-back" :src="getImgUrl('publicMobile/build_download/create_down_back.png?v=20211231')" />
+      <img class="down-back" :src="getImgUrl('publicMobile/game/build_download/create_down_back.png?v=20211231')" />
       <div class="btn-box">
-        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/build_download/open_btn.png')" />
-        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/build_download/down_btn.png')" />
+        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/open_btn.png')" />
+        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/down_btn.png')" />
         <div class="btn-title">
           <span class="red_text">约购</span>APP&nbsp;约着买&nbsp;更便宜
         </div>
@@ -15,7 +15,7 @@
     <div class="line" />
     <div class="info-list">
       <div class="info-item">
-        <img class="info-icon" :src="getImgUrl('publicMobile/build_download/create_coupon.png')" />
+        <img class="info-icon" :src="getImgUrl('publicMobile/game/build_download/create_coupon.png')" />
         <div class="info-text">
           <div class="info-text-title">
             <span>约着买&nbsp;</span>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="info-item">
-        <img class="info-icon" :src="getImgUrl('publicMobile/build_download/create_money.png')" />
+        <img class="info-icon" :src="getImgUrl('publicMobile/game/build_download/create_money.png')" />
         <div class="info-text">
           <div class="info-text-title">
             <span>轻创业&nbsp;</span>
@@ -39,7 +39,7 @@
       <div class="bottom-down">
         <img class="logo" :src="getImgUrl('publicMobile/common/logo.png')" />
         <div class="bottom-info">约购-约着买更便宜</div>
-        <img class="bottom-btn" @click="onOpenApp" :src="getImgUrl('publicMobile/build_download/create_down.png')" />
+        <img class="bottom-btn" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/create_down.png')" />
       </div>
     </div>
   </div>

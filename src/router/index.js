@@ -375,6 +375,20 @@ const routes = [
       title: '新年建新房活动规则',
     }
   }, {
+    path: '/web/game-build-pk',
+    name: 'GameBuildPk',
+    component: () => import('@/views/game-build-pk'),
+    meta: {
+      title: '盖楼活动排行榜',
+    }
+  }, {
+    path: '/web/game-join-history',
+    name: 'GameJoinHistory',
+    component: () => import('@/views/game-join-history'),
+    meta: {
+      title: '参与活动赢大奖',
+    }
+  }, {
     path: '/web/game-animation',
     name: 'GameAnimation',
     component: () => import('@/views/game-animation'),

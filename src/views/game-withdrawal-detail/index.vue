@@ -2,7 +2,7 @@
   <div class="withdrawal-detail">
     <div class="content-box">
       <div class="price-box">
-        <img class="price-icon" :src="getImgUrl('publicMobile/withdrawal/withdrawal-icon.png')" />
+        <img class="price-icon" :src="getImgUrl('publicMobile/game/withdrawal/withdrawal-icon.png')" />
         <div class="price">¥ 8689.99</div>
         <div class="account">账户提现到支付宝（6472）</div>
       </div>
@@ -17,12 +17,12 @@
             </div>
             <div class="progress-item">
               <div class="tap" v-if="progress == 3" />
-              <img class="waiting-icon"  v-if="progress == 2" :src="getImgUrl('publicMobile/withdrawal/waiting.png')" />
+              <img class="waiting-icon"  v-if="progress == 2" :src="getImgUrl('publicMobile/game/withdrawal/waiting.png')" />
             </div>
             <div class="progress-item" v-if="progress == 3">
               <div class="line" />
-              <img class="success-icon" v-if="isOk" :src="getImgUrl('publicMobile/withdrawal/success.png')" />
-              <img class="waiting-icon" v-if="!isOk" :src="getImgUrl('publicMobile/withdrawal/lose.png')" />
+              <img class="success-icon" v-if="isOk" :src="getImgUrl('publicMobile/game/withdrawal/success.png')" />
+              <img class="waiting-icon" v-if="!isOk" :src="getImgUrl('publicMobile/game/withdrawal/lose.png')" />
             </div>
           </div>
           <div class="progress-info">
