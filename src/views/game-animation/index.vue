@@ -271,6 +271,85 @@
         </div>
       </div>
     </van-popup>
+
+    <!-- 中奖弹窗 -->
+    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
+      <div class="popup-box">
+        <div class="result-popup-content">
+          <van-image
+            class="result-bg"
+            width="100%"
+            height="100%"
+            :src="getImgUrl('publicMobile/game/result-bg.png')"
+          />
+          <div class="result-center">
+            <div class="money">¥<span class="money-index">46.91</span></div>
+            <van-image
+              class="get-money"
+              width="70px"
+              height="25px"
+              :src="getImgUrl('publicMobile/game/get-money.png')"
+              @click="goTo('red')"
+            />
+          </div>
+        </div>
+        <div class="result-btn-floor1">
+          <van-image
+            class="rank-btn"
+            width="136px"
+            height="48px"
+            :src="getImgUrl('publicMobile/game/rank-btn2.png')"
+            @click="goTo('rank')"
+          />
+          <van-image
+            class="back-home"
+            width="136px"
+            height="48px"
+            :src="getImgUrl('publicMobile/game/back-home2.png')"
+            @click="gameInit('fail')"
+          />
+        </div>
+        <div class="result-btn-floor2">
+          <van-image
+            class="share-data"
+            width="291px"
+            height="48px"
+            :src="getImgUrl('publicMobile/game/share-data-btn.png')"
+          />
+        </div>
+      </div>
+    </van-popup>
+
+    <!-- 未中奖弹窗 -->
+    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
+      <div class="popup-box">
+        <div class="null-popup-content">
+          <van-image
+            class="null-bg"
+            width="100%"
+            height="100%"
+            :src="getImgUrl('publicMobile/game/null-bg.png')"
+          />
+          <div class="null-title">本次活动您没抽中奖品， 请再接再厉！</div>
+        </div>
+        <div class="null-btn-box">
+          <van-image
+            class="rank-btn"
+            width="136px"
+            height="48px"
+            :src="getImgUrl('publicMobile/game/rank-btn.png')"
+            @click="goTo('rank')"
+          />
+          <van-image
+            class="back-home"
+            width="136px"
+            height="48px"
+            :src="getImgUrl('publicMobile/game/back-home.png')"
+            @click="gameInit('fail')"
+          />
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -320,9 +399,11 @@ export default {
       couponInviteId: null, // 活动id 同configId、activityId
       demoPopup: false,
       isDemoStar: false,
-      successPopup: true,
+      successPopup: false,
       failPopup: false,
       reciprocal: 3,
+      resultPopup: false,
+      nullPopup: false,
     };
   },
   components: {
@@ -376,7 +457,13 @@ export default {
       }
       if (this.couponInviteId || this.configId) {
         param.shareObjectNo = this.couponInviteId || this.configId
-      } 
+      }
+      if (this.resultPopup) {
+        param.contentType = 13
+        param.ext = {
+          gameLevel: 13
+        }
+      }
       share(param)
     },
     timestampToTime(timestamp) {
@@ -427,8 +514,12 @@ export default {
         gameId: this.gameRecordId,
         chanceId: this.chanceId,
       }
-      teamApi.getAddRecord(param, {token: this.token}).then((res) => {
-        this.gameRecordId = res.data.gameId;
+      teamApi.getPrize(param, {token: this.token}).then((res) => {
+        if (res.data.langth) {
+          this.resultPopup = true
+        } else {
+          this.nullPopup = true
+        }
       })
     },
     // 添加游戏记录
@@ -540,6 +631,17 @@ export default {
           return
         } else {
           this.successPopup = true
+          let s = setInterval(() => {
+            if (this.reciprocal === 0) {
+              clearInterval(s)
+              this.successPopup = false
+              this.reciprocal = 3
+              // 抽奖
+              this.getLuckDraw()
+              return
+            }
+            this.reciprocal -= 1
+          }, 1000)
           return
         }
 
@@ -830,6 +932,70 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
+    .null-popup-content {
+      position: relative;
+      width: 100%;
+      height: 437px;
+      .null-bg {
+        position: absolute;
+        top: 0;
+      }
+      .null-title {
+        position: absolute;
+        top: 215px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 220px;
+        height: 56px;
+        text-align: center;
+        font-size: 20px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #F61E0A;
+      }
+    }
+    .null-btn-box {
+      .rank-btn {
+        margin-right: 19px;
+      }
+    }
+    .result-btn-floor1 {
+      margin-bottom: 12px;
+      .rank-btn {
+        margin-right: 19px;
+      }
+    }
+    .result-popup-content {
+      position: relative;
+      width: 100%;
+      height: 437px;
+      .result-bg {
+        position: absolute;
+        top: 0;
+      }
+      .result-center {
+        position: absolute;
+        top: 208px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .get-money {
+          position: relative;
+          top: 2px;
+        }
+        .money {
+          margin-right: 4px;
+          font-size: 20px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #F61E0A;
+          .money-index {
+            font-size: 32px;
+          }
+        }
+      }
+    }
     .success-popup-content {
       position: relative;
       width: 100%;
