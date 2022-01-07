@@ -2,6 +2,9 @@ import { post, get } from '@/utils/request';
 
 const url = {
   game: '/activity/auth/buildhouseInfo',
+  pkInvite: '/activity/auth/getInviteRank',
+  pkRank: '/activity/auth/getFloorRank',
+  accountInfo: '/financial/auth/purseAccountActivity/info',
   demo: '/activity/auth/useBhDemoChance',
   pro: '/activity/auth/useBuildhouseChance',
   prize: '/activity/auth/prizeDraw',
@@ -44,5 +47,26 @@ export default {
       options,
     });
   },
-
+  getPkInvite(params = {}, options = {}) {
+    return post({
+      url: url.pkInvite,
+      data: params,
+      options,
+    });
+  },
+  getPkRank(params = {}, options = {}) {
+    return post({
+      url: url.pkRank,
+      data: params,
+      options,
+    });
+  },
+  getAccountInfo(params = {}, options = {}) {
+    return post({
+      url: url.accountInfo,
+      data: params,
+      options,
+    });
+  },
+  
 };
