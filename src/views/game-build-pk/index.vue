@@ -132,7 +132,6 @@ export default {
     text-align: center;
     line-height: 21px;
     font-weight: 600;
-    margin-top: 22px;
     padding: 0 21px;
     margin-bottom: 23px;
     background-color: rgba(255, 135, 24, 0.1);
