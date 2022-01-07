@@ -16,30 +16,35 @@
           width="32px"
           height="32px"
           :src="getImgUrl('publicMobile/game/share.png')"
+          @click="goTo('share')"
         />
         <van-image
           class="skill"
           width="32px"
           height="32px"
           :src="getImgUrl('publicMobile/game/skill.png')"
+          @click="goTo('skill')"
         />
         <van-image
           class="opp"
           width="32px"
           height="32px"
           :src="getImgUrl('publicMobile/game/opp.png')"
+          @click="goTo('opp')"
         />
         <van-image
           class="rank"
           width="32px"
           height="32px"
           :src="getImgUrl('publicMobile/game/rank.png')"
+          @click="goTo('rank')"
         />
         <van-image
           class="red-box"
           width="40px"
           height="44px"
           :src="getImgUrl('publicMobile/game/red-box.png')"
+          @click="goTo('red')"
         />
       </div>
 
@@ -174,21 +179,115 @@
       </div>
     </div>
 
+    <!-- 试玩结束弹窗 -->
+    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
+      <div class="popup-box">
+        <div class="demo-popup-content">
+          <van-image
+            class="demo-bg"
+            width="100%"
+            height="100%"
+            :src="getImgUrl('publicMobile/game/demo-bg.png')"
+          />
+          <div class="demo-title">挑战{{currentFloor}}层</div>
+          <div class="demo-subtitle">试玩体验超好玩，开始你的游戏吧</div>
+          <van-image
+            class="demo-star-btn"
+            width="134px"
+            height="42px"
+            :src="getImgUrl('publicMobile/game/demo-star-btn.png')"
+            @click="go"
+          />
+        </div>
+
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="demoClose"
+        />
+      </div>
+    </van-popup>
+
+    <!-- 游戏失败弹窗 -->
+    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
+      <div class="popup-box">
+        <div class="fail-popup-content">
+          <van-image
+            class="fail-bg"
+            width="100%"
+            height="100%"
+            :src="getImgUrl('publicMobile/game/fail-bg.png')"
+          />
+          <div class="fail-title">你的成绩为{{currentFloor}}层</div>
+          <van-image
+            class="play-again"
+            width="126px"
+            height="37px"
+            :src="getImgUrl('publicMobile/game/play-again.png')"
+            @click="go"
+          />
+        </div>
+        <div class="fail-btn-box">
+          <van-image
+            class="rank-btn"
+            width="136px"
+            height="48px"
+            :src="getImgUrl('publicMobile/game/rank-btn.png')"
+            @click="goTo('rank')"
+          />
+          <van-image
+            class="back-home"
+            width="136px"
+            height="48px"
+            :src="getImgUrl('publicMobile/game/back-home.png')"
+            @click="gameInit('fail')"
+          />
+        </div>
+      </div>
+    </van-popup>
+  
+    <!-- 游戏成功弹窗 -->
+    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
+      <div class="popup-box">
+        <div class="success-popup-content">
+          <van-image
+            class="success-bg"
+            width="100%"
+            height="100%"
+            :src="getImgUrl('publicMobile/game/success-bg.png')"
+          />
+          <div class="success-title">你的成绩为{{currentFloor}}层</div>
+          <div class="success-btn-box">
+            <van-image
+              class="success-btn"
+              width="100%"
+              height="100%"
+              :src="getImgUrl('publicMobile/game/success-btn.png')"
+            />
+            <div class="success-btn-text">抽奖中 {{reciprocal}}S</div>
+          </div>
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Lazyload } from 'vant';
+import { Image as VanImage, Dialog, Lazyload, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import teamApi from '@/apis/game';
 import JoinUser from './components/join-user/index';
 import MusicPlay from './components/music/index';
+import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import {
   goToApp,
   share,
 } from '@/utils/userInfo';
 Vue.use(VanImage);
+Vue.use(Popup);
 Vue.use(Lazyload);
 export default {
   data() {
@@ -219,6 +318,11 @@ export default {
       activityEndTime: null,
       actTime: null, // 活动时间段
       couponInviteId: null, // 活动id 同configId、activityId
+      demoPopup: false,
+      isDemoStar: false,
+      successPopup: true,
+      failPopup: false,
+      reciprocal: 3,
     };
   },
   components: {
@@ -241,6 +345,28 @@ export default {
   },
   methods: {
     getImgUrl,
+    demoClose() {
+      this.demoPopup = false
+    },
+    goTo(router) {
+      switch(router) {
+        case 'share':
+          this.goShare()
+          break
+        case 'skill':
+          goToApp(meBaseUrl, '/web/game-build-rule?type=1')
+          break
+        case 'opp':
+          goToApp(meBaseUrl, '/web/game-join-history?type=1')
+          break
+        case 'rank':
+          goToApp(meBaseUrl, '/web/game-build-pk')
+          break
+        case 'red':
+          goToApp(meBaseUrl, '/web/game-join-history?type=2')
+          break
+      }
+    },
     goShare() {
       let param = {
         contentType: 12,
@@ -260,7 +386,11 @@ export default {
       var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
       return Y+M+D
     },
-    gameInit() {
+    gameInit(type) {
+      if (type === 'fail') {
+        this.failPopup = false
+      }
+      this.star = false;
       this.currentFloor = 0;
       this.getGame();
     },
@@ -269,6 +399,7 @@ export default {
         this.$bridge.callHandler('getUserInfo',{},(res) => {
           const d = JSON.parse(res)
           this.token = d.data.accessToken
+          localStorage.setItem('token', this.token)
           resolve()
         })
       })
@@ -334,13 +465,10 @@ export default {
         switch(num) {
           case 1:
             return 2;
-            break
           case 2:
             return 3;
-            break
           case 3:
             return 1;
-            break
         }
       } else {
         this.lastTime = num
@@ -349,6 +477,8 @@ export default {
     },
     goDemo() {
       this.star = true
+      this.isDemoStar = true
+      this.getConsumeUsageTimes()
     },
     go() {
       this.setRandom()
@@ -398,7 +528,22 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
-        return Dialog({ message: 'game over' });
+
+        // 试玩结束专用弹窗
+        if (this.isDemoStar) {
+          this.demoPopup = true
+          return
+        }
+
+        if (this.currentFloor < 3) {
+          this.failPopup = true
+          return
+        } else {
+          this.successPopup = true
+          return
+        }
+
+        // return Dialog({ message: 'game over' });
       }
       border.style.width = domWidth + 'px'
       if (this.currentFloor > 1) {
@@ -679,5 +824,123 @@ export default {
   }
   .padding-b {
     padding-bottom: 58px;
+  }
+
+  .popup-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    .success-popup-content {
+      position: relative;
+      width: 100%;
+      height: 560px;
+      .success-bg {
+        position: absolute;
+        top: 0;
+      }
+      .success-title {
+        position: absolute;
+        top: 186px;
+        width: 100%;
+        text-align: center;
+        font-size: 28px;
+        color: #FFFFFF;
+      }
+      .success-btn-box {
+        position: absolute;
+        bottom: 64px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 134px;
+        height: 46px;
+        overflow: hidden;
+        .success-btn {
+          width: 100%;
+          height: 100%;
+        }
+        .success-btn-text {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          transform: translate(-50%);
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          line-height: 41px;
+          font-size: 18px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #CD3F42;
+          z-index: 3;
+        }
+      }
+    }
+    .fail-btn-box {
+      margin-top: 16px;
+      .rank-btn {
+        margin-right: 19px;
+      }
+    }
+    .fail-popup-content {
+      position: relative;
+      width: 100%;
+      height: 371px;
+      .fail-bg {
+        position: absolute;
+        top: 0;
+      }
+      .fail-title {
+        position: absolute;
+        top: 42px;
+        width: 100%;
+        text-align: center;
+        font-size: 28px;
+        color: #FFFFFF;
+      }
+      .play-again {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translate(-50%);
+      }
+    }
+    .demo-popup-content {
+      width: 100%;
+      height: 441px;
+      position: relative;
+      .demo-bg {
+        position: absolute;
+        top: 0;
+      }
+      .demo-title {
+        position: absolute;
+        top: 139px;
+        width: 100%;
+        text-align: center;
+        font-size: 20px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #76281A;
+      }
+      .demo-subtitle {
+        position: absolute;
+        top: 168px;
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #AC786A;
+      }
+      .demo-star-btn {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translate(-50%);
+      }
+    }
+    .demo-close {
+      margin-top: 25px;
+    }
   }
 </style>
