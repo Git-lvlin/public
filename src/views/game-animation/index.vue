@@ -298,7 +298,7 @@
             :src="getImgUrl('publicMobile/game/result-bg.png')"
           />
           <div class="result-center">
-            <div class="money">¥<span class="money-index">46.91</span></div>
+            <div class="money">¥<span class="money-index">{{prize/100}}</span></div>
             <van-image
               class="get-money"
               width="70px"
@@ -420,6 +420,7 @@ export default {
       reciprocal: 3,
       resultPopup: false,
       nullPopup: false,
+      prize: null,
     };
   },
   components: {
@@ -436,8 +437,7 @@ export default {
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
-
-    // await this.getUserInfo()
+    await this.getUserInfo()
     this.getGame()
   },
   methods: {
@@ -535,8 +535,9 @@ export default {
         chanceId: this.chanceId,
       }
       teamApi.getPrize(param, {token: this.token}).then((res) => {
-        if (res.data.langth) {
+        if (res.data.result) {
           this.resultPopup = true
+          this.prize = res.data.prize
         } else {
           this.nullPopup = true
         }
