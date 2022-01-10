@@ -427,7 +427,7 @@ export default {
       duration: null,
       starTime: null,
       buildingGameId: null,
-      load: false,
+      load: true,
     };
   },
   components: {
