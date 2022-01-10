@@ -546,6 +546,7 @@ export default {
       if (this.couponInviteId) {
         param.configId = this.couponInviteId
       }
+      console.log('param', param)
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
