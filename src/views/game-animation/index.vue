@@ -1,11 +1,12 @@
 <template>
   <div class="game">
+    <van-loading class="load" v-if="load" />
     <!-- <van-image
       class="banner"
       width="100%"
       height="812px"
       lazy-load
-      :src="getImgUrl('publicMobile/game/bg.png')"
+      :src="bgImgUrl"
     /> -->
     <!-- 游戏未开始 -->
     <div class="init" v-if="!star">
@@ -57,7 +58,7 @@
         width="100%"
         height="812px"
         lazy-load
-        :src="getImgUrl('publicMobile/game/bg.png')"
+        :src="bgImgUrl"
       />
       <van-image
         class="title"
@@ -152,7 +153,7 @@
         width="100%"
         height="812px"
         lazy-load
-        :src="getImgUrl('publicMobile/game/bg.png')"
+        :src="bgImgUrl"
       />
       <!-- 游戏顶部固定区域 -->
       <div class="game-title">参与游戏赢大奖</div>
@@ -371,18 +372,19 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Lazyload, Popup } from 'vant';
+import { Image as VanImage, Dialog, Lazyload, Popup, Loading } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import teamApi from '@/apis/game';
 import JoinUser from './components/join-user/index';
 import MusicPlay from './components/music/index';
-import { appBaseUrl, meBaseUrl } from "@/constant/index";
+import { meBaseUrl } from "@/constant/index";
 import {
   goToApp,
   share,
 } from '@/utils/userInfo';
 Vue.use(VanImage);
 Vue.use(Popup);
+Vue.use(Loading);
 Vue.use(Lazyload);
 export default {
   data() {
@@ -397,6 +399,7 @@ export default {
         'publicMobile/game/random2.png',
         'publicMobile/game/random3.png',
       ],
+      bgImgUrl: getImgUrl('publicMobile/game/bg.png'),
       inviteCode: null,
       indexImg: null,
       lastTime: null,
@@ -424,12 +427,13 @@ export default {
       duration: null,
       starTime: null,
       buildingGameId: null,
+      load: false,
     };
   },
   components: {
-    [Dialog.Component.name]: Dialog.Component,
     MusicPlay,
     JoinUser,
+    [Dialog.Component.name]: Dialog.Component,
   },
   created () {
   },
@@ -437,16 +441,37 @@ export default {
     const {
       query,
     } = this.$router.history.current;
-    this.inviteCode = query.inviteCode;
-    this.couponInviteId = query.couponInviteId;
-    this.buildingGameId = query.buildingGameId || query.couponInviteId;
-    localStorage.setItem('buildingGameId', this.buildingGameId)
+    if (query.inviteCode) {
+      this.inviteCode = query.inviteCode;
+    }
+    if (query.couponInviteId) {
+      this.couponInviteId = query.couponInviteId;
+      this.buildingGameId = query.couponInviteId;
+      localStorage.setItem('buildingGameId', this.buildingGameId)
+    }
+    await this.loadImg()
     await this.getUserInfo()
     localStorage.setItem('token', this.token)
     this.getGame()
   },
   methods: {
     getImgUrl,
+    loadImg() {
+      return new Promise((resolve, reject) => {
+        let bgImg = new Image();
+        bgImg.src = this.bgImgUrl; // 获取背景图片的url
+        bgImg.onerror = () => {
+          console.log('img onerror')
+          reject()
+        }
+        bgImg.onload = () => { // 等背景图片加载成功后 去除loading
+          setTimeout(() => {
+            this.load = false
+            resolve()
+          }, 200)
+        }
+      })
+    },
     onMusic(e) {
       e.stopPropagation();
       this.$refs.music.onPlayOrPaused();
@@ -518,8 +543,11 @@ export default {
     },
     //  获取游戏详情
     getGame() {
-
-      teamApi.getGameInfo({}, {token: this.token}).then((res) => {
+      let param = {}
+      if (this.buildingGameId) {
+        param.configId = this.buildingGameId
+      }
+      teamApi.getGameInfo(param, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         this.chanceNum = chanceNum
@@ -714,6 +742,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.load {
+  position: fixed;
+  padding-top: 200px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d93d33;
+  margin: auto;
+  text-align: center;
+  z-index: 99999;
+}
   .top-right-box {
     position: absolute;
     top: 84px;
