@@ -332,13 +332,61 @@ const routes = [
     meta: {
       title: '盖房子',
     }
-  },
-  {
-    path: '/web/create-download',
-    name: 'CreateDownload',
-    component: () => import('@/views/create-download'),
+  },{
+    path: '/web/game-download',
+    name: 'GameDownload',
+    component: () => import('@/views/game-download'),
     meta: {
       title: '盖房子下载页',
+    }
+  }, {
+    path: '/web/game-bind-alipay',
+    name: 'GameBindAlipay',
+    component: () => import('@/views/game-bind-alipay'),
+    meta: {
+      title: '绑定支付宝',
+    }
+  }, {
+    path: '/web/game-withdrawal-application',
+    name: 'GameWithdrawalApplication',
+    component: () => import('@/views/game-withdrawal-application'),
+    meta: {
+      title: '提现申请',
+    }
+  }, {
+    path: '/web/game-withdrawal-list',
+    name: 'GameWithdrawalList',
+    component: () => import('@/views/game-withdrawal-list'),
+    meta: {
+      title: '提现记录',
+    }
+  }, {
+    path: '/web/game-withdrawal-detail',
+    name: 'GameWithdrawalDetail',
+    component: () => import('@/views/game-withdrawal-detail'),
+    meta: {
+      title: '提现详情',
+    }
+  }, {
+    path: '/web/game-build-rule',
+    name: 'GameBuildRule',
+    component: () => import('@/views/game-build-rule'),
+    meta: {
+      title: '新年建新房活动规则',
+    }
+  }, {
+    path: '/web/game-build-pk',
+    name: 'GameBuildPk',
+    component: () => import('@/views/game-build-pk'),
+    meta: {
+      title: '盖楼活动排行榜',
+    }
+  }, {
+    path: '/web/game-join-history',
+    name: 'GameJoinHistory',
+    component: () => import('@/views/game-join-history'),
+    meta: {
+      title: '参与活动赢大奖',
     }
   }, {
     path: '/web/game-animation',
