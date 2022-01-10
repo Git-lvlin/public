@@ -2,7 +2,13 @@
   <div class="music-box">
     <audio id="bgMusic" :src="getImgUrl('publicMobile/files/floor_game_music.mp3')" loop autoplay></audio>
     <div :class="state == 0 ? 'music-icon paused' : 'music-icon active'">
-      <Icon size="36" name="music-o" />
+      <!-- <Icon size="36" name="music-o" /> -->
+      <van-image
+        class="m"
+        width="32px"
+        height="32px"
+        :src="getImgUrl('publicMobile/game/music.png')"
+      />
     </div>
   </div>
 </template>
@@ -47,9 +53,10 @@ export default {
 
 <style lang="scss" scoped>
   .music-box {
+    margin-top: 12px;
     position: relative;
-    width: 36px;
-    height: 36px
+    width: 32px;
+    height: 32px
   }
 
   @keyframes rotateAnimate {

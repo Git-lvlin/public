@@ -1,6 +1,5 @@
 <template>
   <div class="game">
-
     <!-- <van-image
       class="banner"
       width="100%"
@@ -129,8 +128,25 @@
 
     <!-- 游戏时 -->
     <div class="in-game" v-if="star" @click="click">
-      <div class="music-play" @click="onMusic">
-        <MusicPlay ref='music' />
+      <div class="top-right-box">
+        <van-image
+          class="share"
+          width="32px"
+          height="32px"
+          :src="getImgUrl('publicMobile/game/share.png')"
+          @click="goTo('share')"
+        />
+        <van-image
+          class="skill"
+          width="32px"
+          height="32px"
+          :src="getImgUrl('publicMobile/game/skill.png')"
+          @click="goTo('skill')"
+        />
+        <MusicPlay ref='music' @click="onMusic"/>
+        <!-- <div class="music-play" @click="onMusic">
+          <MusicPlay ref='music' />
+        </div> -->
       </div>
       <van-image
         class="banner"
@@ -220,7 +236,7 @@
             height="100%"
             :src="getImgUrl('publicMobile/game/fail-bg.png')"
           />
-          <div class="fail-title">你的成绩为{{currentFloor}}层</div>
+          <div class="fail-title">你的成绩为{{currentFloor - 1}}层</div>
           <van-image
             class="play-again"
             width="126px"
@@ -258,7 +274,7 @@
             height="100%"
             :src="getImgUrl('publicMobile/game/success-bg.png')"
           />
-          <div class="success-title">你的成绩为{{currentFloor}}层</div>
+          <div class="success-title">你的成绩为{{currentFloor - 1}}层</div>
           <div class="success-btn-box">
             <van-image
               class="success-btn"
@@ -474,12 +490,13 @@ export default {
       return Y+M+D
     },
     gameInit(type) {
-      if (type === 'fail') {
-        this.failPopup = false
-      }
-      this.star = false;
-      this.currentFloor = 0;
-      this.getGame();
+      location.reload();
+      // if (type === 'fail') {
+      //   this.failPopup = false
+      // }
+      // this.star = false;
+      // this.currentFloor = 0;
+      // this.getGame();
     },
     getUserInfo() {
       return new Promise((resolve) => {
@@ -527,7 +544,7 @@ export default {
       const param = {
         chanceId: this.chanceId,
         activityId: this.configId,
-        floor: this.currentFloor,
+        floor: this.currentFloor - 1,
       }
       teamApi.getAddRecord(param, {token: this.token}).then((res) => {
         this.gameRecordId = res.data.gameId;
@@ -626,7 +643,7 @@ export default {
           return
         }
 
-        if (this.currentFloor < 3) {
+        if (this.currentFloor < 4) {
           this.failPopup = true
           return
         } else {
@@ -717,14 +734,14 @@ export default {
       height: 23px;
     }
   }
-  .music-play {
-    position: fixed;
-    top: 36px;
-    right: 10px;
-    z-index: 5;
-    width: 36px;
-    height: 36px;
-  }
+  // .music-play {
+  //   position: fixed;
+  //   top: 36px;
+  //   right: 10px;
+  //   z-index: 5;
+  //   width: 36px;
+  //   height: 36px;
+  // }
   @keyframes fade {
     from {
       opacity: 1;
