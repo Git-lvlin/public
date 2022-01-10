@@ -543,8 +543,8 @@ export default {
     //  获取游戏详情
     getGame() {
       let param = {}
-      if (this.buildingGameId) {
-        param.configId = this.buildingGameId
+      if (this.couponInviteId) {
+        param.configId = this.couponInviteId
       }
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
