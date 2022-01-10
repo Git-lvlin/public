@@ -111,6 +111,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.load {
+  position: fixed;
+  padding-top: 200px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d93d33;
+  margin: auto;
+  text-align: center;
+  z-index: 99999;
+}
   .game {
     display: flex;
     flex-direction: column;
