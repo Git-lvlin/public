@@ -423,6 +423,7 @@ export default {
       prize: null,
       duration: null,
       starTime: null,
+      buildingGameId: null,
     };
   },
   components: {
@@ -432,18 +433,22 @@ export default {
   },
   created () {
   },
-  async methods() {
+  async mounted() {
     const {
       query,
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
+    this.buildingGameId = query.buildingGameId || query.couponInviteId;
+    localStorage.setItem('buildingGameId', this.buildingGameId)
     await this.getUserInfo()
+    localStorage.setItem('token', this.token)
     this.getGame()
   },
   methods: {
     getImgUrl,
-    onMusic() {
+    onMusic(e) {
+      e.stopPropagation();
       this.$refs.music.onPlayOrPaused();
     },
     demoClose() {
@@ -507,13 +512,13 @@ export default {
         this.$bridge.callHandler('getUserInfo',{},(res) => {
           const d = JSON.parse(res)
           this.token = d.data.accessToken
-          localStorage.setItem('token', this.token)
           resolve()
         })
       })
     },
     //  获取游戏详情
     getGame() {
+
       teamApi.getGameInfo({}, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
