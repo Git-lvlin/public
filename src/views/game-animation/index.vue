@@ -427,7 +427,7 @@ export default {
       duration: null,
       starTime: null,
       buildingGameId: null,
-      load: false,
+      load: true,
     };
   },
   components: {
@@ -543,9 +543,10 @@ export default {
     //  获取游戏详情
     getGame() {
       let param = {}
-      if (this.buildingGameId) {
-        param.configId = this.buildingGameId
+      if (this.couponInviteId) {
+        param.configId = this.couponInviteId
       }
+      console.log('param', param)
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
