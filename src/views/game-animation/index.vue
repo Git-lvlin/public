@@ -5,7 +5,7 @@
       width="100%"
       height="812px"
       lazy-load
-      :src="getImgUrl('publicMobile/game/bg.png')"
+      :src="bgImgUrl"
     /> -->
     <!-- 游戏未开始 -->
     <div class="init" v-if="!star">
@@ -57,7 +57,7 @@
         width="100%"
         height="812px"
         lazy-load
-        :src="getImgUrl('publicMobile/game/bg.png')"
+        :src="bgImgUrl"
       />
       <van-image
         class="title"
@@ -152,7 +152,7 @@
         width="100%"
         height="812px"
         lazy-load
-        :src="getImgUrl('publicMobile/game/bg.png')"
+        :src="bgImgUrl"
       />
       <!-- 游戏顶部固定区域 -->
       <div class="game-title">参与游戏赢大奖</div>
@@ -376,7 +376,7 @@ import { getImgUrl } from '@/utils/tools';
 import teamApi from '@/apis/game';
 import JoinUser from './components/join-user/index';
 import MusicPlay from './components/music/index';
-import { appBaseUrl, meBaseUrl } from "@/constant/index";
+import { meBaseUrl } from "@/constant/index";
 import {
   goToApp,
   share,
@@ -397,12 +397,13 @@ export default {
         'publicMobile/game/random2.png',
         'publicMobile/game/random3.png',
       ],
+      bgImgUrl: getImgUrl('publicMobile/game/bg.png'),
       inviteCode: null,
       indexImg: null,
       lastTime: null,
       showBorder: false,
       over: false,
-      token: 'null',
+      token: null,
       configId: null, // 不传默认取进行中的活动
       chanceNum: null, // 机会
       joinNum: null, // 参与人数
@@ -432,8 +433,11 @@ export default {
     JoinUser,
   },
   created () {
+    console.log('created')
   },
   async mounted() {
+    console.log('mounted-star')
+
     const {
       query,
     } = this.$router.history.current;
@@ -443,12 +447,29 @@ export default {
     if (this.buildingGameId) {
       localStorage.setItem('buildingGameId', this.buildingGameId)
     }
+    await this.loadImg()
     await this.getUserInfo()
     localStorage.setItem('token', this.token)
     this.getGame()
   },
   methods: {
     getImgUrl,
+    loadImg() {
+      return new Promise((resolve, reject) => {
+        let bgImg = new Image();
+        bgImg.src = this.bgImgUrl; // 获取背景图片的url
+        bgImg.onerror = () => {
+          console.log('img onerror')
+          reject()
+        }
+        bgImg.onload = () => { // 等背景图片加载成功后 去除loading
+          setTimeout(() => {
+            this.load = false
+            resolve()
+          }, 200)
+        }
+      })
+    },
     onMusic(e) {
       e.stopPropagation();
       this.$refs.music.onPlayOrPaused();
