@@ -431,28 +431,31 @@ export default {
     };
   },
   components: {
-    [Dialog.Component.name]: Dialog.Component,
     MusicPlay,
     JoinUser,
+    [Dialog.Component.name]: Dialog.Component,
   },
   created () {
     console.log('created')
   },
   async mounted() {
     console.log('mounted-star')
-
     const {
       query,
     } = this.$router.history.current;
+    console.log('query', query)
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
     this.buildingGameId = query.couponInviteId;
     if (this.buildingGameId) {
       localStorage.setItem('buildingGameId', this.buildingGameId)
     }
+    console.log('loadImg-s')
     await this.loadImg()
+    console.log('getUserInfo-s')
     await this.getUserInfo()
     localStorage.setItem('token', this.token)
+    console.log('getGame-s')
     this.getGame()
   },
   methods: {
