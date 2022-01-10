@@ -402,7 +402,7 @@ export default {
       lastTime: null,
       showBorder: false,
       over: false,
-      token: null,
+      token: 'null',
       configId: null, // 不传默认取进行中的活动
       chanceNum: null, // 机会
       joinNum: null, // 参与人数
@@ -439,8 +439,10 @@ export default {
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode;
     this.couponInviteId = query.couponInviteId;
-    this.buildingGameId = query.buildingGameId || query.couponInviteId;
-    localStorage.setItem('buildingGameId', this.buildingGameId)
+    this.buildingGameId = query.couponInviteId;
+    if (this.buildingGameId) {
+      localStorage.setItem('buildingGameId', this.buildingGameId)
+    }
     await this.getUserInfo()
     localStorage.setItem('token', this.token)
     this.getGame()
@@ -518,8 +520,11 @@ export default {
     },
     //  获取游戏详情
     getGame() {
-
-      teamApi.getGameInfo({}, {token: this.token}).then((res) => {
+      let param = {}
+      if (this.buildingGameId) {
+        param.configId = this.buildingGameId
+      }
+      teamApi.getGameInfo(param, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         this.chanceNum = chanceNum
