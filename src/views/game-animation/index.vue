@@ -421,6 +421,8 @@ export default {
       resultPopup: false,
       nullPopup: false,
       prize: null,
+      duration: null,
+      starTime: null,
     };
   },
   components: {
@@ -545,10 +547,12 @@ export default {
     },
     // 添加游戏记录
     getPushRecord() {
+      this.duration = this.endTime - this.starTime
       const param = {
         chanceId: this.chanceId,
         activityId: this.configId,
         floor: this.currentFloor - 1,
+        gameTime: this.duration,
       }
       teamApi.getAddRecord(param, {token: this.token}).then((res) => {
         this.gameRecordId = res.data.gameId;
@@ -593,6 +597,7 @@ export default {
       this.getConsumeUsageTimes()
     },
     go() {
+      this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
       this.getUseBuilding()
@@ -640,13 +645,13 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
-
         // 试玩结束专用弹窗
         if (this.isDemoStar) {
           this.demoPopup = true
           return
         }
-
+        this.endTime = Date.parse(new Date());
+        this.getPushRecord()
         if (this.currentFloor < 4) {
           this.failPopup = true
           return
@@ -665,8 +670,6 @@ export default {
           }, 1000)
           return
         }
-
-        // return Dialog({ message: 'game over' });
       }
       border.style.width = domWidth + 'px'
       if (this.currentFloor > 1) {
