@@ -433,7 +433,7 @@ export default {
   },
   created () {
   },
-  async methods() {
+  async mounted() {
     const {
       query,
     } = this.$router.history.current;
@@ -447,7 +447,8 @@ export default {
   },
   methods: {
     getImgUrl,
-    onMusic() {
+    onMusic(e) {
+      e.stopPropagation();
       this.$refs.music.onPlayOrPaused();
     },
     demoClose() {
