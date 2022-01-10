@@ -446,8 +446,7 @@ export default {
     }
     if (query.couponInviteId) {
       this.couponInviteId = query.couponInviteId;
-      this.buildingGameId = query.couponInviteId;
-      localStorage.setItem('buildingGameId', this.buildingGameId)
+      localStorage.setItem('buildingGameId', this.couponInviteId)
     }
     await this.loadImg()
     await this.getUserInfo()
@@ -550,6 +549,7 @@ export default {
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
+        localStorage.setItem('buildingGameId', this.configId)
         this.chanceNum = chanceNum
         this.joinNum = joinNum
         this.demo = isTestPay
