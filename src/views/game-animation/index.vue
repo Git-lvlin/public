@@ -402,7 +402,7 @@ export default {
       lastTime: null,
       showBorder: false,
       over: false,
-      token: 'AQIAAAAAYdcBHhO25RQlZuABaDCxUZP2UgJZxLlhbsXTYYDPa8Beu-9Zgf7dR9DIMuw=',
+      token: null,
       configId: null, // 不传默认取进行中的活动
       chanceNum: null, // 机会
       joinNum: null, // 参与人数
