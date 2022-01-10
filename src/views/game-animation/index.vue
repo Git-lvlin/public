@@ -143,10 +143,9 @@
           :src="getImgUrl('publicMobile/game/skill.png')"
           @click="goTo('skill')"
         />
-        <MusicPlay ref='music' @click="onMusic"/>
-        <!-- <div class="music-play" @click="onMusic">
+        <div @click="onMusic">
           <MusicPlay ref='music' />
-        </div> -->
+        </div>
       </div>
       <van-image
         class="banner"
@@ -331,6 +330,7 @@
             width="291px"
             height="48px"
             :src="getImgUrl('publicMobile/game/share-data-btn.png')"
+            @click="goTo('share')"
           />
         </div>
       </div>
@@ -442,6 +442,9 @@ export default {
   },
   methods: {
     getImgUrl,
+    onMusic() {
+      this.$refs.music.onPlayOrPaused();
+    },
     demoClose() {
       this.demoPopup = false
     },
