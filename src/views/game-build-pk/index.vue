@@ -1,32 +1,35 @@
 <template>
   <div class="pk-box">
-    <img class="pk-back" :src="getImgUrl('publicMobile/game/build_pk/pk_back.png')" />
+    <img class="flex_fix pk-back" :src="getImgUrl('publicMobile/game/build_pk/pk_back.png')" />
     <div class="px-content">
       <div class="bar-list">
         <div :class="`bar-item ${actType == 1 ? 'bar-act' : ''}`" @click="onChangeBar(1)">邀请用户</div>
         <div :class="`bar-item ${actType == 2 ? 'bar-act' : ''}`" @click="onChangeBar(2)">盖楼冲榜</div>
       </div>
-      <div class="my-ranking">
+      <div class="my-ranking" v-if="pkData.mine.nickname">
         <div>
           我的排名
           <br />
-          2908
+          {{pkData.mine.rank || 0}}
         </div>
         <div class="ranking-user">
           <img
             class="my-avatar"
-            src="https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng1e03efd2c09fddfda258f11c1432b23b0831578ec89a9282e764397184a60bb0"
+            :src="pkData.mine.headImg"
           />
-          <span class="my-name">156****6060</span>
+          <span class="my-name">{{pkData.mine.nickname}}</span>
         </div>
-        <div>
+        <div v-if="actType == 1">
           邀请
           <br />
-          9880人
+          {{pkData.mine.inviteNums || 0}}人
+        </div>
+        <div v-if="actType == 2">
+          {{pkData.mine.floor || 0}}层
         </div>
       </div>
       <div class="ranking-list">
-        <div class="ranking-item" v-for="(item, idx) in userList">
+        <div class="ranking-item" v-for="(item, idx) in pkData.list">
           <div class="item-number">
             <img
               class="item-number-icon"
@@ -38,46 +41,82 @@
           <div class="item-user">
             <img
               class="item-user-avatar"
-              src="https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngf9de5d4f8a078082effe03567d127eb77598cef86a0959540b2d53f692de3960"
+              :src="item.headImg"
             />
-            <span class="item-user-name">乔悦</span>
+            <span class="item-user-name">{{item.nickname}}</span>
           </div>
-          <div class="item-invite">邀请880人</div>
+          <div class="item-invite">{{actType == 1 ? `邀请${item.inviteNums}人` : `${item.floor}层`}}</div>
         </div>
       </div>
-    <div class="more">查看更多&gt;</div>
+    <!-- <div class="more">查看更多&gt;</div> -->
     </div>
   </div>
 </template>
 
 <script>
-import { getImgUrl } from '@/utils/tools';
+import { getImgUrl, storage } from '@/utils/tools';
+import gameApi from '@/apis/game';
+
+let defToken = 'AQQAAAAAYdhNOxO1r6h85uACx6FOZcihea0a_cZhEeCLtQ5uXZMSeqk4LpBlYKECA3U=';
 
 export default {
   data() {
     return {
+      token: storage.get('token') || defToken,
       actType: 1,
-      userList: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+      pkData: {
+        mine: {},
+        list: [],
+      }
     };
   },
-  components: {
-    Image,
-  },
   mounted () {
+    this.getPkInvite();
   },
   methods: {
     getImgUrl,
     onChangeBar(type) {
       if(type != this.actType) {
         this.actType = type
+        if(type == 1) {
+          this.getPkInvite();
+        } else {
+          this.getPkRank();
+        }
       }
-    }
+    },
+    // 邀请排行
+    getPkInvite() {
+      gameApi.getPkInvite({
+        activityId: 3
+      }, {
+        token: this.token,
+      }).then(res => {
+        if(res.code === 0) {
+          this.pkData = res.data;
+        }
+      }).catch(err => {});
+    },
+    // 盖楼排行
+    getPkRank() {
+      gameApi.getPkRank({
+        activityId: 42
+      }, {
+        token: this.token,
+      }).then(res => {
+        if(res.code === 0) {
+          this.pkData = res.data;
+        }
+      }).catch(err => {});
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
   .pk-box {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
   }
   .pk-back {
@@ -86,6 +125,7 @@ export default {
   .px-content {
     position: relative;
     z-index: 2;
+    flex: 1;
     padding: 20px 12px;
     margin-top: -25px;
     background-color: #fff;
@@ -132,7 +172,6 @@ export default {
     text-align: center;
     line-height: 21px;
     font-weight: 600;
-    margin-top: 22px;
     padding: 0 21px;
     margin-bottom: 23px;
     background-color: rgba(255, 135, 24, 0.1);
@@ -146,6 +185,7 @@ export default {
     width: 40px;
     height: 40px;
     margin-right: 10px;
+    border-radius: 50%;
   }
   .ranking-list {
     padding: 0 8px;
@@ -179,6 +219,7 @@ export default {
     width: 48px;
     height: 48px;
     margin-right: 11px;
+    border-radius: 50%;
   }
   .item-user-name {
     color: rgba(90, 90, 90, 1);
