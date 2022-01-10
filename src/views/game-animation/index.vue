@@ -431,7 +431,6 @@ export default {
     JoinUser,
   },
   created () {
-    this.getGame()
   },
   async methods() {
     const {
