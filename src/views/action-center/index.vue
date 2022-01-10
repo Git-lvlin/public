@@ -52,7 +52,6 @@ export default {
   methods: {
     getImgUrl,
     goDetail(item) {
-      console.log('item', item)
       const { actionType, id } = item;
       let url = '';
       const param = `?couponInviteId=${id}`
@@ -62,8 +61,9 @@ export default {
           break
         case 2:
           url='/web/bind-box'
+        case 3:
+          url='/web/game-animation'
       }
-      console.log('param', param)
       goToApp(meBaseUrl, url, param)
     },
     timestampToTime(timestamp) {
@@ -86,7 +86,6 @@ export default {
           }
           return item
         })
-        console.log('list', this.list)
       })
     },
     getUserInfo() {
