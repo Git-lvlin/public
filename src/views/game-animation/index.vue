@@ -484,16 +484,16 @@ export default {
           this.goShare()
           break
         case 'skill':
-          goToApp(meBaseUrl, '/web/game-build-rule?type=1')
+          goToApp(meBaseUrl, '/web/game-build-rule?_immersive=0&type=1')
           break
         case 'opp':
-          goToApp(meBaseUrl, '/web/game-join-history?type=1')
+          goToApp(meBaseUrl, '/web/game-join-history?_immersive=0&type=1')
           break
         case 'rank':
-          goToApp(meBaseUrl, '/web/game-build-pk')
+          goToApp(meBaseUrl, '/web/game-build-pk?_immersive=0&')
           break
         case 'red':
-          goToApp(meBaseUrl, '/web/game-join-history?type=2')
+          goToApp(meBaseUrl, '/web/game-join-history?_immersive=0&type=2')
           break
       }
     },
@@ -627,12 +627,14 @@ export default {
     goDemo() {
       this.star = true
       this.isDemoStar = true
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getConsumeUsageTimes()
     },
     go() {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
     setRandom() {
