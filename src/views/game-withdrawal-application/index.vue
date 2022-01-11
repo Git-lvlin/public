@@ -142,6 +142,7 @@ export default {
     NumberKeyboard,
   },
   mounted () {
+    console.log('token', this.token);
     this.getAccountInfo();
     this.$bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res);
