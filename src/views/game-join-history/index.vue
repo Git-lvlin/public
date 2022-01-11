@@ -304,7 +304,7 @@ export default {
         token: this.token,
       }).then(res => {
         if(res.code == 0 && res.data) {
-          const path = `/web/game-withdrawal-application?at=${this.token}&bid=${this.activityId}`
+          const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${this.activityId}`
           goToApp(meBaseUrl, path);
           // this.$router.push({
           //   path: '/web/game-withdrawal-application',
