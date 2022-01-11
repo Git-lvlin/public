@@ -44,9 +44,8 @@ const defPage = {
 export default {
   data() {
     return {
-      activityId: storage.get('buildingGameId') || '',
-      token: storage.get('token') || '',
-      // token: storage.get('token') || defToken,
+      activityId: '',
+      token: '',
       defAvatar: getImgUrl('publicMobile/common/default_avatar.png'),
       userInfo: {},
       pageData: {
@@ -59,7 +58,12 @@ export default {
     List,
   },
   mounted () {
-    console.log('token', this.token);
+    let {
+      at: token,
+      bid: activityId,
+    } = this.$router.history.current.query;
+    this.token = token;
+    this.activityId = activityId;
     this.$bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res);
       this.userInfo = d.data;

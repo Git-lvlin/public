@@ -54,16 +54,15 @@
 </template>
 
 <script>
-import { getImgUrl, storage } from '@/utils/tools';
+import { getImgUrl } from '@/utils/tools';
 import gameApi from '@/apis/game';
 
-let defToken = 'AQQAAAAAYdhNOxO1r6h85uACx6FOZcihea0a_cZhEeCLtQ5uXZMSeqk4LpBlYKECA3U=';
 
 export default {
   data() {
     return {
-      // token: storage.get('token') || defToken,
-      token: storage.get('token') || '',
+      token: '',
+      activityId: '',
       actType: 1,
       pkData: {
         mine: {},
@@ -72,7 +71,12 @@ export default {
     };
   },
   mounted () {
-    console.log('token', this.token);
+    const {
+      at: token,
+      bid: activityId,
+    } = this.$router.history.current.query;
+    this.token = token;
+    this.activityId = activityId;
     this.getPkInvite();
   },
   methods: {

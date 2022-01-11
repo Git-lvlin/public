@@ -57,7 +57,7 @@
                 获得红包奖励总额(元)
                 <img class="ask-icon" @click="showRedDesc = true" :src="getImgUrl('publicMobile/game/withdrawal/history_desc_ask.png')" />
               </div>
-              <div class="red-price-text">{{totalPrize || 0}}</div>
+              <div class="red-price-text">{{parseFloat((totalPrize || 0) / 100).toFixed(2)}}</div>
             </div>
             <img class="withdrawal-icon" @click="onWithdrawal" :src="getImgUrl('publicMobile/game/withdrawal/history_withdrawal.png')" />
           </div>
@@ -111,7 +111,7 @@
           </div> -->
           <div class="footer-banner">
             <img class="footer-banner-img" :src="getImgUrl('publicMobile/game/withdrawal/invite.png')" />
-            <div class="footer-banner-btn" />
+            <div class="footer-banner-btn" @click="goShare" />
           </div>
         </div>
       </List>
@@ -120,13 +120,13 @@
 </template>
 
 <script>
-import { DatetimePicker, Popup, Dialog, List } from 'vant';
+import { DatetimePicker, Popup, Dialog, List, Toast } from 'vant';
 import Dayjs from 'dayjs';
 import NoData from '@/components/nodata'
-import { getImgUrl, storage } from '@/utils/tools';
+import { getImgUrl } from '@/utils/tools';
 import gameApi from '@/apis/game';
+import { share } from '@/utils/userInfo';
 
-let defToken = 'AQQAAAAAYfGMBhO1r6h85uACdaberb2ahlPFSv7KDBSE6JBgxdLkvYpcDoWnCKpMd4o=';
 const defRankPage = {
   next: 0,
   size: 20,
@@ -141,9 +141,8 @@ const defPrizePage = {
 export default {
   data() {
     return {
-      activityId: storage.get('buildingGameId') || '',
-      // token: storage.get('token') || defToken,
-      token: storage.get('token') || '',
+      activityId: '',
+      token: '',
       actType: 1,
       list: [],
       showDate: false,
@@ -171,10 +170,13 @@ export default {
     List,
   },
   mounted () {
-    console.log('token', this.token);
     let {
-      type
+      at: token,
+      bid: activityId,
+      type,
     } = this.$router.history.current.query;
+    this.token = token;
+    this.activityId = activityId;
     this.listLoading = false;
     if(!!type) {
       this.actType = +type;
@@ -239,7 +241,7 @@ export default {
         token: this.token
       }).then(res => {
         if(res.code == 0) {
-          this.totalPrize= res.data.prize
+          this.totalPrize= +res.data.prize
         }
       });
     },
@@ -291,21 +293,35 @@ export default {
     },
     onConfirmTime(date) {
       this.searchTime = Dayjs(date).format('YYYY-MM')
-      console.log("🚀 ~ file: index.vue ~ line 294 ~ onConfirmTime ~ this.searchTime", this.searchTime)
       this.showDate = false;
     },
     onWithdrawal() {
-      // this.totalPrize
-      console.log("🚀 ~ file: index.vue ~ line 301 ~ onWithdrawal ~ this.totalPrize", this.totalPrize)
-      // Dialog.confirm({
-      //   width: 280,
-      //   title: '提示',
-      //   message: '你的账户尚未绑定支付宝，请先完成支付宝账号再操作',
-      // }).then(() => {
-      //     // on confirm
-      // }).catch(() => {
-      //   // on cancel
-      // });
+      gameApi.getWithdrawVerify({
+        activityId: this.activityId,
+        amount: this.totalPrize,
+      }, {
+        token: this.token,
+      }).then(res => {
+        if(res.code == 0 && res.data) {
+          this.$router.push({
+            path: '/web/game-withdrawal-application',
+            query: {
+              at: this.token,
+              bid: this.activityId,
+            }
+          })
+        }
+      });
+    },
+    goShare() {
+      let param = {
+        contentType: 12,
+        paramId: 14,
+        shareType: 3,
+        sourceType: 12,
+        shareObjectNo: this.activityId,
+      }
+      share(param)
     },
   },
 };
