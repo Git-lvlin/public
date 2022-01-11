@@ -117,8 +117,9 @@ export default {
   data() {
     return {
       defAvatar: getImgUrl('publicMobile/common/default_avatar.png'),
-      activityId: storage.get('buildingGameId') || '45',
-      token: storage.get('token') || defToken,
+      activityId: storage.get('buildingGameId') || '',
+      // token: storage.get('token') || defToken,
+      token: storage.get('token') || '',
       userInfo: {},
       msgCode: '',
       accountInfo: {},

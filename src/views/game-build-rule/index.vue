@@ -1,5 +1,9 @@
 <template>
   <div class="rule-box">
+    <!-- <div class="flex_fix bar-list">
+      <div :class="`bar-item ${actType == 1 ? 'bar-act' : ''}`" @click="onChangeBar(1)">获得机会</div>
+      <div :class="`bar-item ${actType == 2 ? 'bar-act' : ''}`" @click="onChangeBar(2)">我的红包奖励</div>
+    </div> -->
     <div class="rule-info">
       <div v-for="item in rule">
         <div :class="item.css" v-if="item.type == 'text'">{{item.text}}</div>
