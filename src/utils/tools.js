@@ -134,7 +134,6 @@ export const mapNum = (list = []) => {
 export const storage =  {
   get(name) {
     const val = localStorage.getItem(name);
-    console.log("🚀 tools.js ~ line 137 ~ get ~ val", val)
     if (typeof val == 'string') {
       try {
         return JSON.parse(val);;
