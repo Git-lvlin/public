@@ -94,7 +94,7 @@ export default {
     // 邀请排行
     getPkInvite() {
       gameApi.getPkInvite({
-        activityId: 3
+        activityId: this.activityId
       }, {
         token: this.token,
       }).then(res => {
@@ -106,7 +106,7 @@ export default {
     // 盖楼排行
     getPkRank() {
       gameApi.getPkRank({
-        activityId: 42
+        activityId: this.activityId
       }, {
         token: this.token,
       }).then(res => {
