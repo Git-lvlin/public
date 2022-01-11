@@ -483,20 +483,16 @@ export default {
           this.goShare()
           break
         case 'skill':
-          const param = `?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`
-          goToApp(meBaseUrl, '/web/game-build-rule', param)
+          goToApp(meBaseUrl, `/web/game-build-rule?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`)
           break
         case 'opp':
-          const param = `?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`
-          goToApp(meBaseUrl, '/web/game-join-history', param)
+          goToApp(meBaseUrl, `/web/game-join-history?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`)
           break
         case 'rank':
-          const param = `?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`
-          goToApp(meBaseUrl, '/web/game-build-pk', param)
+          goToApp(meBaseUrl, `/web/game-build-pk?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`)
           break
         case 'red':
-          const param = `?_immersive=0&type=2&at=${this.token}&bid=${this.configId}`
-          goToApp(meBaseUrl, '/web/game-join-history', param)
+          goToApp(meBaseUrl, `/web/game-join-history?_immersive=0&type=2&at=${this.token}&bid=${this.configId}`)
           break
       }
     },
