@@ -1,48 +1,110 @@
 <template>
   <div class="withdrawal-list">
-    <div class="content-box">
-      <div class="list" v-for="idx in 2" >
-        <div class="item" @click="onToDetail(idx)">
-          <img
-            class="avatar flex-fix"
-            referrerpolicy="no-referrer"
-            src="https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng3737a564ccf0e7da452f0284f3de129a2bc5f59b859025866a8aefaebdd25978"
-          />
-          <div class="user-info">
-            <div class="info-title">账户提现-支付宝（6472）</div>
-            <div class="item-time">12月20日 19:58</div>
+    <List
+      :finished="listFinished"
+      style="padding: 12px 0"
+      @load="handleBottom"
+      :offset="0"
+    >
+      <div class="content-box">
+        <div class="list" v-for="item in list" >
+          <div class="item" @click="onToDetail(item)">
+            <img
+              class="avatar flex-fix"
+              :src="userInfo.icon || defAvatar"
+            />
+            <div class="user-info">
+              <div class="info-title">账户提现-支付宝</div>
+              <div class="item-time">{{Dayjs(item.createTime).format('MM月DD日 HH:mm')}}</div>
+            </div>
+            <div class="price flex-fix">¥{{parseFloat(+item.amount / 100).toFixed(2)}}</div>
           </div>
-          <div class="price flex-fix">¥3000.00</div>
         </div>
+        <!-- <div class="desc">
+          仅展示所选月份交易数据，查看更多请选择时间
+        </div> -->
       </div>
-      <div class="desc">
-        仅展示所选月份交易数据，查看更多请选择时间
-      </div>
-    </div>
+    </List>
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import { Image } from 'vant';
-import { getImgUrl } from '@/utils/tools';
+import { List } from 'vant';
+import Dayjs from 'dayjs';
+import { getImgUrl, storage } from '@/utils/tools';
+import gameApi from '@/apis/game';
 
+let defToken = 'AQQAAAAAYfGMBhO1r6h85uACdaberb2ahlPFSv7KDBSE6JBgxdLkvYpcDoWnCKpMd4o=';
+const defPage = {
+  next: 0,
+  size: 20,
+  hasNext: false,
+};
 
 export default {
   data() {
     return {
+      activityId: storage.get('buildingGameId') || '45',
+      token: storage.get('token') || defToken,
+      defAvatar: getImgUrl('publicMobile/common/default_avatar.png'),
+      userInfo: {},
+      pageData: {
+        ...defPage,
+      },
+      list: [],
     };
   },
   components: {
-    Image,
+    List,
   },
   mounted () {
+    this.$bridge.callHandler('getUserInfo',{},(res) => {
+      const d = JSON.parse(res);
+      this.userInfo = d.data;
+    })
+    this.getWithdrawList(true);
   },
   methods: {
+    Dayjs,
     getImgUrl,
-    onToDetail(idx) {
-      console.log("🚀 ~ file: index.vue ~ line 44 ~ onToDetail ~ idx", idx)
-      this.$router.push('/web/game-withdrawal-detail');
+    // 获取提现列表
+    getWithdrawList(frist) {
+      gameApi.getWithdrawList({
+        activityId: this.activityId,
+        date: '',
+        next: this.pageData.next,
+        size: this.pageData.size,
+      }, {
+        token: this.token,
+        showLoading: false,
+      }).then(res => {
+        if(res.code == 0) {
+          const data = res.data;
+          this.pageData.hasNext = data.hasNext;
+          this.pageData.next = data.next;
+          if(!data.hasNext) {
+            this.listFinished = true;
+          }
+          if(frist) {
+            this.list = data.records;
+          } else {
+            this.list = this.list.concat(data.records);
+          }
+        }
+      });
+    },
+    handleBottom() {
+      if(this.pageData.hasNext) {
+        this.getWithdrawList();
+      }
+    },
+    onToDetail(item) {
+      this.$router.push({
+        path: '/web/game-withdrawal-detail',
+        query: {
+          ...item,
+        },
+      });
     },
   },
 };
@@ -50,9 +112,10 @@ export default {
 
 <style lang="scss" scoped>
   .withdrawal-list {
-    min-height: 100vh;
-    padding: 12px;
+    height: 100vh;
+    padding: 0 12px;
     background-color: rgba(249, 249, 249, 1);
+    overflow: auto;
   }
   .content-box {
     padding: 15px;
@@ -84,7 +147,7 @@ export default {
   .user-info {
     flex: 1;
     height: 46px;
-    margin-left: 3px;
+    margin-left: 10px;
   }
   .info-title {
     color: rgba(90, 90, 90, 1);
