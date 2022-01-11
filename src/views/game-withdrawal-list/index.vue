@@ -31,8 +31,10 @@
 <script>
 import { List } from 'vant';
 import Dayjs from 'dayjs';
-import { getImgUrl, storage } from '@/utils/tools';
+import { getImgUrl, objToParamStr } from '@/utils/tools';
 import gameApi from '@/apis/game';
+import { meBaseUrl } from "@/constant/index";
+import { goToApp } from '@/utils/userInfo';
 
 let defToken = 'AQQAAAAAYfGMBhO1r6h85uACdaberb2ahlPFSv7KDBSE6JBgxdLkvYpcDoWnCKpMd4o=';
 const defPage = {
@@ -105,12 +107,18 @@ export default {
       }
     },
     onToDetail(item) {
-      this.$router.push({
-        path: '/web/game-withdrawal-detail',
-        query: {
-          ...item,
-        },
-      });
+      if(!item.sn) {
+        return ;
+      }
+      const str = objToParamStr(item);
+      const path = `/web/game-withdrawal-list?_immersive=0&${str}`
+      goToApp(meBaseUrl, path);
+      // this.$router.push({
+      //   path: '/web/game-withdrawal-detail',
+      //   query: {
+      //     ...item,
+      //   },
+      // });
     },
   },
 };

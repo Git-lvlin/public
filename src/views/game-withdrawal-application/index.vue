@@ -108,6 +108,8 @@
 import { Image, Toast, Popup, PasswordInput, NumberKeyboard } from 'vant';
 import gameApi from '@/apis/game';
 import { getImgUrl } from '@/utils/tools';
+import { meBaseUrl } from "@/constant/index";
+import { goToApp } from '@/utils/userInfo';
 
 const timeText = 's后可重新获取'
 const defTimeText = '60s后可重新获取'
@@ -308,13 +310,15 @@ export default {
     },
     // 跳转提现列表
     onToList() {
-      this.$router.push({
-        path: '/web/game-withdrawal-list',
-        query: {
-          at: this.token,
-          bid: this.activityId,
-        },
-      });
+      const path = `/web/game-withdrawal-list?_immersive=0&at=${this.token}&bid=${this.activityId}`
+      goToApp(meBaseUrl, path);
+      // this.$router.push({
+      //   path: '/web/game-withdrawal-list',
+      //   query: {
+      //     at: this.token,
+      //     bid: this.activityId,
+      //   },
+      // });
     },
   },
 };

@@ -125,7 +125,8 @@ import Dayjs from 'dayjs';
 import NoData from '@/components/nodata'
 import { getImgUrl } from '@/utils/tools';
 import gameApi from '@/apis/game';
-import { share } from '@/utils/userInfo';
+import { meBaseUrl } from "@/constant/index";
+import { goToApp, share } from '@/utils/userInfo';
 
 const defRankPage = {
   next: 0,
@@ -303,13 +304,15 @@ export default {
         token: this.token,
       }).then(res => {
         if(res.code == 0 && res.data) {
-          this.$router.push({
-            path: '/web/game-withdrawal-application',
-            query: {
-              at: this.token,
-              bid: this.activityId,
-            }
-          })
+          const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${this.activityId}`
+          goToApp(meBaseUrl, path);
+          // this.$router.push({
+          //   path: '/web/game-withdrawal-application',
+          //   query: {
+          //     at: this.token,
+          //     bid: this.activityId,
+          //   }
+          // })
         }
       });
     },

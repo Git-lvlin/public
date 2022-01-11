@@ -446,11 +446,10 @@ export default {
     }
     if (query.couponInviteId) {
       this.couponInviteId = query.couponInviteId;
-      localStorage.setItem('buildingGameId', this.couponInviteId)
+      this.configId = query.couponInviteId;
     }
     await this.loadImg()
     await this.getUserInfo()
-    localStorage.setItem('token', this.token)
     this.getGame()
   },
   methods: {
@@ -484,48 +483,16 @@ export default {
           this.goShare()
           break
         case 'skill':
-          this.$router.push({
-            path: '/web/game-build-rule',
-            query: {
-              _immersive: 0,
-              type: 1,
-              at: this.token,
-              bid: this.buildingGameId,
-            },
-          });
+          goToApp(meBaseUrl, `/web/game-build-rule?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`)
           break
         case 'opp':
-          this.$router.push({
-            path: '/web/game-join-history',
-            query: {
-              _immersive: 0,
-              type: 1,
-              at: this.token,
-              bid: this.buildingGameId,
-            },
-          });
+          goToApp(meBaseUrl, `/web/game-join-history?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`)
           break
         case 'rank':
-          this.$router.push({
-            path: '/web/game-build-pk',
-            query: {
-              _immersive: 0,
-              type: 1,
-              at: this.token,
-              bid: this.buildingGameId,
-            },
-          });
+          goToApp(meBaseUrl, `/web/game-build-pk?_immersive=0&type=1&at=${this.token}&bid=${this.configId}`)
           break
         case 'red':
-          this.$router.push({
-            path: '/web/game-join-history',
-            query: {
-              _immersive: 0,
-              type: 2,
-              at: this.token,
-              bid: this.buildingGameId,
-            },
-          });
+          goToApp(meBaseUrl, `/web/game-join-history?_immersive=0&type=2&at=${this.token}&bid=${this.configId}`)
           break
       }
     },
@@ -578,11 +545,9 @@ export default {
       if (this.couponInviteId) {
         param.configId = this.couponInviteId
       }
-      console.log('param', param)
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
-        localStorage.setItem('buildingGameId', this.configId)
         this.chanceNum = chanceNum
         this.joinNum = joinNum
         this.demo = isTestPlay
