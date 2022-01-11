@@ -549,11 +549,13 @@ export default {
       console.log('param', param)
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
         const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
+        console.log('isTestPay', isTestPay)
         this.configId = configId
         localStorage.setItem('buildingGameId', this.configId)
         this.chanceNum = chanceNum
         this.joinNum = joinNum
         this.demo = isTestPay
+        console.log('this.demo', this.demo)
         this.prizeWinMsg = prizeWinMsg
         this.ruleText = ruleText
         this.activityStatus = activityStatus
