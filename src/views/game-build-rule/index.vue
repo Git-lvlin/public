@@ -16,7 +16,7 @@
 <script>
 import Vue from 'vue';
 import { Image } from 'vant';
-import { getImgUrl } from '@/utils/tools';
+import { getImgUrl, storage } from '@/utils/tools';
 
 export default {
   data() {
