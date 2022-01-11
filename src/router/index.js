@@ -324,7 +324,15 @@ const routes = [
     meta: {
       title: '约购年货节活动规则',
     }
-  }
+  },
+  {
+    path: '/web/five-star-new',
+    name: 'FiveStarNew',
+    component: () => import('@/views/five-star-new'),
+    meta: {
+      title: '邀请注册秒升五星店主',
+    }
+  },
 ];
 
 const router = new VueRouter({
