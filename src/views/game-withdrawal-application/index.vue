@@ -1,10 +1,26 @@
 <template>
   <div class="withdrawal-application">
     <div class="content-box">
-      <div class="alipay-user">
+      <div class="pay-box" v-if="bindState == 1">
+        <div class="input-box">
+          <input
+            class="input"
+            v-model="accountInfo.withdrawAccount"
+            placeholder="请输入支付宝账号，提现成功后不可修改"
+          />
+        </div>
+        <div class="input-box">
+          <input
+            class="input"
+            v-model="accountInfo.withdrawRealname"
+            placeholder="请输入支付宝账号的真实姓名"
+          />
+        </div>
+      </div>
+      <div class="alipay-user" v-if="bindState == 2">
         <span class="alipay-user-title">到账账户：</span>
-        <img class="alipay-user-avatar" src="https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngbe046035975747431f7d3bdc5edb2d89b9f7d5bc4ad25437f4edcbc509bf17d0" />
-        <span class="alipay-user-account">支付宝（2355）</span>
+        <img class="alipay-user-avatar" :src="userInfo.icon || defAvatar" />
+        <span class="alipay-user-account">支付宝（{{getEncryption(accountInfo.withdrawAccount)}}）</span>
       </div>
       <div class="withdrawal-box">
         <div class="withdrawal-title">提现金额</div>
@@ -15,22 +31,29 @@
         <div class="line"></div>
         <div class="use-price">
           <span>当前余额</span>
-          <span class="use-price-text">{{total}}</span>
+          <span class="use-price-text">{{accountInfo.balanceText}}</span>
           <span>元</span>
         </div>
       </div>
-      <div :class="`withdrawal-btn ${price ? '' : 'unclick'}`" @click="onSubmit">立即提现</div>
+      <div
+        :class="`withdrawal-btn ${price && accountInfo.withdrawAccount && accountInfo.withdrawRealname ? '' : 'unclick'}`"
+        @click="onApply"
+      >立即提现</div>
+      <div class="withdrawal-history" @click="onToList">提现记录</div>
       <div class="withdrawal-desc">
         说明：
         <br />
-        1、前3次不限金额提现，后面需要≥3元起提现,例如3元、4元、5元····；
+        1、支付宝账号和用户名不一致将无法提现，请确认无误之后填写一个支付宝账号只能绑定一个约购APP进行提现。
         <br />
-        2、约购APP平台按照国家税收规定代缴纳20%的偶然所得税，从用户提现金额中扣除，忘悉知
+        2、支付宝账号提现成功后不能再修改，如需修改请通客服联系
         <br />
-        3、提现永久有效
+        3、前3次提现需≥0.12元，后面需要≥3元起提现提现,例如3元、4元、5元····；
+        <br />
+        4、约购APP平台按照国家税收规定代缴纳20%的偶然所得税，从用户提现金额中扣除
+        <br />
+        5、提现永久有效
       </div>
     </div>
-    <div class="withdrawal-history" @click="onToList">提现记录</div>
 
     <Popup
       :style="{background: 'transparent'}"
@@ -51,6 +74,7 @@
         <div class="withdrawal-ps ps-list">
           <PasswordInput
             :value="msgCode"
+            length="4"
             :gutter="10"
             :mask="false"
             @focus="focusCode = true"
@@ -58,16 +82,17 @@
         </div>
         <div class="time-down">
           <span>{{showTimeText}}</span>
-          <span class="get-code-down" v-if="showReGetCode">重新获取</span>
+          <span class="get-code-down" v-if="showReGetCode" @click="getWithdrawSms">重新获取</span>
         </div>
         <div class="popup-btn-list">
           <div class="popup-btn popup-btn-gray" @click="onShowMsg">取消</div>
-          <div class="popup-btn popup-btn-red" @click="onShowMsg">确认提现</div>
+          <div class="popup-btn popup-btn-red" @click="onConfrimApply">确认提现</div>
         </div>
       </div>
     </Popup>
     <NumberKeyboard
       :z-index="9999"
+      maxlength="4"
       v-model="msgCode"
       :show="focusCode"
       @blur="focusCode = false"
@@ -76,19 +101,26 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import { Image, Toast, Popup, PasswordInput, NumberKeyboard } from 'vant';
-import { getImgUrl } from '@/utils/tools';
+import gameApi from '@/apis/game';
+import { getImgUrl, storage } from '@/utils/tools';
 
 const timeText = 's后可重新获取'
 const defTimeText = '60s后可重新获取'
+let defToken = 'AQQAAAAAYfGMBhO1r6h85uACdaberb2ahlPFSv7KDBSE6JBgxdLkvYpcDoWnCKpMd4o=';
 
 export default {
   data() {
     return {
-      msgCode: '123',
+      defAvatar: getImgUrl('publicMobile/common/default_avatar.png'),
+      activityId: storage.get('buildingGameId') || '45',
+      token: storage.get('token') || defToken,
+      userInfo: {},
+      msgCode: '',
+      accountInfo: {},
+      bindState: 0,
       focusCode: false,
-      price: 880.6,
+      price: 1,
       total: 15.00,
       maxTime: 59,
       showMsg: false,
@@ -104,16 +136,57 @@ export default {
     NumberKeyboard,
   },
   mounted () {
+    this.getAccountInfo();
+    this.$bridge.callHandler('getUserInfo',{},(res) => {
+      const d = JSON.parse(res);
+      this.userInfo = d.data;
+    })
   },
   methods: {
     getImgUrl,
+    // 获取支付账户信息
+    getAccountInfo() {
+      gameApi.getAccountInfo({
+        activityId: this.activityId,
+      }, {
+        token: this.token,
+      }).then(res => {
+        if(res.code == 0) {
+          this.bindState = !!res.data.isBinding ? 2 : 1;
+          // res.data = {
+          //   ...res.data,
+          //   withdrawAccount: '441827.b23@sina.cn',
+          //   withdrawRealname: '张三',
+          // }
+          res.data.balanceText = parseFloat(res.data.balance / 100).toFixed(2);
+          this.accountInfo = res.data;
+        }
+      })
+    },
     // 申请提现
-    onSubmit() {
+    onApply() {
       const {
         price,
+        accountInfo,
       } = this;
       const regNumber = /^[0-9]+(.[0-9]{1,2})?$/;
       const isNumber = regNumber.test(price);
+      const regMobile = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+      const regEmail = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      if(!accountInfo.isBinding && !accountInfo.withdrawAccount) {
+        Toast({ message: '请输入支付宝账号' });
+        return;
+      }
+      if(!accountInfo.isBinding && !accountInfo.withdrawRealname) {
+        Toast({ message: '请输入支付宝账号的真实姓名' });
+        return;
+      }
+      const isMobile = regMobile.test(accountInfo.withdrawAccount);
+      const isEmail = regEmail.test(accountInfo.withdrawAccount);
+      if(!isMobile && !isEmail) {
+        Toast({ message: '您输入的支付宝账号不正确，请确认' });
+        return;
+      }
       if(!price) {
         Toast({ message: '请输入提现金额' });
         return;
@@ -122,17 +195,63 @@ export default {
         Toast({ message: '请输入正确金额' });
         return;
       }
-      Toast({ message: '提现' });
-      this.showMsg = true;
-      this.maxTime = 59;
-      this.startTimeDown();
+      // 检验金额
+      gameApi.getWithdrawVerify({
+        activityId: this.activityId,
+        amount: price * 100,
+      }, {
+        token: this.token,
+      }).then(res => {
+        if(res.code == 0 && res.data) {
+          this.getWithdrawSms();
+        }
+      });
+    },
+    // 发送短信
+    getWithdrawSms() {
+      if(this.maxTime > 0 && this.maxTime < 59) {
+        this.showMsg = true;
+        return;
+      }
+      gameApi.getWithdrawSms({}, {
+        token: this.token,
+      }).then(res => {
+        if(res.code == 0) {
+          Toast({
+            message: '短信验证码已发送至您的手机',
+          });
+          this.showMsg = true;
+          this.showReGetCode = false;
+          this.showTimeText = defTimeText;
+          this.maxTime = 59;
+          this.startTimeDown()
+        }
+      });
+    },
+    // 确认提现
+    onConfrimApply() {
+      gameApi.getWithdrawApply({
+        activityId: this.activityId,
+        amount: this.price * 100,
+        withdrawAccount: this.accountInfo.withdrawAccount,
+        withdrawRealname: this.accountInfo.withdrawRealname,
+        verifyCode: this.msgCode,
+      }, {
+        token: this.token,
+      }).then(res => {
+        if(res.code == 0) {
+          Toast({
+            message: '申请成功',
+          });
+          let timer = setTimeout(() => {
+            this.onShowMsg();
+            this.getAccountInfo();
+            clearTimeout(timer);
+          }, 1000)
+        }
+      });
     },
     onShowMsg() {
-      // if(this.showMsg) {
-      //   this.showTimeText = defTimeText;
-      //   this.showReGetCode = false;
-      //   clearInterval(this.timer);
-      // }
       this.showMsg = !this.showMsg;
     },
     // 开始倒计时
@@ -153,6 +272,23 @@ export default {
         this.showTimeText = '';
         this.showReGetCode = true;
       }
+    },
+    getEncryption(account = '') {
+      account = account.toString()
+      let text = '';
+      const emailLen = account.indexOf('@');
+      if(emailLen > -1) {
+        if (emailLen < 3) {
+          text = account.slice(0, emailLen);
+        } else {
+          text = account.slice(0, 3);
+        }
+        text = `${text}***${account.slice(emailLen)}`
+      } else {
+        const pat=/(\d{3})\d*(\d{2})/
+        text = account.replace(pat,'$1******$2');
+      }
+      return text;
     },
     // 跳转提现列表
     onToList() {
@@ -193,6 +329,33 @@ export default {
     background-color: #fff;
     border-radius: 10px;
   }
+
+  .pay-box {
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+  }
+  .input-box {
+    width: 320px;
+    height: 56px;
+    border-radius: 10px;
+    background-color: rgba(249, 249, 249, 1);
+    margin-left: 1px;
+    padding: 16px 0 0 15px;
+    margin-bottom: 10px;
+  }
+  .input {
+    width: 100%;
+    height: 24px;
+    color: rgba(51, 51, 51, 1);
+    font-size: 15px;
+    white-space: nowrap;
+    line-height: 24px;
+    padding: 0 15px 0 0;
+    background-color: transparent;
+    border: none;
+  }
+
   .alipay-user {
     display: flex;
     align-items: center;
