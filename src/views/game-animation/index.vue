@@ -484,16 +484,16 @@ export default {
           this.goShare()
           break
         case 'skill':
-          goToApp(meBaseUrl, '/web/game-build-rule?immersive=0&type=1')
+          goToApp(meBaseUrl, '/web/game-build-rule?_immersive=0&type=1')
           break
         case 'opp':
-          goToApp(meBaseUrl, '/web/game-join-history?immersive=0&type=1')
+          goToApp(meBaseUrl, '/web/game-join-history?_immersive=0&type=1')
           break
         case 'rank':
-          goToApp(meBaseUrl, '/web/game-build-pk?immersive=0&')
+          goToApp(meBaseUrl, '/web/game-build-pk?_immersive=0&')
           break
         case 'red':
-          goToApp(meBaseUrl, '/web/game-join-history?immersive=0&type=2')
+          goToApp(meBaseUrl, '/web/game-join-history?_immersive=0&type=2')
           break
       }
     },
