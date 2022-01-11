@@ -627,12 +627,14 @@ export default {
     goDemo() {
       this.star = true
       this.isDemoStar = true
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getConsumeUsageTimes()
     },
     go() {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
     setRandom() {
