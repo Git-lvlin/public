@@ -1,11 +1,12 @@
 <template>
-  <div>
-  <!-- <div class="withdrawal-application"> -->
+  <!-- <div> -->
+  <div class="withdrawal-application">
+    <!-- <div style="height: 50px"></div>
     <input
       v-model="accountInfo.withdrawAccount"
       placeholder="请输入支付宝账号，提现成功后不可修改"
-    />
-    <!-- <div class="content-box">
+    /> -->
+    <div class="content-box">
       <div class="pay-box" v-if="bindState == 1">
         <div class="input-box">
           <input
@@ -21,8 +22,8 @@
             placeholder="请输入支付宝账号的真实姓名"
           />
         </div>
-      </div> -->
-      <!-- <div class="alipay-user" v-if="bindState == 2">
+      </div>
+      <div class="alipay-user" v-if="bindState == 2">
         <span class="alipay-user-title">到账账户：</span>
         <img class="alipay-user-avatar" :src="userInfo.icon || defAvatar" />
         <span class="alipay-user-account">支付宝（{{getEncryption(accountInfo.withdrawAccount)}}）</span>
@@ -57,10 +58,10 @@
         4、约购APP平台按照国家税收规定代缴纳20%的偶然所得税，从用户提现金额中扣除
         <br />
         5、提现永久有效
-      </div> -->
+      </div>
     </div>
 
-    <!-- <Popup
+    <Popup
       :style="{background: 'transparent'}"
       v-model="showMsg"
     >
@@ -105,7 +106,7 @@
       v-model="msgCode"
       :show="focusCode"
       @blur="focusCode = false"
-    /> -->
+    />
   </div>
 </template>
 
