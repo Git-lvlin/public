@@ -107,7 +107,7 @@
 <script>
 import { Image, Toast, Popup, PasswordInput, NumberKeyboard } from 'vant';
 import gameApi from '@/apis/game';
-import { getImgUrl, storage } from '@/utils/tools';
+import { getImgUrl } from '@/utils/tools';
 
 const timeText = 's后可重新获取'
 const defTimeText = '60s后可重新获取'
@@ -117,9 +117,8 @@ export default {
   data() {
     return {
       defAvatar: getImgUrl('publicMobile/common/default_avatar.png'),
-      activityId: storage.get('buildingGameId') || '',
-      // token: storage.get('token') || defToken,
-      token: storage.get('token') || '',
+      activityId: '',
+      token: '',
       userInfo: {},
       msgCode: '',
       accountInfo: {},
@@ -142,7 +141,12 @@ export default {
     NumberKeyboard,
   },
   mounted () {
-    console.log('token', this.token);
+    let {
+      at: token,
+      bid: activityId,
+    } = this.$router.history.current.query;
+    this.token = token;
+    this.activityId = activityId;
     this.getAccountInfo();
     this.$bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res);
@@ -200,6 +204,10 @@ export default {
       }
       if(!isNumber) {
         Toast({ message: '请输入正确金额' });
+        return;
+      }
+      if(price * 100 > accountInfo.balance) {
+        Toast('您的可提现金额不足');
         return;
       }
       // 检验金额
@@ -300,7 +308,13 @@ export default {
     },
     // 跳转提现列表
     onToList() {
-      this.$router.push('/web/game-withdrawal-list');
+      this.$router.push({
+        path: '/web/game-withdrawal-list',
+        query: {
+          at: this.token,
+          bid: this.activityId,
+        },
+      });
     },
   },
 };
