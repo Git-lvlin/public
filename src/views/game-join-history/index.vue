@@ -261,7 +261,7 @@ export default {
           this.prizePage.totalPage = data.totalPages;
           data.records.forEach(item => {
             item.timeText = Dayjs(item.drawTime * 1000).format('YYYY-MM-DD HH:mm:ss');
-            item.prizeText = parseFloat(item.prize).toFixed(2);
+            item.prizeText = parseFloat(item.prize / 100).toFixed(2);
           });
           if(data.page >= data.totalPages) {
             this.listFinished = true;
