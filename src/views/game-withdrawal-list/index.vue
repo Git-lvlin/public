@@ -44,8 +44,9 @@ const defPage = {
 export default {
   data() {
     return {
-      activityId: storage.get('buildingGameId') || '45',
-      token: storage.get('token') || defToken,
+      activityId: storage.get('buildingGameId') || '',
+      // token: storage.get('token') || defToken,
+      token: storage.get('token') || '',
       defAvatar: getImgUrl('publicMobile/common/default_avatar.png'),
       userInfo: {},
       pageData: {
