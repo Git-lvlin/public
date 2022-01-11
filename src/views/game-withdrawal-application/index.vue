@@ -62,14 +62,18 @@
       <div class="msg-popup">
         <span class="popup-title">请输入短信验证码</span>
         <span class="popup-name">提现</span>
-        <span class="popup-price">¥8689.99</span>
+        <span class="popup-price">¥{{price}}</span>
         <div class="info-item">
           <div class="info-item-title">提现服务费：</div>
-          <div class="info-item-text"><span class="info-item-bold">0</span>元</div>
+          <div class="info-item-text"><span class="info-item-bold">{{parseFloat(withdrawInfo.fee || 0 / 100).toFixed(2)}}</span>元</div>
         </div>
         <div class="info-item">
-          <div class="info-item-title">费率：</div>
-          <div class="info-item-text"><span class="info-item-bold">0</span>元/笔</div>
+          <div class="info-item-title">偶然所得税20%：</div>
+          <div class="info-item-text"><span class="info-item-bold">{{parseFloat(withdrawInfo.tax || 0 / 100).toFixed(2)}}</span>元</div>
+        </div>
+        <div class="info-item">
+          <div class="info-item-title">实际到账金额：</div>
+          <div class="info-item-text"><span class="info-item-bold">{{parseFloat(withdrawInfo.realAmount || 0 / 100).toFixed(2)}}</span>元</div>
         </div>
         <div class="withdrawal-ps ps-list">
           <PasswordInput
@@ -113,15 +117,17 @@ export default {
   data() {
     return {
       defAvatar: getImgUrl('publicMobile/common/default_avatar.png'),
-      activityId: storage.get('buildingGameId') || '45',
-      token: storage.get('token') || defToken,
+      activityId: storage.get('buildingGameId') || '',
+      // token: storage.get('token') || defToken,
+      token: storage.get('token') || '',
       userInfo: {},
       msgCode: '',
       accountInfo: {},
       bindState: 0,
       focusCode: false,
-      price: 1,
-      total: 15.00,
+      price: '',
+      withdrawInfo: {},
+      total: 0,
       maxTime: 59,
       showMsg: false,
       timer: null,
@@ -136,6 +142,7 @@ export default {
     NumberKeyboard,
   },
   mounted () {
+    console.log('token', this.token);
     this.getAccountInfo();
     this.$bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res);
@@ -203,6 +210,7 @@ export default {
         token: this.token,
       }).then(res => {
         if(res.code == 0 && res.data) {
+          this.withdrawInfo = res.data;
           this.getWithdrawSms();
         }
       });
@@ -232,7 +240,7 @@ export default {
     onConfrimApply() {
       gameApi.getWithdrawApply({
         activityId: this.activityId,
-        amount: this.price * 100,
+        amount: this.withdrawInfo.realAmount,
         withdrawAccount: this.accountInfo.withdrawAccount,
         withdrawRealname: this.accountInfo.withdrawRealname,
         verifyCode: this.msgCode,

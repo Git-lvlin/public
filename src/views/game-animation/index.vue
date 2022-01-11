@@ -484,16 +484,48 @@ export default {
           this.goShare()
           break
         case 'skill':
-          goToApp(meBaseUrl, '/web/game-build-rule?type=1')
+          this.$router.push({
+            path: '/web/game-build-rule',
+            query: {
+              _immersive: 0,
+              type: 1,
+              at: this.token,
+              bid: this.buildingGameId,
+            },
+          });
           break
         case 'opp':
-          goToApp(meBaseUrl, '/web/game-join-history?type=1')
+          this.$router.push({
+            path: '/web/game-join-history',
+            query: {
+              _immersive: 0,
+              type: 1,
+              at: this.token,
+              bid: this.buildingGameId,
+            },
+          });
           break
         case 'rank':
-          goToApp(meBaseUrl, '/web/game-build-pk')
+          this.$router.push({
+            path: '/web/game-build-pk',
+            query: {
+              _immersive: 0,
+              type: 1,
+              at: this.token,
+              bid: this.buildingGameId,
+            },
+          });
           break
         case 'red':
-          goToApp(meBaseUrl, '/web/game-join-history?type=2')
+          this.$router.push({
+            path: '/web/game-join-history',
+            query: {
+              _immersive: 0,
+              type: 2,
+              at: this.token,
+              bid: this.buildingGameId,
+            },
+          });
           break
       }
     },
@@ -548,12 +580,12 @@ export default {
       }
       console.log('param', param)
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
-        const { configId, chanceNum, joinNum, isTestPay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
+        const { configId, chanceNum, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         localStorage.setItem('buildingGameId', this.configId)
         this.chanceNum = chanceNum
         this.joinNum = joinNum
-        this.demo = isTestPay
+        this.demo = isTestPlay
         this.prizeWinMsg = prizeWinMsg
         this.ruleText = ruleText
         this.activityStatus = activityStatus
@@ -627,12 +659,14 @@ export default {
     goDemo() {
       this.star = true
       this.isDemoStar = true
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getConsumeUsageTimes()
     },
     go() {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
     setRandom() {

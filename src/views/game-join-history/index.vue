@@ -141,8 +141,9 @@ const defPrizePage = {
 export default {
   data() {
     return {
-      activityId: storage.get('buildingGameId') || '45',
-      token: storage.get('token') || defToken,
+      activityId: storage.get('buildingGameId') || '',
+      // token: storage.get('token') || defToken,
+      token: storage.get('token') || '',
       actType: 1,
       list: [],
       showDate: false,
@@ -170,6 +171,7 @@ export default {
     List,
   },
   mounted () {
+    console.log('token', this.token);
     let {
       type
     } = this.$router.history.current.query;

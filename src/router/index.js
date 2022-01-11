@@ -340,13 +340,6 @@ const routes = [
       title: '盖房子下载页',
     }
   }, {
-    path: '/web/game-bind-alipay',
-    name: 'GameBindAlipay',
-    component: () => import('@/views/game-bind-alipay'),
-    meta: {
-      title: '绑定支付宝',
-    }
-  }, {
     path: '/web/game-withdrawal-application',
     name: 'GameWithdrawalApplication',
     component: () => import('@/views/game-withdrawal-application'),
