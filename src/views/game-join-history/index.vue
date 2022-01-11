@@ -171,6 +171,7 @@ export default {
     List,
   },
   mounted () {
+    console.log('token', this.token);
     let {
       type
     } = this.$router.history.current.query;
