@@ -221,10 +221,6 @@ export default {
           if(!data.hasNext) {
             this.listFinished = true;
           }
-          // data.records.forEach(item => {
-          //   item.timeText = Dayjs(item.drawTime * 1000).format('YYYY-MM-DD HH:mm:ss');
-          //   item.prizeText = parseFloat(item.prize).toFixed(2);
-          // });
           if(frist) {
             this.list = data.records;
           } else {

@@ -141,7 +141,6 @@ export default {
       const d = JSON.parse(res);
       this.userInfo = d.data;
     })
-    this.getEncryption();
   },
   methods: {
     getImgUrl,
