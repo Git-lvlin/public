@@ -62,7 +62,8 @@ let defToken = 'AQQAAAAAYdhNOxO1r6h85uACx6FOZcihea0a_cZhEeCLtQ5uXZMSeqk4LpBlYKEC
 export default {
   data() {
     return {
-      token: storage.get('token') || defToken,
+      // token: storage.get('token') || defToken,
+      token: storage.get('token') || '',
       actType: 1,
       pkData: {
         mine: {},
