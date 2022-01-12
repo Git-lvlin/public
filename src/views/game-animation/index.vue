@@ -212,7 +212,7 @@
             width="134px"
             height="42px"
             :src="getImgUrl('publicMobile/game/demo-star-btn.png')"
-            @click="go"
+            @click="demoGo"
           />
         </div>
 
@@ -654,6 +654,7 @@ export default {
       this.star = true
       this.isDemoStar = true
       document.body.scrollTop = document.documentElement.scrollTop = 0;
+      this.onMusic()
       this.getConsumeUsageTimes()
     },
     go() {
