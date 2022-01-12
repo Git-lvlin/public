@@ -95,7 +95,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup } from 'vant';
+import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup, Toast } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import teamApi from '@/apis/fivestar';
@@ -109,6 +109,7 @@ Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(Lazyload);
 Vue.use(Popup);
+Vue.use(Toast);
 export default {
   data() {
     return {
@@ -117,7 +118,7 @@ export default {
       storeInSrc: null,
       newShareSrc: null,
       initData: null, 
-      ruleText: '一、活动时间：\n2021年11月6日10:00至11月30日18:00\n二、活动对象：\n一至四星社区店主均可参与。\n三、活动内容：\n活动期间，一至四星店主完成所有任务即可直升为五星店\n四、任务条件：\n1、活动期间，1-2星店主成功邀请 40 个新用户注册并完成一次登录签到；3-4星店主成功邀请 20 个新用户注册并完成一次登录签到；\n2、活动期间，1-2星店主成功邀约5名用户成为店主；3-4星店主成功邀约3名用户成为店主；\n3、活动期间，本店主参与集约下单3次；\n五、活动升星规则仅限于本次活动期内有效，活动结束以后恢复原升星规则\n六、本活动解释权归深圳前海汇能科技产业有限公司所有',
+      ruleText: '一、活动时间：\n2022年1月15日10\n二、活动对象：\n1至4星社区店主均可参与。\n三、活动内容：\n活动期间，邀请50名新用户注册约购且该用户登录签到1次，即可升为5星店主，尊享5星店主权益。\n四、活动升星规则仅限于本次活动期内有效，活动结束以后恢复原升星规则。\n五、本活动解释权归深圳前海汇能科技产业有限公司所有。',
       show: false,
       token: null,
       bgType: 0,
@@ -127,8 +128,8 @@ export default {
       content: [
         {
           topTitle: '我的邀请战绩',
-          title: '成功邀约20名新用户并登录签到',
-          subtitle: '未完成（0/20）',
+          title: '成功邀请50名新用户注册约购并签到',
+          subtitle: '未完成（0/50）',
           btnLeft: getImgUrl('publicMobile/fivestar/btn-yq.png'),
           btnRight: getImgUrl('publicMobile/fivestar/btn-yqjl.png'),
           img: getImgUrl('publicMobile/fivestar/item-img3.png'),
@@ -208,18 +209,8 @@ export default {
         zero,
       )
     },
-    rightBtn(index) {
-      switch(index) {
-        case 0:
-          goToApp(meBaseUrl, '/web/invitation-list', '', this.$bridge)
-          break
-        case 1:
-          goToApp(meBaseUrl, '/web/open-shop-list', '', this.$bridge)
-          break
-        case 2:
-          goToApp(meBaseUrl, '/web/partake-list', '', this.$bridge)
-          break
-      }
+    rightBtn() {
+      goToApp(meBaseUrl, '/web/invitation-list?isNew=1')
     },
     intoView() {
       document.getElementById("anchor").scrollIntoView()
@@ -228,7 +219,7 @@ export default {
       if (this.bgType) {
         return
       }
-      teamApi.getList({}, {token: this.token}).then((res) => {
+      teamApi.getListNew({}, {token: this.token}).then((res) => {
         if (res && res.data) {
           this.setText(res.data)
         }
@@ -249,10 +240,15 @@ export default {
         teamApi.getStoreShopInfo({}, {showError: false,token: this.token})
           .then((res) => {
             if (res&&res.code == 0) {
-              this.storeAccount = res.data?.storeAccount
+              if (res.data&&res.data.storeAccount) {
+                this.storeAccount = res.data.storeAccount
+              } else {
+                Toast('本活动仅限店主参与, 请先开店成为店主后参与')
+              }
               this.gradeLevel = res.data?.memberShop?.level?.gradeLevel
               if (this.gradeLevel == 5) {
                 this.bgType = 1
+                Toast('您已是五星店主')
               }
             }
             resolve()
@@ -260,18 +256,18 @@ export default {
       })
     },
     setText(data) {
-      const { inventUser, openStore, storeTrans } = data;
-      this.content[0].title = `成功邀约${inventUser.confNum}名新用户并登录签到`;
+      const { inventUser } = data;
+      this.content[0].title = `成功邀约${inventUser.confNum}名新用户注册约购并签到`;
       this.content[0].subtitle = `未完成（${inventUser.activeNum}/${inventUser.confNum}）`
       this.content[0].type = inventUser.status;
 
-      this.content[1].title = `邀约${openStore.confNum}名用户成功开店`;
-      this.content[1].subtitle = `未完成（${openStore.activeNum}/${openStore.confNum}）`
-      this.content[1].type = openStore.status;
+      // this.content[1].title = `邀约${openStore.confNum}名用户成功开店`;
+      // this.content[1].subtitle = `未完成（${openStore.activeNum}/${openStore.confNum}）`
+      // this.content[1].type = openStore.status;
 
-      this.content[2].title = `参与集约下单${storeTrans.confNum}次`;
-      this.content[2].subtitle = `未完成（${storeTrans.activeNum}/${storeTrans.confNum}）`
-      this.content[2].type = storeTrans.status;
+      // this.content[2].title = `参与集约下单${storeTrans.confNum}次`;
+      // this.content[2].subtitle = `未完成（${storeTrans.activeNum}/${storeTrans.confNum}）`
+      // this.content[2].type = storeTrans.status;
       // if (inventUser.status&&openStore.status&&storeTrans.status) {
       //   this.bgType = 1
       // }
