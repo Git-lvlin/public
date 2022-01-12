@@ -67,7 +67,7 @@
         lazy-load
         :src="getImgUrl('publicMobile/game/title.png')"
       />
-      <div class="sub-title" v-if="!end">已有{{joinNum}}人参与，您今天还有{{chanceNum}}次参与机</div>
+      <div class="sub-title" v-if="!end">已有{{joinNum}}人参与，您今天还有{{chanceNum}}次参与机会</div>
       <div class="sub-title" v-else>已有{{joinNum}}人参与</div>
       <van-image
         class="main"
