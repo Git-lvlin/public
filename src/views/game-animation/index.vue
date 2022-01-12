@@ -476,6 +476,16 @@ export default {
     },
     demoClose() {
       this.demoPopup = false
+      this.gameInit()
+    },
+    demoGo() {
+      this.gameInit()
+      this.demoPopup = false
+      this.starTime = Date.parse(new Date());
+      this.setRandom()
+      this.star = true
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+      this.getUseBuilding()
     },
     goTo(router) {
       switch(router) {
@@ -522,13 +532,18 @@ export default {
       return Y+M+D
     },
     gameInit(type) {
-      location.reload();
-      // if (type === 'fail') {
-      //   this.failPopup = false
-      // }
-      // this.star = false;
-      // this.currentFloor = 0;
-      // this.getGame();
+      // location.reload();
+      for(let i=1;i<this.currentFloor;i++) {
+        let f = 'floor' + i 
+        let dom = document.getElementById(f)
+        dom.remove()
+      }
+      this.star = false;
+      this.currentFloor = 0;
+      if (type === 'fail') {
+        this.failPopup = false
+      }
+      this.getGame();
     },
     getUserInfo() {
       return new Promise((resolve) => {
