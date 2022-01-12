@@ -367,6 +367,9 @@
         </div>
       </div>
     </van-popup>
+    <div class="none" v-for="(item, index) in imgs" :key="index">
+      <img :src="getImgUrl(item)" alt="1">
+    </div>
   </div>
 </template>
 
@@ -786,6 +789,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.none {
+  display: none;
+}
 .load {
   position: fixed;
   padding-top: 200px;
