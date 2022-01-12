@@ -83,7 +83,11 @@ export default {
     getImgUrl,
     onChangeBar(type) {
       if(type != this.actType) {
-        this.actType = type
+        this.actType = type;
+        this.pkData = {
+          mine: {},
+          list: [],
+        }
         if(type == 1) {
           this.getPkInvite();
         } else {
