@@ -485,6 +485,7 @@ export default {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
+      this.onMusic()
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
@@ -671,6 +672,7 @@ export default {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
+      this.onMusic()
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
@@ -717,6 +719,7 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
+        this.onMusic()
         // 试玩结束专用弹窗
         if (this.isDemoStar) {
           this.demoPopup = true
