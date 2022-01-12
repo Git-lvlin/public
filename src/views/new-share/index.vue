@@ -155,7 +155,9 @@ export default {
     } = this.$router.history.current;
     console.log('query', query)
     this.inviteCode = query.inviteCode
-    this.url = query.url
+    this.url = query.url || ''
+    this.isWeixin = query.isWeixin || 0
+    this.type = query.type || 0
   },
   methods: {
     onOpenApp() {
@@ -193,7 +195,7 @@ export default {
       this.show = 0;
       const ua = window.navigator.userAgent.toLowerCase();
       if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        this.isWeixin = 1;
+        window.location.href += `&type=${this.type}&isWeixin=${1}`
         return
       } else {
         this.onOpenApp()
