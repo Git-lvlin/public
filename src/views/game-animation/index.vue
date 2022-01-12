@@ -372,7 +372,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Lazyload, Popup, Loading } from 'vant';
+import { Image as VanImage, Dialog, Lazyload, Popup, Loading, Toast } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import teamApi from '@/apis/game';
 import JoinUser from './components/join-user/index';
@@ -386,6 +386,7 @@ Vue.use(VanImage);
 Vue.use(Popup);
 Vue.use(Loading);
 Vue.use(Lazyload);
+Vue.use(Toast);
 export default {
   data() {
     return {
@@ -476,8 +477,27 @@ export default {
     },
     demoClose() {
       this.demoPopup = false
+      this.gameInit()
+    },
+    demoGo() {
+      this.gameInit()
+      this.demoPopup = false
+      this.starTime = Date.parse(new Date());
+      this.setRandom()
+      this.star = true
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+      this.getUseBuilding()
     },
     goTo(router) {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       switch(router) {
         case 'share':
           this.goShare()
@@ -522,13 +542,18 @@ export default {
       return Y+M+D
     },
     gameInit(type) {
-      location.reload();
-      // if (type === 'fail') {
-      //   this.failPopup = false
-      // }
-      // this.star = false;
-      // this.currentFloor = 0;
-      // this.getGame();
+      // location.reload();
+      for(let i=1;i<this.currentFloor;i++) {
+        let f = 'floor' + i 
+        let dom = document.getElementById(f)
+        dom.remove()
+      }
+      this.star = false;
+      this.currentFloor = 0;
+      if (type === 'fail') {
+        this.failPopup = false
+      }
+      this.getGame();
     },
     getUserInfo() {
       return new Promise((resolve) => {
@@ -549,6 +574,9 @@ export default {
         const { configId, chanceNum, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         this.chanceNum = chanceNum
+        if (!chanceNum) {
+          Toast({ message: '你还有0次参与活动机会，请做任务获得机会' });
+        }
         this.joinNum = joinNum
         this.demo = isTestPlay
         this.prizeWinMsg = prizeWinMsg
@@ -628,6 +656,18 @@ export default {
       this.getConsumeUsageTimes()
     },
     go() {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }     
+      if (this.chanceNum == 0) {
+        return Toast({ message: '还有0次参与机会，请做任务获得机会' });
+      }
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true

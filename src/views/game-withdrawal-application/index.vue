@@ -1,5 +1,11 @@
 <template>
+  <!-- <div> -->
   <div class="withdrawal-application">
+    <!-- <div style="height: 50px"></div>
+    <input
+      v-model="accountInfo.withdrawAccount"
+      placeholder="请输入支付宝账号，提现成功后不可修改"
+    /> -->
     <div class="content-box">
       <div class="pay-box" v-if="bindState == 1">
         <div class="input-box">
@@ -348,6 +354,7 @@ export default {
   .withdrawal-application {
     min-height: 100vh;
     padding: 12px;
+    overflow: auto;
     background-color: rgba(249, 249, 249, 1);
   }
   .content-box {
