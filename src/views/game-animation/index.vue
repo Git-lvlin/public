@@ -657,6 +657,7 @@ export default {
       this.star = true
       this.isDemoStar = true
       document.body.scrollTop = document.documentElement.scrollTop = 0;
+      this.setRandom()
       this.onMusic()
       this.getConsumeUsageTimes()
     },
