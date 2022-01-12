@@ -195,6 +195,7 @@ export default {
     // 获取数据
     getData() {
       this.listFinished = false;
+      this.list = [];
       if(this.actType == 1) {
         this.rankPage = {
           ...defRankPage
