@@ -489,6 +489,15 @@ export default {
       this.getUseBuilding()
     },
     goTo(router) {
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }
       switch(router) {
         case 'share':
           this.goShare()
@@ -647,8 +656,17 @@ export default {
       this.getConsumeUsageTimes()
     },
     go() {
-      if (this.chanceNum < 1) {
-        return Toast({ message: '你还有0次参与活动机会，请做任务获得机会' });
+      if (!this.token) {
+        this.$router.push({
+          path: '/web/new-share',
+          query: {
+            inviteCode: this.inviteCode
+          },
+        });
+        return
+      }     
+      if (this.chanceNum == 0) {
+        return Toast({ message: '还有0次参与机会，请做任务获得机会' });
       }
       this.starTime = Date.parse(new Date());
       this.setRandom()
