@@ -1,6 +1,6 @@
 <template>
   <div class="music-box">
-    <audio id="bgMusic" :src="getImgUrl('publicMobile/files/floor_game_music.mp3')" loop autoplay></audio>
+    <audio id="bgMusic" :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')" loop></audio>
     <div :class="state == 0 ? 'music-icon paused' : 'music-icon active'">
       <Icon size="36" name="music-o" />
     </div>
@@ -40,6 +40,8 @@ export default {
         this.state = 1;
         this.audio.play();
       }
+      
+      console.log(this.state);
     }
   },
 };
