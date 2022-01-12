@@ -372,7 +372,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Dialog, Lazyload, Popup, Loading } from 'vant';
+import { Image as VanImage, Dialog, Lazyload, Popup, Loading, Toast } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import teamApi from '@/apis/game';
 import JoinUser from './components/join-user/index';
@@ -386,6 +386,7 @@ Vue.use(VanImage);
 Vue.use(Popup);
 Vue.use(Loading);
 Vue.use(Lazyload);
+Vue.use(Toast);
 export default {
   data() {
     return {
@@ -564,6 +565,9 @@ export default {
         const { configId, chanceNum, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         this.chanceNum = chanceNum
+        if (!chanceNum) {
+          Toast({ message: '你还有0次参与活动机会，请做任务获得机会' });
+        }
         this.joinNum = joinNum
         this.demo = isTestPlay
         this.prizeWinMsg = prizeWinMsg
@@ -643,6 +647,9 @@ export default {
       this.getConsumeUsageTimes()
     },
     go() {
+      if (this.chanceNum < 1) {
+        return Toast({ message: '你还有0次参与活动机会，请做任务获得机会' });
+      }
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
