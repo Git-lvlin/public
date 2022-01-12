@@ -212,7 +212,7 @@
             width="134px"
             height="42px"
             :src="getImgUrl('publicMobile/game/demo-star-btn.png')"
-            @click="go"
+            @click="demoGo"
           />
         </div>
 
@@ -367,6 +367,9 @@
         </div>
       </div>
     </van-popup>
+    <div class="none" v-for="(item, index) in imgs" :key="index">
+      <img :src="getImgUrl(item)" alt="1">
+    </div>
   </div>
 </template>
 
@@ -485,6 +488,7 @@ export default {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
+      this.onMusic()
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
@@ -653,6 +657,8 @@ export default {
       this.star = true
       this.isDemoStar = true
       document.body.scrollTop = document.documentElement.scrollTop = 0;
+      this.setRandom()
+      this.onMusic()
       this.getConsumeUsageTimes()
     },
     go() {
@@ -671,6 +677,7 @@ export default {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
+      this.onMusic()
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
@@ -717,6 +724,7 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
+        this.onMusic()
         // 试玩结束专用弹窗
         if (this.isDemoStar) {
           this.demoPopup = true
@@ -782,6 +790,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.none {
+  display: none;
+}
 .load {
   position: fixed;
   padding-top: 200px;
