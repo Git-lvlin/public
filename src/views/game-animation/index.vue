@@ -586,6 +586,9 @@ export default {
         this.prizeWinMsg = prizeWinMsg
         this.ruleText = ruleText
         this.activityStatus = activityStatus
+        if (this.activityStatus == 0) {
+          this.end = 1
+        } 
         this.activityStartTime = activityStartTime
         this.activityEndTime = activityEndTime
         this.actTime = this.timestampToTime(activityStartTime) + '-' + this.timestampToTime(activityEndTime)
