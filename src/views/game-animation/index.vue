@@ -890,16 +890,16 @@ export default {
     position: relative;
   }
   @keyframes scaleDraw {
-    0% {transform: translateZ(0) scale(1, 1);  /*开始为原始大小*/}
-    25% {transform: translateZ(0) scale(4.2, 4.2);  /*开始为原始大小*/}
-    50% {transform: translateZ(0) scale(1, 1);  /*开始为原始大小*/}
-    75% {transform: translateZ(0) scale(4.2, 4.2);  /*开始为原始大小*/}
+    0% {transform: translateZ(0) scale(1);  /*开始为原始大小*/}
+    25% {transform: translateZ(0) scale(-4.2);  /*开始为原始大小*/}
+    50% {transform: translateZ(0) scale(1);  /*开始为原始大小*/}
+    75% {transform: translateZ(0) scale(-4.2);  /*开始为原始大小*/}
   }
   #beat {
     position: absolute;
     top: 188px;
-    width: 60px;
-    height: 24.5px;
+    width: 252px;
+    height: 102.9px;
     transform-origin: center top 0;
     animation: scaleDraw 5s ease-in-out infinite;
     -webkit-animation: scaleDraw 5s ease-in-out infinite;
