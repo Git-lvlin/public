@@ -118,7 +118,7 @@ export default {
       storeInSrc: null,
       newShareSrc: null,
       initData: null, 
-      ruleText: '一、活动时间：\n2022年1月15日10\n二、活动对象：\n1至4星社区店主均可参与。\n三、活动内容：\n活动期间，邀请50名新用户注册约购且该用户登录签到1次，即可升为5星店主，尊享5星店主权益。\n四、活动升星规则仅限于本次活动期内有效，活动结束以后恢复原升星规则。\n五、本活动解释权归深圳前海汇能科技产业有限公司所有。',
+      ruleText: '一、活动时间：\n2022年1月15日10:00至2月15日18:00\n二、活动对象：\n1至4星社区店主均可参与。\n三、活动内容：\n活动期间，邀请50名新用户注册约购且该用户登录签到1次，即可升为5星店主，尊享5星店主权益。\n四、活动升星规则仅限于本次活动期内有效，活动结束以后恢复原升星规则。\n五、本活动解释权归深圳前海汇能科技产业有限公司所有。',
       show: false,
       token: null,
       bgType: 0,
@@ -210,7 +210,7 @@ export default {
       )
     },
     rightBtn() {
-      goToApp(meBaseUrl, '/web/invitation-list?_immersive=0&isNew=1')
+      goToApp(meBaseUrl, '/web/invitation-list', '?_immersive=0&isNew=1')
     },
     intoView() {
       document.getElementById("anchor").scrollIntoView()
