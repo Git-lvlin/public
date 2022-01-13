@@ -210,7 +210,7 @@ export default {
       )
     },
     rightBtn() {
-      goToApp(meBaseUrl, '/web/invitation-list?isNew=1')
+      goToApp(meBaseUrl, '/web/invitation-list?_immersive=0&isNew=1')
     },
     intoView() {
       document.getElementById("anchor").scrollIntoView()
@@ -251,6 +251,9 @@ export default {
               this.gradeLevel = res.data?.memberShop?.level?.gradeLevel
               if (this.gradeLevel == 5) {
                 this.bgType = 1
+                if (document.title) {
+                  document.title = '五星店主限时抢'
+                }
                 Toast({message: '您已是五星店主'})
               }
             } else {
