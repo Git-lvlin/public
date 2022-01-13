@@ -61,8 +61,10 @@ export default {
           break
         case 2:
           url='/web/bind-box'
+          break
         case 3:
           url='/web/game-animation'
+          break
       }
       goToApp(meBaseUrl, url, param)
     },
