@@ -45,8 +45,9 @@ export default {
     const {
       query,
     } = this.$router.history.current;
+    console.log('query', query)
     await this.getUserInfo()
-    if (query.isNew === 1) {
+    if (query.isNew == 1) {
       this.getNewList()
     } else {
       this.getList()
