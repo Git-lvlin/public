@@ -216,6 +216,9 @@ export default {
       document.getElementById("anchor").scrollIntoView()
     },
     getData() {
+      if (!this.storeAccount) {
+        return
+      }
       if (this.bgType) {
         return
       }
@@ -243,12 +246,12 @@ export default {
               if (res.data&&res.data.storeAccount) {
                 this.storeAccount = res.data.storeAccount
               } else {
-                Toast('本活动仅限店主参与, 请先开店成为店主后参与')
+                Toast({message: '本活动仅限店主参与, 请先开店成为店主后参与'})
               }
               this.gradeLevel = res.data?.memberShop?.level?.gradeLevel
               if (this.gradeLevel == 5) {
                 this.bgType = 1
-                Toast('您已是五星店主')
+                Toast({message: '您已是五星店主'})
               }
             }
             resolve()
