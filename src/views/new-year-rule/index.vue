@@ -3,7 +3,7 @@
     <div class="mask"></div>
     <div class="box">
       <div class="title">一、活动时间</div>
-      <div class="content">2021年12月24日00:00:00-2022年1月15日23:59:59</div>
+      <div class="content">2021年12月24日00:00:00-2022年2月22日23:59:59</div>
       <div class="title">二、参与条件</div>
       <div class="content">约购APP注册用户，且用户的约购APP已更新到最新版本。</div>
       <div class="title">三、参与方式</div>
