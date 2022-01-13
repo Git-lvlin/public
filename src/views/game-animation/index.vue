@@ -98,6 +98,15 @@
       </div>
       <div class="btn-box-no" v-if="!demo&&!end">
         <van-image
+          v-if="activityStatus==2"
+          class="star"
+          width="193px"
+          height="48px"
+          lazy-load
+          :src="getImgUrl('publicMobile/game/no-star.png')"
+        />
+        <van-image
+          v-else
           class="star"
           width="193px"
           height="48px"
@@ -105,7 +114,8 @@
           @click="go"
           :src="chanceNum?getImgUrl('publicMobile/game/star.png'):getImgUrl('publicMobile/game/null-btn.png')"
         />
-        <div class="time-after-time" v-if="!chanceNum">您有0次机会，去做任务获得更多游戏机会</div>
+
+        <div class="time-after-time" v-if="!chanceNum&&activityStatus!=2">您有0次机会，去做任务获得更多游戏机会</div>
         <div class="time">活动时间：{{actTime}}</div>
       </div>
       <div class="btn-box-end" v-if="end">
