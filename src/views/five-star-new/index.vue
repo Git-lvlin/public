@@ -253,6 +253,8 @@ export default {
                 this.bgType = 1
                 Toast({message: '您已是五星店主'})
               }
+            } else {
+              Toast({message: '本活动仅限店主参与, 请先开店成为店主后参与'})
             }
             resolve()
           })
