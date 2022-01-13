@@ -1,6 +1,6 @@
 <template>
   <div class="music-box">
-    <audio id="bgMusic" :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')" loop></audio>
+    <audio id="bgMusic" :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')" loop preload="auto"></audio>
     <div :class="state == 0 ? 'music-icon paused' : 'music-icon active'">
       <!-- <Icon size="36" name="music-o" /> -->
       <van-image
