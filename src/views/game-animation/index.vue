@@ -207,7 +207,7 @@
     </div>
 
     <!-- 试玩结束弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
       <div class="popup-box">
         <div class="demo-popup-content">
           <van-image
@@ -238,7 +238,7 @@
     </van-popup>
 
     <!-- 游戏失败弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
       <div class="popup-box">
         <div class="fail-popup-content">
           <van-image
@@ -276,7 +276,7 @@
     </van-popup>
   
     <!-- 游戏成功弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
       <div class="popup-box">
         <div class="success-popup-content">
           <van-image
@@ -300,7 +300,7 @@
     </van-popup>
 
     <!-- 中奖弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
       <div class="popup-box">
         <div class="result-popup-content">
           <van-image
@@ -349,7 +349,7 @@
     </van-popup>
 
     <!-- 未中奖弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
       <div class="popup-box">
         <div class="null-popup-content">
           <van-image
@@ -379,6 +379,7 @@
       </div>
     </van-popup>
     <div class="none" v-for="(item, index) in imgs" :key="index">
+      <img :src="getImgUrl('publicMobile/game/bg.png')" alt="1">
       <img :src="getImgUrl(item)" alt="1">
     </div>
   </div>
@@ -902,16 +903,16 @@ export default {
     position: relative;
   }
   @keyframes scaleDraw {
-    0% {transform: translateZ(0) scale(1, 1);  /*开始为原始大小*/}
-    25% {transform: translateZ(0) scale(4.2, 4.2);  /*开始为原始大小*/}
-    50% {transform: translateZ(0) scale(1, 1);  /*开始为原始大小*/}
-    75% {transform: translateZ(0) scale(4.2, 4.2);  /*开始为原始大小*/}
+    0% {transform: translateZ(0) scale(1);  /*开始为原始大小*/}
+    25% {transform: translateZ(0) scale(.238);  /*开始为原始大小*/}
+    50% {transform: translateZ(0) scale(1);  /*开始为原始大小*/}
+    75% {transform: translateZ(0) scale(.238);  /*开始为原始大小*/}
   }
   #beat {
     position: absolute;
     top: 188px;
-    width: 60px;
-    height: 24.5px;
+    width: 252px;
+    height: 102.9px;
     transform-origin: center top 0;
     animation: scaleDraw 5s ease-in-out infinite;
     -webkit-animation: scaleDraw 5s ease-in-out infinite;
