@@ -103,8 +103,9 @@
           height="48px"
           lazy-load
           @click="go"
-          :src="getImgUrl('publicMobile/game/star.png')"
+          :src="chanceNum?getImgUrl('publicMobile/game/star.png'):getImgUrl('publicMobile/game/null-btn.png')"
         />
+        <div class="time-after-time" v-if="!chanceNum">您有0次机会，去做任务获得更多游戏机会</div>
         <div class="time">活动时间：{{actTime}}</div>
       </div>
       <div class="btn-box-end" v-if="end">
@@ -128,7 +129,7 @@
 
 
     <!-- 游戏时 -->
-    <div class="in-game" v-if="star" @click="click">
+    <div class="in-game" v-show="star" @click="click">
       <div class="top-right-box">
         <van-image
           class="share"
@@ -475,8 +476,8 @@ export default {
       })
     },
     onMusic(e) {
-      e.stopPropagation();
       this.$refs.music.onPlayOrPaused();
+      e?.stopPropagation();
     },
     demoClose() {
       this.demoPopup = false
@@ -578,8 +579,11 @@ export default {
         const { configId, chanceNum, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         this.chanceNum = chanceNum
-        if (!chanceNum) {
+        if (!chanceNum && activityStatus == 1) {
           Toast({ message: '你还有0次参与活动机会，请做任务获得机会' });
+        }
+        if (activityStatus == 2) {
+          Toast({ message: '活动未开始' });
         }
         this.joinNum = joinNum
         this.demo = isTestPlay
@@ -1038,6 +1042,13 @@ export default {
     line-height: 17px;
   }
   .time {
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FF3036;
+    line-height: 17px;
+  }
+  .time-after-time {
     font-size: 12px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
