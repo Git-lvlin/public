@@ -890,10 +890,10 @@ export default {
     position: relative;
   }
   @keyframes scaleDraw {
-    0% {transform: scale(1, 1);  /*开始为原始大小*/}
-    25% {transform: scale(4.2, 4.2);  /*开始为原始大小*/}
-    50% {transform: scale(1, 1);  /*开始为原始大小*/}
-    75% {transform: scale(4.2, 4.2);  /*开始为原始大小*/}
+    0% {transform: translateZ(0) scale(1, 1);  /*开始为原始大小*/}
+    25% {transform: translateZ(0) scale(4.2, 4.2);  /*开始为原始大小*/}
+    50% {transform: translateZ(0) scale(1, 1);  /*开始为原始大小*/}
+    75% {transform: translateZ(0) scale(4.2, 4.2);  /*开始为原始大小*/}
   }
   #beat {
     position: absolute;
