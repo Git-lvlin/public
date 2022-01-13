@@ -365,7 +365,7 @@ const routes = [
     name: 'GameBuildRule',
     component: () => import('@/views/game-build-rule'),
     meta: {
-      title: '新年建新房活动规则',
+      title: '新年盖高楼玩法',
     }
   }, {
     path: '/web/game-build-pk',
