@@ -71,15 +71,15 @@
         <span class="popup-price">¥{{price}}</span>
         <div class="info-item">
           <div class="info-item-title">提现服务费：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat(withdrawInfo.fee || 0 / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.fee || 0) / 100).toFixed(2)}}</span>元</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">偶然所得税20%：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat(withdrawInfo.tax || 0 / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.tax || 0) / 100).toFixed(2)}}</span>元</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">实际到账金额：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat(withdrawInfo.realAmount || 0 / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.realAmount || 0) / 100).toFixed(2)}}</span>元</div>
         </div>
         <div class="withdrawal-ps ps-list">
           <PasswordInput
