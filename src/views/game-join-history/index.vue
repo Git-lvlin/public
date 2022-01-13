@@ -1,8 +1,13 @@
 <template>
   <div class="history-box">
-    <div class="flex_fix bar-list">
-      <div :class="`bar-item ${actType == 1 ? 'bar-act' : ''}`" @click="onChangeBar(1)">获得机会</div>
-      <div :class="`bar-item ${actType == 2 ? 'bar-act' : ''}`" @click="onChangeBar(2)">我的红包奖励</div>
+    <div class="bar-height">
+      <div class="flex_fix bar-list">
+        <div :class="`flex_center bar-item ${actType == 1 ? 'bar-act' : ''}`" @click="onChangeBar(1)">
+          获得机会
+          <img class="ask-icon" @click="showRankDesc = true" :src="getImgUrl('publicMobile/game/withdrawal/history_desc_ask.png')" />
+        </div>
+        <div :class="`bar-item ${actType == 2 ? 'bar-act' : ''}`" @click="onChangeBar(2)">我的红包奖励</div>
+      </div>
     </div>
 
     <div class="history-content">
@@ -48,6 +53,26 @@
             />
           </Popup>
         </div>
+        <Popup
+          v-model="showRankDesc"
+          style="background-color: transparent"
+        >
+          <div class="red-desc-popup">
+            <div class="red-desc-content">
+              <img class="red-desc-back" :src="getImgUrl('publicMobile/game/withdrawal/history_desc.png')" />
+              <img class="red-desc-close" @click="showRankDesc = false" :src="getImgUrl('publicMobile/game/withdrawal/history_desc_close.png')" />
+              <div class="red-desc-box">
+                <div class="red-desc-title">温馨提示</div>
+                <div class="red-desc-text">
+                  1、每邀请1个新用户注册，不限邀请/奖励次数；每邀请1个活动期间邀请的注册用户一起玩游戏，不限邀请/奖励次数
+                  <br />
+                  <br />
+                  2、当日奖励的所有奖励盖楼机会需在24小时内用完
+                </div>
+              </div>
+            </div>
+          </div>
+        </Popup>
 
         <!-- 红包奖励 -->
         <div class="red-content" v-if="actType == 2 && list.length">
@@ -109,10 +134,10 @@
             <img class="footer-banner-img" :src="getImgUrl('publicMobile/game/withdrawal/start_task.png')" />
             <div class="footer-banner-btn" />
           </div> -->
-          <div class="footer-banner">
+          <!-- <div class="footer-banner">
             <img class="footer-banner-img" :src="getImgUrl('publicMobile/game/withdrawal/invite.png')" />
             <div class="footer-banner-btn" @click="goShare" />
-          </div>
+          </div> -->
         </div>
       </List>
     </div>
@@ -147,6 +172,8 @@ export default {
       actType: 1,
       list: [],
       showDate: false,
+      firstLoad: true,
+      showRankDesc: false,
       showRedDesc: false,
       minDate: new Date(2022, 0, 1),
       maxDate: new Date(2022, 2, 1),
@@ -182,6 +209,10 @@ export default {
     if(!!type) {
       this.actType = +type;
     }
+    if(this.actType == 1 && this.firstLoad) {
+      this.showRankDesc = true;
+      this.firstLoad = false;
+    }
     this.getData();
   },
   methods: {
@@ -189,6 +220,8 @@ export default {
     onChangeBar(type) {
       if(type != this.actType) {
         this.actType = type;
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
         this.getData();
       }
     },
@@ -197,6 +230,10 @@ export default {
       this.listFinished = false;
       this.list = [];
       if(this.actType == 1) {
+        if(this.firstLoad) {
+          this.showRankDesc = true;
+          this.firstLoad = false;
+        }
         this.rankPage = {
           ...defRankPage
         };
@@ -339,11 +376,16 @@ export default {
     background-color: #F5F5F5;
     overflow: hidden;
   }
+  .bar-height {
+    height: 46px;
+  }
   .bar-list {
-    position: relative;
+    position: fixed;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
     height: 46px;
     background-color: #fff;
     border-top: 1px solid #eee;
