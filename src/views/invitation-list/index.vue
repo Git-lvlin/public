@@ -41,7 +41,7 @@ export default {
     // await this.getUserInfo()
     // this.getList()
   },
-  async computed() {
+  async mounted() {
     const {
       query,
     } = this.$router.history.current;
