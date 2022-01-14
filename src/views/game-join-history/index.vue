@@ -151,7 +151,7 @@ import NoData from '@/components/nodata'
 import { getImgUrl } from '@/utils/tools';
 import gameApi from '@/apis/game';
 import { meBaseUrl } from "@/constant/index";
-import { goToApp, share } from '@/utils/userInfo';
+import { goToApp, share, backOff } from '@/utils/userInfo';
 
 const defRankPage = {
   next: 0,
@@ -206,6 +206,10 @@ export default {
     this.token = token;
     this.activityId = activityId;
     this.listLoading = false;
+    if(!token) {
+      backOff();
+      return;
+    }
     if(!!type) {
       this.actType = +type;
     }
