@@ -178,6 +178,10 @@ export default {
 
     },
     async leftBtn(index) {
+      if (!this.storeAccount) {
+        Toast({message: '本活动仅限店主参与, 请先开店成为店主后参与'})
+        return
+      }
       switch(index) {
         case 0:
           // 分享注册页面 new-share
