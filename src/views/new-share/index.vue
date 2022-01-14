@@ -156,7 +156,7 @@ export default {
     console.log('query', query)
     this.inviteCode = query.inviteCode
     this.url = query.url || ''
-    this.isWeixin = query.isWeixin || 0
+    // this.isWeixin = query.isWeixin || 0
     this.type = query.type || 0
   },
   methods: {

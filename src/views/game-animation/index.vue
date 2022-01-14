@@ -98,13 +98,24 @@
       </div>
       <div class="btn-box-no" v-if="!demo&&!end">
         <van-image
+          v-if="activityStatus==2"
+          class="star"
+          width="193px"
+          height="48px"
+          lazy-load
+          :src="getImgUrl('publicMobile/game/no-star.png')"
+        />
+        <van-image
+          v-else
           class="star"
           width="193px"
           height="48px"
           lazy-load
           @click="go"
-          :src="getImgUrl('publicMobile/game/star.png')"
+          :src="chanceNum?getImgUrl('publicMobile/game/star.png'):getImgUrl('publicMobile/game/null-btn.png')"
         />
+
+        <div class="time-after-time" v-if="!chanceNum&&activityStatus!=2">您有0次机会，去做任务获得更多游戏机会</div>
         <div class="time">活动时间：{{actTime}}</div>
       </div>
       <div class="btn-box-end" v-if="end">
@@ -128,7 +139,7 @@
 
 
     <!-- 游戏时 -->
-    <div class="in-game" v-if="star" @click="click">
+    <div class="in-game" v-show="star" @click="click">
       <div class="top-right-box">
         <van-image
           class="share"
@@ -196,7 +207,7 @@
     </div>
 
     <!-- 试玩结束弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
       <div class="popup-box">
         <div class="demo-popup-content">
           <van-image
@@ -227,7 +238,7 @@
     </van-popup>
 
     <!-- 游戏失败弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
       <div class="popup-box">
         <div class="fail-popup-content">
           <van-image
@@ -265,7 +276,7 @@
     </van-popup>
   
     <!-- 游戏成功弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
       <div class="popup-box">
         <div class="success-popup-content">
           <van-image
@@ -289,7 +300,7 @@
     </van-popup>
 
     <!-- 中奖弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
       <div class="popup-box">
         <div class="result-popup-content">
           <van-image
@@ -338,7 +349,7 @@
     </van-popup>
 
     <!-- 未中奖弹窗 -->
-    <van-popup :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
       <div class="popup-box">
         <div class="null-popup-content">
           <van-image
@@ -368,6 +379,7 @@
       </div>
     </van-popup>
     <div class="none" v-for="(item, index) in imgs" :key="index">
+      <img :src="getImgUrl('publicMobile/game/bg.png')" alt="1">
       <img :src="getImgUrl(item)" alt="1">
     </div>
   </div>
@@ -411,8 +423,8 @@ export default {
       over: false,
       token: null,
       configId: null, // 不传默认取进行中的活动
-      chanceNum: null, // 机会
-      joinNum: null, // 参与人数
+      chanceNum: 8, // 机会
+      joinNum: 6666, // 参与人数
       prizeWinMsg: null, // 中奖信息
       ruleText: null, // 活动规则
       activityStatus: null, // 活动规则 0-结束 1-进行中 2-未开始
@@ -475,22 +487,23 @@ export default {
       })
     },
     onMusic(e) {
-      e.stopPropagation();
       this.$refs.music.onPlayOrPaused();
+      e?.stopPropagation();
     },
     demoClose() {
-      this.demoPopup = false
       this.gameInit()
     },
     demoGo() {
       this.gameInit()
-      this.demoPopup = false
-      this.starTime = Date.parse(new Date());
-      this.setRandom()
-      this.star = true
-      this.onMusic()
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-      this.getUseBuilding()
+      this.go()
+      // this.removeDom()
+      // this.demoPopup = false
+      // this.starTime = Date.parse(new Date());
+      // this.setRandom()
+      // this.star = true
+      // this.onMusic()
+      // document.body.scrollTop = document.documentElement.scrollTop = 0;
+      // this.getUseBuilding()
     },
     goTo(router) {
       if (!this.token) {
@@ -546,17 +559,28 @@ export default {
       return Y+M+D
     },
     gameInit(type) {
-      // location.reload();
+      location.reload();
+      // if (type === 'fail') {
+      //   this.failPopup = false
+      //   location.reload();
+      //   return
+      // }
+      // for(let i=1;i<this.currentFloor;i++) {
+      //   let f = 'floor' + i 
+      //   let dom = document.getElementById(f)
+      //   dom.remove()
+      // }
+      // this.star = false;
+      // this.currentFloor = 0;
+      // this.getGame();
+    },
+    removeDom() {
       for(let i=1;i<this.currentFloor;i++) {
         let f = 'floor' + i 
         let dom = document.getElementById(f)
         dom.remove()
       }
-      this.star = false;
       this.currentFloor = 0;
-      if (type === 'fail') {
-        this.failPopup = false
-      }
       this.getGame();
     },
     getUserInfo() {
@@ -578,14 +602,20 @@ export default {
         const { configId, chanceNum, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         this.chanceNum = chanceNum
-        if (!chanceNum) {
-          Toast({ message: '你还有0次参与活动机会，请做任务获得机会' });
+        if (!chanceNum && activityStatus == 1) {
+          Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
+        }
+        if (activityStatus == 2) {
+          Toast({ message: '活动未开始' });
         }
         this.joinNum = joinNum
         this.demo = isTestPlay
         this.prizeWinMsg = prizeWinMsg
         this.ruleText = ruleText
         this.activityStatus = activityStatus
+        if (this.activityStatus == 0) {
+          this.end = 1
+        } 
         this.activityStartTime = activityStartTime
         this.activityEndTime = activityEndTime
         this.actTime = this.timestampToTime(activityStartTime) + '-' + this.timestampToTime(activityEndTime)
@@ -672,7 +702,7 @@ export default {
         return
       }     
       if (this.chanceNum == 0) {
-        return Toast({ message: '还有0次参与机会，请做任务获得机会' });
+        return Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
       this.starTime = Date.parse(new Date());
       this.setRandom()
@@ -873,16 +903,16 @@ export default {
     position: relative;
   }
   @keyframes scaleDraw {
-    0% {transform: scale(1, 1);  /*开始为原始大小*/}
-    25% {transform: scale(4.2, 4.2);  /*开始为原始大小*/}
-    50% {transform: scale(1, 1);  /*开始为原始大小*/}
-    75% {transform: scale(4.2, 4.2);  /*开始为原始大小*/}
+    0% {transform: translateZ(0) scale(1);  /*开始为原始大小*/}
+    25% {transform: translateZ(0) scale(.238);  /*开始为原始大小*/}
+    50% {transform: translateZ(0) scale(1);  /*开始为原始大小*/}
+    75% {transform: translateZ(0) scale(.238);  /*开始为原始大小*/}
   }
   #beat {
     position: absolute;
     top: 188px;
-    width: 60px;
-    height: 24.5px;
+    width: 252px;
+    height: 102.9px;
     transform-origin: center top 0;
     animation: scaleDraw 5s ease-in-out infinite;
     -webkit-animation: scaleDraw 5s ease-in-out infinite;
@@ -1035,6 +1065,13 @@ export default {
     line-height: 17px;
   }
   .time {
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #FF3036;
+    line-height: 17px;
+  }
+  .time-after-time {
     font-size: 12px;
     font-family: PingFangSC-Regular, PingFang SC;
     font-weight: 400;
