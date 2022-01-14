@@ -170,7 +170,7 @@ export default {
     // 获取支付账户信息
     getAccountInfo() {
       gameApi.getAccountInfo({
-        activityId: this.activityId,
+        // activityId: this.activityId,
       }, {
         token: this.token,
       }).then(res => {
@@ -224,7 +224,7 @@ export default {
       }
       // 检验金额
       gameApi.getWithdrawVerify({
-        activityId: this.activityId,
+        // activityId: this.activityId,
         amount: price * 100,
       }, {
         token: this.token,
