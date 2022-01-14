@@ -4,7 +4,7 @@
       <div class="flex_fix bar-list">
         <div :class="`flex_center bar-item ${actType == 1 ? 'bar-act' : ''}`" @click="onChangeBar(1)">
           获得机会
-          <img class="ask-icon" @click="showRankDesc = true" :src="getImgUrl('publicMobile/game/withdrawal/history_desc_ask.png')" />
+          <img class="ask-icon rank-ask" @click="showRankDesc = true" :src="getImgUrl('publicMobile/game/withdrawal/history_desc_ask.png')" />
         </div>
         <div :class="`bar-item ${actType == 2 ? 'bar-act' : ''}`" @click="onChangeBar(2)">我的红包奖励</div>
       </div>
@@ -414,6 +414,10 @@ export default {
     width: 100%;
     height: 2px;
     background: #E5352F;
+  }
+  .rank-ask {
+    width: 14px;
+    height: 14px;
   }
 
   .history-content {
