@@ -174,6 +174,7 @@ export default {
     width: 32px;
     height: 32px;
     margin-top: 5px;
+    border-radius: 50%;
   }
   .user-info {
     flex: 1;
