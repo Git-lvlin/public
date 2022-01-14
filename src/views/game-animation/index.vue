@@ -496,13 +496,15 @@ export default {
     },
     demoGo() {
       this.gameInit()
-      this.demoPopup = false
-      this.starTime = Date.parse(new Date());
-      this.setRandom()
-      this.star = true
-      this.onMusic()
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-      this.getUseBuilding()
+      this.go()
+      // this.removeDom()
+      // this.demoPopup = false
+      // this.starTime = Date.parse(new Date());
+      // this.setRandom()
+      // this.star = true
+      // this.onMusic()
+      // document.body.scrollTop = document.documentElement.scrollTop = 0;
+      // this.getUseBuilding()
     },
     goTo(router) {
       if (!this.token) {
@@ -558,17 +560,28 @@ export default {
       return Y+M+D
     },
     gameInit(type) {
-      // location.reload();
+      location.reload();
+      // if (type === 'fail') {
+      //   this.failPopup = false
+      //   location.reload();
+      //   return
+      // }
+      // for(let i=1;i<this.currentFloor;i++) {
+      //   let f = 'floor' + i 
+      //   let dom = document.getElementById(f)
+      //   dom.remove()
+      // }
+      // this.star = false;
+      // this.currentFloor = 0;
+      // this.getGame();
+    },
+    removeDom() {
       for(let i=1;i<this.currentFloor;i++) {
         let f = 'floor' + i 
         let dom = document.getElementById(f)
         dom.remove()
       }
-      this.star = false;
       this.currentFloor = 0;
-      if (type === 'fail') {
-        this.failPopup = false
-      }
       this.getGame();
     },
     getUserInfo() {
