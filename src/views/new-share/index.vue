@@ -156,7 +156,7 @@ export default {
     console.log('query', query)
     this.inviteCode = query.inviteCode
     this.url = query.url || ''
-    this.isWeixin = query.isWeixin || 0
+    // this.isWeixin = query.isWeixin || 0
     this.type = query.type || 0
   },
   methods: {
@@ -195,7 +195,7 @@ export default {
       this.show = 0;
       const ua = window.navigator.userAgent.toLowerCase();
       if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        window.location.href += `&type=${this.type}`
+        window.location.href += `&type=${this.type}&isWeixin=${1}`
         return
       } else {
         this.onOpenApp()
