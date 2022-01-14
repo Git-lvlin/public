@@ -274,6 +274,7 @@ export default {
             message: '申请成功',
           });
           this.msgCode = '';
+          this.price = '';
           let timer = setTimeout(() => {
             this.onShowMsg();
             this.getAccountInfo();
