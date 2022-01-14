@@ -464,8 +464,8 @@ export default {
       this.couponInviteId = query.couponInviteId;
       this.configId = query.couponInviteId;
     }
-    await this.loadImg()
     await this.getUserInfo()
+    await this.loadImg()
     this.getGame()
   },
   methods: {
@@ -482,7 +482,7 @@ export default {
           setTimeout(() => {
             this.load = false
             resolve()
-          }, 200)
+          }, 250)
         }
       })
     },
