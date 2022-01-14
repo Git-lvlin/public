@@ -39,7 +39,7 @@
               v-if="progress == 3"
             >
               <div>{{isOk ? '到账' : '提现失败'}}</div>
-              <div class="progress-info-time">{{!!detail.notifyTime ? detail.notifyTime : '-'}}</div>
+              <div class="progress-info-time">{{!!detail.notifyTime && detail.notifyTime != 'null' ? detail.notifyTime : '-'}}</div>
             </div>
           </div>
         </div>
@@ -54,12 +54,20 @@
             <div class="detail-value">¥{{parseFloat((+detail.fee || 0) / 100).toFixed(2)}}</div>
           </div>
           <div class="detail-item">
+            <div>偶然所得税20%</div>
+            <div class="detail-value">¥{{parseFloat((+detail.tax || 0) / 100).toFixed(2)}}</div>
+          </div>
+          <div class="detail-item">
+            <div>实际到账金额</div>
+            <div class="detail-value">¥{{parseFloat((+detail.realAmount || 0) / 100).toFixed(2)}}</div>
+          </div>
+          <div class="detail-item">
             <div>申请时间</div>
             <div class="detail-value">{{detail.createTime}}</div>
           </div>
           <div class="detail-item">
             <div>到账时间</div>
-            <div class="detail-value">{{!!detail.notifyTime ? detail.notifyTime : '-'}}</div>
+            <div class="detail-value">{{!!detail.notifyTime && detail.notifyTime != 'null' ? detail.notifyTime : '-'}}</div>
           </div>
           <!-- <div class="detail-item">
             <div>提现银行</div>

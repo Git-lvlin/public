@@ -272,6 +272,7 @@ export default {
           Toast({
             message: '申请成功',
           });
+          this.msgCode = '';
           let timer = setTimeout(() => {
             this.onShowMsg();
             this.getAccountInfo();
@@ -409,6 +410,7 @@ export default {
   .alipay-user-avatar {
     width: 32px;
     height: 32px;
+    border-radius: 50%;
   }
   .alipay-user-account {
     height: 21px;
