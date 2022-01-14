@@ -444,7 +444,7 @@ export default {
       starTime: null,
       buildingGameId: null,
       load: true,
-      go: false,
+      isGo: false,
     };
   },
   components: {
@@ -666,7 +666,7 @@ export default {
       teamApi.getUseBuildingNum(param, {token: this.token}).then((res) => {
         const { id, configId, memberId } = res.data;
         this.chanceId = id;
-        this.go = false
+        this.isGo = false
       })
     },
     randomNum(minNum,maxNum){
@@ -694,10 +694,10 @@ export default {
       this.getConsumeUsageTimes()
     },
     go() {
-      if (this.go) {
+      if (this.isGo) {
         return
       }
-      this.go = true
+      this.isGo = true
       if (!this.token) {
         this.$router.push({
           path: '/web/new-share',
@@ -708,7 +708,7 @@ export default {
         return
       }
       if (this.chanceNum == 0) {
-        this.go = false
+        this.isGo = false
         return Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
       this.starTime = Date.parse(new Date());
