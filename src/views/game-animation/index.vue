@@ -444,6 +444,7 @@ export default {
       starTime: null,
       buildingGameId: null,
       load: true,
+      go: false,
     };
   },
   components: {
