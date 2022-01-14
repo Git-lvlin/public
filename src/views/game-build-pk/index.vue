@@ -77,7 +77,7 @@ export default {
       bid: activityId,
     } = this.$router.history.current.query;
     this.token = token;
-    if(this.token) {
+    if(!token) {
       backOff();
       return;
     }
