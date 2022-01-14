@@ -56,6 +56,7 @@
 <script>
 import { getImgUrl } from '@/utils/tools';
 import gameApi from '@/apis/game';
+import { backOff } from '@/utils/userInfo';
 
 
 export default {
@@ -76,6 +77,10 @@ export default {
       bid: activityId,
     } = this.$router.history.current.query;
     this.token = token;
+    if(!token) {
+      backOff();
+      return;
+    }
     this.activityId = activityId;
     this.getPkInvite();
   },

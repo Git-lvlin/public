@@ -2,7 +2,7 @@
   <div class="withdrawal-list">
     <List
       :finished="listFinished"
-      style="padding: 12px 0"
+      style="padding: 12px 0;"
       @load="handleBottom"
       :offset="0"
     >
@@ -20,6 +20,13 @@
             <div class="price flex-fix">¥{{parseFloat(+item.amount / 100).toFixed(2)}}</div>
           </div>
         </div>
+        <!-- 空数据 -->
+        <div class="nodata" v-if="list.length == 0">
+          <NoData
+            icon="content"
+            title="暂无提现记录~"
+          />
+        </div>
         <!-- <div class="desc">
           仅展示所选月份交易数据，查看更多请选择时间
         </div> -->
@@ -33,8 +40,9 @@ import { List } from 'vant';
 import Dayjs from 'dayjs';
 import { getImgUrl, objToParamStr } from '@/utils/tools';
 import gameApi from '@/apis/game';
+import NoData from '@/components/nodata'
 import { meBaseUrl } from "@/constant/index";
-import { goToApp } from '@/utils/userInfo';
+import { goToApp, backOff } from '@/utils/userInfo';
 
 let defToken = 'AQQAAAAAYfGMBhO1r6h85uACdaberb2ahlPFSv7KDBSE6JBgxdLkvYpcDoWnCKpMd4o=';
 const defPage = {
@@ -58,6 +66,7 @@ export default {
   },
   components: {
     List,
+    NoData,
   },
   mounted () {
     let {
@@ -70,6 +79,10 @@ export default {
       const d = JSON.parse(res);
       this.userInfo = d.data;
     })
+    if(!token) {
+      backOff();
+      return;
+    }
     this.getWithdrawList(true);
   },
   methods: {
@@ -78,7 +91,7 @@ export default {
     // 获取提现列表
     getWithdrawList(frist) {
       gameApi.getWithdrawList({
-        activityId: this.activityId,
+        // activityId: this.activityId,
         date: '',
         next: this.pageData.next,
         size: this.pageData.size,
@@ -111,7 +124,7 @@ export default {
         return ;
       }
       const str = objToParamStr(item);
-      const path = `/web/game-withdrawal-list?_immersive=0&${str}`
+      const path = `/web/game-withdrawal-detail?_immersive=0&${str}`
       goToApp(meBaseUrl, path);
       // this.$router.push({
       //   path: '/web/game-withdrawal-detail',
@@ -132,6 +145,7 @@ export default {
     overflow: auto;
   }
   .content-box {
+    min-height: 100%;
     padding: 15px;
     background-color: #fff;
     border-radius: 10px;
@@ -139,6 +153,9 @@ export default {
   .flex-fix {
     flex-grow: 0;
     flex-shrink: 0;
+  }
+  .nodata {
+    padding-bottom: 80px;
   }
   .list {
     height: 70px;

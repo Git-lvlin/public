@@ -423,8 +423,8 @@ export default {
       over: false,
       token: null,
       configId: null, // 不传默认取进行中的活动
-      chanceNum: null, // 机会
-      joinNum: null, // 参与人数
+      chanceNum: 8, // 机会
+      joinNum: 6666, // 参与人数
       prizeWinMsg: null, // 中奖信息
       ruleText: null, // 活动规则
       activityStatus: null, // 活动规则 0-结束 1-进行中 2-未开始
@@ -491,7 +491,6 @@ export default {
       e?.stopPropagation();
     },
     demoClose() {
-      this.demoPopup = false
       this.gameInit()
     },
     demoGo() {
