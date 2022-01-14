@@ -151,7 +151,7 @@ import NoData from '@/components/nodata'
 import { getImgUrl } from '@/utils/tools';
 import gameApi from '@/apis/game';
 import { meBaseUrl } from "@/constant/index";
-import { goToApp, share } from '@/utils/userInfo';
+import { goToApp, share, backOff } from '@/utils/userInfo';
 
 const defRankPage = {
   next: 0,
@@ -206,6 +206,10 @@ export default {
     this.token = token;
     this.activityId = activityId;
     this.listLoading = false;
+    if(!token) {
+      backOff();
+      return;
+    }
     if(!!type) {
       this.actType = +type;
     }
@@ -335,13 +339,13 @@ export default {
       this.showDate = false;
     },
     onWithdrawal() {
-      gameApi.getWithdrawVerify({
-        activityId: this.activityId,
-        amount: this.totalPrize,
-      }, {
-        token: this.token,
-      }).then(res => {
-        if(res.code == 0 && res.data) {
+      // gameApi.getWithdrawVerify({
+      //   activityId: this.activityId,
+      //   amount: this.totalPrize,
+      // }, {
+      //   token: this.token,
+      // }).then(res => {
+      //   if(res.code == 0 && res.data) {
           const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${this.activityId}`
           goToApp(meBaseUrl, path);
           // this.$router.push({
@@ -351,8 +355,8 @@ export default {
           //     bid: this.activityId,
           //   }
           // })
-        }
-      });
+      //   }
+      // });
     },
     goShare() {
       let param = {
