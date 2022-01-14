@@ -330,7 +330,7 @@ const routes = [
     name: 'FiveStarNew',
     component: () => import('@/views/five-star-new'),
     meta: {
-      title: '邀请注册秒升五星店主',
+      title: '新春到，升五星',
     }
   },
 ];
