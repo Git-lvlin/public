@@ -91,7 +91,7 @@ export default {
     // 获取提现列表
     getWithdrawList(frist) {
       gameApi.getWithdrawList({
-        activityId: this.activityId,
+        // activityId: this.activityId,
         date: '',
         next: this.pageData.next,
         size: this.pageData.size,
@@ -124,7 +124,7 @@ export default {
         return ;
       }
       const str = objToParamStr(item);
-      const path = `/web/game-withdrawal-list?_immersive=0&${str}`
+      const path = `/web/game-withdrawal-detail?_immersive=0&${str}`
       goToApp(meBaseUrl, path);
       // this.$router.push({
       //   path: '/web/game-withdrawal-detail',
