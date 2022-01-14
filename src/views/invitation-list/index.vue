@@ -31,17 +31,35 @@ export default {
       token: null,
       bgType: 0,
       listData: [],
+      isNew: null,
     };
   },
   components: {
     [Dialog.Component.name]: Dialog.Component,
   },
   async created () {
+    // await this.getUserInfo()
+    // this.getList()
+  },
+  async mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    console.log('query', query)
     await this.getUserInfo()
-    this.getList()
+    if (query.isNew == 1) {
+      this.getNewList()
+    } else {
+      this.getList()
+    }
   },
   methods: {
     getImgUrl,
+    getNewList() {
+      teamApi.getInvitationListNew({page:1,size:99}, {token:this.token}).then((res) => {
+        this.listData = res.data.records
+      })
+    },
     getList() {
       teamApi.getInvitationList({page:1,size:99}, {token:this.token}).then((res) => {
         this.listData = res.data.records

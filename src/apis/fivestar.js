@@ -6,9 +6,25 @@ const url = {
   inventuserlist: '/store/auth/activity/inventuserlist',
   inventstorelist: '/store/auth/activity/inventstorelist',
   storetranslist: '/store/auth/activity/storetranslist',
+  listNew: '/store/auth/newyear/projectList',
+  inventuserlistNew: '/store/auth/newyear/inventuserlist'
 };
 
 export default {
+  getInvitationListNew(params = {}, options = {}) {
+    return post({
+      url: url.inventuserlistNew,
+      data: params,
+      options,
+    });
+  },
+  getListNew(params = {}, options = {}) {
+    return post({
+      url: url.listNew,
+      data: params,
+      options,
+    });
+  },
   getList(params = {}, options = {}) {
     return post({
       url: url.list,
