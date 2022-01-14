@@ -335,13 +335,13 @@ export default {
       this.showDate = false;
     },
     onWithdrawal() {
-      gameApi.getWithdrawVerify({
-        activityId: this.activityId,
-        amount: this.totalPrize,
-      }, {
-        token: this.token,
-      }).then(res => {
-        if(res.code == 0 && res.data) {
+      // gameApi.getWithdrawVerify({
+      //   activityId: this.activityId,
+      //   amount: this.totalPrize,
+      // }, {
+      //   token: this.token,
+      // }).then(res => {
+      //   if(res.code == 0 && res.data) {
           const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${this.activityId}`
           goToApp(meBaseUrl, path);
           // this.$router.push({
@@ -351,8 +351,8 @@ export default {
           //     bid: this.activityId,
           //   }
           // })
-        }
-      });
+      //   }
+      // });
     },
     goShare() {
       let param = {
