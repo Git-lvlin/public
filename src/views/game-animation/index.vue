@@ -665,6 +665,7 @@ export default {
       teamApi.getUseBuildingNum(param, {token: this.token}).then((res) => {
         const { id, configId, memberId } = res.data;
         this.chanceId = id;
+        this.go = false
       })
     },
     randomNum(minNum,maxNum){
@@ -692,6 +693,10 @@ export default {
       this.getConsumeUsageTimes()
     },
     go() {
+      if (this.go) {
+        return
+      }
+      this.go = true
       if (!this.token) {
         this.$router.push({
           path: '/web/new-share',
@@ -701,10 +706,8 @@ export default {
         });
         return
       }
-      if (this.star) {
-        return
-      }
       if (this.chanceNum == 0) {
+        this.go = false
         return Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
       this.starTime = Date.parse(new Date());
