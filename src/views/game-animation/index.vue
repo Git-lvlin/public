@@ -163,7 +163,7 @@
         class="banner"
         width="100%"
         height="812px"
-        lazy-load
+        v-if="star"
         :src="bgImgUrl"
       />
       <!-- 游戏顶部固定区域 -->
