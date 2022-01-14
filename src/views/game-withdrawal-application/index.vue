@@ -260,7 +260,8 @@ export default {
     onConfrimApply() {
       gameApi.getWithdrawApply({
         // activityId: this.activityId,
-        amount: this.withdrawInfo.realAmount,
+        // amount: this.withdrawInfo.realAmount,
+        amount: this.withdrawInfo.amount,
         withdrawAccount: this.accountInfo.withdrawAccount,
         withdrawRealname: this.accountInfo.withdrawRealname,
         verifyCode: this.msgCode,
