@@ -604,7 +604,7 @@ export default {
         this.configId = configId
         this.chanceNum = chanceNum
         if (!chanceNum && activityStatus == 1) {
-          Toast({ message: '你还有0次参与活动机会，请做任务获得机会' });
+          Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
         }
         if (activityStatus == 2) {
           Toast({ message: '活动未开始' });
@@ -703,7 +703,7 @@ export default {
         return
       }     
       if (this.chanceNum == 0) {
-        return Toast({ message: '还有0次参与机会，请做任务获得机会' });
+        return Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
       this.starTime = Date.parse(new Date());
       this.setRandom()
