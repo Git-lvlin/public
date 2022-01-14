@@ -64,6 +64,7 @@
     <Popup
       :style="{background: 'transparent'}"
       v-model="showMsg"
+      :close-on-click-overlay="false"
     >
       <div class="msg-popup">
         <span class="popup-title">请输入短信验证码</span>
