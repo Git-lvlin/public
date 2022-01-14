@@ -115,7 +115,7 @@ import { Image, Toast, Popup, PasswordInput, NumberKeyboard } from 'vant';
 import gameApi from '@/apis/game';
 import { getImgUrl } from '@/utils/tools';
 import { meBaseUrl } from "@/constant/index";
-import { goToApp } from '@/utils/userInfo';
+import { goToApp, backOff } from '@/utils/userInfo';
 
 const timeText = 's后可重新获取'
 const defTimeText = '60s后可重新获取'
@@ -155,6 +155,10 @@ export default {
     } = this.$router.history.current.query;
     this.token = token;
     this.activityId = activityId;
+    if(!token) {
+      backOff();
+      return;
+    }
     this.getAccountInfo();
     this.$bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res);
@@ -255,7 +259,7 @@ export default {
     // 确认提现
     onConfrimApply() {
       gameApi.getWithdrawApply({
-        activityId: this.activityId,
+        // activityId: this.activityId,
         amount: this.withdrawInfo.realAmount,
         withdrawAccount: this.accountInfo.withdrawAccount,
         withdrawRealname: this.accountInfo.withdrawRealname,
