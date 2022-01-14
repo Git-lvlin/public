@@ -700,7 +700,10 @@ export default {
           },
         });
         return
-      }     
+      }
+      if (this.star) {
+        return
+      }
       if (this.chanceNum == 0) {
         return Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
