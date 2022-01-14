@@ -195,7 +195,7 @@ export default {
       this.show = 0;
       const ua = window.navigator.userAgent.toLowerCase();
       if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        window.location.href += `&type=${this.type}&isWeixin=${1}`
+        window.location.href += `&type=${this.type}`
         return
       } else {
         this.onOpenApp()
