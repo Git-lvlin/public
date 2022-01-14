@@ -495,15 +495,16 @@ export default {
       this.gameInit()
     },
     demoGo() {
-      // this.gameInit()
-      this.removeDom()
-      this.demoPopup = false
-      this.starTime = Date.parse(new Date());
-      this.setRandom()
-      this.star = true
-      this.onMusic()
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-      this.getUseBuilding()
+      this.gameInit()
+      this.go()
+      // this.removeDom()
+      // this.demoPopup = false
+      // this.starTime = Date.parse(new Date());
+      // this.setRandom()
+      // this.star = true
+      // this.onMusic()
+      // document.body.scrollTop = document.documentElement.scrollTop = 0;
+      // this.getUseBuilding()
     },
     goTo(router) {
       if (!this.token) {
