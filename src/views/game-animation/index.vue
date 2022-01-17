@@ -253,7 +253,7 @@
             width="126px"
             height="37px"
             :src="getImgUrl('publicMobile/game/play-again.png')"
-            @click="go"
+            @click="go('failPopup')"
           />
         </div>
         <div class="fail-btn-box">
@@ -545,7 +545,7 @@ export default {
         param.shareObjectNo = this.couponInviteId || this.configId
       }
       if (this.resultPopup) {
-        let n = parseInt(this.currentFloor)
+        let n = parseInt(this.currentFloor - 1)
         param.contentType = 13
         param.ext = {
           gameLevel: n
@@ -694,7 +694,7 @@ export default {
       this.onMusic()
       this.getConsumeUsageTimes()
     },
-    go() {
+    go(a) {
       if (this.isGo) {
         return
       }
@@ -718,6 +718,9 @@ export default {
       this.onMusic()
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
+      if (a === 'failPopup') {
+        this.failPopup = false
+      }
     },
     setRandom() {
       const img = this.randomNum(1, 3);
