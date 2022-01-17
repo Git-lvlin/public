@@ -207,7 +207,7 @@
     </div>
 
     <!-- 试玩结束弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
       <div class="popup-box">
         <div class="demo-popup-content">
           <van-image
@@ -238,7 +238,7 @@
     </van-popup>
 
     <!-- 游戏失败弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
       <div class="popup-box">
         <div class="fail-popup-content">
           <van-image
@@ -276,7 +276,7 @@
     </van-popup>
   
     <!-- 游戏失败弹窗2 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup2">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup2">
       <div class="popup-box">
         <div class="fail-popup-content">
           <van-image
@@ -298,7 +298,7 @@
     </van-popup>
 
     <!-- 游戏成功弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
       <div class="popup-box">
         <div class="success-popup-content">
           <van-image
@@ -322,7 +322,7 @@
     </van-popup>
 
     <!-- 中奖弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
       <div class="popup-box">
         <div class="result-popup-content">
           <van-image
@@ -372,7 +372,7 @@
     </van-popup>
 
     <!-- 未中奖弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
       <div class="popup-box">
         <div class="null-popup-content">
           <van-image
