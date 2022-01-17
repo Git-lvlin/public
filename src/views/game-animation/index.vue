@@ -520,7 +520,7 @@ export default {
         state = e.musicState ? true : false;
       }
       this.$refs.music.onPlayOrPaused(state);
-      e?.stopPropagation();
+      e?.stopPropagation?.();
     },
     demoClose() {
       this.gameInit()
