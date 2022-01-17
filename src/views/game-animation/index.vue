@@ -341,6 +341,7 @@
               @click="goTo('red')"
             />
           </div>
+          <div class="result-text">{{msg}}</div>
         </div>
         <div class="result-btn-floor1">
           <van-image
@@ -468,6 +469,7 @@ export default {
       load: true,
       isGo: false,
       failPopup2: false,
+      msg: null,
     };
   },
   components: {
@@ -656,6 +658,7 @@ export default {
         if (res.data.result) {
           this.resultPopup = true
           this.prize = res.data.prize
+          this.msg = res.data.msg
         } else {
           this.nullPopup = true
         }
@@ -961,16 +964,40 @@ export default {
     transition: all 1s linear;
     background-color: #FFE0C1;
   }
-  #floor0 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    bottom: 34px;
-    width: 100%;
-    height: 265px;
-    overflow: hidden;
+  @media screen and (max-height:1070px) {
+    #floor0 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      // height: 265px;
+      // overflow: hidden;
+    }
   }
+  @media screen and (min-height:1070px) {
+    #floor0 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      bottom: 34px;
+      width: 100%;
+      // height: 265px;
+      // overflow: hidden;
+    }
+  }
+  // #floor0 {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   position: absolute;
+  //   bottom: 34px;
+  //   width: 100%;
+  //   height: 265px;
+  //   overflow: hidden;
+  // }
   .one {
     z-index: 3;
   }
@@ -986,6 +1013,7 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
     .banner {
       position: absolute;
       top: 0;
@@ -1160,6 +1188,19 @@ export default {
       .result-bg {
         position: absolute;
         top: 0;
+      }
+      .result-text {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        top: 334px;
+        width: 228px;
+        height: 50px;
+        font-size: 18px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 25px;
       }
       .result-center {
         position: absolute;
