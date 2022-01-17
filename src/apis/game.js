@@ -16,9 +16,17 @@ const url = {
   pro: '/activity/auth/useBuildhouseChance',
   prize: '/activity/auth/prizeDraw',
   record: '/activity/auth/addGameRecord',
+  pic: '/member/auth/memberInfo/getMemberInfoMiz',
 };
 
 export default {
+  getPic(params = {}, options = {}) {
+    return post({
+      url: url.pic,
+      data: params,
+      options,
+    });
+  },
   getGameInfo(params = {}, options = {}) {
     return post({
       url: url.game,

@@ -173,7 +173,7 @@
           <van-image
             width="64px"
             height="64px"
-            :src="getImgUrl('publicMobile/game/floor1.png')"
+            :src="image"
           />
         </div>
         <div class="data">{{currentFloor}}层</div>
@@ -470,6 +470,7 @@ export default {
       isGo: false,
       failPopup2: false,
       msg: null,
+      image: null,
     };
   },
   components: {
@@ -493,6 +494,7 @@ export default {
     await this.loadImg()
     await this.getUserInfo()
     this.getGame()
+    this.getUserPic()
   },
   methods: {
     getImgUrl,
@@ -513,7 +515,11 @@ export default {
       })
     },
     onMusic(e) {
-      this.$refs.music.onPlayOrPaused();
+      let state = undefined;
+      if(e.musicState != undefined ) {
+        state = e.musicState ? true : false;
+      }
+      this.$refs.music.onPlayOrPaused(state);
       e?.stopPropagation();
     },
     demoClose() {
@@ -618,6 +624,11 @@ export default {
         })
       })
     },
+    getUserPic() {
+      teamApi.getPic({}, {token: this.token}).then((res) => {
+        this.image = res.data.memberInfoToAdminResponse.icon
+      })
+    },
     //  获取游戏详情
     getGame() {
       let param = {}
@@ -625,7 +636,7 @@ export default {
         param.configId = this.couponInviteId
       }
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
-        const { configId, chanceNum, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
+        const { configId, chanceNum, image, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         this.chanceNum = chanceNum
         if (!chanceNum && activityStatus == 1) {
@@ -716,7 +727,9 @@ export default {
       this.isDemoStar = true
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.setRandom()
-      this.onMusic()
+      this.onMusic({
+        musicState: true
+      })
       this.getConsumeUsageTimes()
     },
     go() {
@@ -740,7 +753,9 @@ export default {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
-      this.onMusic()
+      this.onMusic({
+        musicState: true
+      })
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
@@ -787,7 +802,9 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
-        this.onMusic()
+        this.onMusic({
+          musicState: false
+        })
         // 试玩结束专用弹窗
         if (this.isDemoStar) {
           this.demoPopup = true
