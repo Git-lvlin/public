@@ -275,6 +275,28 @@
       </div>
     </van-popup>
   
+    <!-- 游戏失败弹窗2 -->
+    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup2">
+      <div class="popup-box">
+        <div class="fail-popup-content">
+          <van-image
+            class="fail-bg"
+            width="100%"
+            height="100%"
+            :src="getImgUrl('publicMobile/game/sb-popup.png')"
+          />
+          <div class="fail-title">你的成绩为{{currentFloor - 1}}层</div>
+          <van-image
+            class="play-again"
+            width="197px"
+            height="37px"
+            :src="getImgUrl('publicMobile/game/sb-btn.png')"
+            @click="gameInit"
+          />
+        </div>
+      </div>
+    </van-popup>
+
     <!-- 游戏成功弹窗 -->
     <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
       <div class="popup-box">
@@ -445,6 +467,7 @@ export default {
       buildingGameId: null,
       load: true,
       isGo: false,
+      failPopup2: false,
     };
   },
   components: {
@@ -693,7 +716,7 @@ export default {
       this.onMusic()
       this.getConsumeUsageTimes()
     },
-    go(a) {
+    go() {
       if (this.isGo) {
         return
       }
@@ -717,9 +740,6 @@ export default {
       this.onMusic()
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
-      if (a === 'failPopup') {
-        this.failPopup = false
-      }
     },
     setRandom() {
       const img = this.randomNum(1, 3);
@@ -773,7 +793,11 @@ export default {
         this.endTime = Date.parse(new Date());
         this.getPushRecord()
         if (this.currentFloor < 4) {
-          this.failPopup = true
+          if (this.chanceNum - 1 > 0) {
+            this.failPopup = true
+          } else {
+            this.failPopup2 = true
+          }
           return
         } else {
           this.successPopup = true
@@ -815,10 +839,10 @@ export default {
       const box = document.getElementById('floor-box');
       let indexBox = document.createElement('div');
       indexBox.id = `floor${this.currentFloor}`
-      let style = `z-index:2;position: absolute;top:188px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 1.5s linear;`
+      let style = `z-index:2;position: absolute;top:188px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 1s linear;-webkit-transition:all 1s linear;-moz-transition:all 1s linear;-o-transition:all 1s linear;`
       if (this.currentFloor > 2) {
         const top = parseInt(box.style.top) - 188;
-        style = `z-index:2;position: absolute;top:${-top}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 1.5s linear;`
+        style = `z-index:2;position: absolute;top:${-top}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 1s linear;-webkit-transition:all 1s linear;-moz-transition:all 1s linear;-o-transition:all 1s linear;`
       }
       indexBox.setAttribute("style", style); //为元素设置新的属性
       let currentDiv = document.getElementById("floor-box");
