@@ -1,5 +1,5 @@
 <template>
-  <div class="game">
+  <div :style="star?'overflow: hidden;':''" class="game">
     <van-loading class="load" v-if="load" />
     <!-- <van-image
       class="banner"
