@@ -986,6 +986,7 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    overflow: hidden;
     .banner {
       position: absolute;
       top: 0;
