@@ -430,7 +430,7 @@ export default {
     return {
       currentFloor: 0, // 当前楼层
       show: true,
-      star: false,
+      star: true,
       demo: false, // 是否有试玩机会
       end: false,
       imgs: [
@@ -491,8 +491,8 @@ export default {
       this.configId = query.couponInviteId;
     }
     await this.loadImg()
-    await this.getUserInfo()
-    this.getGame()
+    // await this.getUserInfo()
+    // this.getGame()
   },
   methods: {
     getImgUrl,
@@ -778,7 +778,7 @@ export default {
       const domWidth = parseInt(dom.getBoundingClientRect().width);
       const beforeWidth = parseInt(beforeDom.getBoundingClientRect().width);
       let h = parseInt(beforeDom.getBoundingClientRect().y) - parseInt(dom.getBoundingClientRect().height);
-      if (this.currentFloor > 1) {
+      if (this.currentFloor > 2) {
         h = h - parseInt(box.style.top);
       }
       dom.style.top = h + 'px';
@@ -819,17 +819,16 @@ export default {
         }
       }
       border.style.width = domWidth + 'px'
-      this.sink()
-      // if (this.currentFloor > 1) {
-      //   // 第二层开始下沉
-      //   this.sink()
-      //   return 
-      // } else {
-      //   dom.addEventListener("transitionend", (e) => {
-      //     e.stopPropagation()
-      //     this.isShow()
-      //   })
-      // }
+      if (this.currentFloor > 1) {
+        // 第二层开始下沉
+        this.sink()
+        return 
+      } else {
+        dom.addEventListener("transitionend", (e) => {
+          e.stopPropagation()
+          this.isShow()
+        })
+      }
     },
     click() {
       if (!this.show) {
@@ -844,10 +843,10 @@ export default {
       let indexBox = document.createElement('div');
       indexBox.id = `floor${this.currentFloor}`
       let style = `z-index:2;position: absolute;top:188px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 1s linear;-webkit-transition:all 1s linear;-moz-transition:all 1s linear;-o-transition:all 1s linear;`
-      // if (this.currentFloor > 2) {
+      if (this.currentFloor > 2) {
         const top = parseInt(box.style.top) - 188;
         style = `z-index:2;position: absolute;top:${-top}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 1s linear;-webkit-transition:all 1s linear;-moz-transition:all 1s linear;-o-transition:all 1s linear;`
-      // }
+      }
       indexBox.setAttribute("style", style); //为元素设置新的属性
       let currentDiv = document.getElementById("floor-box");
       currentDiv.appendChild(indexBox);
@@ -965,40 +964,40 @@ export default {
     transition: all 1s linear;
     background-color: #FFE0C1;
   }
-  // @media screen and (max-height:1070px) {
-  //   #floor0 {
-  //     display: flex;
-  //     flex-direction: column;
-  //     align-items: center;
-  //     position: absolute;
-  //     bottom: 4px;
-  //     width: 100%;
-  //     height: 265px;
-  //     overflow: hidden;
-  //   }
-  // }
-  // @media screen and (min-height:1070px) {
-  //   #floor0 {
-  //     display: flex;
-  //     flex-direction: column;
-  //     align-items: center;
-  //     position: absolute;
-  //     bottom: 34px;
-  //     width: 100%;
-  //     height: 265px;
-  //     overflow: hidden;
-  //   }
-  // }
-  #floor0 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    bottom: 34px;
-    width: 100%;
-    height: 265px;
-    overflow: hidden;
+  @media screen and (max-height:1070px) {
+    #floor0 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      bottom: 0px;
+      width: 100%;
+      // height: 265px;
+      // overflow: hidden;
+    }
   }
+  @media screen and (min-height:1070px) {
+    #floor0 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      bottom: 34px;
+      width: 100%;
+      // height: 265px;
+      // overflow: hidden;
+    }
+  }
+  // #floor0 {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   position: absolute;
+  //   bottom: 34px;
+  //   width: 100%;
+  //   height: 265px;
+  //   overflow: hidden;
+  // }
   .one {
     z-index: 3;
   }
