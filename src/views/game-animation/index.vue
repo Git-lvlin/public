@@ -547,7 +547,7 @@ export default {
       if (this.resultPopup) {
         param.contentType = 13
         param.ext = {
-          gameLevel: 13
+          gameLevel: parseInt(this.currentFloor)
         }
       }
       share(param)
