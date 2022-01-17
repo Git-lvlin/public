@@ -1191,6 +1191,8 @@ export default {
       }
       .result-text {
         position: absolute;
+        left: 50%;
+        transform: translate(-50%);
         top: 334px;
         width: 228px;
         height: 50px;
