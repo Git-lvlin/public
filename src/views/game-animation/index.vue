@@ -341,6 +341,7 @@
               @click="goTo('red')"
             />
           </div>
+          <div class="result-text">{{msg}}</div>
         </div>
         <div class="result-btn-floor1">
           <van-image
@@ -468,6 +469,7 @@ export default {
       load: true,
       isGo: false,
       failPopup2: false,
+      msg: null,
     };
   },
   components: {
@@ -656,6 +658,7 @@ export default {
         if (res.data.result) {
           this.resultPopup = true
           this.prize = res.data.prize
+          this.msg = res.data.msg
         } else {
           this.nullPopup = true
         }
@@ -775,7 +778,7 @@ export default {
       const domWidth = parseInt(dom.getBoundingClientRect().width);
       const beforeWidth = parseInt(beforeDom.getBoundingClientRect().width);
       let h = parseInt(beforeDom.getBoundingClientRect().y) - parseInt(dom.getBoundingClientRect().height);
-      if (this.currentFloor > 2) {
+      if (this.currentFloor > 1) {
         h = h - parseInt(box.style.top);
       }
       dom.style.top = h + 'px';
@@ -816,16 +819,17 @@ export default {
         }
       }
       border.style.width = domWidth + 'px'
-      if (this.currentFloor > 1) {
-        // 第二层开始下沉
-        this.sink()
-        return 
-      } else {
-        dom.addEventListener("transitionend", (e) => {
-          e.stopPropagation()
-          this.isShow()
-        })
-      }
+      this.sink()
+      // if (this.currentFloor > 1) {
+      //   // 第二层开始下沉
+      //   this.sink()
+      //   return 
+      // } else {
+      //   dom.addEventListener("transitionend", (e) => {
+      //     e.stopPropagation()
+      //     this.isShow()
+      //   })
+      // }
     },
     click() {
       if (!this.show) {
@@ -840,10 +844,10 @@ export default {
       let indexBox = document.createElement('div');
       indexBox.id = `floor${this.currentFloor}`
       let style = `z-index:2;position: absolute;top:188px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 1s linear;-webkit-transition:all 1s linear;-moz-transition:all 1s linear;-o-transition:all 1s linear;`
-      if (this.currentFloor > 2) {
+      // if (this.currentFloor > 2) {
         const top = parseInt(box.style.top) - 188;
         style = `z-index:2;position: absolute;top:${-top}px;left:50%;transform:translate(-50%);width:${b}px;height:${c}px;background:url(${this.indexImg}) 0 0 no-repeat;background-size:100%;transition: all 1s linear;-webkit-transition:all 1s linear;-moz-transition:all 1s linear;-o-transition:all 1s linear;`
-      }
+      // }
       indexBox.setAttribute("style", style); //为元素设置新的属性
       let currentDiv = document.getElementById("floor-box");
       currentDiv.appendChild(indexBox);
@@ -961,40 +965,40 @@ export default {
     transition: all 1s linear;
     background-color: #FFE0C1;
   }
-  @media screen and (max-height:1070px) {
-    #floor0 {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: absolute;
-      bottom: 4px;
-      width: 100%;
-      height: 265px;
-      overflow: hidden;
-    }
-  }
-  @media screen and (min-height:1070px) {
-    #floor0 {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: absolute;
-      bottom: 34px;
-      width: 100%;
-      height: 265px;
-      overflow: hidden;
-    }
-  }
-  // #floor0 {
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
-  //   position: absolute;
-  //   bottom: 34px;
-  //   width: 100%;
-  //   height: 265px;
-  //   overflow: hidden;
+  // @media screen and (max-height:1070px) {
+  //   #floor0 {
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: center;
+  //     position: absolute;
+  //     bottom: 4px;
+  //     width: 100%;
+  //     height: 265px;
+  //     overflow: hidden;
+  //   }
   // }
+  // @media screen and (min-height:1070px) {
+  //   #floor0 {
+  //     display: flex;
+  //     flex-direction: column;
+  //     align-items: center;
+  //     position: absolute;
+  //     bottom: 34px;
+  //     width: 100%;
+  //     height: 265px;
+  //     overflow: hidden;
+  //   }
+  // }
+  #floor0 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    bottom: 34px;
+    width: 100%;
+    height: 265px;
+    overflow: hidden;
+  }
   .one {
     z-index: 3;
   }
@@ -1185,6 +1189,17 @@ export default {
       .result-bg {
         position: absolute;
         top: 0;
+      }
+      .result-text {
+        position: absolute;
+        top: 334px;
+        width: 228px;
+        height: 50px;
+        font-size: 18px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 25px;
       }
       .result-center {
         position: absolute;
