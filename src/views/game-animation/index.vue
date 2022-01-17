@@ -465,8 +465,8 @@ export default {
       this.couponInviteId = query.couponInviteId;
       this.configId = query.couponInviteId;
     }
-    await this.getUserInfo()
     await this.loadImg()
+    await this.getUserInfo()
     this.getGame()
   },
   methods: {
@@ -545,9 +545,10 @@ export default {
         param.shareObjectNo = this.couponInviteId || this.configId
       }
       if (this.resultPopup) {
+        let n = parseInt(this.currentFloor)
         param.contentType = 13
         param.ext = {
-          gameLevel: parseInt(this.currentFloor)
+          gameLevel: n
         }
       }
       share(param)
