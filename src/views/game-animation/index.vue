@@ -253,7 +253,7 @@
             width="126px"
             height="37px"
             :src="getImgUrl('publicMobile/game/play-again.png')"
-            @click="go('failPopup')"
+            @click="gameInit"
           />
         </div>
         <div class="fail-btn-box">
