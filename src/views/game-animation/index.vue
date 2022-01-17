@@ -446,7 +446,7 @@ export default {
       over: false,
       token: null,
       configId: null, // 不传默认取进行中的活动
-      chanceNum: 8, // 机会
+      chanceNum: 0, // 机会
       joinNum: 6666, // 参与人数
       prizeWinMsg: null, // 中奖信息
       ruleText: null, // 活动规则
