@@ -430,7 +430,7 @@ export default {
     return {
       currentFloor: 0, // 当前楼层
       show: true,
-      star: true,
+      star: false,
       demo: false, // 是否有试玩机会
       end: false,
       imgs: [
@@ -491,8 +491,8 @@ export default {
       this.configId = query.couponInviteId;
     }
     await this.loadImg()
-    // await this.getUserInfo()
-    // this.getGame()
+    await this.getUserInfo()
+    this.getGame()
   },
   methods: {
     getImgUrl,
