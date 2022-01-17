@@ -961,16 +961,40 @@ export default {
     transition: all 1s linear;
     background-color: #FFE0C1;
   }
-  #floor0 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    bottom: 34px;
-    width: 100%;
-    height: 265px;
-    overflow: hidden;
+  @media screen and (max-height:1070px) {
+    #floor0 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      bottom: 4px;
+      width: 100%;
+      height: 265px;
+      overflow: hidden;
+    }
   }
+  @media screen and (min-height:1070px) {
+    #floor0 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      bottom: 34px;
+      width: 100%;
+      height: 265px;
+      overflow: hidden;
+    }
+  }
+  // #floor0 {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   position: absolute;
+  //   bottom: 34px;
+  //   width: 100%;
+  //   height: 265px;
+  //   overflow: hidden;
+  // }
   .one {
     z-index: 3;
   }
