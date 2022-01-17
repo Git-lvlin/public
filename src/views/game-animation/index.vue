@@ -1,5 +1,5 @@
 <template>
-  <div class="game">
+  <div :style="star?'overflow: hidden;':''" class="game">
     <van-loading class="load" v-if="load" />
     <!-- <van-image
       class="banner"
@@ -986,7 +986,6 @@ export default {
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    overflow: hidden;
     .banner {
       position: absolute;
       top: 0;
