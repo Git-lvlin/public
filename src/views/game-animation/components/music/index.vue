@@ -34,10 +34,13 @@ export default {
   },
   methods: {
     getImgUrl, 
-    onPlayOrPaused() {
-      const {
+    onPlayOrPaused(play) {
+      let {
         state,
       } = this;
+      if(play != undefined) {
+        state = play ? 0 : 1;
+      }
       if(state == 1) {
         // audio.currentTime = 0;
         this.state = 0;
