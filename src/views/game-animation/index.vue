@@ -496,7 +496,6 @@ export default {
     },
     demoGo() {
       this.gameInit()
-      this.go()
       // this.removeDom()
       // this.demoPopup = false
       // this.starTime = Date.parse(new Date());
