@@ -626,7 +626,7 @@ export default {
     },
     getUserPic() {
       teamApi.getPic({}, {token: this.token}).then((res) => {
-        this.image = res.data.memberInfoToAdminResponse.icon
+        this.image = res.data.icon
       })
     },
     //  获取游戏详情
