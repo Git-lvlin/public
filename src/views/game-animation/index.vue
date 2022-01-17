@@ -545,7 +545,7 @@ export default {
         param.shareObjectNo = this.couponInviteId || this.configId
       }
       if (this.resultPopup) {
-        let n = parseInt(this.currentFloor - 1)
+        let n = parseInt(this.currentFloor - 1) + ''
         param.contentType = 13
         param.ext = {
           gameLevel: n
