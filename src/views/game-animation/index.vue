@@ -167,13 +167,13 @@
         :src="bgImgUrl"
       />
       <!-- 游戏顶部固定区域 -->
-      <div class="game-title">参与游戏赢大奖</div>
+      <div class="game-title">新年盖高楼</div>
       <div class="user-box">
         <div class="user-pic">
           <van-image
             width="64px"
             height="64px"
-            :src="getImgUrl('publicMobile/game/floor1.png')"
+            :src="image"
           />
         </div>
         <div class="data">{{currentFloor}}层</div>
@@ -207,7 +207,7 @@
     </div>
 
     <!-- 试玩结束弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="demoPopup">
       <div class="popup-box">
         <div class="demo-popup-content">
           <van-image
@@ -238,7 +238,7 @@
     </van-popup>
 
     <!-- 游戏失败弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup">
       <div class="popup-box">
         <div class="fail-popup-content">
           <van-image
@@ -276,7 +276,7 @@
     </van-popup>
   
     <!-- 游戏失败弹窗2 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup2">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="failPopup2">
       <div class="popup-box">
         <div class="fail-popup-content">
           <van-image
@@ -298,7 +298,7 @@
     </van-popup>
 
     <!-- 游戏成功弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
       <div class="popup-box">
         <div class="success-popup-content">
           <van-image
@@ -322,7 +322,7 @@
     </van-popup>
 
     <!-- 中奖弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
       <div class="popup-box">
         <div class="result-popup-content">
           <van-image
@@ -341,7 +341,7 @@
               @click="goTo('red')"
             />
           </div>
-          <div class="result-text">{{msg}}</div>
+          <div class="result-text">{{msg}}恭喜你获得{{prize/100}}元现金红包</div>
         </div>
         <div class="result-btn-floor1">
           <van-image
@@ -372,7 +372,7 @@
     </van-popup>
 
     <!-- 未中奖弹窗 -->
-    <van-popup close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
+    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="nullPopup">
       <div class="popup-box">
         <div class="null-popup-content">
           <van-image
@@ -382,6 +382,7 @@
             :src="getImgUrl('publicMobile/game/null-bg.png')"
           />
           <div class="null-title">本次活动您没抽中奖品， 请再接再厉！</div>
+          <div class="null-text">{{msg}}</div>
         </div>
         <div class="null-btn-box">
           <van-image
@@ -446,7 +447,7 @@ export default {
       over: false,
       token: null,
       configId: null, // 不传默认取进行中的活动
-      chanceNum: 8, // 机会
+      chanceNum: 0, // 机会
       joinNum: 6666, // 参与人数
       prizeWinMsg: null, // 中奖信息
       ruleText: null, // 活动规则
@@ -470,6 +471,7 @@ export default {
       isGo: false,
       failPopup2: false,
       msg: null,
+      image: null,
     };
   },
   components: {
@@ -493,6 +495,7 @@ export default {
     await this.loadImg()
     await this.getUserInfo()
     this.getGame()
+    this.getUserPic()
   },
   methods: {
     getImgUrl,
@@ -513,8 +516,12 @@ export default {
       })
     },
     onMusic(e) {
-      this.$refs.music.onPlayOrPaused();
-      e?.stopPropagation();
+      let state = undefined;
+      if(e.musicState != undefined ) {
+        state = e.musicState ? true : false;
+      }
+      this.$refs.music.onPlayOrPaused(state);
+      e?.stopPropagation?.();
     },
     demoClose() {
       this.gameInit()
@@ -618,6 +625,11 @@ export default {
         })
       })
     },
+    getUserPic() {
+      teamApi.getPic({}, {token: this.token}).then((res) => {
+        this.image = res.data.icon
+      })
+    },
     //  获取游戏详情
     getGame() {
       let param = {}
@@ -625,7 +637,7 @@ export default {
         param.configId = this.couponInviteId
       }
       teamApi.getGameInfo(param, {token: this.token}).then((res) => {
-        const { configId, chanceNum, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
+        const { configId, chanceNum, image, joinNum, isTestPlay, prizeWinMsg, ruleText, activityStatus, activityStartTime, activityEndTime } = res.data
         this.configId = configId
         this.chanceNum = chanceNum
         if (!chanceNum && activityStatus == 1) {
@@ -661,6 +673,7 @@ export default {
           this.msg = res.data.msg
         } else {
           this.nullPopup = true
+          this.msg = res.data.msg
         }
       })
     },
@@ -716,7 +729,9 @@ export default {
       this.isDemoStar = true
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.setRandom()
-      this.onMusic()
+      this.onMusic({
+        musicState: true
+      })
       this.getConsumeUsageTimes()
     },
     go() {
@@ -740,7 +755,9 @@ export default {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
-      this.onMusic()
+      this.onMusic({
+        musicState: true
+      })
       document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
@@ -787,7 +804,9 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
-        this.onMusic()
+        this.onMusic({
+          musicState: false
+        })
         // 试玩结束专用弹窗
         if (this.isDemoStar) {
           this.demoPopup = true
@@ -1155,6 +1174,19 @@ export default {
       .null-bg {
         position: absolute;
         top: 0;
+      }
+      .null-text {
+        position: absolute;
+        top: 334px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 228px;
+        height: 50px;
+        font-size: 18px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 25px;
       }
       .null-title {
         position: absolute;
