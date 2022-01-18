@@ -673,6 +673,7 @@ export default {
           this.msg = res.data.msg
         } else {
           this.nullPopup = true
+          this.msg = res.data.msg
         }
       })
     },
