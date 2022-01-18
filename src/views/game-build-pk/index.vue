@@ -4,7 +4,7 @@
     <div class="px-content">
       <div class="bar-list">
         <div :class="`bar-item ${actType == 1 ? 'bar-act' : ''}`" @click="onChangeBar(1)">邀请用户</div>
-        <div :class="`bar-item ${actType == 2 ? 'bar-act' : ''}`" @click="onChangeBar(2)">盖楼冲榜</div>
+        <div :class="`bar-item ${actType == 2 ? 'bar-act' : ''}`" @click="onChangeBar(2)">闯关楼层</div>
       </div>
       <div class="my-ranking" v-if="pkData.mine.nickname">
         <div>
