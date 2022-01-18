@@ -166,6 +166,7 @@ export default {
   .title {
     color: #333;
     font-weight: 600;
+    text-align: center;
     margin-bottom: 4px;
   }
   .space {
