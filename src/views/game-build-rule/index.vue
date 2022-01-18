@@ -39,7 +39,7 @@
         </div>
         <div class="space" />
         <div class="title">第五步: 冲榜拿8888元现金红包</div>
-        <div>活动结束后邀请好友排名前10名的用户额外获得现金大奖</div>
+        <div>活动结束后邀请用户，排名前10名的用户额外获得现金大奖</div>
         <div class="flex_center">
           <img class="img_264" :src="getImgUrl('publicMobile/game/introduction/introduction_6.png?v=2022')" >
         </div>
