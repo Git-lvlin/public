@@ -167,7 +167,7 @@
         :src="bgImgUrl"
       />
       <!-- 游戏顶部固定区域 -->
-      <div class="game-title">参与游戏赢大奖</div>
+      <div class="game-title">新年盖高楼</div>
       <div class="user-box">
         <div class="user-pic">
           <van-image
@@ -341,7 +341,7 @@
               @click="goTo('red')"
             />
           </div>
-          <div class="result-text">{{msg}}</div>
+          <div class="result-text">{{msg}}恭喜你获得{{prize/100}}元现金红包</div>
         </div>
         <div class="result-btn-floor1">
           <van-image
@@ -382,6 +382,7 @@
             :src="getImgUrl('publicMobile/game/null-bg.png')"
           />
           <div class="null-title">本次活动您没抽中奖品， 请再接再厉！</div>
+          <div class="null-text">{{msg}}</div>
         </div>
         <div class="null-btn-box">
           <van-image
@@ -1172,6 +1173,19 @@ export default {
       .null-bg {
         position: absolute;
         top: 0;
+      }
+      .null-text {
+        position: absolute;
+        top: 334px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 228px;
+        height: 50px;
+        font-size: 18px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #FFFFFF;
+        line-height: 25px;
       }
       .null-title {
         position: absolute;
