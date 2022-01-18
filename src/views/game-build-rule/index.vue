@@ -19,7 +19,7 @@
         <div class="flex_center">
           <img class="img" :src="getImgUrl('publicMobile/game/introduction/introduction_2.png')" >
         </div>
-        <div>2.控制上一层楼小于下一层，盖的越高越好</div>
+        <div>2.控制上一层楼短于下一层，盖的越高越好</div>
         <div class="flex_center">
           <img class="img" :src="getImgUrl('publicMobile/game/introduction/introduction_3.png')" >
         </div>
@@ -34,11 +34,14 @@
         <div class="title">第四步: 获取游戏机会</div>
         <div>游戏机会用完后可以通过邀请新用户注册和玩游戏获得机会</div>
         <div class="text_red"><span class="text_bold">小贴士：分享游戏</span>邀请1个新用户一起玩游戏可以获得2次游戏机会</div>
+        <div class="flex_center">
+          <img class="img_264" :src="getImgUrl('publicMobile/game/introduction/introduction_55.png')" >
+        </div>
         <div class="space" />
         <div class="title">第五步: 冲榜拿8888元现金红包</div>
         <div>活动结束后邀请好友排名前10名的用户额外获得现金大奖</div>
         <div class="flex_center">
-          <img class="img_100" :src="getImgUrl('publicMobile/game/introduction/introduction_6.png')" >
+          <img class="img_264" :src="getImgUrl('publicMobile/game/introduction/introduction_6.png?v=2022')" >
         </div>
         <div class="flex_center">
           <img class="img" :src="getImgUrl('publicMobile/game/introduction/introduction_5.png')" >
@@ -178,6 +181,10 @@ export default {
   }
   .img_100 {
     width: 100%;
+    margin: 5px auto;
+  }
+  .img_264 {
+    width: 264px;
     margin: 5px auto;
   }
   .text_red {
