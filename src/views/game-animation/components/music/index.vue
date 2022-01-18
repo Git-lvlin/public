@@ -3,10 +3,18 @@
     <audio id="bgMusic" :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')" loop preload="auto"></audio>
     <div :class="state == 0 ? 'music-icon' : 'music-icon'">
       <van-image
+        v-if="state"
         class="m"
         width="32px"
         height="32px"
-        :src="state?getImgUrl('publicMobile/game/music.png'):getImgUrl('publicMobile/game/music-no.png')"
+        :src="getImgUrl('publicMobile/game/music.png')"
+      />
+      <van-image
+        v-else
+        class="m"
+        width="32px"
+        height="32px"
+        :src="getImgUrl('publicMobile/game/music-no.png')"
       />
     </div>
   </div>
