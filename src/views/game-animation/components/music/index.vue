@@ -75,7 +75,6 @@ export default {
     justify-content: center;
     width: 100%;
     height: 100%;
-    animation: rotateAnimate 4s linear infinite;
   }
 
   .active {
