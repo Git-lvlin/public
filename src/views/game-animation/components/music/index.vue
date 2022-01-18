@@ -1,13 +1,12 @@
 <template>
   <div class="music-box">
     <audio id="bgMusic" :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')" loop preload="auto"></audio>
-    <div :class="state == 0 ? 'music-icon paused' : 'music-icon active'">
-      <!-- <Icon size="36" name="music-o" /> -->
+    <div :class="state == 0 ? 'music-icon' : 'music-icon'">
       <van-image
         class="m"
         width="32px"
         height="32px"
-        :src="getImgUrl('publicMobile/game/music.png')"
+        :src="state?getImgUrl('publicMobile/game/music.png'):getImgUrl('publicMobile/game/music-no.png')"
       />
     </div>
   </div>
