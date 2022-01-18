@@ -141,7 +141,7 @@
     <!-- 游戏时 -->
     <div class="in-game" v-show="star" @click="click">
       <div class="top-right-box">
-        <van-image
+        <!-- <van-image
           class="share"
           width="32px"
           height="32px"
@@ -154,7 +154,7 @@
           height="32px"
           :src="getImgUrl('publicMobile/game/skill.png')"
           @click="goTo('skill')"
-        />
+        /> -->
         <div @click="onMusic">
           <MusicPlay ref='music' />
         </div>
