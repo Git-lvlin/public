@@ -3,14 +3,14 @@
     <audio id="bgMusic" :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')" loop preload="auto"></audio>
     <div :class="state == 0 ? 'music-icon' : 'music-icon'">
       <van-image
-        v-if="state"
+        v-show="state"
         class="m"
         width="32px"
         height="32px"
         :src="getImgUrl('publicMobile/game/music.png')"
       />
       <van-image
-        v-else
+        v-show="!state"
         class="m"
         width="32px"
         height="32px"
