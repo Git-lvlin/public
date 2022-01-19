@@ -100,7 +100,7 @@ export default {
         path: "",
         //要传递的参数
         param: {
-          parameter: `${h5Url}`,
+          parameter: ``,
         },
       })
     },
