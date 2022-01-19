@@ -298,7 +298,7 @@
     </van-popup>
 
     <!-- 游戏成功弹窗 -->
-    <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
+    <!-- <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="successPopup">
       <div class="popup-box">
         <div class="success-popup-content">
           <van-image
@@ -319,7 +319,7 @@
           </div>
         </div>
       </div>
-    </van-popup>
+    </van-popup> -->
 
     <!-- 中奖弹窗 -->
     <van-popup :close-on-click-overlay="false" :style="{ width:'100%', background: 'none',overflow: 'hidden'}" v-model="resultPopup">
@@ -460,7 +460,7 @@ export default {
       isDemoStar: false,
       successPopup: false,
       failPopup: false,
-      reciprocal: 3,
+      // reciprocal: 3,
       resultPopup: false,
       nullPopup: false,
       prize: null,
@@ -822,18 +822,19 @@ export default {
           }
           return
         } else {
-          this.successPopup = true
-          let s = setInterval(() => {
-            if (this.reciprocal === 0) {
-              clearInterval(s)
-              this.successPopup = false
-              this.reciprocal = 3
-              // 抽奖
-              this.getLuckDraw()
-              return
-            }
-            this.reciprocal -= 1
-          }, 1000)
+          this.getLuckDraw()
+          // this.successPopup = true
+          // let s = setInterval(() => {
+          //   if (this.reciprocal === 0) {
+          //     clearInterval(s)
+          //     this.successPopup = false
+          //     this.reciprocal = 3
+          //     // 抽奖
+          //     this.getLuckDraw()
+          //     return
+          //   }
+          //   this.reciprocal -= 1
+          // }, 1000)
           return
         }
       }
