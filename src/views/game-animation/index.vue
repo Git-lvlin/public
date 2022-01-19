@@ -106,7 +106,7 @@
           :src="getImgUrl('publicMobile/game/no-star.png')"
         />
         <van-image
-          v-else
+          v-else-if="token"
           class="star"
           width="193px"
           height="48px"
@@ -114,9 +114,17 @@
           @click="go"
           :src="chanceNum?getImgUrl('publicMobile/game/star.png'):getImgUrl('publicMobile/game/null-btn.png')"
         />
+        <van-image
+          v-else
+          class="star"
+          width="193px"
+          height="48px"
+          @click="toNewShare"
+          :src="getImgUrl('publicMobile/game/no-token.png')"
+        />
 
         <div class="time-after-time" v-if="!chanceNum&&activityStatus!=2">您有0次机会，去做任务获得更多游戏机会</div>
-        <div class="time">活动时间：{{actTime}}</div>
+        <div class="time" v-if="actTime">活动时间：{{actTime}}</div>
       </div>
       <div class="btn-box-end" v-if="end">
         <van-image
@@ -286,14 +294,14 @@
             :src="getImgUrl('publicMobile/game/sb-popup.png')"
           />
           <div class="fail-title">你的成绩为{{currentFloor - 1}}层</div>
-          <van-image
-            class="play-again"
-            width="197px"
-            height="37px"
-            :src="getImgUrl('publicMobile/game/sb-btn.png')"
-            @click="gameInit"
-          />
         </div>
+        <van-image
+          class="play-again2"
+          width="220px"
+          height="48px"
+          :src="getImgUrl('publicMobile/game/sb-btn-new.png')"
+          @click="gameInit"
+        />
       </div>
     </van-popup>
 
@@ -564,6 +572,14 @@ export default {
           goToApp(meBaseUrl, `/web/game-join-history?_immersive=0&type=2&at=${this.token}&bid=${this.configId}`)
           break
       }
+    },
+    toNewShare() {
+      this.$router.push({
+        path: '/web/new-share',
+        query: {
+          inviteCode: this.inviteCode
+        },
+      });
     },
     goShare() {
       let param = {
@@ -1330,6 +1346,9 @@ export default {
         left: 50%;
         transform: translate(-50%);
       }
+    }
+    .play-again2 {
+      margin-top: 16px;
     }
     .demo-popup-content {
       width: 100%;
