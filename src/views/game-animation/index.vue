@@ -277,7 +277,7 @@
             width="136px"
             height="48px"
             :src="getImgUrl('publicMobile/game/back-home.png')"
-            @click="gameInit('fail')"
+            @click="again"
           />
         </div>
       </div>
@@ -300,7 +300,7 @@
           width="220px"
           height="48px"
           :src="getImgUrl('publicMobile/game/sb-btn-new.png')"
-          @click="gameInit"
+          @click="goTo('share')"
         />
       </div>
     </van-popup>
@@ -364,7 +364,7 @@
             width="136px"
             height="48px"
             :src="getImgUrl('publicMobile/game/back-home2.png')"
-            @click="gameInit('fail')"
+            @click="again"
           />
         </div>
         <div class="result-btn-floor2">
@@ -504,6 +504,9 @@ export default {
     await this.getUserInfo()
     this.getGame()
     this.getUserPic()
+    if (query.again) {
+      this.go()
+    }
   },
   methods: {
     getImgUrl,
@@ -606,6 +609,13 @@ export default {
       var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '.';
       var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
       return Y+M+D
+    },
+    again() {
+      if (this.chanceNum - 1 == 0) {
+        Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
+        return
+      }
+      window.location.href += '&again=1'
     },
     gameInit(type) {
       location.reload();
