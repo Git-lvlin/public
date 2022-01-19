@@ -324,13 +324,12 @@ const routes = [
     meta: {
       title: '约购年货节活动规则',
     }
-  },
-  {
+  },{
     path: '/web/game-download',
     name: 'GameDownload',
     component: () => import('@/views/game-download'),
     meta: {
-      title: '盖房子下载页',
+      title: '新年盖高楼下载页',
     }
   }, {
     path: '/web/game-withdrawal-application',
@@ -372,14 +371,14 @@ const routes = [
     name: 'GameJoinHistory',
     component: () => import('@/views/game-join-history'),
     meta: {
-      title: '参与活动赢大奖',
+      title: '活动奖励明细',
     }
   }, {
     path: '/web/game-animation',
     name: 'GameAnimation',
     component: () => import('@/views/game-animation'),
     meta: {
-      title: '盖房子',
+      title: '新年盖高楼',
     }
   },
   {
