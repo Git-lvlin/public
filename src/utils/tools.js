@@ -131,4 +131,28 @@ export const mapNum = (list = []) => {
   return list;
 };
 
+export const storage =  {
+  get(name) {
+    const val = localStorage.getItem(name);
+    if (typeof val == 'string') {
+      try {
+        return JSON.parse(val);;
+      } catch(e) {
+        return val;
+      }
+    } else {
+      return val;
+    }
+  },
+  set(name, val) {
+    let isJson = val instanceof Array || val instanceof Object ? true : false;
+    localStorage.setItem(name, isJson ? JSON.stringify(val) : val);
+  },
+  add(name, addVal) {
+    let oldVal = storage.get(name);
+    let newVal = oldVal.concat(addVal);
+    storage.set(name, newVal);
+  }
+}
+
 export default {};

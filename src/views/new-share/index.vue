@@ -6,8 +6,7 @@
         'height': `${type?'450px':'351px'}`
       }"
     >
-      <div @click="hasWx" v-show="type" class="button">立即下载</div>
-      <!-- <p id="downloadButton2" v-show="type" class="p">已安装？点这里打开约购</p> -->
+      <div @click="hasWx" v-show="type" class="button">立即打开/下载</div>
     </div>
     <div class="register-box" v-show="!type">
       <div class="phone">
@@ -67,7 +66,7 @@
         </div>
       </div> -->
     </div>
-    <div class="bottom-box" v-show="flag">
+    <!-- <div class="bottom-box" v-show="flag">
       <van-image
         class="logo"
         width="54px"
@@ -76,7 +75,6 @@
       />
       <div class="content-box">
         <p class="text1">约购-约着买更便宜</p>
-        <!-- <p class="text2">新人注册领168元好礼</p> -->
       </div>
       <van-image
         class="bottom-img"
@@ -85,7 +83,7 @@
         :src="getImgUrl('publicMobile/share/button-img.png')"
         @click="hasWx"
       />
-    </div>
+    </div> -->
     <!-- 活动规则弹窗 -->
     <van-popup
       v-model="show"
@@ -95,8 +93,8 @@
     >
       <div class="popup-box">
         <div class="title">温馨提示</div>
-        <div class="subtitle">此手机号已经注册过啦，点击下载约购APP体验吧~ </div>
-        <div @click="hasWx" class="btn">下载约购APP</div>
+        <div class="subtitle">此手机号已经注册过啦，点击打开/下载约购APP体验吧~ </div>
+        <div @click="hasWx" class="btn">打开/下载约购APP</div>
       </div>
     </van-popup>
   </div>
@@ -113,6 +111,8 @@
 import Vue from 'vue';
 import { Image as VanImage, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
+import CallApp from 'callapp-lib';
+import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/newshare';
 Vue.use(VanImage);
 Vue.use(Popup);
@@ -133,6 +133,7 @@ export default {
       countDown: 1,
       inviteCode: null,
       flag: 1,
+      url: null,
     };
   },
   components: {
@@ -154,16 +155,52 @@ export default {
     } = this.$router.history.current;
     console.log('query', query)
     this.inviteCode = query.inviteCode
+    this.url = query.url || ''
+    // this.isWeixin = query.isWeixin || 0
+    this.type = query.type || 0
   },
   methods: {
+    onOpenApp() {
+      console.log("🚀 ~ this.$store.state.appInfo", this.$store.state.appInfo)
+      if (this.$store.state.appInfo.isApp || this.$store.state.appInfo.isMiniprogram) {
+        return;
+      }
+      const options = {
+        scheme: {
+          //URL Scheme 的 scheme 字段，要打开的 APP 的标识
+          protocol: 'yeahgo'
+        },
+        //安卓原生谷歌浏览器必须传递 Intent 协议地址，才能唤起 APP
+        intent: {
+          // APP包名
+          package: 'com.hznt.yeahgo',
+          scheme: 'yeahgo'
+        },
+        timeout: '5000',
+        //APP 的 App Store
+        appstore: DOWNLOAD_IOS,
+        //APP 的应用宝地址，
+        yingyongbao: DOWNLOAD_ANDROID,
+      };
+      const callLib = new CallApp(options);
+      callLib.open({
+        path: "",
+        //要传递的参数
+        param: {
+          parameter: `${this.url || ''}`,
+        },
+      })
+    },
     hasWx() {
       this.show = 0;
       const ua = window.navigator.userAgent.toLowerCase();
       if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        this.isWeixin = 1;
+        window.location.href += `&type=${this.type}&isWeixin=${1}`
         return
+      } else {
+        this.onOpenApp()
       }
-      window.location.href = `https://publicmobile.yeahgo.com/web/transfer`;
+      // window.location.href = `https://publicmobile.yeahgo.com/web/transfer`;
     },
     getInviteCode() {
       const {
