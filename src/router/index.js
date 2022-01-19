@@ -326,13 +326,6 @@ const routes = [
     }
   },
   {
-    path: '/web/game',
-    name: 'Game',
-    component: () => import('@/views/game'),
-    meta: {
-      title: '盖房子',
-    }
-  },{
     path: '/web/game-download',
     name: 'GameDownload',
     component: () => import('@/views/game-download'),
@@ -388,7 +381,15 @@ const routes = [
     meta: {
       title: '盖房子',
     }
-  }
+  },
+  {
+    path: '/web/five-star-new',
+    name: 'FiveStarNew',
+    component: () => import('@/views/five-star-new'),
+    meta: {
+      title: '新春到，升五星',
+    }
+  },
 ];
 
 const router = new VueRouter({

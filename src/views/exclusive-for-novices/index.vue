@@ -217,7 +217,19 @@ export default {
       this.loading = true;
       teamApi.getNewCouponGoodsList({}).then((res) => {
         let data = res.data.goodsList;
-        this.list = data
+        this.list = data.map((item) => {
+          let arr = []
+          let indexArr = []
+          item.couponList.map((ele) => {
+            if (arr.indexOf(ele.couponDesc) == -1) {
+              arr.push(ele.couponDesc)
+              indexArr.push(ele)
+            }
+            return indexArr
+          })
+          item.couponList = indexArr
+          return item
+        })
         this.loading = false;
       }).catch(() => {
         this.loading = false;
