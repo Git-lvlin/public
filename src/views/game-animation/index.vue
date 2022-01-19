@@ -308,7 +308,7 @@
             :src="getImgUrl('publicMobile/game/success-bg.png')"
           />
           <div class="success-title">你的成绩为{{currentFloor - 1}}层</div>
-          <div class="success-btn-box">
+          <!-- <div class="success-btn-box">
             <van-image
               class="success-btn"
               width="100%"
@@ -316,7 +316,7 @@
               :src="getImgUrl('publicMobile/game/success-btn.png')"
             />
             <div class="success-btn-text">抽奖中 {{reciprocal}}S</div>
-          </div>
+          </div> -->
         </div>
       </div>
     </van-popup>
@@ -823,17 +823,18 @@ export default {
           return
         } else {
           this.successPopup = true
-          let s = setInterval(() => {
-            if (this.reciprocal === 0) {
-              clearInterval(s)
-              this.successPopup = false
-              this.reciprocal = 3
-              // 抽奖
-              this.getLuckDraw()
-              return
-            }
-            this.reciprocal -= 1
-          }, 1000)
+          this.getLuckDraw()
+          // let s = setInterval(() => {
+          //   if (this.reciprocal === 0) {
+          //     clearInterval(s)
+          //     this.successPopup = false
+          //     this.reciprocal = 3
+          //     // 抽奖
+          //     this.getLuckDraw()
+          //     return
+          //   }
+          //   this.reciprocal -= 1
+          // }, 1000)
           return
         }
       }
