@@ -4,7 +4,8 @@
       <!-- <div class="join-num">已有36510人参与</div> -->
       <img class="down-back" :src="getImgUrl('publicMobile/game/build_download/create_down_back.png?v=20211231')" />
       <div class="btn-box">
-        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/open_btn.png')" />
+        <!-- <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/open_btn.png')" /> -->
+        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/join_btn.png')" />
         <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/down_btn.png')" />
         <div class="btn-title">
           <span class="red_text">约购</span>APP&nbsp;约着买&nbsp;更便宜
