@@ -61,7 +61,7 @@ import { Image, Popup } from 'vant';
 import CallApp from 'callapp-lib';
 import { getImgUrl } from '@/utils/tools';
 import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
-import { meBaseUrl } from '@/constant/common';
+import { meBaseUrl } from '@/constant/index';
 
 export default {
   data() {
