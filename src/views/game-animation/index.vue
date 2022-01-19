@@ -725,9 +725,9 @@ export default {
       }
     },
     goDemo() {
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.star = true
       this.isDemoStar = true
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.setRandom()
       this.onMusic({
         musicState: true
@@ -752,13 +752,13 @@ export default {
         this.isGo = false
         return Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
       this.onMusic({
         musicState: true
       })
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
     setRandom() {
