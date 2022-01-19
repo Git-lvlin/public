@@ -504,7 +504,8 @@ export default {
     await this.getUserInfo()
     this.getGame()
     this.getUserPic()
-    if (query.again) {
+    if (query.again == 1) {
+      console.log('token', this.token, this.isGo, this.chanceNum)
       this.go()
     }
   },
