@@ -231,7 +231,7 @@
             width="134px"
             height="42px"
             :src="getImgUrl('publicMobile/game/demo-star-btn.png')"
-            @click="demoGo"
+            @click="again"
           />
         </div>
 
@@ -610,7 +610,11 @@ export default {
     },
     again() {
       if (this.chanceNum - 1 > 0) {
-        window.location.href = window.location.href + '&again=1'
+        if (!window.location.href.includes('again')) {
+          window.location.href = window.location.href + '&again=1'
+        } else {
+          location.reload();
+        }
       } else {
         Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
