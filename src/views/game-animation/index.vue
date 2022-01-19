@@ -611,11 +611,11 @@ export default {
       return Y+M+D
     },
     again() {
-      if (this.chanceNum - 1 == 0) {
+      if (this.chanceNum - 1 > 0) {
+        window.location.href += '&again=1'
+      } else {
         Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
-        return
       }
-      window.location.href += '&again=1'
     },
     gameInit(type) {
       location.reload();
