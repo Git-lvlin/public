@@ -502,12 +502,8 @@ export default {
     }
     await this.loadImg()
     await this.getUserInfo()
-    this.getGame()
+    this.getGame(query.again)
     this.getUserPic()
-    if (query.again == 1) {
-      console.log('token', this.token, this.isGo, this.chanceNum)
-      this.go()
-    }
   },
   methods: {
     getImgUrl,
@@ -658,7 +654,7 @@ export default {
       })
     },
     //  获取游戏详情
-    getGame() {
+    getGame(a) {
       let param = {}
       if (this.couponInviteId) {
         param.configId = this.couponInviteId
@@ -684,6 +680,9 @@ export default {
         this.activityStartTime = activityStartTime
         this.activityEndTime = activityEndTime
         this.actTime = this.timestampToTime(activityStartTime) + '-' + this.timestampToTime(activityEndTime)
+        if (a == 1) {
+          this.go()
+        }
       })
     },
     // 抽奖
