@@ -341,7 +341,7 @@
               @click="goTo('red')"
             />
           </div>
-          <div class="result-text">{{msg}}恭喜你获得{{prize/100}}元现金红包</div>
+          <div class="result-text">{{msg}}获得{{prize/100}}元现金红包</div>
         </div>
         <div class="result-btn-floor1">
           <van-image
