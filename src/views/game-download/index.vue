@@ -116,7 +116,7 @@ export default {
       const callLib = new CallApp(options);
       // ${appUrl}?url=
       const appUrl = 'https://www.yeahgo.com/web/index';
-      let h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
+      let h5Url = `${meBaseUrl}/web/game-animation?_authorizationRequired=1`;
       callLib.open({
         path: "",
         //要传递的参数
