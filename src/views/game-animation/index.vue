@@ -480,6 +480,7 @@ export default {
       failPopup2: false,
       msg: null,
       image: null,
+      againType: 0,
     };
   },
   components: {
@@ -609,7 +610,7 @@ export default {
     },
     again() {
       if (this.chanceNum - 1 > 0) {
-        window.location.href += '&again=1'
+        window.location.href = window.location.href + '&again=1'
       } else {
         Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
@@ -680,7 +681,8 @@ export default {
         this.activityStartTime = activityStartTime
         this.activityEndTime = activityEndTime
         this.actTime = this.timestampToTime(activityStartTime) + '-' + this.timestampToTime(activityEndTime)
-        if (a == 1) {
+        if (a > 0) {
+          this.againType = a
           this.go()
         }
       })
