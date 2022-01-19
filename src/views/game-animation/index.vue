@@ -256,13 +256,13 @@
             :src="getImgUrl('publicMobile/game/fail-bg.png')"
           />
           <div class="fail-title">你的成绩为{{currentFloor - 1}}层</div>
-          <van-image
+          <!-- <van-image
             class="play-again"
             width="126px"
             height="37px"
             :src="getImgUrl('publicMobile/game/play-again.png')"
             @click="gameInit"
-          />
+          /> -->
         </div>
         <div class="fail-btn-box">
           <van-image
