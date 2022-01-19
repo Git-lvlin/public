@@ -349,7 +349,7 @@
               @click="goTo('red')"
             />
           </div>
-          <div class="result-text">{{msg}}恭喜你获得{{prize/100}}元现金红包</div>
+          <div class="result-text">{{msg}}</div>
         </div>
         <div class="result-btn-floor1">
           <van-image
@@ -1249,6 +1249,7 @@ export default {
         font-weight: 500;
         color: #FFFFFF;
         line-height: 25px;
+        text-align: center;
       }
       .result-center {
         position: absolute;
