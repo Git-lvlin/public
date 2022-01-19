@@ -388,7 +388,15 @@ const routes = [
     meta: {
       title: '新年盖高楼',
     }
-  }
+  },
+  {
+    path: '/web/five-star-new',
+    name: 'FiveStarNew',
+    component: () => import('@/views/five-star-new'),
+    meta: {
+      title: '新春到，升五星',
+    }
+  },
 ];
 
 const router = new VueRouter({
