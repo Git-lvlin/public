@@ -23,7 +23,7 @@
       <div class="code-err">{{codeErr}}</div>
       <div class="button" @click="reg">提交</div>
     </div>
-    <div class="title"><span class="red">约购</span>APP 约着买 更便宜</div>
+    <div class="title"><span class="red">约购</span> 约着买 更便宜</div>
     <div class="subtitle">物美价廉有温度</div>
     <van-image
       class="border"
