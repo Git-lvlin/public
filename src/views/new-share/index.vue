@@ -183,6 +183,7 @@ export default {
         yingyongbao: DOWNLOAD_ANDROID,
       };
       const callLib = new CallApp(options);
+      const h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
       callLib.open({
         path: "",
         //要传递的参数
