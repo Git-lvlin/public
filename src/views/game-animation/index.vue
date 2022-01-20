@@ -780,6 +780,8 @@ export default {
         } else {
           this.nullPopup = true
           this.msg = res.data.msg
+          this.onMusicClose()
+          this.pushOne()
         }
       })
     },
@@ -904,8 +906,6 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
-        this.onMusicClose()
-        this.pushOne()
         // 试玩结束专用弹窗
         if (this.isDemoStar) {
           this.demoPopup = true
