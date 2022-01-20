@@ -59,7 +59,7 @@
         >
           <div class="red-desc-popup">
             <div class="red-desc-content">
-              <img class="red-desc-back" :src="getImgUrl('publicMobile/game/withdrawal/history_desc.png')" />
+              <img class="red-desc-back" :src="getImgUrl('publicMobile/game/withdrawal/history_desc.png?v=2022')" />
               <img class="red-desc-close" @click="showRankDesc = false" :src="getImgUrl('publicMobile/game/withdrawal/history_desc_close.png')" />
               <div class="red-desc-box">
                 <div class="red-desc-title">温馨提示</div>
@@ -522,8 +522,8 @@ export default {
     position: relative;
   }
   .red-desc-back {
-    width: 264px;
-    height: 230px;
+    width: 308px;
+    height: 229px;
   }
   .red-desc-close {
     position: absolute;
