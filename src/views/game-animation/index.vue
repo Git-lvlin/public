@@ -39,7 +39,7 @@
           :src="getImgUrl('publicMobile/game/rank.png')"
           @click="goTo('rank')"
         />
-        <div @click="onMusic">
+        <div class="m" @click="onMusic">
           <MusicPlay ref='music' />
         </div>
         <van-image
@@ -950,9 +950,11 @@ export default {
     }
     .rank {
       margin-top: 12px;
+      margin-bottom: 12px;
+    }
+    .m {
       margin-bottom: 10px;
     }
-
   }
   .join-control {
     position: absolute;

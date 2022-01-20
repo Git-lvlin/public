@@ -36,7 +36,7 @@ export default {
       // 0 暂停 1 播放
       state: 0,
       loop: 0,
-      indexUrl: null,
+      indexUrl: getImgUrl('publicMobile/game/files/floor_game_music.mp3'),
     };
   },
   components: {
@@ -44,7 +44,6 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   mounted () {
-
     const audio = document.getElementById("bgMusic");
     audio.addEventListener('loadeddata', () => {
       console.log('加载第一帧');
