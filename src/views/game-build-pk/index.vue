@@ -1,7 +1,7 @@
 <template>
   <div class="pk-box">
     <div class="back-box">
-      <img class="flex_fix pk-back" :src="getImgUrl('publicMobile/game/build_pk/pk_back.png?v=2022')" />
+      <img class="flex_fix pk-back" :src="getImgUrl('publicMobile/game/build_pk/pk_back.png?v=202201')" />
       <div class="back_info" :style="`background-image: url(${getImgUrl('publicMobile/game/build_pk/back_info_back.png')})`">
         <NoticeBar
           scrollable
@@ -48,7 +48,7 @@
             <img
               class="item-number-icon"
               v-if="idx < 3"
-              :src="getImgUrl(`publicMobile/game/build_pk/floor_${idx + 1}.png`)"
+              :src="getImgUrl(`publicMobile/game/build_pk/pk_${idx + 1}.png`)"
             />
             <span class="item-number-text" v-else>{{`${idx < 9 ? '0' : ''}${idx + 1}`}}</span>
           </div>
@@ -261,12 +261,13 @@ export default {
     margin-bottom: 10px;
   }
   .item-number {
-    width: 27px;
+    width: 30px;
+    text-align: center;
     margin-right: 25px;
   }
   .item-number-icon {
-    width: 27px;
-    height: 36px;
+    width: 30px;
+    height: 24px;
   }
   .item-number-text {
     font-size: 15px;
