@@ -39,6 +39,20 @@
           :src="getImgUrl('publicMobile/game/rank.png')"
           @click="goTo('rank')"
         />
+        <div class="m" @click="onMusic">
+          <van-image
+            v-show="state"
+            width="32px"
+            height="32px"
+            :src="getImgUrl('publicMobile/game/music.png')"
+          />
+          <van-image
+            v-show="!state"
+            width="32px"
+            height="32px"
+            :src="getImgUrl('publicMobile/game/music-no.png')"
+          />
+        </div>
         <van-image
           class="red-box"
           width="40px"
@@ -147,24 +161,21 @@
 
 
     <!-- 游戏时 -->
-    <div class="in-game" v-show="star" @click="click">
+    <div class="in-game" v-if="star" @click="click">
       <div class="top-right-box">
-        <!-- <van-image
-          class="share"
-          width="32px"
-          height="32px"
-          :src="getImgUrl('publicMobile/game/share.png')"
-          @click="goTo('share')"
-        />
-        <van-image
-          class="skill"
-          width="32px"
-          height="32px"
-          :src="getImgUrl('publicMobile/game/skill.png')"
-          @click="goTo('skill')"
-        /> -->
         <div @click="onMusic">
-          <MusicPlay ref='music' />
+          <van-image
+            v-show="state"
+            width="32px"
+            height="32px"
+            :src="getImgUrl('publicMobile/game/music.png')"
+          />
+          <van-image
+            v-show="!state"
+            width="32px"
+            height="32px"
+            :src="getImgUrl('publicMobile/game/music-no.png')"
+          />
         </div>
       </div>
       <van-image
@@ -240,7 +251,7 @@
           width="28px"
           height="28px"
           :src="getImgUrl('publicMobile/game/demo-close.png')"
-          @click="demoClose"
+          @click="gameInit2"
         />
       </div>
     </van-popup>
@@ -256,13 +267,6 @@
             :src="getImgUrl('publicMobile/game/fail-bg.png')"
           />
           <div class="fail-title">你的成绩为{{currentFloor - 1}}层</div>
-          <!-- <van-image
-            class="play-again"
-            width="126px"
-            height="37px"
-            :src="getImgUrl('publicMobile/game/play-again.png')"
-            @click="gameInit"
-          /> -->
         </div>
         <div class="fail-btn-box">
           <van-image
@@ -280,6 +284,13 @@
             @click="again"
           />
         </div>
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
   
@@ -301,6 +312,13 @@
           height="48px"
           :src="getImgUrl('publicMobile/game/sb-btn-new.png')"
           @click="goTo('share')"
+        />
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
         />
       </div>
     </van-popup>
@@ -326,6 +344,13 @@
             <div class="success-btn-text">抽奖中 {{reciprocal}}S</div>
           </div>
         </div>
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
 
@@ -376,6 +401,13 @@
             @click="goTo('share')"
           />
         </div>
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
 
@@ -405,14 +437,38 @@
             width="136px"
             height="48px"
             :src="getImgUrl('publicMobile/game/back-home.png')"
-            @click="gameInit('fail')"
+            @click="gameInit"
           />
         </div>
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
     <div class="none" v-for="(item, index) in imgs" :key="index">
       <img :src="getImgUrl('publicMobile/game/bg.png')" alt="1">
       <img :src="getImgUrl(item)" alt="1">
+    </div>
+    <div class="none2">
+      <audio
+        id="bgMusic1"
+        :src="getImgUrl('publicMobile/game/files/1.mp3')"
+        :loop="false"
+        preload="auto"
+      />
+      <audio
+        id="bgMusic2"
+        :src="getImgUrl('publicMobile/game/files/2.mp3')"
+        :loop="false"
+        preload="auto"
+      />
+      <div>
+        <MusicPlay ref='music' />
+      </div>
     </div>
   </div>
 </template>
@@ -481,6 +537,9 @@ export default {
       msg: null,
       image: null,
       againType: 0,
+      audio1: null,
+      audio2: null,
+      state: 1
     };
   },
   components: {
@@ -508,6 +567,16 @@ export default {
   },
   methods: {
     getImgUrl,
+    pushOne() {
+      const audio1 = document.getElementById("bgMusic1");
+      this.audio1 = audio1
+      this.audio1.play()
+    },
+    pushTwo() {
+      const audio2 = document.getElementById("bgMusic2");
+      this.audio2 = audio2
+      this.audio2.play()
+    },
     loadImg() {
       return new Promise((resolve, reject) => {
         let bgImg = new Image();
@@ -525,27 +594,34 @@ export default {
       })
     },
     onMusic(e) {
-      this.$refs.music.setUrl(e.url)
-      let state = undefined;
-      if(e.musicState != undefined ) {
-        state = e.musicState ? true : false;
+      try {
+        this.state = !this.state
+        this.$refs.music.onPlayOrPaused(this.state);
+        if (!this.state) {
+          const audio2 = document.getElementById("bgMusic2");
+          const audio1 = document.getElementById("bgMusic1");
+          audio2?.pause?.()
+          audio1?.pause?.()
+        }
+        e?.stopPropagation?.();
+      } catch (error) {
+        console.log('error', error)
       }
-      this.$refs.music.onPlayOrPaused(state);
-      e?.stopPropagation?.();
     },
-    demoClose() {
-      this.gameInit()
-    },
-    demoGo() {
-      this.gameInit()
-      // this.removeDom()
-      // this.demoPopup = false
-      // this.starTime = Date.parse(new Date());
-      // this.setRandom()
-      // this.star = true
-      // this.onMusic()
-      // document.body.scrollTop = document.documentElement.scrollTop = 0;
-      // this.getUseBuilding()
+    onMusicClose(e) {
+      try {
+        this.state = false
+        this.$refs.music.onPlayOrPaused(0);
+        if (!this.state) {
+          const audio2 = document.getElementById("bgMusic2");
+          const audio1 = document.getElementById("bgMusic1");
+          audio2?.pause?.()
+          audio1?.pause?.()
+        }
+        e?.stopPropagation?.();
+      } catch (error) {
+        console.log('error', error)
+      }
     },
     goTo(router) {
       if (!this.token) {
@@ -620,21 +696,16 @@ export default {
         Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
     },
-    gameInit(type) {
+    gameInit() {
       location.reload();
-      // if (type === 'fail') {
-      //   this.failPopup = false
-      //   location.reload();
-      //   return
-      // }
-      // for(let i=1;i<this.currentFloor;i++) {
-      //   let f = 'floor' + i 
-      //   let dom = document.getElementById(f)
-      //   dom.remove()
-      // }
-      // this.star = false;
-      // this.currentFloor = 0;
-      // this.getGame();
+    },
+    gameInit2(e) {
+      if (window.location.href.includes('again')) {
+        window.location.href = window.location.href.split('&again')[0]
+      } else {
+        location.reload();
+      }
+      e?.stopPropagation?.();
     },
     removeDom() {
       for(let i=1;i<this.currentFloor;i++) {
@@ -694,10 +765,6 @@ export default {
     },
     // 抽奖
     getLuckDraw() {
-      this.onMusic({
-        musicState: true,
-        url: 'publicMobile/game/files/2.mp3'
-      })
       const param = {
         activityId: this.configId,
         gameId: this.gameRecordId,
@@ -708,6 +775,8 @@ export default {
           this.resultPopup = true
           this.prize = res.data.prize
           this.msg = res.data.msg
+          this.onMusicClose()
+          this.pushTwo()
         } else {
           this.nullPopup = true
           this.msg = res.data.msg
@@ -766,10 +835,6 @@ export default {
       this.star = true
       this.isDemoStar = true
       this.setRandom()
-      this.onMusic({
-        musicState: true,
-        url: 'publicMobile/game/files/floor_game_music.mp3'
-      })
       this.getConsumeUsageTimes()
     },
     go() {
@@ -794,10 +859,6 @@ export default {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
-      this.onMusic({
-        musicState: true,
-        url: 'publicMobile/game/files/floor_game_music.mp3'
-      })
       this.getUseBuilding()
     },
     setRandom() {
@@ -843,10 +904,8 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
-        this.onMusic({
-          musicState: true,
-          url: 'publicMobile/game/files/1.mp3'
-        })
+        this.onMusicClose()
+        this.pushOne()
         // 试玩结束专用弹窗
         if (this.isDemoStar) {
           this.demoPopup = true
@@ -919,6 +978,12 @@ export default {
 .none {
   display: none;
 }
+.none2 {
+  position: absolute;
+  top: -999px;
+  opacity: 0;
+  z-index: -2;
+}
 .load {
   position: fixed;
   padding-top: 200px;
@@ -945,9 +1010,11 @@ export default {
     }
     .rank {
       margin-top: 12px;
+    }
+    .m {
+      margin-top: 12px;
       margin-bottom: 10px;
     }
-
   }
   .join-control {
     position: absolute;
@@ -1410,8 +1477,8 @@ export default {
         transform: translate(-50%);
       }
     }
+  }
     .demo-close {
       margin-top: 25px;
     }
-  }
 </style>
