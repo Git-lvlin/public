@@ -548,7 +548,7 @@ export default {
     margin-bottom: 11px;
   }
   .red-desc-text {
-    font-size: 12px;
+    font-size: 14px;
     color: #333333;
     line-height: 16px;
   }
