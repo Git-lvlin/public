@@ -700,7 +700,7 @@ export default {
     // 抽奖
     getLuckDraw() {
       this.onMusic({
-        musicState: true,
+        musicState: false,
         url: 'publicMobile/game/files/2.mp3'
       })
       const param = {
@@ -771,10 +771,10 @@ export default {
       this.star = true
       this.isDemoStar = true
       this.setRandom()
-      this.onMusic({
-        musicState: true,
-        url: 'publicMobile/game/files/floor_game_music.mp3'
-      })
+      // this.onMusic({
+      //   musicState: true,
+      //   url: 'publicMobile/game/files/floor_game_music.mp3'
+      // })
       this.getConsumeUsageTimes()
     },
     go() {
@@ -799,10 +799,10 @@ export default {
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
-      this.onMusic({
-        musicState: true,
-        url: 'publicMobile/game/files/floor_game_music.mp3'
-      })
+      // this.onMusic({
+      //   musicState: true,
+      //   url: 'publicMobile/game/files/floor_game_music.mp3'
+      // })
       this.getUseBuilding()
     },
     setRandom() {
@@ -849,7 +849,7 @@ export default {
         border.style.top = h + 'px';
         this.over = true
         this.onMusic({
-          musicState: true,
+          musicState: false,
           url: 'publicMobile/game/files/1.mp3'
         })
         // 试玩结束专用弹窗
@@ -950,9 +950,9 @@ export default {
     }
     .rank {
       margin-top: 12px;
-      margin-bottom: 12px;
     }
     .m {
+      margin-top: 12px;
       margin-bottom: 10px;
     }
   }

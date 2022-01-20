@@ -50,6 +50,16 @@ export default {
       this.onPlayOrPaused();
     });
     this.audio = audio;
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState == "visible") {
+        document.title='页面可见';
+        this.audio.play();
+      }
+      if (document.visibilityState == "hidden") {
+        document.title='页面不可见';
+        this.audio.pause();
+      }
+    })
   },
   methods: {
     getImgUrl,
@@ -58,6 +68,11 @@ export default {
         this.loop = 1
       }
       this.indexUrl = getImgUrl(url)
+      const audio = document.getElementById("bgMusic");
+      audio.addEventListener('loadeddata', () => {
+        console.log('加载第一帧');
+        this.onPlayOrPaused();
+      });
     },
     onPlayOrPaused(play) {
       let {
