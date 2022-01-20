@@ -158,7 +158,7 @@ export default {
     this.url = query.url || ''
     this.type = query.type || 0
     const ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
       this.isWeixin = query.isWeixin || 0
     }
   },

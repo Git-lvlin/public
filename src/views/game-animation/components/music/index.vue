@@ -1,6 +1,11 @@
 <template>
   <div class="music-box">
-    <audio id="bgMusic" :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')" loop preload="auto"></audio>
+    <audio
+      id="bgMusic"
+      :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')"
+      loop
+      preload="auto"
+    />
     <div :class="state == 0 ? 'music-icon' : 'music-icon'">
       <van-image
         v-show="state"
@@ -37,7 +42,12 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   mounted () {
-    this.audio = document.getElementById("bgMusic");
+    const audio = document.getElementById("bgMusic");
+    audio.addEventListener('loadeddata', () => {
+      console.log('加载第一帧');
+      this.onPlayOrPaused();
+    });
+    this.audio = audio;
   },
   methods: {
     getImgUrl, 
