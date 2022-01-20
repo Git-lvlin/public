@@ -231,7 +231,7 @@
             width="134px"
             height="42px"
             :src="getImgUrl('publicMobile/game/demo-star-btn.png')"
-            @click="demoGo"
+            @click="again"
           />
         </div>
 
@@ -277,7 +277,7 @@
             width="136px"
             height="48px"
             :src="getImgUrl('publicMobile/game/back-home.png')"
-            @click="gameInit('fail')"
+            @click="again"
           />
         </div>
       </div>
@@ -300,7 +300,7 @@
           width="220px"
           height="48px"
           :src="getImgUrl('publicMobile/game/sb-btn-new.png')"
-          @click="gameInit"
+          @click="goTo('share')"
         />
       </div>
     </van-popup>
@@ -364,7 +364,7 @@
             width="136px"
             height="48px"
             :src="getImgUrl('publicMobile/game/back-home2.png')"
-            @click="gameInit('fail')"
+            @click="again"
           />
         </div>
         <div class="result-btn-floor2">
@@ -480,6 +480,7 @@ export default {
       failPopup2: false,
       msg: null,
       image: null,
+      againType: 0,
     };
   },
   components: {
@@ -502,7 +503,7 @@ export default {
     }
     await this.loadImg()
     await this.getUserInfo()
-    this.getGame()
+    this.getGame(query.again)
     this.getUserPic()
   },
   methods: {
@@ -607,6 +608,17 @@ export default {
       var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
       return Y+M+D
     },
+    again() {
+      if (this.chanceNum - 1 > 0) {
+        if (!window.location.href.includes('again')) {
+          window.location.href = window.location.href + '&again=1'
+        } else {
+          location.reload();
+        }
+      } else {
+        Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
+      }
+    },
     gameInit(type) {
       location.reload();
       // if (type === 'fail') {
@@ -647,7 +659,7 @@ export default {
       })
     },
     //  获取游戏详情
-    getGame() {
+    getGame(a) {
       let param = {}
       if (this.couponInviteId) {
         param.configId = this.couponInviteId
@@ -673,6 +685,10 @@ export default {
         this.activityStartTime = activityStartTime
         this.activityEndTime = activityEndTime
         this.actTime = this.timestampToTime(activityStartTime) + '-' + this.timestampToTime(activityEndTime)
+        if (a > 0) {
+          this.againType = a
+          this.go()
+        }
       })
     },
     // 抽奖
