@@ -2,12 +2,13 @@
   <div class="create-downlaod" id="openAppBox">
     <div class="down-box">
       <!-- <div class="join-num">已有36510人参与</div> -->
-      <img class="down-back" :src="getImgUrl('publicMobile/game/build_download/create_down_back.png?v=20211231')" />
+      <img class="down-back" :src="getImgUrl('publicMobile/game/build_download/create_down_back.png?v=20220120')" />
       <div class="btn-box">
-        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/open_btn.png')" />
+        <!-- <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/open_btn.png')" /> -->
+        <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/join_btn.png')" />
         <img class="btn-icon" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/down_btn.png')" />
         <div class="btn-title">
-          <span class="red_text">约购</span>APP&nbsp;约着买&nbsp;更便宜
+          <span class="red_text">约购</span>&nbsp;约着买&nbsp;更便宜
         </div>
       </div>
     </div>
@@ -42,34 +43,54 @@
         <img class="bottom-btn" @click="onOpenApp" :src="getImgUrl('publicMobile/game/build_download/create_down.png')" />
       </div>
     </div>
+
+    <Popup
+      v-model="showTip"
+      style="background-color: transparent"
+    >
+      <div class="tips-box" @click="showTip = false">
+        <img :src="getImgUrl('publicMobile/game/build_download/build_download_tips.png')" class="tips-img" />
+      </div>
+    </Popup>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Image } from 'vant';
+import { Image, Popup } from 'vant';
 import CallApp from 'callapp-lib';
 import { getImgUrl } from '@/utils/tools';
 import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
+import { meBaseUrl } from '@/constant/index';
 
 export default {
   data() {
     return {
       listClass: {
         "join-list": true,
-      }
+      },
+      showTip: false,
+      isInWechat: false,
     };
   },
   components: {
     Image,
+    Popup,
   },
   mounted () {
-    // this.onOpenApp();
+    const ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+      this.isInWechat = true;
+    }
   },
   methods: {
     getImgUrl,
     onOpenApp() {
       console.log("🚀 ~ this.$store.state.appInfo", this.$store.state.appInfo)
+      if(this.isInWechat) {
+        this.showTip = true;
+        return;
+      }
       if (this.$store.state.appInfo.isApp || this.$store.state.appInfo.isMiniprogram) {
         return;
       }
@@ -95,7 +116,7 @@ export default {
       const callLib = new CallApp(options);
       // ${appUrl}?url=
       const appUrl = 'https://www.yeahgo.com/web/index';
-      let h5Url = 'https://publicmobile-dev.yeahgo.com/web/polite-invitation?couponInviteId=1';
+      let h5Url = `${meBaseUrl}/web/game-animation?_authorizationRequired=1`;
       callLib.open({
         path: "",
         //要传递的参数
@@ -252,4 +273,16 @@ export default {
     height: 42px;
   }
 
+
+  .tips-box {
+    width: 100vw;
+    height: 100vh;
+  }
+  .tips-img {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 290px;
+    height: 150px;
+  }
 </style>
