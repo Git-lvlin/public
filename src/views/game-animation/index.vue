@@ -525,6 +525,7 @@ export default {
       })
     },
     onMusic(e) {
+      this.$refs.music.setUrl(e.url)
       let state = undefined;
       if(e.musicState != undefined ) {
         state = e.musicState ? true : false;
@@ -693,6 +694,10 @@ export default {
     },
     // 抽奖
     getLuckDraw() {
+      this.onMusic({
+        musicState: true,
+        url: 'publicMobile/game/files/2.mp3'
+      })
       const param = {
         activityId: this.configId,
         gameId: this.gameRecordId,
@@ -762,7 +767,8 @@ export default {
       this.isDemoStar = true
       this.setRandom()
       this.onMusic({
-        musicState: true
+        musicState: true,
+        url: 'publicMobile/game/files/floor_game_music.mp3'
       })
       this.getConsumeUsageTimes()
     },
@@ -789,7 +795,8 @@ export default {
       this.setRandom()
       this.star = true
       this.onMusic({
-        musicState: true
+        musicState: true,
+        url: 'publicMobile/game/files/floor_game_music.mp3'
       })
       this.getUseBuilding()
     },
@@ -837,7 +844,8 @@ export default {
         border.style.top = h + 'px';
         this.over = true
         this.onMusic({
-          musicState: false
+          musicState: true,
+          url: 'publicMobile/game/files/1.mp3'
         })
         // 试玩结束专用弹窗
         if (this.isDemoStar) {

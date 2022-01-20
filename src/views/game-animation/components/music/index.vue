@@ -2,8 +2,8 @@
   <div class="music-box">
     <audio
       id="bgMusic"
-      :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')"
-      loop
+      :src="indexUrl"
+      :loop="loop"
       preload="auto"
     />
     <div :class="state == 0 ? 'music-icon' : 'music-icon'">
@@ -35,6 +35,8 @@ export default {
       audio: null,
       // 0 暂停 1 播放
       state: 0,
+      loop: 0,
+      indexUrl: null,
     };
   },
   components: {
@@ -42,6 +44,7 @@ export default {
     [Dialog.Component.name]: Dialog.Component,
   },
   mounted () {
+
     const audio = document.getElementById("bgMusic");
     audio.addEventListener('loadeddata', () => {
       console.log('加载第一帧');
@@ -50,7 +53,13 @@ export default {
     this.audio = audio;
   },
   methods: {
-    getImgUrl, 
+    getImgUrl,
+    setUrl(url) {
+      if (url.includes('floor_game_music.mp3')) {
+        this.loop = 1
+      }
+      this.indexUrl = getImgUrl(url)
+    },
     onPlayOrPaused(play) {
       let {
         state,
