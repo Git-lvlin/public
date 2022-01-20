@@ -39,6 +39,9 @@
           :src="getImgUrl('publicMobile/game/rank.png')"
           @click="goTo('rank')"
         />
+        <div @click="onMusic">
+          <MusicPlay ref='music' />
+        </div>
         <van-image
           class="red-box"
           width="40px"
@@ -525,7 +528,9 @@ export default {
       })
     },
     onMusic(e) {
-      this.$refs.music.setUrl(e.url)
+      if (e.url != undefined) {
+        this.$refs.music.setUrl(e.url)
+      }
       let state = undefined;
       if(e.musicState != undefined ) {
         state = e.musicState ? true : false;
