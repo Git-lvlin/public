@@ -151,7 +151,7 @@
         <van-image
           class="tip"
           width="311px"
-          height="124px"
+          height="154px"
           lazy-load
           :src="getImgUrl('publicMobile/game/tip.png')"
         />
