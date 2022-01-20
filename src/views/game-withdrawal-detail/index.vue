@@ -89,7 +89,7 @@
 
 <script>
 import Vue from 'vue';
-import Dayjs from dayjs;
+import Dayjs from 'dayjs';
 import { Image, Toast } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 
