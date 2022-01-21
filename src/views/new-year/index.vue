@@ -6,7 +6,7 @@
       width="100%"
       height="235px"
       lazy-load
-      :src="getImgUrl('publicMobile/happynewyear/bg.png')"
+      :src="getImgUrl('publicMobile/happynewyear/bg.png?v=1')"
     />
     <van-image
       class="gz"
