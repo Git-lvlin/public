@@ -111,7 +111,7 @@ export default {
         //APP 的应用宝地址，
         yingyongbao: DOWNLOAD_ANDROID,
         //唤端失败后跳转的地址。
-        // fallback: ""
+        fallback: DOWNLOAD_ANDROID,
       };
       const callLib = new CallApp(options);
       // ${appUrl}?url=
