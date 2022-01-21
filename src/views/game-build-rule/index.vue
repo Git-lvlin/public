@@ -33,7 +33,7 @@
         <div class="space" />
         <div class="title">第四步: 获取游戏机会</div>
         <div>游戏机会用完后可以通过邀请新用户注册和玩游戏获得机会</div>
-        <div class="text_red"><span class="text_bold">小贴士：分享游戏</span>邀请1个新用户一起玩游戏可以获得2次游戏机会</div>
+        <div class="text_red"><span class="text_bold">小贴士：分享游戏</span>邀请1个新用户注册且玩游戏，总共可以获得2次游戏机会</div>
         <div class="flex_center">
           <img class="img_264" :src="getImgUrl('publicMobile/game/introduction/introduction_55.png')" >
         </div>
