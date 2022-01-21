@@ -155,7 +155,6 @@ export default {
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode
     this.url = query.url || ''
-    this.isWeixin = query.isWeixin || 0
     this.type = query.type || 0
     const ua = window.navigator.userAgent.toLowerCase();
     if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
