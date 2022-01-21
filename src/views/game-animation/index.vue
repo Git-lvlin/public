@@ -39,6 +39,20 @@
           :src="getImgUrl('publicMobile/game/rank.png')"
           @click="goTo('rank')"
         />
+        <div class="m" @click="onMusic">
+          <van-image
+            v-show="state"
+            width="32px"
+            height="32px"
+            :src="getImgUrl('publicMobile/game/music.png')"
+          />
+          <van-image
+            v-show="!state"
+            width="32px"
+            height="32px"
+            :src="getImgUrl('publicMobile/game/music-no.png')"
+          />
+        </div>
         <van-image
           class="red-box"
           width="40px"
@@ -106,7 +120,7 @@
           :src="getImgUrl('publicMobile/game/no-star.png')"
         />
         <van-image
-          v-else
+          v-else-if="token"
           class="star"
           width="193px"
           height="48px"
@@ -114,9 +128,17 @@
           @click="go"
           :src="chanceNum?getImgUrl('publicMobile/game/star.png'):getImgUrl('publicMobile/game/null-btn.png')"
         />
+        <van-image
+          v-else
+          class="star"
+          width="193px"
+          height="48px"
+          @click="toNewShare"
+          :src="getImgUrl('publicMobile/game/no-token.png')"
+        />
 
         <div class="time-after-time" v-if="!chanceNum&&activityStatus!=2">您有0次机会，去做任务获得更多游戏机会</div>
-        <div class="time">活动时间：{{actTime}}</div>
+        <div class="time" v-if="actTime">活动时间：{{actTime}}</div>
       </div>
       <div class="btn-box-end" v-if="end">
         <van-image
@@ -129,7 +151,7 @@
         <van-image
           class="tip"
           width="311px"
-          height="124px"
+          height="154px"
           lazy-load
           :src="getImgUrl('publicMobile/game/tip.png')"
         />
@@ -139,24 +161,21 @@
 
 
     <!-- 游戏时 -->
-    <div class="in-game" v-show="star" @click="click">
+    <div class="in-game" v-if="star" @click="click">
       <div class="top-right-box">
-        <!-- <van-image
-          class="share"
-          width="32px"
-          height="32px"
-          :src="getImgUrl('publicMobile/game/share.png')"
-          @click="goTo('share')"
-        />
-        <van-image
-          class="skill"
-          width="32px"
-          height="32px"
-          :src="getImgUrl('publicMobile/game/skill.png')"
-          @click="goTo('skill')"
-        /> -->
         <div @click="onMusic">
-          <MusicPlay ref='music' />
+          <van-image
+            v-show="state"
+            width="32px"
+            height="32px"
+            :src="getImgUrl('publicMobile/game/music.png')"
+          />
+          <van-image
+            v-show="!state"
+            width="32px"
+            height="32px"
+            :src="getImgUrl('publicMobile/game/music-no.png')"
+          />
         </div>
       </div>
       <van-image
@@ -223,7 +242,7 @@
             width="134px"
             height="42px"
             :src="getImgUrl('publicMobile/game/demo-star-btn.png')"
-            @click="demoGo"
+            @click="again"
           />
         </div>
 
@@ -232,7 +251,7 @@
           width="28px"
           height="28px"
           :src="getImgUrl('publicMobile/game/demo-close.png')"
-          @click="demoClose"
+          @click="gameInit2"
         />
       </div>
     </van-popup>
@@ -248,13 +267,6 @@
             :src="getImgUrl('publicMobile/game/fail-bg.png')"
           />
           <div class="fail-title">你的成绩为{{currentFloor - 1}}层</div>
-          <van-image
-            class="play-again"
-            width="126px"
-            height="37px"
-            :src="getImgUrl('publicMobile/game/play-again.png')"
-            @click="gameInit"
-          />
         </div>
         <div class="fail-btn-box">
           <van-image
@@ -269,9 +281,16 @@
             width="136px"
             height="48px"
             :src="getImgUrl('publicMobile/game/back-home.png')"
-            @click="gameInit('fail')"
+            @click="again"
           />
         </div>
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
   
@@ -286,14 +305,21 @@
             :src="getImgUrl('publicMobile/game/sb-popup.png')"
           />
           <div class="fail-title">你的成绩为{{currentFloor - 1}}层</div>
-          <van-image
-            class="play-again"
-            width="197px"
-            height="37px"
-            :src="getImgUrl('publicMobile/game/sb-btn.png')"
-            @click="gameInit"
-          />
         </div>
+        <van-image
+          class="play-again2"
+          width="220px"
+          height="48px"
+          :src="getImgUrl('publicMobile/game/sb-btn-new.png')"
+          @click="goTo('share')"
+        />
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
 
@@ -318,6 +344,13 @@
             <div class="success-btn-text">抽奖中 {{reciprocal}}S</div>
           </div>
         </div>
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
 
@@ -341,7 +374,7 @@
               @click="goTo('red')"
             />
           </div>
-          <div class="result-text">{{msg}}恭喜你获得{{prize/100}}元现金红包</div>
+          <div class="result-text">{{msg}}</div>
         </div>
         <div class="result-btn-floor1">
           <van-image
@@ -356,7 +389,7 @@
             width="136px"
             height="48px"
             :src="getImgUrl('publicMobile/game/back-home2.png')"
-            @click="gameInit('fail')"
+            @click="again"
           />
         </div>
         <div class="result-btn-floor2">
@@ -368,6 +401,13 @@
             @click="goTo('share')"
           />
         </div>
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
 
@@ -397,14 +437,38 @@
             width="136px"
             height="48px"
             :src="getImgUrl('publicMobile/game/back-home.png')"
-            @click="gameInit('fail')"
+            @click="gameInit"
           />
         </div>
+        <van-image
+          class="demo-close"
+          width="28px"
+          height="28px"
+          :src="getImgUrl('publicMobile/game/demo-close.png')"
+          @click="gameInit2"
+        />
       </div>
     </van-popup>
     <div class="none" v-for="(item, index) in imgs" :key="index">
       <img :src="getImgUrl('publicMobile/game/bg.png')" alt="1">
       <img :src="getImgUrl(item)" alt="1">
+    </div>
+    <div class="none2">
+      <audio
+        id="bgMusic1"
+        :src="getImgUrl('publicMobile/game/files/1.mp3')"
+        :loop="false"
+        preload="auto"
+      />
+      <audio
+        id="bgMusic2"
+        :src="getImgUrl('publicMobile/game/files/2.mp3')"
+        :loop="false"
+        preload="auto"
+      />
+      <div>
+        <MusicPlay ref='music' />
+      </div>
     </div>
   </div>
 </template>
@@ -472,6 +536,10 @@ export default {
       failPopup2: false,
       msg: null,
       image: null,
+      againType: 0,
+      audio1: null,
+      audio2: null,
+      state: 1
     };
   },
   components: {
@@ -494,11 +562,21 @@ export default {
     }
     await this.loadImg()
     await this.getUserInfo()
-    this.getGame()
+    this.getGame(query.again)
     this.getUserPic()
   },
   methods: {
     getImgUrl,
+    pushOne() {
+      const audio1 = document.getElementById("bgMusic1");
+      this.audio1 = audio1
+      this.audio1.play()
+    },
+    pushTwo() {
+      const audio2 = document.getElementById("bgMusic2");
+      this.audio2 = audio2
+      this.audio2.play()
+    },
     loadImg() {
       return new Promise((resolve, reject) => {
         let bgImg = new Image();
@@ -516,26 +594,34 @@ export default {
       })
     },
     onMusic(e) {
-      let state = undefined;
-      if(e.musicState != undefined ) {
-        state = e.musicState ? true : false;
+      try {
+        this.state = !this.state
+        this.$refs.music.onPlayOrPaused(this.state);
+        if (!this.state) {
+          const audio2 = document.getElementById("bgMusic2");
+          const audio1 = document.getElementById("bgMusic1");
+          audio2?.pause?.()
+          audio1?.pause?.()
+        }
+        e?.stopPropagation?.();
+      } catch (error) {
+        console.log('error', error)
       }
-      this.$refs.music.onPlayOrPaused(state);
-      e?.stopPropagation?.();
     },
-    demoClose() {
-      this.gameInit()
-    },
-    demoGo() {
-      this.gameInit()
-      // this.removeDom()
-      // this.demoPopup = false
-      // this.starTime = Date.parse(new Date());
-      // this.setRandom()
-      // this.star = true
-      // this.onMusic()
-      // document.body.scrollTop = document.documentElement.scrollTop = 0;
-      // this.getUseBuilding()
+    onMusicClose(e) {
+      try {
+        this.state = false
+        this.$refs.music.onPlayOrPaused(0);
+        if (!this.state) {
+          const audio2 = document.getElementById("bgMusic2");
+          const audio1 = document.getElementById("bgMusic1");
+          audio2?.pause?.()
+          audio1?.pause?.()
+        }
+        e?.stopPropagation?.();
+      } catch (error) {
+        console.log('error', error)
+      }
     },
     goTo(router) {
       if (!this.token) {
@@ -565,6 +651,14 @@ export default {
           break
       }
     },
+    toNewShare() {
+      this.$router.push({
+        path: '/web/new-share',
+        query: {
+          inviteCode: this.inviteCode
+        },
+      });
+    },
     goShare() {
       let param = {
         contentType: 12,
@@ -591,21 +685,27 @@ export default {
       var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
       return Y+M+D
     },
-    gameInit(type) {
+    again() {
+      if (this.chanceNum - 1 > 0) {
+        if (!window.location.href.includes('again')) {
+          window.location.href = window.location.href + '&again=1'
+        } else {
+          location.reload();
+        }
+      } else {
+        Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
+      }
+    },
+    gameInit() {
       location.reload();
-      // if (type === 'fail') {
-      //   this.failPopup = false
-      //   location.reload();
-      //   return
-      // }
-      // for(let i=1;i<this.currentFloor;i++) {
-      //   let f = 'floor' + i 
-      //   let dom = document.getElementById(f)
-      //   dom.remove()
-      // }
-      // this.star = false;
-      // this.currentFloor = 0;
-      // this.getGame();
+    },
+    gameInit2(e) {
+      if (window.location.href.includes('again')) {
+        window.location.href = window.location.href.split('&again')[0]
+      } else {
+        location.reload();
+      }
+      e?.stopPropagation?.();
     },
     removeDom() {
       for(let i=1;i<this.currentFloor;i++) {
@@ -631,7 +731,7 @@ export default {
       })
     },
     //  获取游戏详情
-    getGame() {
+    getGame(a) {
       let param = {}
       if (this.couponInviteId) {
         param.configId = this.couponInviteId
@@ -657,6 +757,10 @@ export default {
         this.activityStartTime = activityStartTime
         this.activityEndTime = activityEndTime
         this.actTime = this.timestampToTime(activityStartTime) + '-' + this.timestampToTime(activityEndTime)
+        if (a > 0) {
+          this.againType = a
+          this.go()
+        }
       })
     },
     // 抽奖
@@ -671,9 +775,13 @@ export default {
           this.resultPopup = true
           this.prize = res.data.prize
           this.msg = res.data.msg
+          this.onMusicClose()
+          this.pushTwo()
         } else {
           this.nullPopup = true
           this.msg = res.data.msg
+          this.onMusicClose()
+          this.pushOne()
         }
       })
     },
@@ -725,13 +833,10 @@ export default {
       }
     },
     goDemo() {
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.star = true
       this.isDemoStar = true
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.setRandom()
-      this.onMusic({
-        musicState: true
-      })
       this.getConsumeUsageTimes()
     },
     go() {
@@ -752,13 +857,10 @@ export default {
         this.isGo = false
         return Toast({ message: '你还有0次游戏机会，请分享邀请好友获得更多机会' });
       }
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.starTime = Date.parse(new Date());
       this.setRandom()
       this.star = true
-      this.onMusic({
-        musicState: true
-      })
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
       this.getUseBuilding()
     },
     setRandom() {
@@ -804,9 +906,6 @@ export default {
         border.style.width = beforeWidth + 'px';
         border.style.top = h + 'px';
         this.over = true
-        this.onMusic({
-          musicState: false
-        })
         // 试玩结束专用弹窗
         if (this.isDemoStar) {
           this.demoPopup = true
@@ -879,6 +978,12 @@ export default {
 .none {
   display: none;
 }
+.none2 {
+  position: absolute;
+  top: -999px;
+  opacity: 0;
+  z-index: -2;
+}
 .load {
   position: fixed;
   padding-top: 200px;
@@ -905,9 +1010,11 @@ export default {
     }
     .rank {
       margin-top: 12px;
+    }
+    .m {
+      margin-top: 12px;
       margin-bottom: 10px;
     }
-
   }
   .join-control {
     position: absolute;
@@ -1233,6 +1340,7 @@ export default {
         font-weight: 500;
         color: #FFFFFF;
         line-height: 25px;
+        text-align: center;
       }
       .result-center {
         position: absolute;
@@ -1331,6 +1439,9 @@ export default {
         transform: translate(-50%);
       }
     }
+    .play-again2 {
+      margin-top: 16px;
+    }
     .demo-popup-content {
       width: 100%;
       height: 441px;
@@ -1366,8 +1477,8 @@ export default {
         transform: translate(-50%);
       }
     }
+  }
     .demo-close {
       margin-top: 25px;
     }
-  }
 </style>

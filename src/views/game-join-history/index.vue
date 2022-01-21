@@ -59,15 +59,15 @@
         >
           <div class="red-desc-popup">
             <div class="red-desc-content">
-              <img class="red-desc-back" :src="getImgUrl('publicMobile/game/withdrawal/history_desc.png')" />
+              <img class="red-desc-back" :src="getImgUrl('publicMobile/game/withdrawal/history_desc.png?v=2022')" />
               <img class="red-desc-close" @click="showRankDesc = false" :src="getImgUrl('publicMobile/game/withdrawal/history_desc_close.png')" />
               <div class="red-desc-box">
                 <div class="red-desc-title">温馨提示</div>
                 <div class="red-desc-text">
-                  1、每邀请1个新用户注册，奖励机会1次，不限邀请/奖励次数；活动期间每邀请1个新用户注册且玩游戏，奖励机会1次不限邀请/奖励次数
+                  1、每邀请1个新用户注册，奖励机会1次，不限邀请奖励次数；每邀请一个新用户玩游戏（试玩游戏不算），再奖励1次机会，不限邀请奖励次数；
                   <br />
                   <br />
-                  2、当日奖励的所有奖励盖楼机会需在24小时内用完
+                  2、邀请新用户奖励的盖楼机会需在24小时内用完，过期自动失效。
                 </div>
               </div>
             </div>
@@ -108,10 +108,10 @@
                 <div class="red-desc-box">
                   <div class="red-desc-title">温馨提示</div>
                   <div class="red-desc-text">
-                    1、对该活动抽奖获得的奖励：现金红包可以提现到支付宝账户，用户提现前需绑定支付宝账户，前3次不限金额提现，后面需要按照1的整数倍提现（提现按钮分别为:全部提现（仅可提现3次）、1元、5元、10元、20元、50元、100元、自定义金额）
+                    1、红包奖励总额可以提现到支付宝；
                     <br />
                     <br />
-                    2、中奖用户请可以根据需求提现到个人的付宝账户，每个支付宝账号仅限一人使用
+                    2、提现前需绑定支付宝账户。
                   </div>
                 </div>
               </div>
@@ -522,8 +522,8 @@ export default {
     position: relative;
   }
   .red-desc-back {
-    width: 264px;
-    height: 230px;
+    width: 308px;
+    height: 229px;
   }
   .red-desc-close {
     position: absolute;
@@ -548,7 +548,7 @@ export default {
     margin-bottom: 11px;
   }
   .red-desc-text {
-    font-size: 12px;
+    font-size: 14px;
     color: #333333;
     line-height: 16px;
   }

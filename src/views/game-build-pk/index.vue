@@ -1,6 +1,16 @@
 <template>
   <div class="pk-box">
-    <img class="flex_fix pk-back" :src="getImgUrl('publicMobile/game/build_pk/pk_back.png')" />
+    <div class="back-box">
+      <img class="flex_fix pk-back" :src="getImgUrl('publicMobile/game/build_pk/pk_back.png?v=202201')" />
+      <div class="back_info" :style="`background-image: url(${getImgUrl('publicMobile/game/build_pk/back_info_back.png')})`">
+        <NoticeBar
+          scrollable
+          text="活动结束后，邀请用户排名第1名的用户奖励8888元现金红包。"
+          color="#FEF1D1"
+          background="transparent"
+        />
+      </div>
+    </div>
     <div class="px-content">
       <div class="bar-list">
         <div :class="`bar-item ${actType == 1 ? 'bar-act' : ''}`" @click="onChangeBar(1)">邀请用户</div>
@@ -29,12 +39,16 @@
         </div>
       </div>
       <div class="ranking-list">
-        <div class="ranking-item" v-for="(item, idx) in pkData.list">
+        <div
+          class="ranking-item"
+          v-for="(item, idx) in pkData.list"
+          v-if="idx < 10 || (idx >= 10 && (showData.invite && actType == 1 || showData.floor && actType == 2))"
+        >
           <div class="item-number">
             <img
               class="item-number-icon"
               v-if="idx < 3"
-              :src="getImgUrl(`publicMobile/game/build_pk/floor_${idx + 1}.png`)"
+              :src="getImgUrl(`publicMobile/game/build_pk/pk_${idx + 1}.png`)"
             />
             <span class="item-number-text" v-else>{{`${idx < 9 ? '0' : ''}${idx + 1}`}}</span>
           </div>
@@ -48,12 +62,18 @@
           <div class="item-invite">{{actType == 1 ? `邀请${item.inviteNums}人` : `${item.floor}层`}}</div>
         </div>
       </div>
-    <!-- <div class="more">查看更多&gt;</div> -->
+    <div
+      class="more"
+      v-if="!showData.invite && actType == 1 || !showData.floor && actType == 2"
+      @click="actType == 1 ? showData.invite = true : showData.floor = true"
+    >查看更多&gt;</div>
+    <div class="more" v-if="(showData.invite && actType == 1) || (showData.floor && actType == 2)">仅显示前30名</div>
     </div>
   </div>
 </template>
 
 <script>
+import { NoticeBar } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import gameApi from '@/apis/game';
 import { backOff } from '@/utils/userInfo';
@@ -65,11 +85,18 @@ export default {
       token: '',
       activityId: '',
       actType: 1,
+      showData: {
+        invite: false,
+        floor: false,
+      },
       pkData: {
         mine: {},
         list: [],
       }
     };
+  },
+  components: {
+    NoticeBar,
   },
   mounted () {
     const {
@@ -146,6 +173,28 @@ export default {
     background-color: #fff;
     border-radius: 30px 30px 0 0;
   }
+
+  .back-box {
+    position: relative;
+  }
+  .back_info {
+    position: absolute;
+    left: 50%;
+    bottom: 60px;
+    width: 160px;
+    height: 32px;
+    border-radius: 32px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    transform: translateX(-50%);
+  }
+  .pk-box .back_info .van-notice-bar {
+    height: 32px;
+    font-size: 14px;
+    padding: 0 2px;
+  }
+
   .bar-list {
     display: flex;
     align-items: center;
@@ -212,12 +261,13 @@ export default {
     margin-bottom: 10px;
   }
   .item-number {
-    width: 27px;
+    width: 30px;
+    text-align: center;
     margin-right: 25px;
   }
   .item-number-icon {
-    width: 27px;
-    height: 36px;
+    width: 30px;
+    height: 24px;
   }
   .item-number-text {
     font-size: 15px;
@@ -252,7 +302,7 @@ export default {
     font-size: 15px;
     text-align: center;
     line-height: 21px;
-    padding: 20px 0 64px 0;
+    padding: 20px 0 50px 0;
     margin: 0 auto;
   }
 </style>
