@@ -176,13 +176,14 @@ export default {
           package: 'com.hznt.yeahgo',
           scheme: 'yeahgo'
         },
-        timeout: '5000',
+        timeout: '3000',
         //APP 的 App Store
         appstore: DOWNLOAD_IOS,
         //APP 的应用宝地址，
         yingyongbao: DOWNLOAD_ANDROID,
       };
       const callLib = new CallApp(options);
+      // const h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
       callLib.open({
         path: "",
         //要传递的参数
