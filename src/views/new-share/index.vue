@@ -164,6 +164,7 @@ export default {
       if (this.$store.state.appInfo.isApp || this.$store.state.appInfo.isMiniprogram) {
         return;
       }
+      console.log('DOWNLOAD_ANDROID', DOWNLOAD_ANDROID);
       const options = {
         scheme: {
           //URL Scheme 的 scheme 字段，要打开的 APP 的标识
@@ -180,7 +181,7 @@ export default {
         appstore: DOWNLOAD_IOS,
         //APP 的应用宝地址，
         yingyongbao: DOWNLOAD_ANDROID,
-        callback: DOWNLOAD_ANDROID,
+        fallback: DOWNLOAD_ANDROID,
       };
       const callLib = new CallApp(options);
       // const h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
@@ -189,7 +190,7 @@ export default {
         //要传递的参数
         param: {
           parameter: `${this.url || ''}`,
-        },
+        }
       })
     },
     hasWx() {
