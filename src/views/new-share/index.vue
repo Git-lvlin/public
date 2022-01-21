@@ -153,10 +153,9 @@ export default {
     const {
       query,
     } = this.$router.history.current;
-    console.log('query', query)
     this.inviteCode = query.inviteCode
     this.url = query.url || ''
-    // this.isWeixin = query.isWeixin || 0
+    this.isWeixin = query.isWeixin || 0
     this.type = query.type || 0
   },
   methods: {
@@ -181,6 +180,7 @@ export default {
         appstore: DOWNLOAD_IOS,
         //APP 的应用宝地址，
         yingyongbao: DOWNLOAD_ANDROID,
+        callback: DOWNLOAD_ANDROID,
       };
       const callLib = new CallApp(options);
       // const h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
