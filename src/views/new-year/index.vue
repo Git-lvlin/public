@@ -6,7 +6,7 @@
       width="100%"
       height="235px"
       lazy-load
-      :src="getImgUrl('publicMobile/happynewyear/bg.png')"
+      :src="getImgUrl('publicMobile/happynewyear/bg.png?v=1')"
     />
     <van-image
       class="gz"
@@ -99,7 +99,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Lazyload, Popup, Tab, Tabs, Loading } from 'vant';
+import { Image as VanImage, Lazyload, Popup, Tab, Tabs, Loading, Toast } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import api from '@/apis/year';
@@ -201,13 +201,14 @@ export default {
       })
     },
     goto(type) {
-      shareGoToNewShare(this.inviteCode, this.token, this.$store.state, this.$router);
       if (type==1) {
+        shareGoToNewShare(this.inviteCode, this.token, this.$store.state, this.$router);
         goToApp(appBaseUrl, '/flutter/mine/sign_in/detail')
         bury('web_new_year_click_to_sign_in')
       } else {
-        goToApp(meBaseUrl, '/web/bind-box')
-        bury('web_new_year_click_to_bind_box')
+        Toast('本期盲盒活动已结束！');
+        // goToApp(meBaseUrl, '/web/bind-box')
+        // bury('web_new_year_click_to_bind_box')
       }
     },
     showPopup() {
