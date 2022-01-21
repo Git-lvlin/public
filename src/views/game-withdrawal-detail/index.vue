@@ -28,7 +28,7 @@
           <div class="progress-info">
             <div class="progress-info-item">
               <div>发起提现</div>
-              <div class="progress-info-time">{{detail.createTime}}</div>
+              <div class="progress-info-time">{{Dayjs(+detail.createTime).format('YYYY-MM-DD HH:mm:ss')}}</div>
             </div>
             <div
               :class="`progress-info-item ${progress == 2 ? 'act-top act-bank' : ''}`"
@@ -39,7 +39,7 @@
               v-if="progress == 3"
             >
               <div>{{isOk ? '到账' : '提现失败'}}</div>
-              <div class="progress-info-time">{{!!detail.notifyTime && detail.notifyTime != 'null' ? Dayjs(detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
+              <div class="progress-info-time">{{!!detail.notifyTime && detail.notifyTime != 'null' ? Dayjs(+detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
             </div>
           </div>
         </div>
@@ -63,11 +63,11 @@
           </div>
           <div class="detail-item">
             <div>申请时间</div>
-            <div class="detail-value">{{Dayjs(detail.createTime).format('YYYY-MM-DD HH:mm:ss')}}</div>
+            <div class="detail-value">{{Dayjs(+detail.createTime).format('YYYY-MM-DD HH:mm:ss')}}</div>
           </div>
           <div class="detail-item">
             <div>到账时间</div>
-            <div class="detail-value">{{!!detail.notifyTime && detail.notifyTime != 'null' ? Dayjs(detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
+            <div class="detail-value">{{!!detail.notifyTime && detail.notifyTime != 'null' ? Dayjs(+detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
           </div>
           <!-- <div class="detail-item">
             <div>提现银行</div>

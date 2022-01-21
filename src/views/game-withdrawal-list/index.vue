@@ -121,19 +121,22 @@ export default {
       }
     },
     onToDetail(item) {
-      if(!item.sn) {
+      const data = { ...item };
+      if(!data.sn) {
         return ;
       }
-      if(item.notifyTime) {
-        item.notifyTime = new Date(item.notifyTime).getTime();
+      if(data.notifyTime) {
+        data.notifyTime = new Date(data.notifyTime).getTime();
       }
-      if(item.createTime) {
-        item.createTime = new Date(item.createTime).getTime();
+      if(data.createTime) {
+        data.createTime = new Date(data.createTime).getTime();
       }
-      const str = objToParamStr(item);
+      console.log("🚀 ~ file: index.vue ~ line 135 ~ onToDetail ~ data", data)
+      const str = objToParamStr(data);
       // const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
       // const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
       const path = `/web/game-withdrawal-detail?_immersive=0&${str}`
+      console.log("🚀 ~ file: index.vue ~ line 139 ~ onToDetail ~ path", path)
       goToApp(meBaseUrl, path);
       // this.$router.push({
       //   path: '/web/game-withdrawal-detail',
