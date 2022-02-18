@@ -90,7 +90,7 @@
           <div class="red-list">
             <div class="flex_between list-item" v-for="item in list">
               <div class="list-info">
-                <div>盖楼{{item.floor}}层抽奖</div>
+                <div>{{item.title}}</div>
                 <div class="list-info-time">{{item.timeText}}</div>
               </div>
               <div class="list-num">{{item.prizeText}}元</div>
