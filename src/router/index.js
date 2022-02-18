@@ -389,6 +389,14 @@ const routes = [
       title: '新春到，升五星',
     }
   },
+  {
+    path: '/web/green-channel',
+    name: 'GreenChannel',
+    component: () => import('@/views/green-channel'),
+    meta: {
+      title: '约购平台 - 社区店入驻绿色通道',
+    }
+  }
 ];
 
 const router = new VueRouter({
