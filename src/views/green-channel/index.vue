@@ -1,91 +1,84 @@
 <template>
   <div class="container" v-if="!isWeixin">
-    <div class="head"
-      :style="{
-        'background-image': `url('${type?edImg:img}')`,
-        'height': `${type?'450px':'351px'}`
-      }"
-    >
-      <div @click="hasWx" v-show="type" class="button">立即打开/下载</div>
-    </div>
-    <div class="register-box" v-show="!type">
+    <div class="register-box">
       <div class="phone">
+        <div class="error">
+          <van-image
+            class="error-icon"
+            width="14px"
+            height="14px"
+            :src="getImgUrl('publicMobile/share/logo.png')"
+          />
+          <div class="msg">请输入店铺名称</div>
+        </div>
+        <div class="span"></div>
+        <div class="label">店铺名称</div>
+        <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="2-15个字，仅支持汉字、字母、-">
+      </div>
+      <div class="phone">
+        <div class="span"></div>
+        <div class="label">所属地区</div>
+        <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请选择">
+        <van-image
+          class="address-icon"
+          width="5.5px"
+          height="9.5px"
+          :src="getImgUrl('publicMobile/share/logo.png')"
+        />
+      </div>
+      <div class="phone">
+        <div class="span"></div>
+        <div class="label">详细地址</div>
+        <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="例：26号2单元201室">
+      </div>
+      <div class="pic-upload">
+        <div class="upload-title">
+          <div class="span"></div>
+          <div class="label">证明材料</div>
+        </div>
+        <div class="pic-tips">
+          <div class="t1">i</div>
+          <div class="t2">请确保照片完整、图像清晰</div>
+          <div class="t3">查看示例</div>
+        </div>
+        <div class="upload-btn">
+          <van-image
+            class="upload-btn"
+            width="156px"
+            height="117px"
+            :src="getImgUrl('publicMobile/share/logo.png')"
+          />
+          <input id="file" @change='handleFileChange' type="file" ref="inputer" name="file" accept="image/png,image/jpeg,image/gif,image/jpg" />
+        </div>
+      </div>
+      <div class="phone">
+        <div class="span"></div>
+        <div class="label">手机号码</div>
         <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机账号">
       </div>
-      <div class="phone-err">{{phoneErr}}</div>
       <div class="code-box">
-        <div class="code">
-          <input class="input code-input" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
-        </div>
+        <div class="span"></div>
+        <div class="label">短信验证码</div>
+        <input class="input code-input" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="输入验证码" type="text">
         <div class="code-btn" @click="getCode" v-if="countDown">{{codeText}}</div>
         <div class="code-btn" v-else v-html="time"></div>
       </div>
-      <div class="code-err">{{codeErr}}</div>
-      <div class="button" @click="reg">提交</div>
     </div>
-    <div class="title"><span class="red">约购</span> 约着买 更便宜</div>
-    <div class="subtitle">物美价廉有温度</div>
-    <van-image
-      class="border"
-      width="26px"
-      height="4px"
-      :src="getImgUrl('publicMobile/share/border.png')"
-    />
-    <div class="detail">
-      <div class="item">
+    <div class="submit-top"></div>
+    <div class="submit">
+      <div class="submit-text-box">
         <van-image
-          width="60px"
-          height="60px"
-          :src="getImgUrl('publicMobile/share/img1.png')"
+          class="submit-yes-icon"
+          width="18px"
+          height="18px"
+          :src="yes?getImgUrl('publicMobile/share/logo.png'):getImgUrl('publicMobile/share/logo.png')"
         />
-        <div class="right-box">
-          <p class="p1">约着买 <span class="red">更省心</span></p>
-          <p class="p2">品牌直供 质量保障</p>
-        </div>
+        <div class="submit-text">我已阅读并同意和签订 <span class="red-span">店铺协议</span>、<span class="red-span">隐私政策</span>和<span class="red-span">服务合同</span></div>
       </div>
-      <div class="item">
-        <van-image
-          width="60px"
-          height="60px"
-          :src="getImgUrl('publicMobile/share/img2.png')"
-        />
-        <div class="right-box">
-          <p class="p1">轻创业 <span class="red">低成本</span></p>
-          <p class="p2">约购模式 创富首选</p>
-        </div>
-      </div>
-      <!-- <div class="item">
-        <van-image
-          width="60px"
-          height="60px"
-          :src="getImgUrl('publicMobile/share/img3.png')"
-        />
-        <div class="right-box">
-          <p class="p1">邻里互动 <span class="red">更高效</span></p>
-          <p class="p2">即时分享新动态 邻里更亲密</p>
-        </div>
-      </div> -->
-    </div>
-    <div class="bottom-box" v-show="flag">
-      <van-image
-        class="logo"
-        width="54px"
-        height="54px"
-        :src="getImgUrl('publicMobile/share/logo.png')"
-      />
-      <div class="content-box">
-        <p class="text1">约购-约着买更便宜</p>
-      </div>
-      <van-image
-        class="bottom-img"
-        width="112px"
-        height="40px"
-        :src="getImgUrl('publicMobile/share/button-img.png')"
-        @click="hasWx"
-      />
+      <div class="submit-button" @click="submit">提交申请</div>
     </div>
     <!-- 活动规则弹窗 -->
-    <van-popup
+    <!-- <van-popup
       v-model="show"
       :lazy-render="false"
       round
@@ -96,7 +89,7 @@
         <div class="subtitle">此手机号已经注册过啦，点击打开/下载约购APP体验吧~ </div>
         <div @click="hasWx" class="btn">打开/下载约购APP</div>
       </div>
-    </van-popup>
+    </van-popup> -->
   </div>
   <div class="container2" v-else>
     <van-image
@@ -109,23 +102,24 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Popup } from 'vant';
+import { Image as VanImage, Popup, Uploader } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import CallApp from 'callapp-lib';
 import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/newshare';
+import api from '@/apis/green';
+import axios from 'axios';
 Vue.use(VanImage);
 Vue.use(Popup);
+Vue.use(Uploader);
 export default {
   data() {
     return {
       isWeixin: 0,
       show: 0,
-      edImg: getImgUrl('publicMobile/newshare/new-share-bg-ed.png'),
-      img: getImgUrl('publicMobile/newshare/new-share-bg.png'),
       type: 0,
-      phone: '',
-      code:'',
+      phone: '13681935443',
+      code: '1234',
       phoneErr: '',
       codeErr: '',
       codeText: '获取验证码',
@@ -134,20 +128,21 @@ export default {
       inviteCode: null,
       flag: 1,
       url: null,
+      yes: false,
+      fil: null,
+      uploadConfig: null,
+      uploadUrl: 'https://dev-yeahgo-oss.yeahgo.com//store/greenchannel1645262793160.png',
+      storeName: 'mmmmmmmm',
+      province: '湖北省',
+      city: '黄冈市',
+      reg: '红安县',
+      address: 'aaaaaa'
     };
   },
   components: {
   },
   created () {
-    // const a = document.createElement('script');
-    // a.type = 'text/javascript';
-    // a.src = 'https://web.cdn.openinstall.io/openinstall.js';
-    // document.body.appendChild(a);
-    // a.onload = () => {
-    //   setTimeout(() => {
-    //     this.nowUpdata()
-    //   }, 0)
-    // }
+    this.getUrl()
   },
   mounted() {
     const {
@@ -162,6 +157,87 @@ export default {
     }
   },
   methods: {
+    uploadAttach(data) {
+      console.log('data', data)
+      let contentLen = Math.round(data.file.size * 100 / 1024) / 100
+      let fd = new FormData()
+      fd.append('Content-Length', contentLen)
+      fd.append('OSSAccessKeyId', data.OSSAccessKeyId)
+      fd.append('policy', data.policy)
+      fd.append('signature', data.signature)
+      // 文件名字
+      fd.append('key', data.path + data.name)
+      fd.append('dir', data.path)
+      fd.append('success_action_status', '200')
+      // 文件必须声明在最后，否则异常
+      fd.append('file', data.file)
+      return new Promise((resolve, reject) => {
+        axios.post(data.imgServer, fd, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          transformRequest: (data) => {
+            return data
+          }
+        }).then(res => {
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    getUrl() {
+      api.getUploadUrl().then((res) => {
+        console.log('uploadConfig', res)
+        this.uploadConfig = res.data
+      })
+    },
+    async handleFileChange(r) {
+      console.log('r', r)
+      let fileName = new Date().getTime()
+      let dom = this.$refs.inputer
+      this.file = dom.files[0];
+      let file = dom.files[0];
+      let data = {}
+      const {host, accessid, policy, signature, dir} = this.uploadConfig
+      data.imgServer = host
+      data.OSSAccessKeyId = accessid
+      data.policy = policy
+      data.signature = signature
+      data.path = dir
+      let format = file.name.substring(file.name.lastIndexOf('.', file.name.length - 1))
+      fileName = fileName + format
+      data.name = fileName
+      data.file = file
+      this.uploadAttach(data).then((res) => {
+        console.log('uploadAttach', {
+          res: res,
+          url: data.imgServer + '/' + data.path + data.name
+        })
+        this.uploadUrl = data.imgServer + '/' + data.path + data.name
+      })
+    },
+    submit() {
+      // if (!this.yes) {
+      //   return
+      // }
+      const param = {
+        storeName: this.storeName,
+        provinceName: this.province,
+        cityName: this.city,
+        regionName: this.reg,
+        address: this.address,
+        credentialList: [this.uploadUrl],
+        captcha: this.code,
+        phoneNumber: this.phone,
+      }
+      api.submit(param).then((res) => {
+        console.log('提交成功', res)
+      })
+    },
+    onYes() {
+      this.yes = !this.yes
+    },
     onOpenApp() {
       console.log("🚀 ~ this.$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp || this.$store.state.appInfo.isMiniprogram) {
@@ -230,7 +306,7 @@ export default {
         return
       }
       this.countDown = 0
-      teamApi.getCode({phoneNumber: this.phone})
+      api.getCode({phoneNumber: this.phone})
       let interval = setInterval(() => {
         if (this.time>0) {
           this.time -= 1
@@ -276,54 +352,6 @@ export default {
         })
     },
     getImgUrl,
-    // nowUpdata() {
-    //   const data = OpenInstall.parseUrlParams();///openinstall.js中提供的工具函数，解析url中的所有查询参数
-    //   new OpenInstall({
-    //     /*appKey必选参数，openinstall平台为每个应用分配的ID*/
-    //     appKey : "sh7yz9",
-    //     preferWakeup:true,
-    //     /*自定义遮罩的html*/
-    //     //mask:function(){
-    //     //  return "<div id='_shadow' style='position:fixed;left:0;top:0;background:rgba(0,255,0,0.5);filter:alpha(opacity=50);width:100%;height:100%;z-index:10000;'></div>"
-    //     //},
-    //     /*OpenInstall初始化完成的回调函数，可选*/
-    //     onready : function() {
-    //       /*在app已安装的情况尝试拉起app*/
-    //       this.schemeWakeup();
-          
-    //       /*用户点击某个按钮时(假定按钮id为downloadButton)，安装app*/
-    //       var m = this,
-    //       button = document.getElementById("downloadButton"),
-    //       button2 = document.getElementById("downloadButton2"),
-    //       button3 = document.getElementById("downloadButton3"),
-    //       button4 = document.getElementById("downloadButton4");
-    //       if (button) {
-    //         button.onclick = function() {
-    //           m.wakeupOrInstall();
-    //           return false;
-    //         }
-    //       }
-    //       if (button2) {
-    //         button2.onclick = function() {
-    //           m.wakeupOrInstall();
-    //           return false;
-    //         }
-    //       }
-    //       if (button3) {
-    //         button3.onclick = function() {
-    //           m.wakeupOrInstall();
-    //           return false;
-    //         }
-    //       }
-    //       if (button4) {
-    //         button4.onclick = function() {
-    //           m.wakeupOrInstall();
-    //           return false;
-    //         }
-    //       }
-    //     }
-    //   }, data);
-    // }
   },
 };
 </script>
@@ -346,22 +374,6 @@ export default {
     width:100%;
     height: 450px;
     background-size: 100% 100%;
-    .button {
-      width:250px;
-      height:50px;
-      background-color:#ffffff;
-      border-radius:3px;
-      box-shadow:0px 2px 8px #ea291e;
-      font-family:PingFang SC;
-      color:#ea4036;
-      font-size:16px;
-      letter-spacing:1px;
-      line-height:50px;
-      text-align:center;
-      margin: 0 auto;
-      margin-top: 279px;
-      z-index: 2;
-    }
     .p {
       margin-top: 25px;
       width: 100%;
@@ -473,61 +485,72 @@ export default {
     }
   }
 }
+.input {
+  outline-style: none;
+  border: 0;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #CCCCCC;
+}
+.label {
+  height: 20px;
+  font-size: 14px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  line-height: 20px;
+}
+.span {
+  margin-right: 6px;
+  width: 4px;
+  height: 4px;
+  background: #E5352F;
+  border-radius: 50%;
+}
 .register-box {
-  padding: 23px 32px 7px 32px;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   .phone {
-    width: 311px;
-    height: 46px;
-    border-radius: 6px;
-    border: 1px solid #E5352F;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 66px;
     overflow: hidden;
-  }
-  .phone-err {
-    margin-top: 6px;
-    width: 100%;
-    height: 20px;
-    font-size: 14px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #EA3D35;
-    line-height: 20px;
+    border-bottom: 1px solid #F5F5F5;
+    position: relative;
+    .phone-input {
+      margin-left: 32px;
+      width: 208px;
+      height: 20px;
+    }
   }
   .code-box {
-    margin-top: 10px;
     display: flex;
-    justify-content: center;
-    .code {
-      width: 196px;
-      height: 46px;
-      border-radius: 6px;
-      border: 1px solid #E5352F;
-      overflow: hidden;
+    justify-content: flex-start;
+    align-items: center;
+    height: 66px;
+    overflow: hidden;
+    border-bottom: 1px solid #F5F5F5;
+    .code-input {
+      margin-left: 18px;
+      width: 84px;
+      height: 20px;
     }
     .code-btn {
-      margin-left: 6px;
+      margin-left: 45px;
       text-align: center;
-      width: 109px;
-      height: 46px;
+      width: 116px;
+      height: 30px;
       background: #E5352F;
       border-radius: 6px;
       font-size: 14px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: #FFFFFF;
-      line-height: 46px;
+      line-height: 30px;
     }
-  }
-  .code-err {
-    margin-top: 6px;
-    width: 100%;
-    height: 20px;
-    font-size: 14px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #EA3D35;
-    line-height: 20px;
   }
   .button {
     text-align: center;
@@ -543,17 +566,7 @@ export default {
     color: #FFFFFF;
     line-height: 48px;
   }
-  .input {
-    padding-left: 12px;
-    outline-style: none;
-    border: 0;
-    width: 100%;
-    height: 100%;
-    font-size: 18px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #000;
-  }
+
 }
 .popup-box {
   display: flex;
@@ -600,5 +613,123 @@ export default {
     color: #FFFFFF;
     line-height: 48px;
   }
+}
+
+.pic-upload {
+  padding-top: 24px;
+  padding-bottom: 23px;
+  display: flex;
+  flex-direction: column;
+  width: 343px;
+  border-bottom: 1px solid #F5F5F5;
+  .upload-title {
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .pic-tips {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 11px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #CCCCCC;
+    line-height: 16px;
+    .t1 {
+      margin-right: 3px;
+      width: 10px;
+      height: 10px;
+      border: 1px solid #CCCCCC;
+      color: #CCCCCC;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 10px;
+    }
+    .t3 {
+      margin-left: 10px;
+      color: #E5352F;
+      text-decoration: underline;
+    }
+  }
+  .upload-btn {
+    width: 156px;
+    height: 117px;
+    overflow: hidden;
+  }
+}
+.submit-top {
+  position: fixed;
+  bottom: 138px;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+  opacity: 0.1;
+}
+.submit {
+  padding: 30px 16px 24px 16px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 138px;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .submit-text-box {
+    display: flex;
+    justify-content: flex-start;
+    .submit-text {
+      margin-left: 8px;
+      color: #666665;
+      font-size: 13px;
+      .red-span {
+        color: #E5352F;
+        text-decoration: underline;
+      }
+    }
+  }
+  .submit-button {
+    margin-top: 18px;
+    width: 343px;
+    height: 48px;
+    background: #E5352F;
+    box-shadow: 0px 3px 6px 0px rgba(229, 53, 47, 0.4);
+    border-radius: 8px;
+    opacity: 0.5;
+    text-align: center;
+    line-height: 48px;
+    font-size: 16px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #FFFFFF;
+  }
+}
+.error {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  bottom: 2px;
+  left: 10px;
+  width: 333px;
+  font-size: 11px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #E5352F;
+  .msg {
+    margin-left: 4px;
+  }
+}
+#file {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>
