@@ -155,4 +155,20 @@ export const storage =  {
   }
 }
 
+export const arrayToTree = (list, parId = 0) => {
+  const len = list.length
+  function loop(pid) {
+    const res = [];
+    for (let i = 0; i < len; i += 1) {
+      const item = list[i]
+      if (item&&item.pid === pid) {
+        item.children = loop(item.id)
+        res.push(item)
+      }
+    }
+    return res.length ? res : null
+  }
+  return loop(parId)
+}
+
 export default {};

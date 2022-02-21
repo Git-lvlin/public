@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="!isWeixin">
+  <div class="container" v-if="pageType===1">
     <div class="register-box">
       <div class="phone">
         <div class="error">
@@ -7,7 +7,7 @@
             class="error-icon"
             width="14px"
             height="14px"
-            :src="getImgUrl('publicMobile/share/logo.png')"
+            :src="getImgUrl('publicMobile/green/icon-error.png')"
           />
           <div class="msg">请输入店铺名称</div>
         </div>
@@ -15,15 +15,15 @@
         <div class="label">店铺名称</div>
         <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="2-15个字，仅支持汉字、字母、-">
       </div>
-      <div class="phone">
+      <div class="phone" @click="onShowPicker">
         <div class="span"></div>
         <div class="label">所属地区</div>
-        <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请选择">
+        <div class="input phone-input" :class="areaAll!=='请选择'?'hasContent':''">{{areaAll}}</div>
         <van-image
           class="address-icon"
-          width="5.5px"
-          height="9.5px"
-          :src="getImgUrl('publicMobile/share/logo.png')"
+          width="12px"
+          height="12px"
+          :src="getImgUrl('publicMobile/green/right.png')"
         />
       </div>
       <div class="phone">
@@ -39,14 +39,14 @@
         <div class="pic-tips">
           <div class="t1">i</div>
           <div class="t2">请确保照片完整、图像清晰</div>
-          <div class="t3">查看示例</div>
+          <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
           <van-image
             class="upload-btn"
             width="156px"
             height="117px"
-            :src="getImgUrl('publicMobile/share/logo.png')"
+            :src="getImgUrl('publicMobile/green/upload-icon.png')"
           />
           <input id="file" @change='handleFileChange' type="file" ref="inputer" name="file" accept="image/png,image/jpeg,image/gif,image/jpg" />
         </div>
@@ -67,43 +67,72 @@
     <div class="submit-top"></div>
     <div class="submit">
       <div class="submit-text-box">
+        <div class="click-reg" @click="checkTypeChange"></div>
         <van-image
+          v-show="checkType"
           class="submit-yes-icon"
           width="18px"
           height="18px"
-          :src="yes?getImgUrl('publicMobile/share/logo.png'):getImgUrl('publicMobile/share/logo.png')"
+          :src="getImgUrl('publicMobile/green/checked.png')"
         />
-        <div class="submit-text">我已阅读并同意和签订 <span class="red-span">店铺协议</span>、<span class="red-span">隐私政策</span>和<span class="red-span">服务合同</span></div>
+        <van-image
+          v-show="!checkType"
+          class="submit-yes-icon"
+          width="18px"
+          height="18px"
+          :src="getImgUrl('publicMobile/green/checkout.png')"
+        />
+        <div class="submit-text">我已阅读并同意和签订<span class="red-span">店铺协议</span>、<span class="red-span">隐私政策</span>和<span class="red-span">服务合同</span></div>
       </div>
-      <div class="submit-button" @click="submit">提交申请</div>
+      <div class="submit-button" :class="checkType?'open':''" @click="submit">提交申请</div>
     </div>
-    <!-- 活动规则弹窗 -->
-    <!-- <van-popup
-      v-model="show"
-      :lazy-render="false"
-      round
-      :style="{ height: '203px' }"
-    >
-      <div class="popup-box">
-        <div class="title">温馨提示</div>
-        <div class="subtitle">此手机号已经注册过啦，点击打开/下载约购APP体验吧~ </div>
-        <div @click="hasWx" class="btn">打开/下载约购APP</div>
-      </div>
-    </van-popup> -->
+    <van-popup v-model="showPicker" round position="bottom">
+      <van-picker show-toolbar @confirm="onConfirm" @cancel="onCancel" title="所属地区" :columns="columns" />
+    </van-popup>
   </div>
-  <div class="container2" v-else>
+  <div class="container2" v-else-if="pageType===2">
+    <div class="look-h1">请确保图像清晰完整，光线均匀</div>
+    <div class="look-h2">图片符合要求才能更快完成审核</div>
     <van-image
-      class="wxtx"
+      class="look-img"
       width="100%"
-      :src="getImgUrl('publicMobile/common/transfer-wx.png')"
+      height="238px"
+      :src="getImgUrl('publicMobile/green/example.png')"
     />
+    <div class="look-btn" @click="ok">知道了</div>
+  </div>
+  <div class="container3" v-else>
+    <van-image
+      class="success-icon"
+      width="188px"
+      height="188px"
+      :src="getImgUrl('publicMobile/green/ed.png')"
+    />
+    <div class="ed-title">资料提交成功</div>
+    <div class="ed-border"></div>
+    <div class="ed-info">
+      <div class="ed-info-title">申请信息</div>
+      <div class="ed-info-item">
+        <div class="ed-item-label">手机号码</div>
+        <div class="ed-item-value">{{phone}}</div>
+      </div>
+      <div class="ed-info-item">
+        <div class="ed-item-label">店铺名称</div>
+        <div class="ed-item-value">{{storeName}}</div>
+      </div>
+      <div class="ed-info-item">
+        <div class="ed-item-label">提货点地址</div>
+        <div class="ed-item-value ed-address">{{address}}</div>
+      </div>
+    </div>
+    <div class="ed-btn" @click="download">下载约购APP</div>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Popup, Uploader } from 'vant';
-import { getImgUrl } from '@/utils/tools';
+import { Image as VanImage, Popup, Picker } from 'vant';
+import { getImgUrl, arrayToTree } from '@/utils/tools';
 import CallApp from 'callapp-lib';
 import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/newshare';
@@ -111,7 +140,7 @@ import api from '@/apis/green';
 import axios from 'axios';
 Vue.use(VanImage);
 Vue.use(Popup);
-Vue.use(Uploader);
+Vue.use(Picker);
 export default {
   data() {
     return {
@@ -128,7 +157,7 @@ export default {
       inviteCode: null,
       flag: 1,
       url: null,
-      yes: false,
+      checkType: false,
       fil: null,
       uploadConfig: null,
       uploadUrl: 'https://dev-yeahgo-oss.yeahgo.com//store/greenchannel1645262793160.png',
@@ -136,7 +165,11 @@ export default {
       province: '湖北省',
       city: '黄冈市',
       reg: '红安县',
-      address: 'aaaaaa'
+      address: '奥术大师大所大所大所多奥术大师大所大所大所多奥术大师大所大所大所多奥术大师大所大所大所多奥术大师大所大所大所多奥术大师大所大所大所多',
+      pageType: 1,
+      showPicker: false,
+      columns: null,
+      areaAll: '请选择',
     };
   },
   components: {
@@ -145,18 +178,56 @@ export default {
     this.getUrl()
   },
   mounted() {
-    const {
-      query,
-    } = this.$router.history.current;
-    this.inviteCode = query.inviteCode
-    this.url = query.url || ''
-    this.type = query.type || 0
-    const ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
-      this.isWeixin = query.isWeixin || 0
-    }
+    // const {
+    //   query,
+    // } = this.$router.history.current;
+    // this.inviteCode = query.inviteCode
+    // this.url = query.url || ''
+    // this.type = query.type || 0
+    // const ua = window.navigator.userAgent.toLowerCase();
+    // if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
+    //   this.isWeixin = query.isWeixin || 0
+    // }
+    const area = arrayToTree(window.yeahgo_area)
+    let str = JSON.stringify(area)
+    str = str.replace(/name/g, 'text')
+    this.columns = JSON.parse(str)
   },
   methods: {
+    onShowPicker() {
+      this.showPicker = true
+    },
+    onConfirm(value) {
+      this.showPicker = false
+      this.areaAll = value[0] + '-' + value[1] + '-' + value[2]; 
+      this.province = value[0]
+      this.city = value[1]
+      this.reg = value[2]
+    },
+    onCancel() {
+      console.log('取消');
+      this.showPicker = false
+    },
+    download() {
+      const u = window.navigator.userAgent;
+      console.log('u', u)
+      const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+      const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if (isAndroid) {
+        //这个是安卓操作系统
+        window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.hznt.yeahgo';
+      }
+      if (isIOS) {
+    　　//这个是ios操作系统
+        window.location.href = 'itms-apps://itunes.apple.com/app/id1556552939?action=write-review';
+      }
+    },
+    ok() {
+      this.pageType = 1
+    },
+    look() {
+      this.pageType = 2
+    },
     uploadAttach(data) {
       console.log('data', data)
       let contentLen = Math.round(data.file.size * 100 / 1024) / 100
@@ -218,9 +289,6 @@ export default {
       })
     },
     submit() {
-      // if (!this.yes) {
-      //   return
-      // }
       const param = {
         storeName: this.storeName,
         provinceName: this.province,
@@ -233,10 +301,11 @@ export default {
       }
       api.submit(param).then((res) => {
         console.log('提交成功', res)
+        this.pageType = 3
       })
     },
-    onYes() {
-      this.yes = !this.yes
+    checkTypeChange() {
+      this.checkType = !this.checkType
     },
     onOpenApp() {
       console.log("🚀 ~ this.$store.state.appInfo", this.$store.state.appInfo)
@@ -317,7 +386,7 @@ export default {
         }
       }, 1000)
     },
-    reg() {
+    handReg() {
       this.blur()
       if (!this.code) {
         return
@@ -361,8 +430,116 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #FFFCFC;
-  padding-bottom: 30px;
+  background-color: #FFFFFF;
+}
+.container3 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+}
+.success-icon {
+  margin-top: 19px;
+}
+.ed-title {
+  margin-top: 22px;
+  font-size: 24px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+}
+.ed-border {
+  margin-top: 48px;
+  margin-bottom: 24px;
+  width: 311px;
+  height: 1px;
+  border: 1px solid #F5F5F5;
+}
+.ed-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 311px;
+  .ed-info-title {
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-family: PingFangSC-Medium, PingFang SC;
+    font-weight: 500;
+    color: #000000;
+  }
+  .ed-info-item {
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: flex-start;
+    .ed-item-label {
+      text-align: left;
+      width: 81px;
+      height: 18px;
+      font-size: 13px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #999999;
+      line-height: 18px;
+    }
+    .ed-item-value {
+      font-size: 13px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #333333;
+    }
+    .ed-address {
+      width: 230px;
+    }
+
+  }
+}
+.ed-btn {
+  margin-top: 133px;
+  width: 311px;
+  height: 48px;
+  background: linear-gradient(250deg, #F4655C 0%, #E5352F 100%);
+  border-radius: 8px;
+  line-height: 48px;
+  text-align: center;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+.look-h1 {
+  margin-top: 30px;
+  margin-bottom: 8px;
+  width: 100%;
+  font-size: 22px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  text-align: center;
+}
+.look-h2 {
+  margin-bottom: 16px;
+  width: 100%;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #666666;
+  text-align: center;
+}
+.look-btn {
+  margin: 0 auto;
+  margin-top: 80px;
+  width: 343px;
+  height: 48px;
+  background: #E5352F;
+  box-shadow: 0px 3px 6px 0px rgba(229, 53, 47, 0.4);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 48px;
+  text-align: center;
 }
 .container {
   display: flex;
@@ -655,6 +832,7 @@ export default {
     }
   }
   .upload-btn {
+    position: relative;
     width: 156px;
     height: 117px;
     overflow: hidden;
@@ -682,6 +860,15 @@ export default {
   .submit-text-box {
     display: flex;
     justify-content: flex-start;
+    position: relative;
+    .click-reg {
+      position: absolute;
+      top: -30px;
+      left: -16px;
+      width: 60px;
+      height: 60px;
+      z-index: 1;
+    }
     .submit-text {
       margin-left: 8px;
       color: #666665;
@@ -707,6 +894,9 @@ export default {
     font-weight: 500;
     color: #FFFFFF;
   }
+  .open {
+    opacity: 1;
+  }
 }
 .error {
   display: flex;
@@ -721,15 +911,26 @@ export default {
   font-weight: 400;
   color: #E5352F;
   .msg {
-    margin-left: 4px;
+    margin-left: 2px;
   }
 }
 #file {
+  position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
+}
+.address-icon {
+  position: absolute;
+  right: 0;
+}
+.hasContent {
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
 }
 </style>
