@@ -50,7 +50,7 @@ module.exports = {
             minPixelValue: 1, // 设置最小的转换数值
             mediaQuery: false, // 设置媒体查询里的单位是否需要转换单位
             replace: true, // 是否直接更换属性值，而不添加备用属性
-            // exclude: [/node_modules/] //忽略某些文件夹下的文件
+            exclude: [/element-ui/] //忽略某些文件夹下的文件
           }),
         ],
       },
