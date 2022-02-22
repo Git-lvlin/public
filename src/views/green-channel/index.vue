@@ -13,9 +13,18 @@
         </div>
         <div class="span"></div>
         <div class="label">店铺名称</div>
-        <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="2-15个字，仅支持汉字、字母、-">
+        <input class="input phone-input" :class="storeName?'hasContent':'noContent'" v-model="storeName" type="text" placeholder="2-15个字，仅支持汉字、字母、-">
       </div>
       <div class="phone" @click="onShowPicker">
+        <div class="error">
+          <van-image
+            class="error-icon"
+            width="14px"
+            height="14px"
+            :src="getImgUrl('publicMobile/green/icon-error.png')"
+          />
+          <div class="msg">请选择提货点所属地区</div>
+        </div>
         <div class="span"></div>
         <div class="label">所属地区</div>
         <div class="input phone-input" :class="areaAll!=='请选择'?'hasContent':''">{{areaAll}}</div>
@@ -27,9 +36,18 @@
         />
       </div>
       <div class="phone">
+        <div class="error">
+          <van-image
+            class="error-icon"
+            width="14px"
+            height="14px"
+            :src="getImgUrl('publicMobile/green/icon-error.png')"
+          />
+          <div class="msg">如您填报的地址有误，将无法及时收到商品，其损失由您承担</div>
+        </div>
         <div class="span"></div>
         <div class="label">详细地址</div>
-        <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="例：26号2单元201室">
+        <input class="input phone-input" :class="address?'hasContent':''" @focus="focus" v-model="address" type="text" placeholder="例：26号2单元201室">
       </div>
       <div class="pic-upload">
         <div class="upload-title">
@@ -52,14 +70,32 @@
         </div>
       </div>
       <div class="phone">
+        <div class="error">
+          <van-image
+            class="error-icon"
+            width="14px"
+            height="14px"
+            :src="getImgUrl('publicMobile/green/icon-error.png')"
+          />
+          <div class="msg">您输入的手机号有误</div>
+        </div>
         <div class="span"></div>
         <div class="label">手机号码</div>
-        <input class="input phone-input" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机账号">
+        <input class="input phone-input" :class="phone?'hasContent':''" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机号码">
       </div>
       <div class="code-box">
+        <div class="error">
+          <van-image
+            class="error-icon"
+            width="14px"
+            height="14px"
+            :src="getImgUrl('publicMobile/green/icon-error.png')"
+          />
+          <div class="msg">您输入的验证码有误</div>
+        </div>
         <div class="span"></div>
         <div class="label">短信验证码</div>
-        <input class="input code-input" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="输入验证码" type="text">
+        <input class="input code-input" :class="code?'hasContent':''" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
         <div class="code-btn" @click="getCode" v-if="countDown">{{codeText}}</div>
         <div class="code-btn" v-else v-html="time"></div>
       </div>
@@ -147,8 +183,8 @@ export default {
       isWeixin: 0,
       show: 0,
       type: 0,
-      phone: '13681935443',
-      code: '1234',
+      phone: null,
+      code: null,
       phoneErr: '',
       codeErr: '',
       codeText: '获取验证码',
@@ -161,11 +197,11 @@ export default {
       fil: null,
       uploadConfig: null,
       uploadUrl: 'https://dev-yeahgo-oss.yeahgo.com//store/greenchannel1645262793160.png',
-      storeName: 'mmmmmmmm',
+      storeName: null,
       province: '湖北省',
       city: '黄冈市',
       reg: '红安县',
-      address: '奥术大师大所大所大所多奥术大师大所大所大所多奥术大师大所大所大所多奥术大师大所大所大所多奥术大师大所大所大所多奥术大师大所大所大所多',
+      address: null,
       pageType: 1,
       showPicker: false,
       columns: null,
@@ -710,6 +746,7 @@ export default {
     height: 66px;
     overflow: hidden;
     border-bottom: 1px solid #F5F5F5;
+    position: relative;
     .code-input {
       margin-left: 18px;
       width: 84px;
@@ -932,5 +969,21 @@ export default {
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #333333;
+}
+.noContent {
+  color: #ccc;
+}
+
+input::-webkit-input-placeholder{
+  color: #ccc;
+}
+input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+  color: #ccc;
+}
+input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+  color: #ccc;
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+  color: #ccc;
 }
 </style>
