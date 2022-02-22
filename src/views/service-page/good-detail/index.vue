@@ -1,73 +1,126 @@
 <template>
   <div class="detail-container">
-    <div class="swipe-box">
-      <Swipe
-        :autoplay="3000"
-        indicator-color="white"
-        :show-indicators="false"
-        @change="handleSwipeChange"
-      >
-        <SwipeItem v-for="i in banner">
-          <div class="swiper-item">
-            <van-image width="375" height="375" fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-            <div class="banner-mask"/>
-          </div>
-        </SwipeItem>
-      </Swipe>
-      <div class="dot-box">{{bannerIndex + 1}}/{{banner.length}}</div>
-    </div>
+    <template v-if="goodDetail.orderType">
+      <div class="swipe-box">
+        <Swipe
+          :autoplay="3000"
+          indicator-color="white"
+          :show-indicators="false"
+          @change="handleSwipeChange"
+        >
+          <SwipeItem v-for="item in goodDetail.imageList" v-bind:key="item">
+            <div class="swiper-item">
+              <van-image width="375" height="375" fit="cover" :src="item" />
+              <div class="banner-mask"/>
+            </div>
+          </SwipeItem>
+        </Swipe>
+        <div class="dot-box">{{bannerIndex + 1}}/{{goodDetail.imageList.length}}</div>
+      </div>
 
-    <div class="good-head">
-      <div class="head-title">优质番茄 500g*1盒子（最多16字…优质番茄 500g*1盒子（最多16字…</div>
-      <div class="flex_middle head-desc-box">
-        <div class="head-desc-text">halouasdfasdf</div>
-        <div class="head-sales">22012</div>
+      <div class="flex_middle head-red-box" :style="`background-image: url(${headBackImg})`">
+        <div class="head-red-price"></div>
+        <div class="head-red-other" :style="`background-image: url(${headOtherBackImg})`"></div>
       </div>
-      <div class="flex_middle head-price-box">
-        <div class="price-name" v-if="type == 1">集约价：</div>
-        <div class="price-text">¥<span class="max-font">8</span>.32</div>
-        <div class="sec_label" v-if="type == 2">秒约特惠</div>
-        <div class="market-price margin-10" v-if="type == 1">市场价<span class="font-line">¥14.32</span></div>
+      <div class="good-head">
+        <div class="head-title">{{goodDetail.goodsName}}</div>
+        <div class="flex_middle head-desc-box">
+          <div class="head-desc-text">{{goodDetail.goodsDesc}}</div>
+          <div class="head-sales">{{goodDetail.goodsSaleNumStr}}</div>
+        </div>
+        <div class="flex_middle head-price-box">
+          <div class="price-name" v-if="goodDetail.orderType == 15 || goodDetail.orderType == 16">集约价：</div>
+          <div class="price-text">¥<span class="max-font">{{goodDetail.priceObj.max}}</span>.{{goodDetail.priceObj.min}}</div>
+          <div class="sec_label" v-if="goodDetail.orderType == 2">秒约特惠</div>
+          <div class="market-price margin-10" v-if="goodDetail.orderType == 15 || goodDetail.orderType == 16">市场价<span class="font-line">¥{{goodDetail.marketPrice / 100}}</span></div>
+        </div>
+        <div class="market-price" v-if="goodDetail.orderType == 2">市场价<span class="font-line">¥{{goodDetail.marketPrice / 100}}</span></div>
       </div>
-      <div class="market-price" v-if="type == 2">市场价<span class="font-line">¥14.32</span></div>
-    </div>
 
-    <div class="good-detail">
-      <div class="detail-title">商品详情</div>
-      <div class="detail-list">
-        <van-image
-          width="100%"
-          fit="cover"
-          src="https://img.yzcdn.cn/vant/cat.jpeg"
-          v-for="item in 5"
-        />
+      <div class="good-detail">
+        <div class="detail-title">商品详情</div>
+        <div class="detail-list">
+          <van-image
+            width="100%"
+            fit="cover"
+            :src="item"
+            v-for="item in goodDetail.contentImageList"
+            v-bind:key="item"
+          />
+        </div>
       </div>
-    </div>
+    </template>
+    <el-empty :description="noData" v-if="noData"></el-empty>
   </div>
 </template>
 
 <script>
 import '@vant/touch-emulator';
-import { Swipe, SwipeItem, Toast, Image } from 'vant';
+import { Swipe, SwipeItem, Image } from 'vant';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css'
 import { getImgUrl } from '@/utils/tools';
+import orderApi from '@/apis/order';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
+import Vue from 'vue';
+
+Vue.use(ElementUI);
 
 export default {
   data() {
     return {
-      banner: [1,1,1,1,1],
+      goodDetail: {
+        imageList: [],
+      },
+      apiParams: {},
       bannerIndex: 0,
       info: null,
-      type: 2,
+      headBackImg: getImgUrl('/publicMobile/servicepage/good/jiyue_back.png'),
+      headOtherBackImg: getImgUrl('/publicMobile/servicepage/good/jiyue_time.png'),
+      noData: '',
     };
   },
   mounted() {
     const {
       query,
     } = this.$router.history.current;
+    this.apiParams = query;
+    // activityId objectId
+    if(query.orderType && query.skuId && query.spuId) {
+      this.getGoodDetail();
+    }
   },
   methods: {
     getImgUrl,
+    // 获取订单详情
+    getGoodDetail() {
+      if(this.apiParams.orderType == 5 || this.apiParams.orderType == 6) {
+
+      } else {
+        orderApi.getGoodDetail(this.apiParams).then(res => {
+          console.log("🚀 Api.getGoodDetail ~ data", res);
+          if(res.code == 0 && res.success) {
+            let data = res.data;
+            data.priceObj = this.handlePrice(data.salePrice);
+            this.goodDetail = data;
+            console.log("🚀 ~ file: index.vue ~ line 101 ~ orderApi.getGoodDetail ~ data", data)
+          } else {
+            this.noData = res.msg;
+          }
+        });
+      }
+    },
+    handlePrice(price) {
+      const amount = (price || 0) / 100;
+      const amountList = `${amount}`.split('.');
+      let max = +amountList[0];
+      let min = amountList[1].length > 1 ? +amountList[1] : '00';
+      return {
+        prire: `${max}.${min}`,
+        max,
+        min,
+      }
+    },
     handleSwipeChange(index) {
       this.bannerIndex = index;
     },
@@ -109,13 +162,27 @@ export default {
     line-height: 20PX;
     letter-spacing: 1PX;
     text-align: center;
-    background: rgba($color: #000000, $alpha: .35);
+    background: linear-gradient(144deg, #ED8065 0%, #D7291D 100%);
+    // background: rgba($color: #000000, $alpha: .35);
     border-radius: 20PX;
   }
   .good-head {
     padding: 12PX;
     margin-bottom: 12PX;
     background: #fff;
+  }
+  .head-red-box {
+    justify-content: space-between;
+    width: 100%;
+    height: 60PX;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .head-red-other {
+    width: 164PX;
+    height: 60PX;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
   }
   .head-title {
     font-size: 18PX;
