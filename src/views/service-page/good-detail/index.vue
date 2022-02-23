@@ -46,7 +46,7 @@
             v-if="goodDetail.orderType == 5 || goodDetail.orderType == 6"
           >
             <div class="red-time-title">距活动结束仅剩</div>
-            <CountDown :time="goodDetail.lastTime">
+            <CountDown :time="goodDetail.lastTime || 0">
               <template #default="timeData">
                 <div class="flex_middle">
                   <div class="time-block" v-if="timeData.days > 0">{{ timeData.days }}</div>
@@ -91,7 +91,7 @@
         </div>
       </div>
     </template>
-    <el-empty :description="noData" v-if="noData"></el-empty>
+    <el-empty :description="noData || '暂无数据'" v-if="noData"></el-empty>
   </div>
 </template>
 
@@ -129,6 +129,8 @@ export default {
     // activityId objectId
     if(query.orderType && query.skuId && query.spuId) {
       this.getGoodDetail();
+    } else {
+      this.noData = '暂无数据'
     }
   },
   methods: {

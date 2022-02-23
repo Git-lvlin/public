@@ -94,7 +94,7 @@
                     key="info"
                   >
                     <template slot-scope="scope">
-                      <div class="flex_middle">
+                      <div class="flex_middle" @click="onToDetail(scope.row)">
                         <el-image
                           class="flex_fix"
                           style="width: 100px; height: 100px"
@@ -258,7 +258,7 @@ export default {
       // 1483650435852873730
       this.getOrderDetail(query.id);
     } else {
-      this.noData = true;
+      this.noData = '暂无数据';
     }
   },
   methods: {
@@ -289,6 +289,25 @@ export default {
       } else if(columnIndex == 4 || columnIndex == 5) {
         return [0, 0]
       }
+    },
+    onToDetail(good) {
+      const {
+        objectId,
+        activityId,
+        orderType,
+        skuId,
+        spuId,
+      } = good;
+      this.$router.push({
+        path: '/web/service-page/good-detail',
+        query: {
+          objectId,
+          activityId,
+          orderType,
+          skuId,
+          spuId,
+        }
+      });
     },
     onOpenOrCloseDrawer(index) {
       this.showDrawer = !this.showDrawer;
