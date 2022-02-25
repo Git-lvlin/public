@@ -2,28 +2,28 @@
   <div class="container" v-if="pageType===1">
     <div class="register-box">
       <div class="phone">
-        <div class="error">
+        <div class="error" v-if="nameErr">
           <van-image
             class="error-icon"
             width="14px"
             height="14px"
             :src="getImgUrl('publicMobile/green/icon-error.png')"
           />
-          <div class="msg">请输入店铺名称</div>
+          <div class="msg">{{nameErr}}</div>
         </div>
         <div class="span"></div>
         <div class="label">店铺名称</div>
-        <input class="input phone-input" :class="storeName?'hasContent':'noContent'" v-model="storeName" type="text" placeholder="2-15个字，仅支持汉字、字母、-">
+        <input class="input phone-input" :class="storeName?'hasContent':'noContent'" @focus="focusChange('name')" v-model="storeName" type="text" placeholder="2-15个字，仅支持汉字、字母、-">
       </div>
       <div class="phone" @click="onShowPicker">
-        <div class="error">
+        <div class="error" v-if="areaAllErr">
           <van-image
             class="error-icon"
             width="14px"
             height="14px"
             :src="getImgUrl('publicMobile/green/icon-error.png')"
           />
-          <div class="msg">请选择提货点所属地区</div>
+          <div class="msg">{{areaAllErr}}</div>
         </div>
         <div class="span"></div>
         <div class="label">所属地区</div>
@@ -36,18 +36,18 @@
         />
       </div>
       <div class="phone">
-        <div class="error">
+        <div class="error" v-if="addressErr">
           <van-image
             class="error-icon"
             width="14px"
             height="14px"
             :src="getImgUrl('publicMobile/green/icon-error.png')"
           />
-          <div class="msg">如您填报的地址有误，将无法及时收到商品，其损失由您承担</div>
+          <div class="msg">{{addressErr}}</div>
         </div>
         <div class="span"></div>
         <div class="label">详细地址</div>
-        <input class="input phone-input" :class="address?'hasContent':''" @focus="focus" v-model="address" type="text" placeholder="例：26号2单元201室">
+        <input class="input phone-input" :class="address?'hasContent':''" @focus="focusChange('address')" v-model="address" type="text" placeholder="例：26号2单元201室">
       </div>
       <div class="pic-upload">
         <div class="upload-title">
@@ -70,34 +70,34 @@
         </div>
       </div>
       <div class="phone">
-        <div class="error">
+        <div class="error" v-if="phoneErr">
           <van-image
             class="error-icon"
             width="14px"
             height="14px"
             :src="getImgUrl('publicMobile/green/icon-error.png')"
           />
-          <div class="msg">您输入的手机号有误</div>
+          <div class="msg">{{phoneErr}}</div>
         </div>
         <div class="span"></div>
         <div class="label">手机号码</div>
-        <input class="input phone-input" :class="phone?'hasContent':''" @focus="focus" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机号码">
+        <input class="input phone-input" :class="phone?'hasContent':''" @focus="focusChange('phone')" v-model="phone" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')" type="text" placeholder="请输入手机号码">
       </div>
       <div class="code-box">
-        <div class="error">
+        <div class="error" v-if="codeErr">
           <van-image
             class="error-icon"
             width="14px"
             height="14px"
             :src="getImgUrl('publicMobile/green/icon-error.png')"
           />
-          <div class="msg">您输入的验证码有误</div>
+          <div class="msg">{{codeErr}}</div>
         </div>
         <div class="span"></div>
         <div class="label">短信验证码</div>
-        <input class="input code-input" :class="code?'hasContent':''" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
+        <input class="input code-input" :class="code?'hasContent':''" @focus="focusChange('code')" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
         <div class="code-btn" @click="getCode" v-if="countDown">{{codeText}}</div>
-        <div class="code-btn" v-else v-html="time"></div>
+        <div class="code-btn code-btn-no" v-else v-html="time + 'S后再次发送'"></div>
       </div>
     </div>
     <div class="submit-top"></div>
@@ -118,7 +118,7 @@
           height="18px"
           :src="getImgUrl('publicMobile/green/checkout.png')"
         />
-        <div class="submit-text">我已阅读并同意和签订<span class="red-span">店铺协议</span>、<span class="red-span">隐私政策</span>和<span class="red-span">服务合同</span></div>
+        <div class="submit-text">我已阅读并同意和签订<span class="red-span" @click="lookXY(0)">店铺协议</span>、<span class="red-span" @click="lookXY(1)">隐私政策</span>和<span class="red-span" @click="lookXY(2)">服务合同</span></div>
       </div>
       <div class="submit-button" :class="checkType?'open':''" @click="submit">提交申请</div>
     </div>
@@ -167,7 +167,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Popup, Picker } from 'vant';
+import { Image as VanImage, Popup, Picker, Toast } from 'vant';
 import { getImgUrl, arrayToTree } from '@/utils/tools';
 import CallApp from 'callapp-lib';
 import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
@@ -185,8 +185,6 @@ export default {
       type: 0,
       phone: null,
       code: null,
-      phoneErr: '',
-      codeErr: '',
       codeText: '获取验证码',
       time: 60,
       countDown: 1,
@@ -196,7 +194,7 @@ export default {
       checkType: false,
       fil: null,
       uploadConfig: null,
-      uploadUrl: 'https://dev-yeahgo-oss.yeahgo.com//store/greenchannel1645262793160.png',
+      uploadUrl: null,
       storeName: null,
       province: '湖北省',
       city: '黄冈市',
@@ -206,6 +204,16 @@ export default {
       showPicker: false,
       columns: null,
       areaAll: '请选择',
+      nameErr: null,
+      phoneErr: null,
+      codeErr: null,
+      addressErr: null,
+      areaAllErr: null,
+      xy: [
+        '/web/agreement',
+        '/web/agreement?reg=user&index=0',
+        '/web/agreement?reg=user&index=1'
+      ]
     };
   },
   components: {
@@ -230,10 +238,19 @@ export default {
     this.columns = JSON.parse(str)
   },
   methods: {
+    lookXY(type) {
+      this.$router.push({
+        path: xy[type],
+        query: {
+          inviteCode: this.inviteCode
+        },
+      });
+    },
     onShowPicker() {
       this.showPicker = true
     },
     onConfirm(value) {
+      this.areaAllErr = ''
       this.showPicker = false
       this.areaAll = value[0] + '-' + value[1] + '-' + value[2]; 
       this.province = value[0]
@@ -325,6 +342,30 @@ export default {
       })
     },
     submit() {
+      if (!this.storeName) {
+        this.nameErr = '请输入店铺名称'
+        return
+      }
+      if (!this.areaAll) {
+        this.areaAllErr = '请选择提货点所属地区'
+        return
+      }
+      if (!this.address) {
+        this.addressErr = '如您填报的地址有误，将无法及时收到商品，其损失由您承担'
+        return
+      }
+      if (!this.uploadUrl) {
+        Toast({message: '请上传证明材料'});
+        return
+      }
+      if (!this.phone) {
+        this.phoneErr = '请输入的手机号有误'
+        return
+      }
+      if (!this.code) {
+        this.codeErr = '请输入的验证码有误'
+        return
+      }
       const param = {
         storeName: this.storeName,
         provinceName: this.province,
@@ -336,8 +377,22 @@ export default {
         phoneNumber: this.phone,
       }
       api.submit(param).then((res) => {
-        console.log('提交成功', res)
-        this.pageType = 3
+        if (res.code === 0) {
+          console.log('提交成功', res)
+          this.pageType = 3
+        } else {
+          switch(res.data.key) {
+            case 'storeName':
+              this.nameErr = res.msg;
+              break
+            case 'credentialList':
+              Toast({message: res.msg});
+              break
+            case 'phoneNumber':
+              this.phoneErr = res.msg;
+              break
+          }
+        }
       })
     },
     checkTypeChange() {
@@ -393,6 +448,22 @@ export default {
         query,
       } = this.$router.history.current;
       this.inviteCode = query.inviteCode
+    },
+    focusChange(type) {
+      switch(type) {
+        case 'name':
+          this.nameErr = ''
+          break
+        case 'phone':
+          this.phoneErr = ''
+          break
+        case 'code':
+          this.codeErr = ''
+          break
+        case 'address':
+          this.addressErr = ''
+          break
+      }
     },
     focus() {
       this.flag = 0
@@ -764,6 +835,9 @@ export default {
       font-weight: 400;
       color: #FFFFFF;
       line-height: 30px;
+    }
+    .code-btn-no {
+      opacity: .5;
     }
   }
   .button {
