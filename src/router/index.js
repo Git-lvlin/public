@@ -396,6 +396,14 @@ const routes = [
     meta: {
       title: '约购平台 - 社区店入驻绿色通道',
     }
+  },
+  {
+    path: '/web/special-offer-fresh',
+    name: 'SpecialOfferFresh',
+    component: () => import('@/views/special-offer-fresh'),
+    meta: {
+      title: '今日特价生鲜',
+    }
   }
 ];
 
