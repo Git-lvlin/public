@@ -197,14 +197,15 @@ export default {
       })
     },
     hasWx() {
-      this.show = 0;
-      const ua = window.navigator.userAgent.toLowerCase();
-      if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        window.location.href += `&type=${this.type}&isWeixin=${1}`
-        return
-      } else {
-        this.onOpenApp()
-      }
+      // this.show = 0;
+      // const ua = window.navigator.userAgent.toLowerCase();
+      // if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+      //   window.location.href += `&type=${this.type}&isWeixin=${1}`
+      //   return
+      // } else {
+      //   this.onOpenApp()
+      // }
+      this.onOpenApp()
       // window.location.href = `https://publicmobile.yeahgo.com/web/transfer`;
     },
     getInviteCode() {

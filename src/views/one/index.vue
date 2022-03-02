@@ -5,16 +5,10 @@
       <van-image
         class="banner"
         width="100%"
-        height="270px"
-        :src="getImgUrl('publicMobile/fresh/banner.png')"
+        height="274px"
+        :src="getImgUrl('publicMobile/fresh/banner-green.png')"
       />
-      <div class="title"
-        :style="{
-          'background-image': `url('${getImgUrl('publicMobile/fresh/title-bg.png')}')`
-        }"
-      >
-        <div class="title-text">今日特价生鲜活动仅限自提</div>
-      </div>
+      <div class="title">活动范围：重庆</div>
       <div class="list-box">
         <div class="item" @click="toDetail(item)" v-for="(item, index) in list" :key="index">
           <van-image
@@ -42,7 +36,7 @@
         class="banner2"
         width="100%"
         height="100%"
-        :src="getImgUrl('publicMobile/fresh/banner2.png')"
+        :src="getImgUrl('publicMobile/fresh/banner2-green.png')"
       />
       <van-image
         v-if="this.storeNo"
@@ -56,14 +50,14 @@
         class="go-btn"
         width="200px"
         height="40px"
-        :src="getImgUrl('publicMobile/fresh/go.png')"
+        :src="getImgUrl('publicMobile/fresh/go-green.png')"
       />
       <van-image
         v-if="!this.storeNo"
         class="download-btn"
         width="200px"
         height="40px"
-        :src="getImgUrl('publicMobile/fresh/download.png')"
+        :src="getImgUrl('publicMobile/fresh/download-green.png')"
       />
     </div>
 
@@ -76,7 +70,7 @@
       :style="{ height: '506px' }"
     >
       <div class="rule-div">
-        <div class="title">今日特价生鲜规则</div>
+        <div class="title">1分钱领生鲜活动规则</div>
         <textarea class="content" readonly v-model="ruleText"></textarea>
       </div>
     </van-popup>
@@ -114,7 +108,7 @@ export default {
     await this.getUserInfo();
   },
   mounted() {
-    this.url = meBaseUrl + '/web/special-offer-fresh?_immersive=0&_authorizationRequired=1'
+    this.url = meBaseUrl + '/web/one?_immersive=0&_authorizationRequired=1'
     console.log('url', this.url)
     this.getListData()
   },
@@ -142,7 +136,7 @@ export default {
         page: 1,
         size: 99,
       }
-      teamApi.getList(param).then((res) => {
+      teamApi.getOneList(param).then((res) => {
         console.log('res-list', res)
         this.list = res.data.records
         this.list[0].stockNum = 0
@@ -199,11 +193,11 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #EE3912;
+  background-color: #2F9200;
   position: relative;
 }
 .fd {
-  background-color: #FD773E;
+  background-color: #2F9200;
 }
 .rule-btn {
   position: absolute;
@@ -217,27 +211,26 @@ export default {
   font-size: 12px;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: #EE3912;
+  color: #2F9200;
   text-align: center;
   line-height: 18px;
   z-index: 3;
+  border: 1px solid #2F9200;
 }
 .title {
   margin: 0 auto;
-  margin-top: 8px;
-  margin-bottom: 13px;
-  width: 175px;
-  height: 31px;
-  background-size: 100% 100%;
-  .title-text {
-    text-align: center;
-    font-size: 12px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
-    color: #FFFFFF;
-    line-height: 31px;
-    z-index: 2;
-  }
+  margin-top: 16px;
+  margin-bottom: 16px;
+  width: 120px;
+  height: 28px;
+  line-height: 28px;
+  border-radius: 14px;
+  border: 1px solid #FFFFFF;
+  font-size: 14px;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-align: center;
 }
 
 .list-box {

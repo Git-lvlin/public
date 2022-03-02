@@ -404,6 +404,14 @@ const routes = [
     meta: {
       title: '今日特价生鲜',
     }
+  },
+  {
+    path: '/web/one',
+    name: 'One',
+    component: () => import('@/views/one'),
+    meta: {
+      title: '一分钱领生鲜活动',
+    }
   }
 ];
 
