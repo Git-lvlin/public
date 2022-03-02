@@ -57,6 +57,7 @@
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/go.png')"
+        @click="outPage"
       />
       <van-image
         v-if="!this.storeNo"
@@ -64,6 +65,7 @@
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/download.png')"
+        @click="outPage"
       />
     </div>
 
@@ -103,7 +105,7 @@ export default {
       ruleText: null,
       showPopup: false,
       activityType: 1,
-      storeNo: 'store_m_123942',
+      storeNo: null,
       url: null,
       config: null,
     };
@@ -119,6 +121,14 @@ export default {
     this.getListData()
   },
   methods: {
+    outPage() {
+      this.$router.push({
+        path: '/web/new-share',
+        query: {
+          inviteCode: ''
+        },
+      });
+    },
     getUserInfo() {
       return new Promise((resolve) => {
         this.$bridge.callHandler('getUserInfo',{},(res) => {
