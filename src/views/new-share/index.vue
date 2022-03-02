@@ -205,8 +205,8 @@ export default {
       // } else {
       //   this.onOpenApp()
       // }
-      this.onOpenApp()
-      // window.location.href = `https://publicmobile.yeahgo.com/web/transfer`;
+      // this.onOpenApp()
+      window.location.href = DOWNLOAD_ANDROID;
     },
     getInviteCode() {
       const {
