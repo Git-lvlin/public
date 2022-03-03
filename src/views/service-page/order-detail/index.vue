@@ -20,7 +20,7 @@
                 <el-col :span="8">
                   <div class="info-item">
                     <span class="font-bold">订单类型：</span>
-                    {{orderDetail.orderTypeStr}}商品
+                    {{orderDetail.orderTypeStr}}订单
                   </div>
                 </el-col>
                 <el-col :span="8">
