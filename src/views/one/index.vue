@@ -8,7 +8,7 @@
         height="274px"
         :src="getImgUrl('publicMobile/fresh/banner-green.png')"
       />
-      <div class="title">活动范围：重庆</div>
+      <!-- <div class="title">活动范围：重庆</div> -->
       <div class="list-box">
         <div class="item" @click="toDetail(item)" v-for="(item, index) in list" :key="index">
           <van-image
