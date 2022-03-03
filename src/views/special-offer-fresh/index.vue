@@ -108,14 +108,34 @@ export default {
       storeNo: null,
       url: null,
       config: null,
+      inviteCode: '',
     };
   },
   components: {
   },
   async created () {
+    const rightButton = {
+      type: 'share',
+      object: {
+        contentType: 14,
+        paramId: 15,
+        shareType: 3,
+        sourceType: 13,
+      }
+    };
+    const titleLabel = {
+      titleLabelColor: '', // 暂时不会传
+      font: '', // 暂时不会传
+      text: '', // 默认documenttitle
+    };
+    setNavigationBar('#FFFFFF', rightButton, titleLabel);
     await this.getUserInfo();
   },
   mounted() {
+    const {
+      query,
+    } = this.$router.history.current;
+    this.inviteCode = query.inviteCode || '';
     this.url = meBaseUrl + '/web/special-offer-fresh?_immersive=0&_authorizationRequired=1'
     console.log('url', this.url)
     this.getListData()
@@ -125,7 +145,7 @@ export default {
       this.$router.push({
         path: '/web/new-share',
         query: {
-          inviteCode: ''
+          inviteCode: this.inviteCode
         },
       });
     },
