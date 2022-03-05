@@ -47,7 +47,7 @@
         </div>
         <div class="span"></div>
         <div class="label">详细地址</div>
-        <input class="input phone-input" :class="address?'hasContent':''" @focus="focusChange('address')" v-model="address" type="text" placeholder="例：26号2单元201室">
+        <input class="input phone-input" :class="address?'hasContent':''" @focus="focusChange('address')" v-model="address" type="text" placeholder="请输入详细地址信息">
       </div>
       <div class="pic-upload">
         <div class="upload-title">
@@ -64,7 +64,7 @@
             class="upload-btn"
             width="156px"
             height="117px"
-            :src="getImgUrl('publicMobile/green/upload-icon.png')"
+            :src="uploadUrl?uploadUrl:getImgUrl('publicMobile/green/upload-icon.png')"
           />
           <input id="file" @change='handleFileChange' type="file" ref="inputer" name="file" accept="image/png,image/jpeg,image/gif,image/jpg" />
         </div>
