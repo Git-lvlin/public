@@ -113,7 +113,7 @@ export default {
   },
   components: {
   },
-  async created () {
+  created () {
     const rightButton = {
       type: 'share',
       object: {
@@ -129,13 +129,14 @@ export default {
       text: '', // 默认documenttitle
     };
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
-    await this.getUserInfo();
+    // await this.getUserInfo();
   },
   mounted() {
     const {
       query,
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode || '';
+    this.storeNo = query.storeNo
     this.url = meBaseUrl + '/web/special-offer-fresh?_immersive=0&_authorizationRequired=1'
     console.log('url', this.url)
     this.getListData()
@@ -149,15 +150,15 @@ export default {
         },
       });
     },
-    getUserInfo() {
-      return new Promise((resolve) => {
-        this.$bridge.callHandler('getUserInfo',{},(res) => {
-          const d = JSON.parse(res)
-          this.storeNo = d.data.storeNo
-          resolve()
-        })
-      })
-    },
+    // getUserInfo() {
+    //   return new Promise((resolve) => {
+    //     this.$bridge.callHandler('getUserInfo',{},(res) => {
+    //       const d = JSON.parse(res)
+    //       this.storeNo = d.data.storeNo
+    //       resolve()
+    //     })
+    //   })
+    // },
     toDetail(item) {
       if (item.stockNum<1) {
         return

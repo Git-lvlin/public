@@ -60,7 +60,7 @@
           <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
-          <van-uploader v-model="uploader" :max-size="900 * 1024" :max-count="2" />
+          <van-uploader v-model="uploader" :after-read="handleFileChange" />
           <!-- <van-image
             class="upload-btn"
             width="156px"
@@ -217,11 +217,7 @@ export default {
         '/web/agreement?reg=user&index=0',
         '/web/agreement?reg=user&index=1'
       ],
-      uploader: [
-        {
-          url: getImgUrl('publicMobile/green/upload-icon.png'),
-        },
-      ]
+      uploader: []
     };
   },
   components: {
@@ -324,7 +320,7 @@ export default {
         this.uploadConfig = res.data
       })
     },
-    async handleFileChange(r) {
+    handleFileChange(r) {
       console.log('r', r)
       let fileName = new Date().getTime()
       let dom = this.$refs.inputer
@@ -347,7 +343,7 @@ export default {
           url: data.imgServer + '/' + data.path + data.name
         })
         this.uploadUrl = data.imgServer + '/' + data.path + data.name
-        this.uploader.push({url: this.uploadUrl})
+        this.uploader.push({url: this.uploadUrl, isImage: true})
       })
     },
     submit() {
@@ -952,10 +948,10 @@ export default {
     }
   }
   .upload-btn {
-    position: relative;
+    // position: relative;
     // width: 156px;
     // height: 117px;
-    overflow: hidden;
+    // overflow: hidden;
   }
 }
 .submit-top {
