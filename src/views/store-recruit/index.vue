@@ -45,6 +45,9 @@
 import Vue from "vue";
 import { Image as VanImage } from "vant";
 import { getImgUrl } from "@/utils/tools";
+import {
+  setNavigationBar,
+} from '@/utils/userInfo';
 Vue.use(VanImage);
 export default {
   data() {
@@ -52,6 +55,21 @@ export default {
     };
   },
   created() {
+    const rightButton = {
+      type: 'share',
+      object: {
+        contentType: 15,
+        paramId: 16,
+        shareType: 3,
+        sourceType: 14,
+      }
+    };
+    const titleLabel = {
+      titleLabelColor: '#FFFFFF', // 暂时不会传
+      font: '', // 暂时不会传
+      text: '', // 默认documenttitle
+    };
+    setNavigationBar('#419157', rightButton, titleLabel);
   },
   mounted() {
     const {
