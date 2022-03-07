@@ -60,7 +60,7 @@
           <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
-          <van-uploader v-model="uploader" :after-read="handleFileChange" />
+          <van-uploader v-model="uploader" :after-read="afterRead" />
           <!-- <van-image
             class="upload-btn"
             width="156px"
@@ -320,12 +320,9 @@ export default {
         this.uploadConfig = res.data
       })
     },
-    handleFileChange(r) {
-      console.log('r', r)
+    afterRead(f) {
       let fileName = new Date().getTime()
-      let dom = this.$refs.inputer
-      this.file = dom.files[0];
-      let file = dom.files[0];
+      let file = f;
       let data = {}
       const {host, accessid, policy, signature, dir} = this.uploadConfig
       data.imgServer = host
@@ -333,7 +330,7 @@ export default {
       data.policy = policy
       data.signature = signature
       data.path = dir
-      let format = file.name.substring(file.name.lastIndexOf('.', file.name.length - 1))
+      let format = file?.name.substring(file?.name.lastIndexOf('.', file.name.length - 1))
       fileName = fileName + format
       data.name = fileName
       data.file = file

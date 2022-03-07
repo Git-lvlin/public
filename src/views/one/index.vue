@@ -16,12 +16,12 @@
             width="100%"
             :src="item.imageUrl"
           />
-          <div class="item-img-mask" v-if="item.stockNum===0">
+          <div class="item-img-mask" v-if="!item.stockNum">
             <div class="item-img-mask-text">已售罄</div>
           </div>
-          <div class="name" :class="item.stockNum<1?'disable-color':''">{{item.goodsName}}</div>
+          <div class="name" :class="!item.stockNum?'disable-color':''">{{item.goodsName}}</div>
           <div class="price">
-            <span class="l" :class="item.stockNum<1?'disable-color':''">¥<span class="l-index">{{item.salePrice/100}}</span></span>
+            <span class="l" :class="!item.stockNum?'disable-color':''">¥<span class="l-index">{{item.salePrice/100}}</span></span>
             <span class="r">¥{{item.marketPrice/100}}</span>
           </div>
           <div class="num">{{item.goodsSaleNumStr}}</div>
