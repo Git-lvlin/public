@@ -65,7 +65,7 @@ export default {
       }
     };
     const titleLabel = {
-      titleLabelColor: '#FFFFFF', // 暂时不会传
+      titleLabelColor: '', // 暂时不会传
       font: '', // 暂时不会传
       text: '', // 默认documenttitle
     };
