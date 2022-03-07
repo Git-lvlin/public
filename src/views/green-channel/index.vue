@@ -322,7 +322,7 @@ export default {
     },
     afterRead(f) {
       let fileName = new Date().getTime()
-      let file = f;
+      let file = f
       let data = {}
       const {host, accessid, policy, signature, dir} = this.uploadConfig
       data.imgServer = host
@@ -330,7 +330,8 @@ export default {
       data.policy = policy
       data.signature = signature
       data.path = dir
-      let format = file?.name.substring(file?.name.lastIndexOf('.', file.name.length - 1))
+      let last = file.name.lastIndexOf('.', file.name.length - 1)
+      let format = file.name.substring(last)
       fileName = fileName + format
       data.name = fileName
       data.file = file
@@ -339,8 +340,8 @@ export default {
           res: res,
           url: data.imgServer + '/' + data.path + data.name
         })
-        this.uploadUrl = data.imgServer + '/' + data.path + data.name
-        this.uploader.push({url: this.uploadUrl, isImage: true})
+        // this.uploadUrl = data.imgServer + '/' + data.path + data.name
+        this.uploader.push({url: data.imgServer + '/' + data.path + data.name, isImage: true})
       })
     },
     submit() {
@@ -356,7 +357,7 @@ export default {
         this.addressErr = '如您填报的地址有误，将无法及时收到商品，其损失由您承担'
         return
       }
-      if (!this.uploadUrl) {
+      if (!this.uploader) {
         Toast({message: '请上传证明材料'});
         return
       }
@@ -374,7 +375,7 @@ export default {
         cityName: this.city,
         regionName: this.reg,
         address: this.address,
-        credentialList: [this.uploadUrl],
+        credentialList: this.uploader,
         captcha: this.code,
         phoneNumber: this.phone,
       }
