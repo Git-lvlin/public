@@ -169,9 +169,7 @@ export default {
         size: 99,
       }
       teamApi.getOneList(param).then((res) => {
-        console.log('res-list', res)
         this.list = res.data.records
-        this.list[0].stockNum = 0
         this.config = res.data.config
         this.ruleText = this.config.ruleText
         this.activityType = this.config.activityStatus
