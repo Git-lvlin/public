@@ -60,13 +60,14 @@
           <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
-          <van-image
+          <van-uploader v-model="uploader" :max-size="900 * 1024" :max-count="2" />
+          <!-- <van-image
             class="upload-btn"
             width="156px"
             height="117px"
             :src="uploadUrl?uploadUrl:getImgUrl('publicMobile/green/upload-icon.png')"
           />
-          <input id="file" @change='handleFileChange' type="file" ref="inputer" name="file" accept="image/png,image/jpeg,image/gif,image/jpg" />
+          <input id="file" @change='handleFileChange' type="file" ref="inputer" name="file" accept="image/png,image/jpeg,image/gif,image/jpg" /> -->
         </div>
       </div>
       <div class="phone">
@@ -167,13 +168,15 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Popup, Picker, Toast } from 'vant';
+import { Image as VanImage, Popup, Picker, Toast, Uploader } from 'vant';
 import { getImgUrl, arrayToTree } from '@/utils/tools';
 import CallApp from 'callapp-lib';
 import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/newshare';
 import api from '@/apis/green';
 import axios from 'axios';
+
+Vue.use(Uploader);
 Vue.use(VanImage);
 Vue.use(Popup);
 Vue.use(Picker);
@@ -213,6 +216,11 @@ export default {
         '/web/agreement',
         '/web/agreement?reg=user&index=0',
         '/web/agreement?reg=user&index=1'
+      ],
+      uploader: [
+        {
+          url: getImgUrl('publicMobile/green/upload-icon.png'),
+        },
       ]
     };
   },
@@ -339,6 +347,7 @@ export default {
           url: data.imgServer + '/' + data.path + data.name
         })
         this.uploadUrl = data.imgServer + '/' + data.path + data.name
+        this.uploader.push({url: this.uploadUrl})
       })
     },
     submit() {
@@ -944,8 +953,8 @@ export default {
   }
   .upload-btn {
     position: relative;
-    width: 156px;
-    height: 117px;
+    // width: 156px;
+    // height: 117px;
     overflow: hidden;
   }
 }
