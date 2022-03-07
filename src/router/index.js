@@ -426,6 +426,14 @@ const routes = [
     meta: {
       title: '一分钱领生鲜活动',
     }
+  },
+  {
+    path: '/web/store-recruit',
+    name: 'StoreRecruit',
+    component: () => import('@/views/store-recruit'),
+    meta: {
+      title: '约购生鲜店主招募',
+    }
   }
 ];
 
