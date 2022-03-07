@@ -16,7 +16,7 @@
             width="100%"
             :src="item.imageUrl"
           />
-          <div class="item-img-mask" v-if="item.stockNum<1">
+          <div class="item-img-mask" v-if="item.stockNum===0">
             <div class="item-img-mask-text">已售罄</div>
           </div>
           <div class="name" :class="item.stockNum<1?'disable-color':''">{{item.goodsName}}</div>
