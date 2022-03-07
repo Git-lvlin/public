@@ -380,6 +380,20 @@ const routes = [
     meta: {
       title: '新年盖高楼',
     }
+  }, {
+    path: '/web/service-page/good-detail',
+    name: 'ServiceGoodDetail',
+    component: () => import('@/views/service-page/good-detail'),
+    meta: {
+      title: '商品详情',
+    }
+  }, {
+    path: '/web/service-page/order-detail',
+    name: 'ServiceOrderDetail',
+    component: () => import('@/views/service-page/order-detail'),
+    meta: {
+      title: '订单详情',
+    }
   },
   {
     path: '/web/five-star-new',

@@ -110,6 +110,7 @@ const request = async ({
         }
       }, 1000);
     }
+    return error;
   }).finally(() => {
     if (showLoading) {
       requestCount -= 1;
