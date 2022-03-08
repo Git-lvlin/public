@@ -20,9 +20,10 @@ axios.interceptors.request.use((config) => {
   }
   config.headers.p = "H5";
   config.headers.v = "1.0.0";
-
   if (process.env.NODE_ENV === 'production') {
-    config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
+    if (!config.url.includes('-oss.yeahgo.com')) {
+      config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
+    }
   }
   return config;
 }, (error) => Promise.reject(error));
@@ -109,6 +110,7 @@ const request = async ({
         }
       }, 1000);
     }
+    return error;
   }).finally(() => {
     if (showLoading) {
       requestCount -= 1;

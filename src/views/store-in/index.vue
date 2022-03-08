@@ -159,6 +159,38 @@
         </div>
       </div>
     </div>
+    <div class="title" v-if="res">
+      <van-image
+        width="17px"
+        height="13px"
+        :src="getImgUrl('publicMobile/store/title-l.png')"
+      />
+      <span class="title-text">店主故事</span>
+      <van-image
+        width="17px"
+        height="13px"
+        :src="getImgUrl('publicMobile/store/title-r.png')"
+      />
+    </div>
+    <div class="shopkeeper-box" v-if="res">
+      <div class="shopkeeper-div" >
+        <div class="shopkeeper-top">
+          <van-image
+            class="logo"
+            width="74px"
+            height="74px"
+            :src="res.logo"
+          />
+          <div class="logo-right">
+            <div class="shopkeeper-title">{{res.storeUserName}}</div>
+            <div class="shopkeeper-name"><span></span>{{res.storeName}}</div>
+          </div>
+        </div>
+        <div class="shopkeeper-border"></div>
+        <div class="shopkeeper-bottom">{{res.storeStory}}</div>
+      </div>
+    </div>
+
     <div class="title">
       <van-image
         width="17px"
@@ -199,6 +231,7 @@ import { Image as VanImage } from "vant";
 import { getImgUrl } from "@/utils/tools";
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp, judgeVersionIsNew } from "@/utils/userInfo";
+import api from '@/apis/storein';
 Vue.use(VanImage);
 export default {
   props: {},
@@ -208,6 +241,7 @@ export default {
       hasToken: false,
       isNewVersion: false,
       newShare: 0,
+      res: null,
     };
   },
   components: {},
@@ -234,9 +268,16 @@ export default {
       // 5星店主活动
       this.newShare = 1
     }
+    this.getInitData()
   },
   methods: {
     getImgUrl,
+    getInitData() {
+      api.getData().then((res) => {
+        console.log('res', res)
+        this.res = res.data
+      })
+    },
     getUserInfo() {
       return new Promise((resolve) => {
         this.$bridge.callHandler("getUserInfo", {}, (res) => {
@@ -424,7 +465,82 @@ export default {
 .z-index {
   margin-top: 34.32px;
   z-index: 4;
-  margin-bottom: 33px;
+  margin-bottom: 48px;
+}
+.shopkeeper-box {
+  margin-bottom: 36px;
+}
+.shopkeeper-div {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  margin: 0 auto;
+  margin-top: 16px;
+  margin-bottom: 12px;
+  width: 351px;
+  background-color: #ffffff;
+  border: 3px solid;
+  border-color: #f6c78c;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(226, 197, 167, 0.27), 0px 0px 3px #845c34 inset;
+  .shopkeeper-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .logo {
+      margin-right: 28px;
+      width: 74px;
+      height: 74px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .logo-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .shopkeeper-title {
+        margin-bottom: 5px;
+        font-size: 24px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #5A2629;
+        line-height: 33px;
+      }
+      .shopkeeper-name {
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #5A2629;
+        line-height: 20px;
+        span {
+          position: relative;
+          top: -2px;
+          display: inline-block;
+          margin-right: 6px;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background-color: #ef9f3c;
+          line-height: 20px;
+        }
+      }
+    }
+  }
+  .shopkeeper-border {
+    margin: 12px 0;
+    width: 299px;
+    height: 1px;
+    background: rgba(241, 155, 56, 0.19);
+  }
+  .shopkeeper-bottom {
+    font-size: 12px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #5A2629;
+    line-height: 17px;
+    text-indent: 2em;
+  }
 }
 .last-box {
   margin: 0 auto;

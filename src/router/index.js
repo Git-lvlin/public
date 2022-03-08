@@ -380,6 +380,20 @@ const routes = [
     meta: {
       title: '新年盖高楼',
     }
+  }, {
+    path: '/web/service-page/good-detail',
+    name: 'ServiceGoodDetail',
+    component: () => import('@/views/service-page/good-detail'),
+    meta: {
+      title: '商品详情',
+    }
+  }, {
+    path: '/web/service-page/order-detail',
+    name: 'ServiceOrderDetail',
+    component: () => import('@/views/service-page/order-detail'),
+    meta: {
+      title: '订单详情',
+    }
   },
   {
     path: '/web/five-star-new',
@@ -389,6 +403,38 @@ const routes = [
       title: '新春到，升五星',
     }
   },
+  {
+    path: '/web/green-channel',
+    name: 'GreenChannel',
+    component: () => import('@/views/green-channel'),
+    meta: {
+      title: '约购平台 - 社区店入驻绿色通道',
+    }
+  },
+  {
+    path: '/web/special-offer-fresh',
+    name: 'SpecialOfferFresh',
+    component: () => import('@/views/special-offer-fresh'),
+    meta: {
+      title: '今日特价生鲜',
+    }
+  },
+  {
+    path: '/web/one',
+    name: 'One',
+    component: () => import('@/views/one'),
+    meta: {
+      title: '一分钱领生鲜活动',
+    }
+  },
+  {
+    path: '/web/store-recruit',
+    name: 'StoreRecruit',
+    component: () => import('@/views/store-recruit'),
+    meta: {
+      title: '约购生鲜店主招募',
+    }
+  }
 ];
 
 const router = new VueRouter({

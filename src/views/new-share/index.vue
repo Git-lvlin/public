@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="!isWeixin">
+  <div class="container">
     <div class="head"
       :style="{
         'background-image': `url('${type?edImg:img}')`,
@@ -98,13 +98,13 @@
       </div>
     </van-popup>
   </div>
-  <div class="container2" v-else>
+  <!-- <div class="container2" v-else>
     <van-image
       class="wxtx"
       width="100%"
       :src="getImgUrl('publicMobile/common/transfer-wx.png')"
     />
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -156,10 +156,10 @@ export default {
     this.inviteCode = query.inviteCode
     this.url = query.url || ''
     this.type = query.type || 0
-    const ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
-      this.isWeixin = query.isWeixin || 0
-    }
+    // const ua = window.navigator.userAgent.toLowerCase();
+    // if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
+    //   this.isWeixin = query.isWeixin || 0
+    // }
   },
   methods: {
     onOpenApp() {
@@ -197,15 +197,16 @@ export default {
       })
     },
     hasWx() {
-      this.show = 0;
-      const ua = window.navigator.userAgent.toLowerCase();
-      if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        window.location.href += `&type=${this.type}&isWeixin=${1}`
-        return
-      } else {
-        this.onOpenApp()
-      }
-      // window.location.href = `https://publicmobile.yeahgo.com/web/transfer`;
+      // this.show = 0;
+      // const ua = window.navigator.userAgent.toLowerCase();
+      // if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+      //   window.location.href += `&type=${this.type}&isWeixin=${1}`
+      //   return
+      // } else {
+      //   this.onOpenApp()
+      // }
+      // this.onOpenApp()
+      window.location.href = DOWNLOAD_ANDROID;
     },
     getInviteCode() {
       const {
