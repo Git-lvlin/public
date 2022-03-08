@@ -60,7 +60,7 @@
           <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
-          <van-uploader v-model="uploader" :after-read="afterRead" />
+          <van-uploader v-model="uploader" :deletable="false" :after-read="afterRead" />
           <!-- <van-image
             class="upload-btn"
             width="156px"
@@ -197,7 +197,7 @@ export default {
       checkType: false,
       fil: null,
       uploadConfig: null,
-      uploadUrl: null,
+      uploadUrl: [],
       storeName: null,
       province: '湖北省',
       city: '黄冈市',
@@ -242,6 +242,18 @@ export default {
     this.columns = JSON.parse(str)
   },
   methods: {
+    // deletePic(p) {
+    //   console.log('uploadUrl', this.uploadUrl)
+    //   return new Promise((resolve) => {
+    //     console.log('deletePic', p)
+    //     const { file } = p
+    //     console.log('ffff', file.name)
+    //     if (file.name)
+    //     this.uploadUrl.filter(item => item.indexOf(file.name) == -1)
+    //     console.log('this.uploadUrl', this.uploadUrl)
+    //     resolve()
+    //   })
+    // },
     lookXY(type) {
       this.$router.push({
         path: xy[type],
@@ -286,7 +298,6 @@ export default {
       this.pageType = 2
     },
     uploadAttach(data) {
-      console.log('data', data)
       let contentLen = Math.round(data.file.size * 100 / 1024) / 100
       let fd = new FormData()
       fd.append('Content-Length', contentLen)
@@ -316,13 +327,13 @@ export default {
     },
     getUrl() {
       api.getUploadUrl().then((res) => {
-        console.log('uploadConfig', res)
         this.uploadConfig = res.data
       })
     },
     afterRead(f) {
+      console.log('afterRead')
       let fileName = new Date().getTime()
-      let file = f
+      let file = f.file
       let data = {}
       const {host, accessid, policy, signature, dir} = this.uploadConfig
       data.imgServer = host
@@ -335,13 +346,10 @@ export default {
       fileName = fileName + format
       data.name = fileName
       data.file = file
-      this.uploadAttach(data).then((res) => {
-        console.log('uploadAttach', {
-          res: res,
-          url: data.imgServer + '/' + data.path + data.name
-        })
-        // this.uploadUrl = data.imgServer + '/' + data.path + data.name
-        this.uploader.push({url: data.imgServer + '/' + data.path + data.name, isImage: true})
+      this.uploadAttach(data).then(() => {
+        let url = data.imgServer + '/' + data.path + data.name
+        this.uploadUrl.push(url)
+        console.log('this.uploadUrl', this.uploadUrl)
       })
     },
     submit() {
@@ -357,7 +365,7 @@ export default {
         this.addressErr = '如您填报的地址有误，将无法及时收到商品，其损失由您承担'
         return
       }
-      if (!this.uploader) {
+      if (!this.uploadUrl) {
         Toast({message: '请上传证明材料'});
         return
       }
@@ -375,7 +383,7 @@ export default {
         cityName: this.city,
         regionName: this.reg,
         address: this.address,
-        credentialList: this.uploader,
+        credentialList: this.uploadUrl,
         captcha: this.code,
         phoneNumber: this.phone,
       }
