@@ -35,7 +35,7 @@
           :src="getImgUrl('publicMobile/green/right.png')"
         />
       </div>
-      <div class="phone">
+      <!-- <div class="phone">
         <div class="error" v-if="addressErr">
           <van-image
             class="error-icon"
@@ -48,7 +48,7 @@
         <div class="span"></div>
         <div class="label">详细地址</div>
         <input class="input phone-input" :class="address?'hasContent':''" @focus="focusChange('address')" v-model="address" type="text" placeholder="请输入详细地址信息">
-      </div>
+      </div> -->
       <div class="pic-upload">
         <div class="upload-title">
           <div class="span"></div>
@@ -361,10 +361,10 @@ export default {
         this.areaAllErr = '请选择提货点所属地区'
         return
       }
-      if (!this.address) {
-        this.addressErr = '如您填报的地址有误，将无法及时收到商品，其损失由您承担'
-        return
-      }
+      // if (!this.address) {
+      //   this.addressErr = '如您填报的地址有误，将无法及时收到商品，其损失由您承担'
+      //   return
+      // }
       if (!this.uploadUrl) {
         Toast({message: '请上传证明材料'});
         return
