@@ -103,7 +103,7 @@
     </div>
     <div class="submit-top"></div>
     <div class="submit">
-      <div class="submit-text-box">
+      <!-- <div class="submit-text-box">
         <div class="click-reg" @click="checkTypeChange"></div>
         <van-image
           v-show="checkType"
@@ -120,8 +120,10 @@
           :src="getImgUrl('publicMobile/green/checkout.png')"
         />
         <div class="submit-text">我已阅读并同意和签订<span class="red-span" @click="lookXY(0)">店铺协议</span>、<span class="red-span" @click="lookXY(1)">隐私政策</span>和<span class="red-span" @click="lookXY(2)">服务合同</span></div>
-      </div>
-      <div class="submit-button" :class="checkType?'open':''" @click="submit">提交申请</div>
+      </div> -->
+      <!-- <div class="submit-button" :class="checkType?'open':''" @click="submit">提交申请</div> -->
+
+      <div class="submit-button open" @click="submit">提交申请</div>
     </div>
     <van-popup v-model="showPicker" round position="bottom">
       <van-picker show-toolbar @confirm="onConfirm" @cancel="onCancel" title="所属地区" :columns="columns" />
@@ -962,18 +964,18 @@ export default {
 }
 .submit-top {
   position: fixed;
-  bottom: 138px;
+  bottom: 88px;
   width: 100%;
   height: 8px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
   opacity: 0.1;
 }
 .submit {
-  padding: 30px 16px 24px 16px;
+  padding: 0px 16px 24px 16px;
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 138px;
+  height: 88px;
   background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
