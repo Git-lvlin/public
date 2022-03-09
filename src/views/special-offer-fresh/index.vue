@@ -1,7 +1,9 @@
 <template>
-  <div class="container" :class="activityType===0?'fd':''">
+  <!-- <div class="container" :class="activityType===0?'fd':''"> -->
+  <div class="container">
     <div class="rule-btn" @click="lookRule">规则</div>
-    <div class="box1" v-if="activityType === 1">
+    <!-- <div class="box1" v-if="activityType === 1"> -->
+    <div class="box1">
       <van-image
         class="banner"
         width="100%"
@@ -37,7 +39,7 @@
       <div class="cushion"></div>
     </div>
 
-    <div class="box2" v-else-if="activityType===0">
+    <!-- <div class="box2" v-else-if="activityType===0">
       <van-image
         class="banner2"
         width="100%"
@@ -67,7 +69,7 @@
         :src="getImgUrl('publicMobile/fresh/download.png')"
         @click="outPage"
       />
-    </div>
+    </div> -->
 
     <!-- 活动规则弹窗 -->
     <van-popup
@@ -410,26 +412,26 @@ export default {
   }
 }
 
-.box2 {
-  position: relative;
-  .over {
-    position: absolute;
-    top: 489px;
-    left: 50%;
-    transform: translate(-50%);
-  }
-  .go-btn {
-    position: absolute;
-    top: 460px;
-    left: 50%;
-    transform: translate(-50%);
-  }
-  .download-btn {
-    position: absolute;
-    top: 524px;
-    left: 50%;
-    transform: translate(-50%);
-  }
-}
+// .box2 {
+//   position: relative;
+//   .over {
+//     position: absolute;
+//     top: 489px;
+//     left: 50%;
+//     transform: translate(-50%);
+//   }
+//   .go-btn {
+//     position: absolute;
+//     top: 460px;
+//     left: 50%;
+//     transform: translate(-50%);
+//   }
+//   .download-btn {
+//     position: absolute;
+//     top: 524px;
+//     left: 50%;
+//     transform: translate(-50%);
+//   }
+// }
 
 </style>
