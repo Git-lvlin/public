@@ -1,16 +1,13 @@
 <template>
-  <!-- <div class="container" :class="activityType===0?'fd':''"> -->
   <div class="container">
     <div class="rule-btn" @click="lookRule">规则</div>
-    <!-- <div class="box1" v-if="activityType === 1"> -->
-    <div class="box1">
+    <div class="box1" v-if="storeNo">
       <van-image
         class="banner"
         width="100%"
         height="274px"
         :src="getImgUrl('publicMobile/fresh/banner-green.png')"
       />
-      <!-- <div class="title">活动范围：重庆</div> -->
       <div class="list-box">
         <div class="item" @click="toDetail(item)" v-for="(item, index) in list" :key="index">
           <van-image
@@ -33,22 +30,21 @@
       <div class="cushion"></div>
     </div>
 
-    <!-- <div class="box2" v-else-if="activityType===0">
+    <div class="box2" v-else>
       <van-image
         class="banner2"
         width="100%"
         height="100%"
         :src="getImgUrl('publicMobile/fresh/banner2-green.png')"
       />
-      <van-image
+      <!-- <van-image
         v-if="this.storeNo"
         class="over"
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/over.png')"
-      />
+      /> -->
       <van-image
-        v-if="!this.storeNo"
         class="go-btn"
         width="200px"
         height="40px"
@@ -56,14 +52,13 @@
         @click="outPage"
       />
       <van-image
-        v-if="!this.storeNo"
         class="download-btn"
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/download-green.png')"
         @click="outPage"
       />
-    </div> -->
+    </div>
 
     <!-- 活动规则弹窗 -->
     <van-popup
@@ -227,9 +222,6 @@ export default {
   min-height: 100vh;
   background-color: #2F9200;
   position: relative;
-}
-.fd {
-  background-color: #2F9200;
 }
 .rule-btn {
   position: absolute;
