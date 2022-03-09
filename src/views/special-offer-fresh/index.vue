@@ -95,6 +95,7 @@ import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/fresh';
 import {
   goToApp,
+  setNavigationBar,
 } from '@/utils/userInfo';
 Vue.use(VanImage);
 Vue.use(Popup);
