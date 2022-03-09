@@ -160,7 +160,7 @@
         <div class="ed-item-value">{{storeName}}</div>
       </div>
       <div class="ed-info-item">
-        <div class="ed-item-label">提货点地址</div>
+        <div class="ed-item-label">所属地区</div>
         <div class="ed-item-value ed-address">{{address}}</div>
       </div>
     </div>
