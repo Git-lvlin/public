@@ -314,11 +314,12 @@ export default {
       fd.append('file', data.file)
       return new Promise((resolve, reject) => {
         axios.post(data.imgServer, fd, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
+          // headers: {
+          //   'Content-Type': 'multipart/form-data'
+          // },
           transformRequest: (data) => {
-            return qs.stringify(data)
+            return data
+            // return qs.stringify(data)
           }
         }).then(res => {
           resolve(res)
