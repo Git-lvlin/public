@@ -317,9 +317,6 @@ export default {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          transformRequest: (data) => {
-            return JSON.stringify(data)
-          }
         }).then(res => {
           resolve(res)
         }).catch(err => {
