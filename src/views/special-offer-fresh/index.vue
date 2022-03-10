@@ -65,7 +65,7 @@
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/download.png')"
-        @click="outPage"
+        @click="download"
       />
     </div>
 
@@ -143,6 +143,20 @@ export default {
     this.getListData()
   },
   methods: {
+    download() {
+      const u = window.navigator.userAgent;
+      console.log('u', u)
+      const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+      const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if (isAndroid) {
+        //这个是安卓操作系统
+        window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.hznt.yeahgo';
+      }
+      if (isIOS) {
+    　　//这个是ios操作系统
+        window.location.href = 'itms-apps://itunes.apple.com/app/id1556552939?action=write-review';
+      }
+    },
     outPage() {
       this.$router.push({
         path: '/web/new-share',
