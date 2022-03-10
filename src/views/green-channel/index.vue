@@ -161,7 +161,7 @@
       </div>
       <div class="ed-info-item">
         <div class="ed-item-label">所属地区</div>
-        <div class="ed-item-value ed-address">{{address}}</div>
+        <div class="ed-item-value ed-address">{{areaAll}}</div>
       </div>
     </div>
     <div class="ed-btn" @click="download">下载约购APP</div>
