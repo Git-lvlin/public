@@ -317,10 +317,9 @@ export default {
           headers: {
             'Content-Type': 'multipart/form-data'
           },
-          // transformRequest: (data) => {
-          //   // return data
-          //   return qs.stringify(data)
-          // }
+          transformRequest: (data) => {
+            return qs.stringify(data)
+          }
         }).then(res => {
           resolve(res)
         }).catch(err => {
