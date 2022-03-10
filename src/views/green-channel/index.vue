@@ -301,26 +301,39 @@ export default {
     },
     uploadAttach(data) {
       let contentLen = Math.round(data.file.size * 100 / 1024) / 100
-      let fd = new FormData()
-      fd.append('Content-Length', contentLen)
-      fd.append('OSSAccessKeyId', data.OSSAccessKeyId)
-      fd.append('policy', data.policy)
-      fd.append('signature', data.signature)
-      // 文件名字
-      fd.append('key', data.path + data.name)
-      fd.append('dir', data.path)
-      fd.append('success_action_status', '200')
-      // 文件必须声明在最后，否则异常
-      fd.append('file', data.file)
+      // let fd = new FormData()
+      // fd.append('Content-Length', contentLen)
+      // fd.append('OSSAccessKeyId', data.OSSAccessKeyId)
+      // fd.append('policy', data.policy)
+      // fd.append('signature', data.signature)
+      // // 文件名字
+      // fd.append('key', data.path + data.name)
+      // fd.append('dir', data.path)
+      // fd.append('success_action_status', '200')
+      // // 文件必须声明在最后，否则异常
+      // fd.append('file', data.file)
+      let fd = {
+        'Content-Length': contentLen,
+        'OSSAccessKeyId': data.OSSAccessKeyId,
+        'policy': data.policy,
+        'signature': data.signature,
+        'key': data.path + data.name,
+        'dir': data.path,
+        'success_action_status': '200',
+        'file': data.file
+      }
       return new Promise((resolve, reject) => {
-        axios.post(data.imgServer, fd, {
-          // headers: {
-          //   'Content-Type': 'multipart/form-data'
+        axios.post(data.imgServer, qs.stringify(fd), {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          // transformRequest: (data) => {
+          //   let ret = ''
+          //   for (let it in data) {
+          //     ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+          //   }
+          //   return ret
           // },
-          transformRequest: (data) => {
-            return data
-            // return qs.stringify(data)
-          }
         }).then(res => {
           resolve(res)
         }).catch(err => {
