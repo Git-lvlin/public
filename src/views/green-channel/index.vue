@@ -177,7 +177,7 @@ import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/newshare';
 import api from '@/apis/green';
 import axios from 'axios';
-
+import qs from 'qs';
 Vue.use(Uploader);
 Vue.use(VanImage);
 Vue.use(Popup);
@@ -315,8 +315,12 @@ export default {
       return new Promise((resolve, reject) => {
         axios.post(data.imgServer, fd, {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'multipart/form-data'
           },
+          // transformRequest: (data) => {
+          //   // return data
+          //   return qs.stringify(data)
+          // }
         }).then(res => {
           resolve(res)
         }).catch(err => {
