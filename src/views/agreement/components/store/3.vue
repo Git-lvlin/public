@@ -1,6 +1,6 @@
 <template>
 <div>
-<p><strong>约购平台社区店</strong><strong>规则及</strong><strong>服务须知</strong></p>
+<p><strong>约购平台</strong><strong>社区店规则及</strong><strong>服务须知</strong><strong>2.0</strong></p>
 <p>欢迎您入驻约购平台，成为社区店卖家，即社区店店主。在您正式开通社区店之前，为保障您的权益，请认真阅读本规则及服务须知。如您勾选&ldquo;已阅读&rdquo;则代表您理解并同意本规则及须知内容，如有异议请终止入驻。</p>
 <p>约购平台的各项服务协议及规则、须知、通知等文件，最终解释权归约购平台所有。</p>
 <p><strong><strong>一、本规则相关定义：</strong></strong></p>
@@ -134,6 +134,7 @@
 <p>平台服务费以约购平台在每个阶段规定的实际金额为准。</p>
 <p>九、本规则及服务须知，自发布之日起生效。本次更新版本如与之前版本有冲突或增加和修改部分，以本次内容为准，其它内容不变并具有法律效力。</p>
 <p>十、本人已完整阅读本须知各项内容及平台服务费重要约定，承诺为本人自愿申请成为约购社区店（约购生鲜及约购社区服务中心）及缴纳平台服务费（含平台优惠），并对本人的权利义务知悉。勾选即同意《约购平台社区店规则及服务须知2.0》，具有法律效力。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布日期：2022年3月&nbsp;10日</p>
 </div>
 </template>
 <style lang="scss" scoped>
