@@ -176,8 +176,6 @@ import CallApp from 'callapp-lib';
 import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/newshare';
 import api from '@/apis/green';
-import axios from 'axios';
-import qs from 'qs';
 Vue.use(Uploader);
 Vue.use(VanImage);
 Vue.use(Popup);
