@@ -87,7 +87,7 @@
       :style="{ height: '506px' }"
     >
       <div class="rule-div">
-        <div class="title">今日特价生鲜规则</div>
+        <div class="title">活动规则</div>
         <textarea class="content" readonly v-model="ruleText"></textarea>
       </div>
     </van-popup>
