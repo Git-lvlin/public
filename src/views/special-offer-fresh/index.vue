@@ -60,21 +60,21 @@
         height="40px"
         :src="getImgUrl('publicMobile/fresh/over.png')"
       /> -->
-      <!-- <van-image
+      <van-image
         v-if="!this.storeNo"
         class="go-btn"
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/go.png')"
         @click="outPage"
-      /> -->
+      />
       <van-image
         v-if="!this.storeNo"
         class="download-btn"
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/download.png')"
-        @click="outPage"
+        @click="download"
       />
     </div>
 

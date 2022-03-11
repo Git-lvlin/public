@@ -66,7 +66,7 @@
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/download-green.png')"
-        @click="outPage"
+        @click="download"
       />
     </div>
 
