@@ -2,7 +2,7 @@ import { post, get } from '@/utils/request';
 
 const url = {
   up: '/store/open/memberShopApply/uploadToken',
-  code: '/store/oepn/memberShopApply/sendCaptcha',
+  code: '/store/open/memberShopApply/sendCaptcha',
   submit: '/store/open/memberShopApply/greenchannel'
 };
 

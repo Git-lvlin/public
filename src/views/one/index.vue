@@ -1,15 +1,14 @@
 <template>
-  <div class="container" :class="activityType===0?'fd':''">
+  <div class="container">
     <div class="rule-btn" @click="lookRule">规则</div>
-    <div class="box1" v-if="activityType === 1">
+    <div class="box1" v-if="storeNo">
       <van-image
         class="banner"
         width="100%"
         height="274px"
         :src="getImgUrl('publicMobile/fresh/banner-green.png')"
       />
-      <!-- <div class="title">活动范围：重庆</div> -->
-      <div class="list-box">
+      <div class="list-box" v-if="list.length">
         <div class="item" @click="toDetail(item)" v-for="(item, index) in list" :key="index">
           <van-image
             class="item-img"
@@ -27,26 +26,35 @@
           <div class="num">{{item.goodsSaleNumStr}}</div>
         </div>
       </div>
-      <div class="bottom">-没有更多商品了-</div>
-      <div class="cushion"></div>
+      <div class="bottom" v-if="list.length">-没有更多商品了-</div>
+      <div class="cushion" v-if="list.length"></div>
+
+      <div class="null" v-if="!list.length">
+        <van-image
+          class="null-icon"
+          width="288px"
+          height="239px"
+          :src="getImgUrl('publicMobile/fresh/null.png')"
+        />
+        <div class="null-text">商品已抢光啦，下次早点来喔～</div>
+      </div>
     </div>
 
-    <div class="box2" v-else-if="activityType===0">
+    <div class="box2" v-else>
       <van-image
         class="banner2"
         width="100%"
         height="100%"
         :src="getImgUrl('publicMobile/fresh/banner2-green.png')"
       />
-      <van-image
+      <!-- <van-image
         v-if="this.storeNo"
         class="over"
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/over.png')"
-      />
+      /> -->
       <van-image
-        v-if="!this.storeNo"
         class="go-btn"
         width="200px"
         height="40px"
@@ -54,12 +62,11 @@
         @click="outPage"
       />
       <van-image
-        v-if="!this.storeNo"
         class="download-btn"
         width="200px"
         height="40px"
         :src="getImgUrl('publicMobile/fresh/download-green.png')"
-        @click="outPage"
+        @click="download"
       />
     </div>
 
@@ -72,7 +79,7 @@
       :style="{ height: '506px' }"
     >
       <div class="rule-div">
-        <div class="title">1分钱领生鲜活动规则</div>
+        <div class="title">活动规则</div>
         <textarea class="content" readonly v-model="ruleText"></textarea>
       </div>
     </van-popup>
@@ -83,9 +90,9 @@
 import Vue from 'vue';
 import { Image as VanImage, Popup } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import CallApp from 'callapp-lib';
+// import CallApp from 'callapp-lib';
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
-import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
+// import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/fresh';
 import {
   goToApp,
@@ -99,7 +106,6 @@ export default {
       list: [],
       ruleText: null,
       showPopup: false,
-      activityType: 1,
       storeNo: null,
       url: null,
       config: null,
@@ -124,19 +130,30 @@ export default {
       text: '', // 默认documenttitle
     };
     setNavigationBar('#FFFFFF', rightButton, titleLabel);
-    // await this.getUserInfo();
   },
   mounted() {
     const {
       query,
     } = this.$router.history.current;
     this.inviteCode = query.inviteCode || '';
-    this.storeNo = query.storeNo
-    this.url = meBaseUrl + '/web/one?_immersive=0&_authorizationRequired=1'
-    console.log('url', this.url)
+    this.storeNo = query.storeNo;
+    this.url = meBaseUrl + '/web/one?_immersive=0&_authorizationRequired=1';
     this.getListData()
   },
   methods: {
+    download() {
+      const u = window.navigator.userAgent;
+      const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+      const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if (isAndroid) {
+        //这个是安卓操作系统
+        window.location.href = 'https://a.app.qq.com/o/simple.jsp?pkgname=com.hznt.yeahgo';
+      }
+      if (isIOS) {
+    　　//这个是ios操作系统
+        window.location.href = 'itms-apps://itunes.apple.com/app/id1556552939?action=write-review';
+      }
+    },
     outPage() {
       this.$router.push({
         path: '/web/new-share',
@@ -145,17 +162,8 @@ export default {
         },
       });
     },
-    getUserInfo() {
-      return new Promise((resolve) => {
-        this.$bridge.callHandler('getUserInfo',{},(res) => {
-          const d = JSON.parse(res)
-          this.storeNo = d.data.storeNo
-          resolve()
-        })
-      })
-    },
     toDetail(item) {
-      if (item.stockNum<1) {
+      if (item.stockNum==0) {
         return
       }
       const { skuId, spuId, orderType, activityId, objectId } = item;
@@ -172,46 +180,45 @@ export default {
         this.list = res.data.records
         this.config = res.data.config
         this.ruleText = this.config.ruleText
-        this.activityType = this.config.activityStatus
       })
     },
     lookRule() {
       this.showPopup = true
     },
-    onOpenApp() {
-      console.log("🚀 ~ this.$store.state.appInfo", this.$store.state.appInfo)
-      if (this.$store.state.appInfo.isApp || this.$store.state.appInfo.isMiniprogram) {
-        return;
-      }
-      console.log('DOWNLOAD_ANDROID', DOWNLOAD_ANDROID);
-      const options = {
-        scheme: {
-          //URL Scheme 的 scheme 字段，要打开的 APP 的标识
-          protocol: 'yeahgo'
-        },
-        //安卓原生谷歌浏览器必须传递 Intent 协议地址，才能唤起 APP
-        intent: {
-          // APP包名
-          package: 'com.hznt.yeahgo',
-          scheme: 'yeahgo'
-        },
-        timeout: '3000',
-        //APP 的 App Store
-        appstore: DOWNLOAD_IOS,
-        //APP 的应用宝地址，
-        yingyongbao: DOWNLOAD_ANDROID,
-        fallback: DOWNLOAD_ANDROID,
-      };
-      const callLib = new CallApp(options);
-      // const h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
-      callLib.open({
-        path: "",
-        //要传递的参数
-        param: {
-          parameter: `${this.url || ''}`,
-        }
-      })
-    },
+    // onOpenApp() {
+    //   console.log("🚀 ~ this.$store.state.appInfo", this.$store.state.appInfo)
+    //   if (this.$store.state.appInfo.isApp || this.$store.state.appInfo.isMiniprogram) {
+    //     return;
+    //   }
+    //   console.log('DOWNLOAD_ANDROID', DOWNLOAD_ANDROID);
+    //   const options = {
+    //     scheme: {
+    //       //URL Scheme 的 scheme 字段，要打开的 APP 的标识
+    //       protocol: 'yeahgo'
+    //     },
+    //     //安卓原生谷歌浏览器必须传递 Intent 协议地址，才能唤起 APP
+    //     intent: {
+    //       // APP包名
+    //       package: 'com.hznt.yeahgo',
+    //       scheme: 'yeahgo'
+    //     },
+    //     timeout: '3000',
+    //     //APP 的 App Store
+    //     appstore: DOWNLOAD_IOS,
+    //     //APP 的应用宝地址，
+    //     yingyongbao: DOWNLOAD_ANDROID,
+    //     fallback: DOWNLOAD_ANDROID,
+    //   };
+    //   const callLib = new CallApp(options);
+    //   // const h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
+    //   callLib.open({
+    //     path: "",
+    //     //要传递的参数
+    //     param: {
+    //       parameter: `${this.url || ''}`,
+    //     }
+    //   })
+    // },
     getImgUrl,
   },
 };
@@ -225,9 +232,6 @@ export default {
   min-height: 100vh;
   background-color: #2F9200;
   position: relative;
-}
-.fd {
-  background-color: #2F9200;
 }
 .rule-btn {
   position: absolute;
@@ -435,4 +439,23 @@ export default {
   }
 }
 
+.null {
+  margin: 0 auto;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 351px;
+  height: 361px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  .null-text {
+    font-size: 13px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    font-weight: 400;
+    color: #333333;
+    line-height: 19px;
+  }
+}
 </style>

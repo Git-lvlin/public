@@ -160,8 +160,8 @@
         <div class="ed-item-value">{{storeName}}</div>
       </div>
       <div class="ed-info-item">
-        <div class="ed-item-label">提货点地址</div>
-        <div class="ed-item-value ed-address">{{address}}</div>
+        <div class="ed-item-label">所属地区</div>
+        <div class="ed-item-value ed-address">{{areaAll}}</div>
       </div>
     </div>
     <div class="ed-btn" @click="download">下载约购APP</div>
@@ -176,8 +176,6 @@ import CallApp from 'callapp-lib';
 import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 import teamApi from '@/apis/newshare';
 import api from '@/apis/green';
-import axios from 'axios';
-
 Vue.use(Uploader);
 Vue.use(VanImage);
 Vue.use(Popup);
@@ -312,19 +310,49 @@ export default {
       fd.append('success_action_status', '200')
       // 文件必须声明在最后，否则异常
       fd.append('file', data.file)
+      let oReq;
+
+
       return new Promise((resolve, reject) => {
-        axios.post(data.imgServer, fd, {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          transformRequest: (data) => {
-            return data
+        if (window.XMLHttpRequest) {
+          oReq = new XMLHttpRequest();
+        } else { //IE6及其以下版本浏览器
+          oReq = new ActiveXObject('Microsoft.XMLHTTP');
+        }
+        oReq.onreadystatechange = function () {
+          if (oReq.readyState == 4) {
+            var status = oReq.status;
+            if (status == 200) {
+              // _this.host1 = result.data.host+'/';
+              // _this.dir = result.data.dir;
+              // let s = _this.host1+_this.dir+(storeAs);
+              // _this.urls.push(s);
+              // _this.$emit('transfer',s)
+              resolve()
+            } else {
+              reject()
+              // alert('upload fail')
+            }
           }
-        }).then(res => {
-          resolve(res)
-        }).catch(err => {
-          reject(err)
-        })
+        }
+        oReq.open("POST", data.imgServer);
+        oReq.send(fd);
+        // axios.post(data.imgServer, fd, {
+        //   headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded'
+        //   },
+        //   // transformRequest: (data) => {
+        //   //   let ret = ''
+        //   //   for (let it in data) {
+        //   //     ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+        //   //   }
+        //   //   return ret
+        //   // },
+        // }).then(res => {
+        //   resolve(res)
+        // }).catch(err => {
+        //   reject(err)
+        // })
       })
     },
     getUrl() {
@@ -349,7 +377,7 @@ export default {
       data.name = fileName
       data.file = file
       this.uploadAttach(data).then(() => {
-        let url = data.imgServer + '/' + data.path + data.name
+        let url = data.imgServer + data.path + data.name
         this.uploadUrl.push(url)
         console.log('this.uploadUrl', this.uploadUrl)
       })
