@@ -60,7 +60,7 @@
           <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
-          <van-uploader v-model="uploader" :result-type="'file'" @oversize="oversize" :deletable="false" :after-read="afterRead" />
+          <van-uploader v-model="uploader" @oversize="oversize" :deletable="false" :after-read="afterRead" />
           <!-- <van-image
             class="upload-btn"
             width="156px"
