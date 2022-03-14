@@ -424,7 +424,7 @@ const routes = [
     name: 'One',
     component: () => import('@/views/one'),
     meta: {
-      title: '一分钱领生鲜活动',
+      title: '1分钱领生鲜活动',
     }
   },
   {
