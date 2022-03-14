@@ -60,7 +60,7 @@
           <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
-          <van-uploader v-model="uploader" :max-size="1024 * 1024" @oversize="oversize" :deletable="false" :after-read="afterRead" />
+          <van-uploader v-model="uploader" :result-type="'file'" @oversize="oversize" :deletable="false" :after-read="afterRead" />
           <!-- <van-image
             class="upload-btn"
             width="156px"
@@ -255,7 +255,7 @@ export default {
     //   })
     // },
     oversize() {
-      Toast({message: '图片超过大小限制'});
+      // Toast({message: '图片超过大小限制'});
     },
     lookXY(type) {
       this.$router.push({
