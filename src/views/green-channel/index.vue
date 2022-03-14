@@ -60,7 +60,7 @@
           <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
-          <van-uploader v-model="uploader" :deletable="false" :after-read="afterRead" />
+          <van-uploader v-model="uploader" :max-size="1024 * 1024" @oversize="oversize" :deletable="false" :after-read="afterRead" />
           <!-- <van-image
             class="upload-btn"
             width="156px"
@@ -254,6 +254,9 @@ export default {
     //     resolve()
     //   })
     // },
+    oversize() {
+      Toast({message: '图片超过大小限制'});
+    },
     lookXY(type) {
       this.$router.push({
         path: xy[type],
@@ -298,9 +301,11 @@ export default {
       this.pageType = 2
     },
     uploadAttach(data) {
+      console.log('data---', data)
       let contentLen = Math.round(data.file.size * 100 / 1024) / 100
+      console.log('contentLen', contentLen)
       let fd = new FormData()
-      fd.append('Content-Length', contentLen)
+      // fd.append('Content-Length', contentLen)
       fd.append('OSSAccessKeyId', data.OSSAccessKeyId)
       fd.append('policy', data.policy)
       fd.append('signature', data.signature)
@@ -361,7 +366,7 @@ export default {
       })
     },
     afterRead(f) {
-      console.log('afterRead')
+      console.log('afterRead', f.file)
       let fileName = new Date().getTime()
       let file = f.file
       let data = {}
