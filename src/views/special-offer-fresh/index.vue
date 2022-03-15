@@ -35,7 +35,7 @@
               <span class="r">¥{{item.marketPrice/100}}</span>
             </div>
           </div>
-          <div class="btn">立即抢购</div>
+          <div class="btn" v-if="!item.stockNum">立即抢购</div>
         </div>
       </div>
       <div class="bottom" v-if="list.length">-没有更多商品了-</div>
