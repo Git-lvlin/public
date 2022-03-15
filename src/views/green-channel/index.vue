@@ -60,7 +60,7 @@
           <div class="t3" @click="look">查看示例</div>
         </div>
         <div class="upload-btn">
-          <van-uploader v-model="uploader" @oversize="oversize" :deletable="false" :after-read="afterRead" />
+          <van-uploader v-model="uploader" @delete="deletePic" @oversize="oversize" :after-read="afterReadlog" />
           <!-- <van-image
             class="upload-btn"
             width="156px"
@@ -242,18 +242,10 @@ export default {
     this.columns = JSON.parse(str)
   },
   methods: {
-    // deletePic(p) {
-    //   console.log('uploadUrl', this.uploadUrl)
-    //   return new Promise((resolve) => {
-    //     console.log('deletePic', p)
-    //     const { file } = p
-    //     console.log('ffff', file.name)
-    //     if (file.name)
-    //     this.uploadUrl.filter(item => item.indexOf(file.name) == -1)
-    //     console.log('this.uploadUrl', this.uploadUrl)
-    //     resolve()
-    //   })
-    // },
+    deletePic(p) {
+      console.log('this', this.uploader)
+      console.log('p', p)
+    },
     oversize() {
       // Toast({message: '图片超过大小限制'});
     },
@@ -365,6 +357,17 @@ export default {
         this.uploadConfig = res.data
       })
     },
+    async uploadImg() {
+      if(!this.uploader) {
+        return
+      }
+      for(let i=0;i<this.uploader.length;i++) {
+        await this.afterRead(this.uploader[i])
+      }
+    },
+    afterReadlog(f) {
+      console.log('afterReadlog-file', f)
+    },
     afterRead(f) {
       console.log('afterRead', f.file)
       let fileName = new Date().getTime()
@@ -381,13 +384,16 @@ export default {
       fileName = fileName + format
       data.name = fileName
       data.file = file
-      this.uploadAttach(data).then(() => {
-        let url = data.imgServer + data.path + data.name
-        this.uploadUrl.push(url)
-        console.log('this.uploadUrl', this.uploadUrl)
+      return new Promise((resolve) => {
+        this.uploadAttach(data).then(() => {
+          let url = data.imgServer + data.path + data.name
+          this.uploadUrl.push(url)
+          console.log('this.uploadUrl', this.uploadUrl)
+          resolve()
+        })
       })
     },
-    submit() {
+    async submit() {
       if (!this.storeName) {
         this.nameErr = '请输入店铺名称'
         return
@@ -412,6 +418,7 @@ export default {
         this.codeErr = '请输入的验证码有误'
         return
       }
+      await this.uploadImg()
       const param = {
         storeName: this.storeName,
         provinceName: this.province,
