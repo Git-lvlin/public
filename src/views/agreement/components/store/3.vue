@@ -139,7 +139,7 @@
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布日期：2022年3月12 日</p>
+<p class="last">发布日期：2022年3月12日</p>
 </div>
 </template>
 <style lang="scss" scoped>
@@ -151,5 +151,8 @@ p {
 p:nth-child(1) {
   text-align: center;
   text-indent:0
+}
+.last {
+  text-align: right;
 }
 </style>
