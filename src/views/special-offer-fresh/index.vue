@@ -17,20 +17,25 @@
       </div>
       <div class="list-box" v-if="list.length">
         <div class="item" @click="toDetail(item)" v-for="(item, index) in list" :key="index">
-          <van-image
-            class="item-img"
-            width="100%"
-            :src="item.imageUrl"
-          />
-          <div class="item-img-mask" v-if="!item.stockNum">
-            <div class="item-img-mask-text">已售罄</div>
+          <div class="img-box">
+            <van-image
+              class="item-img"
+              width="100%"
+              :src="item.imageUrl"
+            />
+            <div class="item-img-mask" v-if="!item.stockNum">
+              <div class="item-img-mask-text">已售罄</div>
+            </div>
           </div>
-          <div class="name" :class="!item.stockNum?'disable-color':''">{{item.goodsName}}</div>
-          <div class="price">
-            <span class="l" :class="!item.stockNum?'disable-color':''">¥<span class="l-index">{{item.salePrice/100}}</span></span>
-            <span class="r">¥{{item.marketPrice/100}}</span>
+          <div class="right-box">
+            <div class="name van-multi-ellipsis--l2" :class="!item.stockNum?'disable-color':''">{{item.goodsName}}</div>
+            <div class="num">{{item.goodsSaleNumStr}}</div>
+            <div class="price">
+              <span class="l" :class="!item.stockNum?'disable-color':''">¥<span class="l-index">{{item.salePrice/100}}</span></span>
+              <span class="r">¥{{item.marketPrice/100}}</span>
+            </div>
           </div>
-          <div class="num">{{item.goodsSaleNumStr}}</div>
+          <div class="btn" v-if="item.stockNum">立即抢购</div>
         </div>
       </div>
       <div class="bottom" v-if="list.length">-没有更多商品了-</div>
@@ -281,61 +286,86 @@ export default {
 
 .list-box {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  padding: 0 12px;
+  justify-content: center;
+  margin-top: 9px;
   .item {
-    display: flex;
-    flex-direction: column;
-    width: 172px;
-    height: 262px;
-    background: #FFFFFF;
-    border-radius: 8px;
-    overflow: hidden;
     position: relative;
-    .item-img {
-      width: 100%;
-      height: 172px;
-      overflow: hidden;
-    }
-    .item-img-mask {
+    margin-bottom: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 351px;
+    height: 114px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    .btn {
       position: absolute;
-      top: 0;
-      width: 100%;
-      height: 172px;
-      overflow: hidden;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .item-img-mask-text {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      line-height: 100px;
-      background: rgba(0, 0, 0, 0.5);
-      font-size: 20px;
-      font-family: PingFangSC-Regular, PingFang SC;
-      font-weight: 400;
+      bottom: 16px;
+      right: 12px;
+      width: 80px;
+      height: 24px;
+      background: linear-gradient(270deg, #FF3333 0%, #FF6161 100%);
+      border-radius: 12px;
+      font-size: 13px;
+      font-family: PingFangSC-Medium, PingFang SC;
+      font-weight: 500;
       color: #FFFFFF;
+      line-height: 24px;
       text-align: center;
     }
+    .img-box {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      border-radius: 4px;
+      overflow: hidden;
+      .item-img {
+        width: 100%;
+        height: 100%;
+      }
+      .item-img-mask {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .item-img-mask-text {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        line-height: 60px;
+        background: rgba(0, 0, 0, 0.5);
+        font-size: 16px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        text-align: center;
+      }
+    }
+    .right-box {
+      margin-left: 12px;
+      display: flex;
+      flex-direction: column;
+      width: 229px;
+    }
     .name {
-      margin-top: 12px;
-      margin-bottom: 8px;
-      margin-left: 8px;
-      width: 156px;
-      height: 19px;
+      margin-bottom: 12px;
+      width: 229px;
+      height: 40px;
       font-size: 14px;
       font-family: PingFangSC-Medium, PingFang SC;
       font-weight: 500;
       color: #333333;
       line-height: 20px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
     }
 
     .price {
@@ -345,46 +375,42 @@ export default {
       line-height: 21px;
       .l {
         display: inline-block;
-        margin-left: 8px;
-        color: #D7291D;
-        font-size: 12px;
+        height: 21px;
+        line-height: 21px;
+        color: #E5352F;
+        font-size: 10px;
         font-family: DINAlternate-Bold, DINAlternate;
         font-weight: bold;
         .l-index {
-          font-size: 18px;
+          font-size: 16px;
         }
       }
       .r {
         display: inline-block;
         text-decoration: line-through;
-        margin-left: 4px;
+        height: 21px;
+        line-height: 21px;
+        margin-left: 8px;
         font-size: 12px;
         font-family: DINAlternate-Bold, DINAlternate;
         font-weight: bold;
-        color: #B2B2B2;
+        color: #999999;
       }
     }
     .disable-color {
       color: #999999 !important;
     }
     .num {
-      margin-left: 8px;
-      height: 17px;
-      font-size: 12px;
+      height: 16px;
+      font-size: 11px;
       font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
-      color: #B2B2B2;
-      line-height: 17px;
+      color: #999999;
+      line-height: 16px;
     }
   }
-  .item:nth-child(odd) {
-    margin-bottom: 8px;
-    margin-right: 7px;
-  }
-  .item:nth-child(even) {
-    margin-bottom: 8px;
-  }
 }
+
 
 .bottom {
   margin-top: 30px;
