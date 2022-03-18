@@ -333,6 +333,7 @@
 <p>公司官网：https://www.qhhznt.com</p>
 <p>个人信息保护联系电话：400-632-3288</p>
 <p>联系人：约购客户服务保障团队</p>
+<p style="text-align:right">2022年3月18日</p>
 </div>
 </template>
 
