@@ -15,7 +15,7 @@
       <div class="phone-err">{{phoneErr}}</div>
       <div class="code-box">
         <div class="code">
-          <input class="input code-input" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
+          <input class="input code-input" autocomplete="one-time-code" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
         </div>
         <div class="code-btn" @click="getCode" v-if="countDown">{{codeText}}</div>
         <div class="code-btn" v-else v-html="time"></div>
