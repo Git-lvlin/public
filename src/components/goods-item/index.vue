@@ -6,25 +6,32 @@
         :height="100 | pxtovw"
         :src="good.imageUrl"
       />
-      <div class="sale" >已约{{good.activitySaleNum}}件</div>
+      <!-- <div class="sale" >已约{{good.activitySaleNum}}件</div> -->
     </div>
     <div class="info_box">
       <div class="title text_two_line">{{good.goodsName}}</div>
-      <div class="desc text_one_line">{{good.goodsDesc}}</div>
-      <div class="time_down"><count-down :time="good.endTime" color="#e7512d" />后结束</div>
+      <div class="sold">
+        <!-- <pic
+          :width="100 | pxtovw"
+          :height="100 | pxtovw"
+          :src="good.imageUrl"
+        /> -->
+      </div>
+      <!-- <div class="desc text_one_line">{{good.goodsDesc}}</div> -->
+      <!-- <div class="time_down"><count-down :time="good.endTime" color="#e7512d" />后结束</div> -->
       <div class="flex_middle footer">
         <div class="price_box">
-          <div class="price_market">
+          <!-- <div class="price_market">
             <span>市场价：</span>
             <em>¥{{good.marketPrice | price}}</em>
-          </div>
+          </div> -->
           <div class="price">
-            <span class="text_red">单约价 </span>
+            <span class="text_red">拼团价 </span>
             <span class="text_small">¥</span>
             <span>{{good.activityPrice | price}}</span>
           </div>
         </div>
-        <div class="btn last_arrow">去单约</div>
+        <div class="btn last_arrow">马上抢</div>
       </div>
     </div>
   </div>
@@ -34,7 +41,9 @@
 import Image from '@/components/image';
 import CountDown from '@/components/count-down';
 import { appBaseUrl } from "@/constant/index";
-
+import {
+  goToApp,
+} from '@/utils/userInfo';
 export default {
   props: {
     width: {
@@ -64,10 +73,11 @@ export default {
       console.log(window.navigator)
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
-        this.$bridge.callHandler(
-          'router',
-          `${appBaseUrl}/shopping/detail${paramStr}`,
-        )
+        goToApp(appBaseUrl, '/shopping/detail', paramStr)
+        // this.$bridge.callHandler(
+        //   'router',
+        //   `${appBaseUrl}/shopping/detail${paramStr}`,
+        // )
       } else if (this.$store.state.appInfo.isMiniprogram) {
         wx.miniProgram.navigateTo({
           url: `/subpages/cart/detail/index${paramStr}`
@@ -83,7 +93,7 @@ export default {
 <style lang="scss" scoped>
 .goods-item {
   display: flex;
-  padding: 12px;
+  padding: 21px 12px;
   margin-bottom: 12px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -91,7 +101,7 @@ export default {
 
 .img-wrap {
   width: 100px;
-  height: 122px;
+  height: 100px;
   overflow: hidden;
   border-radius: 8px;
 }
@@ -110,7 +120,7 @@ export default {
   margin-left: 8px;
 }
 .title {
-  height: 40px;
+  height: 39px;
   color: #333333;
   font-size: 14px;
   line-height: 20px;

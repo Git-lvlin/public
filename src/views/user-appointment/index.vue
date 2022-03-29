@@ -2,15 +2,16 @@
   <div
     class="user_appointment"
   >
-    <div class="flex_fix">
+    <!-- <div class="flex_fix">
       <nav-bar title="单约专享" />
-    </div>
+    </div> -->
+    <div class=""></div>
     <img
       class="back_img flex_fix"
       :src="getImgUrl('publicMobile/together/activity_back.png')"
     />
     <div class="container">
-      <separate-line v-if="goodList.length" title="正在疯抢" />
+      <!-- <dotted-line v-if="goodList.length" title="正在疯抢" /> -->
       <van-list
         v-if="goodList.length"
         v-model="loading"
@@ -26,7 +27,8 @@
           />
         </div>
         <template #finished>
-          <separate-line title="没有更多商品" />
+          <!-- <separate-line title="没有更多商品" /> -->
+          <dotted-line title="没有更多商品" />
         </template>
       </van-list>
     </div>
@@ -39,9 +41,11 @@ import { getImgUrl } from '@/utils/tools';
 import NavBar from '@/components/navbar';
 import GoodsItem from '@/components/goods-item';
 import SeparateLine from '@/components/separate-line';
+import DottedLine from '@/components/dotted-line';
 import teamApi from '@/apis/appointment';
-import commonApi from '@/apis/common';
+// import commonApi from '@/apis/common';
 import jsBridge from '@/utils/jsBridge';
+
 
 export default {
   data() {
@@ -58,6 +62,7 @@ export default {
     'nav-bar': NavBar,
     GoodsItem,
     SeparateLine,
+    DottedLine,
     [Image.name]: Image,
     [List.name]: List,
   },
@@ -73,19 +78,19 @@ export default {
   methods: {
     getImgUrl,
     getResourceKey() {
-      commonApi.getResourceKey({
-        resourceKey: "MINIEXAMINE",
-        timeVersion: new Date().getTime(),
-      }).then(res => {
-        // console.log("res", res);
-        if(res.code == 0) {
-          const data = res.data.data;
-          if(data.state == 1) {
-            this.getUserList()
-          }
-        }
-      });
-
+      // commonApi.getResourceKey({
+      //   resourceKey: "MINIEXAMINE",
+      //   timeVersion: new Date().getTime(),
+      // }).then(res => {
+      //   // console.log("res", res);
+      //   if(res.code == 0) {
+      //     const data = res.data.data;
+      //     if(data.state == 1) {
+      //       this.getUserList()
+      //     }
+      //   }
+      // });
+      this.getUserList()
     },
     getUserList() {
       const {
