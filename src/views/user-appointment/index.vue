@@ -5,7 +5,13 @@
     <!-- <div class="flex_fix">
       <nav-bar title="单约专享" />
     </div> -->
-    <div class=""></div>
+    <div class="banner">
+      <van-swipe class="my-swipe" :autoplay="2000" indicator-color="white">
+        <van-swipe-item v-for="(item,index) in bannerList" :key="index">
+          <img class="user-pic" width="100%" height="100%" :src="item.image" @click="clickBanner(item)"/>
+        </van-swipe-item>
+      </van-swipe>
+    </div>
     <img
       class="back_img flex_fix"
       :src="getImgUrl('publicMobile/together/activity_back.png')"
@@ -36,16 +42,19 @@
 </template>
 
 <script>
-import { Image, List } from 'vant';
+import Vue from 'vue';
+import { Image, List, Swipe, SwipeItem } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import NavBar from '@/components/navbar';
 import GoodsItem from '@/components/goods-item';
 import SeparateLine from '@/components/separate-line';
 import DottedLine from '@/components/dotted-line';
 import teamApi from '@/apis/appointment';
-// import commonApi from '@/apis/common';
+import commonApi from '@/apis/common';
 import jsBridge from '@/utils/jsBridge';
-
+import { goToApp } from '@/utils/userInfo';
+Vue.use(Swipe);
+Vue.use(SwipeItem);
 
 export default {
   data() {
@@ -56,6 +65,7 @@ export default {
       size: 10,
       totalPage: 1,
       goodList: [],
+      bannerList: null,
     };
   },
   components: {
@@ -69,6 +79,7 @@ export default {
   created () {
     // 不推荐在这里调用 fetchItem
     // this.getUserList();
+    this.getbanner()
     this.getResourceKey();
     // console.log('windows', window);
     // console.log(this.$store.state);
@@ -77,6 +88,42 @@ export default {
   },
   methods: {
     getImgUrl,
+    clickBanner(item) {
+      console.log('点击拼团banner-item', item)
+      if (item.actionUrlApp) {
+        // 有类型参数就分别跳转
+        if (this.$store.state.appInfo.isApp) {
+          goToApp(item.actionUrlApp)
+          return
+        }
+        if (this.$store.state.appInfo.isMiniprogram) {
+          wx.miniProgram.navigateTo({
+            url: item.actionUrlMini
+          })
+          return
+        }
+      } else {
+        // 默认跳转app
+        goToApp(item.actionUrl)
+      }
+    },
+    getbanner() {
+      const param = {
+        location: 8,
+        verifyVersionId: 1
+      }
+      commonApi.getBannerList(param).then(res=>{
+        this.bannerList = res.data.map(item => {
+          if (item.actionUrl && item.actionUrl.includes(',')) {
+            let arr = item.actionUrl.split(',')
+            item.actionUrlApp = arr[0]
+            item.actionUrlMini = arr[1]
+            return item
+          }
+          return item
+        })
+      })
+    },
     getResourceKey() {
       // commonApi.getResourceKey({
       //   resourceKey: "MINIEXAMINE",
@@ -169,5 +216,22 @@ export default {
   }
   .goods_list {
     padding: 0 12px;
+  }
+  .banner {
+    padding: 94px 12px 16px 12px;
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 2;
+  }
+  .my-swipe {
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100px;
+  }
+  .my-swipe .van-swipe-item {
+    color: #fff;
+    font-size: 20px;
+    line-height: 150px;
+    text-align: center;
   }
 </style>
