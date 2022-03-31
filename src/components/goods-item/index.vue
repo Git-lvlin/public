@@ -1,11 +1,13 @@
 <template>
   <div class="goods-item" @click="onToDetail">
     <div class="flex_fix img-wrap">
-      <pic
+      <van-image class="goods_img" width="100%" height="100%" :src="good.imageUrl" />
+      <van-image v-if="good.memberType" class="new_tag_image" width="24px" height="43px" :src="newTagImage" />
+      <!-- <pic
         :width="100 | pxtovw"
         :height="100 | pxtovw"
         :src="good.imageUrl"
-      />
+      /> -->
       <div class="stock-null" v-if="!good.stockNum">
         <div class="null">已售罄</div>
       </div>
@@ -13,7 +15,7 @@
     <div class="info_box">
       <div class="title text_two_line" :class="!good.stockNum?'null-title':''">{{good.goodsName}}</div>
       <div class="goods_num" :class="!good.stockNum?'null-num':''">
-        <pic :width="15" :height="15" :src="!good.stockNum?iconNull:icon" />
+        <van-image width="15px" height="15px" :src="!good.stockNum?iconNull:icon" />
         <div class="goods_num_str" :class="!good.stockNum?'null-num-str':''">{{good.goodsSaleNumStr}}</div>
       </div>
       <!-- <div class="desc text_one_line">{{good.goodsDesc}}</div> -->
@@ -30,20 +32,24 @@
             <span>{{good.activityPrice | price}}</span>
           </div>
         </div>
-        <div class="btn last_arrow" :class="!good.stockNum?'null-btn':''">马上抢</div>
+       
       </div>
     </div>
+    <div class="btn last_arrow" :class="!good.stockNum?'null-btn':''">马上抢</div>
   </div>
 </template>
 
 <script>
-import Image from '@/components/image';
+// import Image from '@/components/image';
+import Vue from 'vue';
+import { Image as VanImage } from 'vant';
 import CountDown from '@/components/count-down';
 import { appBaseUrl } from "@/constant/index";
 import { getImgUrl } from '@/utils/tools';
 import {
   goToApp,
 } from '@/utils/userInfo';
+Vue.use(VanImage);
 export default {
   props: {
     width: {
@@ -56,7 +62,7 @@ export default {
     },
   },
   components: {
-    pic: Image,
+    // pic: Image,
     CountDown,
   },
   data() {
@@ -64,6 +70,7 @@ export default {
       time: 30 * 60 * 60 * 60,
       icon: getImgUrl('publicMobile/collage/icon-hot.png'),
       iconNull: getImgUrl('publicMobile/collage/icon-hot-null.png'),
+      newTagImage: getImgUrl('publicMobile/collage/new.png'),
     };
   },
   methods: {
@@ -94,7 +101,9 @@ export default {
 
 <style lang="scss" scoped>
 .goods-item {
+  position: relative;
   display: flex;
+  align-items: center;
   padding: 21px 12px;
   margin-bottom: 12px;
   background-color: #ffffff;
@@ -107,6 +116,15 @@ export default {
   height: 100px;
   overflow: hidden;
   border-radius: 8px;
+}
+.goods_img {
+  position: absolute;
+  top: 0;
+}
+.new_tag_image {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .stock-null {
   display: flex;
@@ -143,7 +161,10 @@ export default {
 // }
 
 .info_box {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   margin-left: 8px;
 }
 .title {
@@ -199,6 +220,9 @@ export default {
   color: #999999;
 }
 .btn {
+  position: absolute;
+  right: 11px;
+  bottom: 18px;
   display: flex;
   align-items: center;
   justify-content: center;

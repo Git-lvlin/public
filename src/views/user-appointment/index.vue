@@ -16,8 +16,8 @@
       class="back_img flex_fix"
       :src="getImgUrl('publicMobile/together/activity_back.png')"
     />
-    <div class="container">
-      <!-- <dotted-line v-if="goodList.length" title="正在疯抢" /> -->
+    <div class="container" v-if="goodList.length">
+      <!-- <dotted-line v-if="!.length" title="正在疯抢" /> -->
       <van-list
         v-if="goodList.length"
         v-model="loading"
@@ -37,6 +37,15 @@
           <dotted-line title="没有更多商品" />
         </template>
       </van-list>
+    </div>
+    <div class="null" v-else>
+      <van-image
+        class="null-icon"
+        width="288px"
+        height="239px"
+        :src="getImgUrl('publicMobile/fresh/null.png')"
+      />
+      <div class="null-text">商品已抢光啦，下次早点来喔～</div>
     </div>
   </div>
 </template>
@@ -235,5 +244,24 @@ export default {
     font-size: 20px;
     line-height: 150px;
     text-align: center;
+  }
+  .null {
+    margin: 0 auto;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 351px;
+    height: 361px;
+    background: #FFFFFF;
+    border-radius: 12px;
+    .null-text {
+      font-size: 13px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #333333;
+      line-height: 19px;
+    }
   }
 </style>
