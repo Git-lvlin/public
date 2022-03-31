@@ -196,7 +196,7 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #CE1E27;
+    background-color: #E10017;
   }
 
   .back_img {
@@ -213,9 +213,11 @@ export default {
     z-index: 1;
     flex: 1;
     overflow-y: auto;
+    padding-bottom: 62px;
   }
   .goods_list {
     padding: 0 12px;
+    margin-bottom: 20px;
   }
   .banner {
     padding: 94px 12px 16px 12px;
