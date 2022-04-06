@@ -685,7 +685,7 @@ export default {
       switch(type) {
         case 'index':
           if (this.storeConsume.storeConsumeIsTaskFinish) {
-            goToApp(appBaseUrl, '/tab/index?index=2', '', this.$bridge)
+            goToApp(appBaseUrl, '/flutter/store/member/index', '', this.$bridge)
           } else {
             this.getTask(4)
           }
