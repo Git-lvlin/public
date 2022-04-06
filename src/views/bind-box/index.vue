@@ -162,6 +162,29 @@
           <span class="text" @click="go('home')">{{orderConsume.consumeIsTaskFinish?'去首页逛逛':'领取任务'}}</span>
         </div>
       </div>
+
+      <div class="item box-f" v-if="storeConsume.storeConsumeIsShow">
+        <div class="task-title">
+          <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
+          <div class="task-title-text">
+            <span>采购订单</span>
+          </div>
+          <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
+        </div>
+        <div class="task-content">
+          <div class="task-flex">
+            <p>每日采购<span class="span">{{storeConsume.storeConsumeNum}}</span>笔≥<span class="span">{{storeConsume.storeConsumePrice/100}}</span>元的集约订单，获得{{storeConsume.storeConsumeChanceNum}}次开盒机会，每天封顶获得{{storeConsume.storeConsumeDayMaxNum}}次开盲盒机会。</p>
+            <p v-if="!storeConsume.storeConsumeIsFinish">本次已邀请<span class="span">{{blindboxStatus?storeConsume.storeConsumeFinishNum:'x'}}</span>人，还差<span class="span">{{blindboxStatus?storeConsume.storeConsumeUnNum:'x'}}</span>人。(已获取{{storeConsume.storeConsumeActivityChanceNum}}次机会)</p>
+            <p v-else>今天已经圆满完成任务，明天再继续努力吧~</p>
+            <p class="new-p">完成消费任务后退款，将取消盲盒活动奖品发放。</p>
+          </div>
+        </div>
+        <div class="btn-yellow">
+          <van-image width="225px" height="41px" :src="getImgUrl('publicMobile/bindbox/btn-yellow.png')" />
+          <span class="text" @click="go('index')">{{storeConsume.storeConsumeIsTaskFinish?'立即参与':'领取任务'}}</span>
+        </div>
+      </div>
+
       <div class="tail">
         <van-image class="l" width="34px" height="2px" :src="getImgUrl('publicMobile/bindbox/logo-left-border.png')" />
         <div class="tail-text">约着买更便宜</div>
@@ -418,6 +441,7 @@ export default {
     this.getTask(1);
     this.getTask(2);
     this.getTask(3);
+    this.getTask(4);
     this.init();
     this.sameDayHasSgin();
   },
@@ -586,7 +610,7 @@ export default {
       }
       teamApi.getTaskInfo(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
-          const { prizeNotice, configId, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
+          const { prizeNotice, configId, inviteFriends, storeConsume, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
           this.prizeNotice = prizeNotice
           this.couponInviteId = configId
           this.prizeWinMsg = prizeWinMsg
@@ -594,6 +618,7 @@ export default {
           this.validTimeMsg = validTimeMsg
           this.unuseNum = unuseNum
           this.inviteFriends= inviteFriends
+          this.storeConsume = storeConsume
           this.signIn = signIn
           this.blindboxStatus = blindboxStatus
           this.activityStartTime = this.timestampToTime(activityStartTime)
@@ -658,6 +683,13 @@ export default {
         return
       }
       switch(type) {
+        case 'index':
+          if (this.storeConsume.storeConsumeIsTaskFinish) {
+            goToApp(appBaseUrl, '/tab/index?index=2', '', this.$bridge)
+          } else {
+            this.getTask(4)
+          }
+          break
         case 'home':
           if (this.orderConsume.consumeIsTaskFinish) {
             goToApp(appBaseUrl, '/tab/index?index=0', '', this.$bridge)
@@ -1063,6 +1095,13 @@ export default {
       }
       .btn-yellow {
         top: -34px;
+      }
+    }
+    .box-f {
+      margin-top: 18px;
+      height: 200px;
+      .task-content {
+        height: 85px;
       }
     }
     .task-content {
