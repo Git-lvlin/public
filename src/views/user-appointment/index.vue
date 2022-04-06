@@ -2,7 +2,6 @@
   <div
     class="user_appointment"
   >
-    <van-loading class="load" v-if="load" />
     <!-- <div class="flex_fix">
       <nav-bar title="单约专享" />
     </div> -->
@@ -53,7 +52,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image, List, Swipe, SwipeItem, Lazyload, Loading, } from 'vant';
+import { Image, List, Swipe, SwipeItem } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import NavBar from '@/components/navbar';
 import GoodsItem from '@/components/goods-item';
@@ -65,8 +64,6 @@ import jsBridge from '@/utils/jsBridge';
 import { goToApp } from '@/utils/userInfo';
 Vue.use(Swipe);
 Vue.use(SwipeItem);
-Vue.use(Loading);
-Vue.use(Lazyload);
 export default {
   data() {
     return {
@@ -77,7 +74,6 @@ export default {
       totalPage: 1,
       goodList: [],
       bannerList: null,
-      load: true,
       isNull: false,
     };
   },
@@ -93,7 +89,7 @@ export default {
     // 不推荐在这里调用 fetchItem
     // this.getUserList();
     this.getbanner()
-    // this.getResourceKey();
+    this.getResourceKey();
     // console.log('windows', window);
     // console.log(this.$store.state);
     this.jsb = jsBridge;
@@ -138,7 +134,6 @@ export default {
           }
           return item
         })
-        this.load = false
       })
     },
     getResourceKey() {
