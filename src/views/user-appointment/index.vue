@@ -89,7 +89,7 @@ export default {
     // 不推荐在这里调用 fetchItem
     // this.getUserList();
     this.getbanner()
-    this.getResourceKey();
+    // this.getResourceKey();
     // console.log('windows', window);
     // console.log(this.$store.state);
     this.jsb = jsBridge;
@@ -99,13 +99,16 @@ export default {
     getImgUrl,
     clickBanner(item) {
       console.log('点击拼团banner-item', item)
+      if (!item.actionUrl) {
+        return
+      }
       if (item.actionUrlApp) {
         // 有类型参数就分别跳转
-        if (this.$store.state.appInfo.isApp) {
+        if (this.$store.state.appInfo.isApp && item.actionUrlApp) {
           goToApp(item.actionUrlApp)
           return
         }
-        if (this.$store.state.appInfo.isMiniprogram) {
+        if (this.$store.state.appInfo.isMiniprogram && item.actionUrlMini) {
           wx.miniProgram.navigateTo({
             url: item.actionUrlMini
           })
