@@ -39,7 +39,7 @@
         </template>
       </van-list>
     </div>
-    <div class="null" v-if="!goodList.length && !load">
+    <div class="null" v-if="isNull">
       <van-image
         class="null-icon"
         width="288px"
@@ -78,6 +78,7 @@ export default {
       goodList: [],
       bannerList: null,
       load: true,
+      isNull: false,
     };
   },
   components: {
@@ -174,6 +175,9 @@ export default {
             this.goodList = data.records;
           } else {
             this.goodList = this.goodList.concat(data.records);
+          }
+          if (!this.goodList.length) {
+            this.isNull = true
           }
           if (data.records.length < this.size) {
             this.finished = true;
