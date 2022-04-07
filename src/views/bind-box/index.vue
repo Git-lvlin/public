@@ -68,7 +68,11 @@
             :good="item"
           />
         </div>
-        <div class="list-box-text">{{appTips}}</div>
+      </div>
+      <div class="list-box-text">
+        <van-swipe :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
+          <van-swipe-item>{{appTips}}</van-swipe-item>
+        </van-swipe>
       </div>
     </div>
 
@@ -400,6 +404,7 @@ export default {
       inviteCode: null,
       couponInviteId: null,
       clicked:false,
+      storeNo: null,
     };
   },
   components: {
@@ -604,7 +609,9 @@ export default {
       return Y+M+D+h+m;
     },
     init() {
-      const param = {}
+      const param = {
+        storeNo: this.storeNo
+      }
       if (this.couponInviteId) {
         param.configId = this.couponInviteId
       }
@@ -670,6 +677,7 @@ export default {
           const d = JSON.parse(res)
           this.phone = d.data.phoneNumber
           this.token = d.data.accessToken
+          this.storeNo = d.data.storeNo
           resolve()
         })
       })
@@ -1004,16 +1012,17 @@ export default {
         position: relative;
         height: 71px;
       }
-      .list-box-text {
-        margin-top: 3px;
-        width: 100%;
-        height: 14px;
-        font-size: 10px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #FBF0BB;
-        line-height: 14px;
-      }
+
+    }
+    .list-box-text {
+      margin-top: 3px;
+      width: 100%;
+      height: 14px;
+      font-size: 10px;
+      font-family: PingFangSC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #FBF0BB;
+      line-height: 14px;
     }
   }
   .title-box {
