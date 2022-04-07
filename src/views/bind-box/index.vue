@@ -71,8 +71,12 @@
       </div>
     </div>
     <div class="list-box-text">
-      <van-swipe class="list-bubble-swipe" :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
-        <van-swipe-item>{{appTips}}</van-swipe-item>
+      <van-swipe class="list-bubble-swipe" :autoplay="1000" style="height: 50px;" :show-indicators="false" indicator-color="white">
+        <van-swipe-item>
+          <span> {{appTips}} </span>
+          <span> {{appTips}} </span>
+          <span> {{appTips}} </span>
+        </van-swipe-item>
       </van-swipe>
     </div>
     <div class="task-box" id="anchor">
@@ -1012,27 +1016,7 @@ export default {
       }
     }
   }
-  .list-box-text {
-    width: 100%;
-    height: 14px;
-    background-color: #EA5737;
-    border-bottom: 8px solid #B64030;
-    font-size: 10px;
-    font-weight: 400;
-    color: #FBF0BB;
-    line-height: 14px;
-    overflow: hidden;
-    .list-bubble-swipe {
-      position: relative;
-      top: 3px;
-      left: 12px;
-      width: 350px;
-      .van-swipe-item{
-        position: absolute;
-        animation: 14s rowup linear infinite normal;
-      }
-    }
-  }
+
   .title-box {
     padding: 0 16px;
     display: flex;
@@ -1062,6 +1046,25 @@ export default {
   }
   .text-more {
     color: #F7FD95;
+  }
+  .list-box-text {
+    padding-bottom: 3px;
+    width: 100%;
+    height: 50px;
+    background-color: #EA5737;
+    border-bottom: 8px solid #B64030;
+    font-size: 10px;
+    font-weight: 400;
+    color: #FBF0BB;
+    line-height: 14px;
+    overflow: hidden;
+    .list-bubble-swipe {
+      height: 50px;
+      .van-swipe-item{
+        position: absolute;
+        animation: 14s rowup linear infinite normal;
+      }
+    }
   }
   .task-box {
     padding-top: 11px;
