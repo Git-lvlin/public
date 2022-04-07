@@ -173,8 +173,8 @@
         </div>
         <div class="task-content">
           <div class="task-flex">
-            <p>每日采购<span class="span">{{storeConsume.storeConsumeNum}}</span>笔≥<span class="span">{{storeConsume.storeConsumePrice/100}}</span>元的集约订单，获得{{storeConsume.storeConsumeChanceNum}}次开盒机会，每天封顶获得{{storeConsume.storeConsumeDayMaxNum}}次开盲盒机会。</p>
-            <p v-if="!storeConsume.storeConsumeIsFinish">本次已邀请<span class="span">{{blindboxStatus?storeConsume.storeConsumeFinishNum:'x'}}</span>人，还差<span class="span">{{blindboxStatus?storeConsume.storeConsumeUnNum:'x'}}</span>人。(已获取{{storeConsume.storeConsumeActivityChanceNum}}次机会)</p>
+            <p>每日采购<span class="span">{{storeConsume.storeConsumeNum}}</span>笔≥<span class="span">{{storeConsume.storeConsumePrice/100}}</span>元的集约订单，获得{{storeConsume.storeConsumeChanceNum}}次开盲盒机会，每天封顶获得{{storeConsume.storeConsumeDayMaxNum}}次开盲盒机会。</p>
+            <p v-if="!storeConsume.storeConsumeIsFinish">本次已消费<span class="span">{{blindboxStatus?storeConsume.storeConsumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?storeConsume.storeConsumeUnNum:'x'}}</span>笔。(已获取{{storeConsume.storeConsumeActivityChanceNum}}次机会)</p>
             <p v-else>今天已经圆满完成任务，明天再继续努力吧~</p>
             <p class="new-p">完成消费任务后退款，将取消盲盒活动奖品发放。</p>
           </div>
