@@ -70,7 +70,7 @@
         </div>
       </div>
       <div class="list-box-text">
-        <van-swipe class="bubble-swipe" :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
+        <van-swipe class="list-bubble-swipe" :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
           <van-swipe-item>{{appTips}}</van-swipe-item>
         </van-swipe>
       </div>
@@ -800,7 +800,7 @@ export default {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-140px);
+    transform: translateX(-375px);
   }
 }
   .bubble {
@@ -1012,23 +1012,17 @@ export default {
         position: relative;
         height: 71px;
       }
-
     }
     .list-box-text {
       padding: 6px 12px 6px 12px;
-      width: 100%;
       height: 14px;
       font-size: 10px;
       font-weight: 400;
       color: #FBF0BB;
       line-height: 14px;
       overflow: hidden;
-      .bubble-swipe {
-        position: relative;
-        top: 0;
-        left: 0;
+      .list-bubble-swipe {
         .van-swipe-item{
-          position: absolute;
           animation: 14s rowup linear infinite normal;
         }
       }
