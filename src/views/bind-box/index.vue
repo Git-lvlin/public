@@ -167,7 +167,7 @@
         </div>
       </div>
 
-      <div class="item box-f" v-if="storeConsume.storeConsumeIsShow">
+      <div class="item box-f" v-if="storeConsume.length&&storeConsume.storeConsumeIsShow">
         <div class="task-title">
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
