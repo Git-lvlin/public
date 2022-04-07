@@ -172,7 +172,7 @@ export default {
           } else {
             this.goodList = this.goodList.concat(data.records);
           }
-          if (!this.goodList.length) {
+          if (!this.goodList || !this.goodList.length) {
             this.isNull = true
           }
           if (data.records.length < this.size) {
