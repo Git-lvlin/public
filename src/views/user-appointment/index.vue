@@ -164,6 +164,7 @@ export default {
         const {
           data,
         } = res;
+        console.log('shuj', res)
         if (data && data.records) {
           this.totalPage = data.totalPage;
           if (page < 2) {
@@ -180,6 +181,7 @@ export default {
         }
         this.loading = false;
       }).catch(() => {
+        this.isNull = true;
         this.loading = false;
       });
     },
