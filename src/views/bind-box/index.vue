@@ -69,13 +69,12 @@
           />
         </div>
       </div>
-      <div class="list-box-text">
-        <van-swipe class="list-bubble-swipe" :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
-          <van-swipe-item>{{appTips}}</van-swipe-item>
-        </van-swipe>
-      </div>
     </div>
-
+    <div class="list-box-text">
+      <van-swipe class="list-bubble-swipe" :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
+        <van-swipe-item>{{appTips}}</van-swipe-item>
+      </van-swipe>
+    </div>
     <div class="task-box" id="anchor">
       <div class="title-box">
         <van-image class="left-icon" width="45px" height="16px" :src="getImgUrl('publicMobile/bindbox/title-icon.png')" />
@@ -1002,7 +1001,6 @@ export default {
   .goods-list {
     width: 100%;
     background-color: #EA5737;
-    border-bottom: 8px solid #B64030;
     .list-box {
       padding: 19px 0 0 16px;
       overflow: hidden;
@@ -1013,18 +1011,21 @@ export default {
         height: 71px;
       }
     }
-    .list-box-text {
-      padding: 6px 12px 6px 12px;
-      height: 14px;
-      font-size: 10px;
-      font-weight: 400;
-      color: #FBF0BB;
-      line-height: 14px;
-      overflow: hidden;
-      .list-bubble-swipe {
-        .van-swipe-item{
-          animation: 14s rowup linear infinite normal;
-        }
+  }
+  .list-box-text {
+    padding: 6px 12px 6px 12px;
+    height: 14px;
+    background-color: #EA5737;
+    border-bottom: 8px solid #B64030;
+    font-size: 10px;
+    font-weight: 400;
+    color: #FBF0BB;
+    line-height: 14px;
+    overflow: hidden;
+    .list-bubble-swipe {
+      width: 100%;
+      .van-swipe-item{
+        animation: 14s rowup linear infinite normal;
       }
     }
   }
