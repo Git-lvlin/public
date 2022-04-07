@@ -56,7 +56,7 @@
       <div class="title-box">
         <van-image class="left-icon" width="45px" height="16px" :src="getImgUrl('publicMobile/bindbox/title-icon.png')" />
         <van-image class="star-left" width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
-        <div class="title">盲盒里可能会有1</div>
+        <div class="title">盲盒里可能会有</div>
         <van-image class="star-right" width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
         <van-image class="right-icon" width="45px" height="16px" :src="getImgUrl('publicMobile/bindbox/title-icon.png')" />
       </div>
@@ -71,7 +71,7 @@
       </div>
     </div>
     <div class="list-box-text">
-      <van-swipe class="list-bubble-swipe" :autoplay="1000" style="height: 50px;" :show-indicators="false" indicator-color="white">
+      <van-swipe class="list-bubble-swipe" :autoplay="1000" style="height: 30px;" :show-indicators="false" indicator-color="white">
         <van-swipe-item>
           <span> {{appTips}} </span>
           <span> {{appTips}} </span>
@@ -1059,7 +1059,10 @@ export default {
     line-height: 14px;
     overflow: hidden;
     .list-bubble-swipe {
-      height: 50px;
+      width: 375px;
+      position: relative;
+      top: 3px;
+      left: 6px;
       .van-swipe-item{
         position: absolute;
         animation: 14s rowup linear infinite normal;
