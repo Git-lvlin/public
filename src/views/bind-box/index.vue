@@ -139,7 +139,7 @@
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
             <!-- <span class="text-more">任务三：</span> -->
-            <span>订单消费</span>
+            <span>每日首单消费</span>
           </div>
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
         </div>
