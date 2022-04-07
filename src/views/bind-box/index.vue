@@ -68,7 +68,7 @@
             :good="item"
           />
         </div>
-        <!-- <div class="list-box-text">话费中奖后，将在7个工作日内充值到您的收货手机号中。</div> -->
+        <div class="list-box-text">{{appTips}}</div>
       </div>
     </div>
 
@@ -610,7 +610,7 @@ export default {
       }
       teamApi.getTaskInfo(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
-          const { prizeNotice, configId, inviteFriends, storeConsume, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
+          const { prizeNotice, configId, appTips, inviteFriends, storeConsume, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
           this.prizeNotice = prizeNotice
           this.couponInviteId = configId
           this.prizeWinMsg = prizeWinMsg
@@ -618,6 +618,7 @@ export default {
           this.validTimeMsg = validTimeMsg
           this.unuseNum = unuseNum
           this.inviteFriends= inviteFriends
+          this.appTips = appTips
           this.storeConsume = storeConsume
           this.signIn = signIn
           this.blindboxStatus = blindboxStatus
