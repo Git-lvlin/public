@@ -70,7 +70,7 @@
         </div>
       </div>
       <div class="list-box-text">
-        <van-swipe :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
+        <van-swipe class="bubble-swipe" :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
           <van-swipe-item>{{appTips}}</van-swipe-item>
         </van-swipe>
       </div>
@@ -167,7 +167,7 @@
         </div>
       </div>
 
-      <div class="item box-f" v-if="storeConsume.length&&storeConsume.storeConsumeIsShow">
+      <div class="item box-f" v-if="storeConsume!=={}&&storeConsume.storeConsumeIsShow">
         <div class="task-title">
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
@@ -1004,7 +1004,7 @@ export default {
     background-color: #EA5737;
     border-bottom: 8px solid #B64030;
     .list-box {
-      padding: 19px 0 10px 16px;
+      padding: 19px 0 0 16px;
       overflow: hidden;
       white-space: nowrap;
       overflow-x: auto;
@@ -1015,14 +1015,23 @@ export default {
 
     }
     .list-box-text {
-      margin-top: 3px;
+      padding: 6px 12px 6px 12px;
       width: 100%;
       height: 14px;
       font-size: 10px;
-      font-family: PingFangSC-Regular, PingFang SC;
       font-weight: 400;
       color: #FBF0BB;
       line-height: 14px;
+      overflow: hidden;
+      .bubble-swipe {
+        position: relative;
+        top: 0;
+        left: 0;
+        .van-swipe-item{
+          position: absolute;
+          animation: 14s rowup linear infinite normal;
+        }
+      }
     }
   }
   .title-box {
