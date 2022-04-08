@@ -70,10 +70,10 @@
         </div>
       </div>
     </div>
-    <div class="list-box-text">
-      <van-swipe class="list-bubble-swipe" :autoplay="1000" style="height: 14px;" :show-indicators="false" indicator-color="white">
-        <van-swipe-item>{{appTips}}</van-swipe-item>
-      </van-swipe>
+    <div class="list-box-text" v-if="appTips">
+      <div class="list_content_box">
+        <div class="text_index">{{appTips}}</div>
+      </div>
     </div>
     <div class="list-box-bottom-border"></div>
     <div class="task-box" id="anchor">
@@ -1044,8 +1044,8 @@ export default {
   .text-more {
     color: #F7FD95;
   }
+
   .list-box-text {
-    padding-bottom: 4px;
     width: 100%;
     height: 14px;
     background-color: #EA5737;
@@ -1053,15 +1053,23 @@ export default {
     font-weight: 400;
     color: #FBF0BB;
     line-height: 14px;
-    overflow: hidden;
-    .list-bubble-swipe {
-      padding-left: 12px;
-      .van-swipe-item{
-        width: 200%;
-        animation: 14s rowup linear infinite normal;
+    .list_content_box {
+      margin: 0 auto;
+      width: 351px;
+      height: 100%;
+      overflow: hidden;
+      .text_index {
+        width: 750px;
+        height: 100%;
+        text-align: left;
+        display: flex;
+        flex-wrap: nowrap;
+        animation: rowup 10s linear infinite;
+        transition: all 1s;
       }
     }
   }
+
   .list-box-bottom-border {
     width: 100%;
     height: 8px;
