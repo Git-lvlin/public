@@ -165,6 +165,9 @@ export default {
           data,
         } = res;
         console.log('shuj', res)
+        if (res.code == '10110') {
+          this.isNull = true
+        }
         if (data && data.records) {
           this.totalPage = data.totalPage;
           if (page < 2) {
