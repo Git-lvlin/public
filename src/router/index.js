@@ -18,7 +18,7 @@ const routes = [
     name: 'UserAppointment',
     component: () => import('@/views/user-appointment'),
     meta: {
-      title: '单约专享',
+      title: '',
     },
   },
   {
@@ -433,6 +433,14 @@ const routes = [
     component: () => import('@/views/store-recruit'),
     meta: {
       title: '约购生鲜店主招募',
+    }
+  },
+  {
+    path: '/web/group-rule',
+    name: 'GroupRule',
+    component: () => import('@/views/group-rule'),
+    meta: {
+      title: '拼团规则',
     }
   }
 ];

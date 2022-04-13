@@ -68,10 +68,14 @@
             :good="item"
           />
         </div>
-        <!-- <div class="list-box-text">话费中奖后，将在7个工作日内充值到您的收货手机号中。</div> -->
       </div>
     </div>
-
+    <div class="list-box-text" v-if="appTips">
+      <div class="list_content_box">
+        <div class="text_index">{{appTips}}</div>
+      </div>
+    </div>
+    <div class="list-box-bottom-border"></div>
     <div class="task-box" id="anchor">
       <div class="title-box">
         <van-image class="left-icon" width="45px" height="16px" :src="getImgUrl('publicMobile/bindbox/title-icon.png')" />
@@ -139,7 +143,7 @@
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
             <!-- <span class="text-more">任务三：</span> -->
-            <span>订单消费</span>
+            <span>每日首单消费</span>
           </div>
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
         </div>
@@ -162,6 +166,29 @@
           <span class="text" @click="go('home')">{{orderConsume.consumeIsTaskFinish?'去首页逛逛':'领取任务'}}</span>
         </div>
       </div>
+
+      <div class="item box-f" v-if="storeConsume&&storeConsume!=={}&&storeConsume.storeConsumeIsShow">
+        <div class="task-title">
+          <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
+          <div class="task-title-text">
+            <span>采购订单</span>
+          </div>
+          <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
+        </div>
+        <div class="task-content">
+          <div class="task-flex">
+            <p>每日采购<span class="span">{{storeConsume.storeConsumeNum}}</span>笔≥<span class="span">{{storeConsume.storeConsumePrice/100}}</span>元的集约订单，获得{{storeConsume.storeConsumeChanceNum}}次开盲盒机会，每天封顶获得{{storeConsume.storeConsumeDayMaxNum}}次开盲盒机会。</p>
+            <p v-if="!storeConsume.storeConsumeIsFinish">本次已消费<span class="span">{{blindboxStatus?storeConsume.storeConsumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?storeConsume.storeConsumeUnNum:'x'}}</span>笔。(已获取{{storeConsume.storeConsumeActivityChanceNum}}次机会)</p>
+            <p v-else>今天已经圆满完成任务，明天再继续努力吧~</p>
+            <p class="new-p">完成消费任务后退款，将取消盲盒活动奖品发放。</p>
+          </div>
+        </div>
+        <div class="btn-yellow">
+          <van-image width="225px" height="41px" :src="getImgUrl('publicMobile/bindbox/btn-yellow.png')" />
+          <span class="text" @click="go('index')">{{storeConsume.storeConsumeIsTaskFinish?'立即参与':'领取任务'}}</span>
+        </div>
+      </div>
+
       <div class="tail">
         <van-image class="l" width="34px" height="2px" :src="getImgUrl('publicMobile/bindbox/logo-left-border.png')" />
         <div class="tail-text">约着买更便宜</div>
@@ -377,6 +404,7 @@ export default {
       inviteCode: null,
       couponInviteId: null,
       clicked:false,
+      storeNo: null,
     };
   },
   components: {
@@ -418,6 +446,7 @@ export default {
     this.getTask(1);
     this.getTask(2);
     this.getTask(3);
+    this.getTask(4);
     this.init();
     this.sameDayHasSgin();
   },
@@ -580,13 +609,15 @@ export default {
       return Y+M+D+h+m;
     },
     init() {
-      const param = {}
+      const param = {
+        storeNo: this.storeNo
+      }
       if (this.couponInviteId) {
         param.configId = this.couponInviteId
       }
       teamApi.getTaskInfo(param, {token: this.token}).then((res) => {
         if (res.code === 0) {
-          const { prizeNotice, configId, inviteFriends, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
+          const { prizeNotice, configId, appTips, inviteFriends, storeConsume, signIn, orderConsume, prizeWinMsg, ruleText, validTimeMsg, unuseNum, blindboxStatus, activityStartTime, activityEndTime } = res.data;
           this.prizeNotice = prizeNotice
           this.couponInviteId = configId
           this.prizeWinMsg = prizeWinMsg
@@ -594,6 +625,8 @@ export default {
           this.validTimeMsg = validTimeMsg
           this.unuseNum = unuseNum
           this.inviteFriends= inviteFriends
+          this.appTips = appTips
+          this.storeConsume = storeConsume
           this.signIn = signIn
           this.blindboxStatus = blindboxStatus
           this.activityStartTime = this.timestampToTime(activityStartTime)
@@ -644,6 +677,7 @@ export default {
           const d = JSON.parse(res)
           this.phone = d.data.phoneNumber
           this.token = d.data.accessToken
+          this.storeNo = d.data.storeNo
           resolve()
         })
       })
@@ -658,6 +692,13 @@ export default {
         return
       }
       switch(type) {
+        case 'index':
+          if (this.storeConsume.storeConsumeIsTaskFinish) {
+            goToApp(appBaseUrl, '/flutter/store/member/index', '', this.$bridge)
+          } else {
+            this.getTask(4)
+          }
+          break
         case 'home':
           if (this.orderConsume.consumeIsTaskFinish) {
             goToApp(appBaseUrl, '/tab/index?index=0', '', this.$bridge)
@@ -759,7 +800,7 @@ export default {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-140px);
+    transform: translateX(-375px);
   }
 }
   .bubble {
@@ -961,9 +1002,8 @@ export default {
   .goods-list {
     width: 100%;
     background-color: #EA5737;
-    border-bottom: 8px solid #B64030;
     .list-box {
-      padding: 19px 0 10px 16px;
+      padding: 19px 0 0 16px;
       overflow: hidden;
       white-space: nowrap;
       overflow-x: auto;
@@ -971,18 +1011,9 @@ export default {
         position: relative;
         height: 71px;
       }
-      .list-box-text {
-        margin-top: 3px;
-        width: 100%;
-        height: 14px;
-        font-size: 10px;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: #FBF0BB;
-        line-height: 14px;
-      }
     }
   }
+
   .title-box {
     padding: 0 16px;
     display: flex;
@@ -1012,6 +1043,37 @@ export default {
   }
   .text-more {
     color: #F7FD95;
+  }
+
+  .list-box-text {
+    width: 100%;
+    height: 14px;
+    background-color: #EA5737;
+    font-size: 10px;
+    font-weight: 400;
+    color: #FBF0BB;
+    line-height: 14px;
+    .list_content_box {
+      margin: 0 auto;
+      width: 351px;
+      height: 100%;
+      overflow: hidden;
+      .text_index {
+        width: 750px;
+        height: 100%;
+        text-align: left;
+        display: flex;
+        flex-wrap: nowrap;
+        animation: rowup 10s linear infinite;
+        transition: all 1s;
+      }
+    }
+  }
+
+  .list-box-bottom-border {
+    width: 100%;
+    height: 8px;
+    background-color: #B64030;
   }
   .task-box {
     padding-top: 11px;
@@ -1063,6 +1125,13 @@ export default {
       }
       .btn-yellow {
         top: -34px;
+      }
+    }
+    .box-f {
+      margin-top: 18px;
+      height: 200px;
+      .task-content {
+        height: 85px;
       }
     }
     .task-content {
