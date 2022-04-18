@@ -70,7 +70,7 @@ export default {
       loading: false,
       finished: true,
       page: 1,
-      size: 10,
+      size: 99,
       totalPage: 1,
       goodList: [],
       bannerList: null,
