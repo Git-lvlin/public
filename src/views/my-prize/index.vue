@@ -9,6 +9,7 @@
         v-for="item in prizeList"
         :key="item.id"
         :good="item"
+        :token="token"
       />
     </div>
     <div v-if="prizeList.length" class="null">没有更多了〜</div>

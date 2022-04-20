@@ -270,10 +270,18 @@
           <van-image v-if="popupType===1" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/no-chance-bg.png')" />
           <van-image v-else-if="popupType===2" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/sorry-bg.png')" />
           <van-image v-else-if="popupType===3" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/prize-bg.png')" />
+          <van-image v-else-if="popupType===4" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/red.png')" />
           <div class="popup-prize-box" v-if="popupType===3">
             <div class="popup-title van-ellipsis">{{openData.goodsName}}</div>
             <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
             <div class="popup-price"><div class="text">价值</div>¥{{openData.salePrice/100}}</div>
+          </div>
+          <div class="popup-prize-red-box">
+            <div class="red-title">
+              <span class="price-head">¥</span>
+              <span class="big-money">{{openData.salePrice/100}}</span>
+            </div>
+            <div class="red-detail">恭喜您获得<span class="red-money">{{openData.salePrice/100}}</span>元红包</div>
           </div>
         </div>
 
@@ -284,7 +292,7 @@
           @click="onPopup"
         >
           <span v-if="popupType===1">查看任务</span>
-          <span v-else-if="popupType===2">知道了</span>
+          <span v-else-if="popupType===2 || popupType===4">知道了</span>
           <span v-else-if="popupType===3">免费兑换</span>
         </div>
         <!-- 关闭按钮 -->
@@ -1593,6 +1601,33 @@ export default {
     .img-bg-box {
       position: relative;
       margin-bottom: 28px;
+      .popup-prize-red-box {
+        position: absolute;
+        top: 229px;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        .red-title {
+          color: #FF0000;
+          .price-head {
+            font-size: 20px;
+          }
+          .big-money {
+            font-size: 44px;            
+          }
+        }
+        .red-detail {
+          color: #FFE7C5;
+          font-size: 20px;
+          .red-money {
+            color: #FFDC00;
+            font-size: 26px;
+          }
+        }
+      }
       .popup-prize-box {
         position: absolute;
         top: 152px;

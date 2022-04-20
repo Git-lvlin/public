@@ -150,6 +150,9 @@ export default {
       timer: null,
       showTimeText: defTimeText,
       showReGetCode: false,
+      chanceId: '',
+      businessId: '',
+      goodsType: 1,
     };
   },
   components: {
@@ -162,9 +165,15 @@ export default {
     let {
       at: token,
       bid: activityId,
+      t: goodsType,
+      i: businessId,
+      ci: chanceId,
     } = this.$router.history.current.query;
     this.token = token;
     this.activityId = activityId;
+    this.goodsType = goodsType;
+    this.businessId = businessId;
+    this.chanceId = chanceId;
     if(!token) {
       backOff();
       return;
@@ -268,14 +277,20 @@ export default {
     },
     // 确认提现
     onConfrimApply() {
-      gameApi.getWithdrawApply({
+      let params = {
         // activityId: this.activityId,
         // amount: this.withdrawInfo.realAmount,
         amount: this.withdrawInfo.amount,
         withdrawAccount: this.accountInfo.withdrawAccount,
         withdrawRealname: this.accountInfo.withdrawRealname,
         verifyCode: this.msgCode,
-      }, {
+      }
+      if (this.goodsType == 2) {
+        params.businessId = this.businessId
+        params.chanceId = this.chanceId
+        params.activityType = 1 // 提现活动类型 0:盖楼活动 1：盲盒现金活动
+      }
+      gameApi.getWithdrawApply(params, {
         token: this.token,
       }).then(res => {
         if(res.code == 0) {
