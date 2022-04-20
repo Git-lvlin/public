@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     getImgUrl,
-    go() {
+    go(type) {
       if (type == 'getMoney') {
         //跳转盲盒支付宝提现页面
         const {activityId, id, chanceId} = this.good;
