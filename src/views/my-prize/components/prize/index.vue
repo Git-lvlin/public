@@ -41,8 +41,8 @@ export default {
     go(type) {
       if (type == 'getMoney') {
         //跳转盲盒支付宝提现页面
-        const {activityId, id, chanceId} = this.good;
-        const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${activityId}&t=2&i=${id}&ci=${chanceId}`
+        const {activityId, id, chanceId, salePrice} = this.good;
+        const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${activityId}&t=2&i=${id}&ci=${chanceId}&s=${salePrice}`
         goToApp(meBaseUrl, path);
         return
       }

@@ -35,7 +35,7 @@
           <input class="price-input" v-model="price" />
         </div>
         <div class="line"></div>
-        <div class="use-price">
+        <div class="use-price" v-if="!money">
           <span>当前余额</span>
           <span class="use-price-text">{{accountInfo.balanceText}}</span>
           <span>元</span>
@@ -153,6 +153,7 @@ export default {
       chanceId: '',
       businessId: '',
       goodsType: 1,
+      money: 0,
     };
   },
   components: {
@@ -168,12 +169,15 @@ export default {
       t: goodsType,
       i: businessId,
       ci: chanceId,
+      s: money,
     } = this.$router.history.current.query;
     this.token = token;
     this.activityId = activityId;
     this.goodsType = goodsType;
     this.businessId = businessId;
     this.chanceId = chanceId;
+    this.money = money;
+    this.price = money;
     if(!token) {
       backOff();
       return;
