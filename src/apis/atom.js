@@ -1,7 +1,7 @@
 import { post, get } from '@/utils/request';
 
 const url = {
-  list: '/activity/open/inviteCouponActivityList',
+  list: '/goods/option/getSpeInfoByType',
 };
 
 export default {

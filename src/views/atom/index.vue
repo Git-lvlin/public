@@ -4,13 +4,13 @@
     <van-image class="title" width="225px" height="35px" :src="getImgUrl('publicMobile/atom/title.png')" />
     <div class="list_box">
       <div class="list_item" v-for="(item, index) in list" :key="index" @click="onToDetail(item)">
-        <van-image lazy-load class="good_img" width="122px" height="122px" :src="item.imgUrl" />
+        <van-image lazy-load class="good_img" width="122px" height="122px" :src="item.imageUrl" />
         <div class="item_right_box">
-          <div class="goods_name van-ellipsis">{{item.name}}</div>
-          <div class="goods_detail van-multi-ellipsis--l2">{{item.dec}}</div>
+          <div class="goods_name van-ellipsis">{{item.goodsName}}</div>
+          <div class="goods_detail van-multi-ellipsis--l2">{{item.goodsDesc}}</div>
           <div class="goods_price_box">
             <span class="price_head">¥</span>
-            <span class="money">{{getPrice(item.price)}}</span>
+            <span class="money">{{getPrice(item.salePrice)}}</span>
           </div>
         </div>
         <div class="item_btn">立即抢购</div>
@@ -31,19 +31,12 @@ Vue.use(Lazyload);
 export default {
   data() {
     return {
-      list: [
-        {
-          name: '氢原子呼吸机氢原子呼吸机氢原子呼吸机氢原子呼吸机氢原子呼吸机',
-          dec: '呼吸机中的战斗机，保障您和家人的用 水健呼吸机中的战斗机，保障您和家人的用 水健呼吸机中的战斗机，保障您和家人的用 水健呼吸机中的战斗机，保障您和家人的用 水健',
-          price: 680010,
-          imgUrl: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/atom/banner.png'
-        }
-      ],
+      list: [],
     };
   },
   components: {},
   created() {
-    // this.getList()
+    this.getList()
   },
   mounted() {
   },
@@ -52,8 +45,8 @@ export default {
     onToDetail(item) {
       console.log('item', item)
       console.log('this.$store.state.appInfo', this.$store.state.appInfo)
-      const data = item;
-      const paramStr = `?orderType=${data.orderType || 3}&spuId=${data.spuId || ''}&objectId=${data.objectId || ''}&activityId=${data.activityId || ''}&skuId=${data.skuId || ''}&wsId=${data.wsId || ''}`
+      const {orderType, spuId, objectId, activityId, skuId, wsId} = item;
+      const paramStr = `?orderType=${orderType || 3}&spuId=${spuId || ''}&objectId=${objectId || ''}&activityId=${activityId || ''}&skuId=${skuId || ''}&wsId=${wsId || ''}`
       console.log("$store.state.appInfo", this.$store.state.appInfo)
       if (this.$store.state.appInfo.isApp) {
         goToApp(appBaseUrl, '/shopping/detail', paramStr)
@@ -67,17 +60,17 @@ export default {
     },
     getList() {
       const param = {
-        size: 99,
-        next: 0,
+        type: 1, // 1=氢原子
       }
       teamApi.getList(param).then(res => {
-        this.list = res.data.records.map((item) => {
-          item.time = this.timestampToTime(item.activityStartTime) + ' 至 ' + this.timestampToTime(item.activityEndTime)
-          if (!item.bannerImage) {
-            item.bannerImage = getImgUrl('publicMobile/center/banner.png');
-          }
-          return item
-        })
+        this.list = res.data.records;
+        // this.list = res.data.records.map((item) => {
+        //   item.time = this.timestampToTime(item.activityStartTime) + ' 至 ' + this.timestampToTime(item.activityEndTime)
+        //   if (!item.bannerImage) {
+        //     item.bannerImage = getImgUrl('publicMobile/center/banner.png');
+        //   }
+        //   return item
+        // })
       })
     },
     getPrice(p) {
