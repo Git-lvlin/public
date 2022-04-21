@@ -442,7 +442,16 @@ const routes = [
     meta: {
       title: '拼团规则',
     }
-  }
+  },
+  {
+    path: '/web/blind-box-between',
+    name: 'BlindBoxBetween',
+    component: () => import('@/views/blind-box-between'),
+    meta: {
+      title: '打开约购APP',
+    }
+  },
+  
 ];
 
 const router = new VueRouter({
