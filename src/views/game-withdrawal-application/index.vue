@@ -47,7 +47,7 @@
         @click="onApply"
       >立即提现</div>
       <div class="withdrawal-history" @click="onToList">提现记录</div>
-      <div class="withdrawal-desc">
+      <div class="withdrawal-desc" v-if="!isRed">
         说明：
         <br />
         <!-- 1、支付宝账号与身份信息不一致将无法提现，请确认无误之后填写一个支付宝账号只能绑定一个约购APP进行提现。
@@ -177,8 +177,8 @@ export default {
     this.goodsType = goodsType;
     this.businessId = businessId;
     this.chanceId = chanceId;
-    this.money = money;
-    this.price = money;
+    this.money = money/100;
+    this.price = money/100;
     if(!token) {
       backOff();
       return;
