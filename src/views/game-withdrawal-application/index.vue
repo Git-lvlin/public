@@ -32,7 +32,8 @@
         <div class="withdrawal-title">提现金额</div>
         <div class="withdrawal-price">
           <span class="price-util">¥</span>
-          <input class="price-input" v-model="price" />
+          <input class="price-input" v-if="!money" v-model="price" />
+          <span class="price-input" v-else>{{price}}</span>
         </div>
         <div class="line"></div>
         <div class="use-price" v-if="!money">
@@ -289,11 +290,13 @@ export default {
         withdrawRealname: this.accountInfo.withdrawRealname,
         verifyCode: this.msgCode,
       }
+      console.log('this.goodsType', this.goodsType)
       if (this.goodsType == 2) {
         params.businessId = this.businessId
         params.chanceId = this.chanceId
         params.activityType = 1 // 提现活动类型 0:盖楼活动 1：盲盒现金活动
       }
+      console.log('提现请求参数', params)
       gameApi.getWithdrawApply(params, {
         token: this.token,
       }).then(res => {

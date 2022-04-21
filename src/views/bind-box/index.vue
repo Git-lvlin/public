@@ -40,9 +40,12 @@
       </p>
     </div>
 
-    <div class="title-one">开盲盒</div>
+    <!-- <div class="title-one">开盲盒</div>
     <div class="title-two">赢超级大奖</div>
-    <div class="subtitle">华为mate40手机、海信电视机等你来开</div>
+    <div class="subtitle">华为mate40手机、海信电视机等你来开</div> -->
+
+    <van-image class="title_img" width="258px" height="116px" :src="getImgUrl('publicMobile/bindbox/title_img.png')" />
+
 
     <div class="num">
       <p>剩余次数：<span class="chance">{{unuseNum}}</span>次</p>
@@ -966,6 +969,15 @@ export default {
     z-index: 9;
     background-color: #c3331d;
     overflow: hidden;
+  }
+  .title_img {
+    position: absolute;
+    top: 60px;
+    width: 258px;
+    height: 116px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
   }
   .title-one {
     position: absolute;
