@@ -280,7 +280,7 @@
           </div>
         </div>
         <div class="img-bg-box" v-else>
-          <van-image width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/red.png')" />
+          <van-image width="100%" height="439px" :src="getImgUrl('publicMobile/bindbox/red.png')" />
           <div class="popup-prize-red-box">
             <div class="red-title">
               <span class="price-head">¥</span>
@@ -1653,6 +1653,9 @@ export default {
           }
         }
         .red-detail {
+          margin-top: 74px;
+          width: 100%;
+          text-align: center;
           color: #FFE7C5;
           font-size: 20px;
           .red-money {
