@@ -82,15 +82,18 @@
         <span class="popup-price">¥{{price}}</span>
         <div class="info-item">
           <div class="info-item-title">提现服务费：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.fee || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-if="!isRed"><span class="info-item-bold">{{parseFloat((+withdrawInfo.fee || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-else><span class="info-item-bold">0</span>元</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">偶然所得税20%：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.tax || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-if="!isRed"><span class="info-item-bold">{{parseFloat((+withdrawInfo.tax || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-else><span class="info-item-bold">0</span>元</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">实际到账金额：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.realAmount || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-if="!isRed"><span class="info-item-bold">{{parseFloat((+withdrawInfo.realAmount || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-else><span class="info-item-bold">{{price}}</span>元</div>
         </div>
         <div class="withdrawal-ps ps-list">
           <PasswordInput
@@ -177,7 +180,7 @@ export default {
     this.goodsType = goodsType;
     this.businessId = businessId;
     this.chanceId = chanceId;
-    this.money = money/100;
+    this.money = money;
     this.price = money/100;
     if(!token) {
       backOff();
@@ -246,6 +249,11 @@ export default {
         Toast('您的可提现金额不足');
         return;
       }
+      if (this.goodsType == 2) {
+        // 红包不用校验金额
+        this.getWithdrawSms();
+        return
+      }
       // 检验金额
       gameApi.getWithdrawVerify({
         // activityId: this.activityId,
@@ -285,7 +293,7 @@ export default {
       let params = {
         // activityId: this.activityId,
         // amount: this.withdrawInfo.realAmount,
-        amount: this.withdrawInfo.amount,
+        amount: this.goodsType==2?this.money:this.withdrawInfo.amount,
         withdrawAccount: this.accountInfo.withdrawAccount,
         withdrawRealname: this.accountInfo.withdrawRealname,
         verifyCode: this.msgCode,
