@@ -363,7 +363,7 @@ export default {
     },
     // 跳转提现列表
     onToList() {
-      const path = `/web/game-withdrawal-list?_immersive=0&at=${this.token}&bid=${this.activityId}`
+      const path = `/web/game-withdrawal-list?_immersive=0&at=${this.token}&bid=${this.activityId}&i=${this.money}`
       goToApp(meBaseUrl, path);
       // this.$router.push({
       //   path: '/web/game-withdrawal-list',
