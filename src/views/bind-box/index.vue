@@ -300,14 +300,14 @@
           <span v-else-if="popupType===2">知道了</span>
           <span v-else-if="popupType===3">免费兑换</span>
         </div>
-        <div class="popup-btn"
+        <div class="red-btn-new"
           v-else
           :style="{
-            'background-image': `url('${getImgUrl('publicMobile/bindbox/btn-red.png')}')`
+            'background-image': `url('${getImgUrl('publicMobile/bindbox/red-btn-new.png')}')`
           }"
           @click="getMoney"
         >
-          <span>去提现</span>
+          <!-- <span>去提现</span> -->
         </div>
         <!-- 关闭按钮 -->
         <div class="popup-x" v-if="animationEnd" @click="closePopup(1)">
@@ -1715,6 +1715,14 @@ export default {
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #FFFFFF;
+  }
+  .red-btn-new {
+    position: relative;
+    margin: 0 auto;
+    width: 291px;
+    height: 48px;
+    margin-bottom: 17px;
+    background-size: 100% 100%;
   }
   .popup-x {
     text-align: center;
