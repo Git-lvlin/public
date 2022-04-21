@@ -210,7 +210,7 @@ const routes = [
     name: '404',
     component: () => import('@/views/404'),
     meta: {
-      title: '404',
+      title: '温馨提示',
     }
   },
   {
