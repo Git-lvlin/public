@@ -28,10 +28,9 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Popup } from 'vant';
+import { Image as VanImage } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 Vue.use(VanImage);
-Vue.use(Popup);
 export default {
   data() {
     return {

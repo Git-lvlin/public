@@ -157,7 +157,8 @@ export default {
       chanceId: '',
       businessId: '',
       goodsType: 1,
-      money: 0,
+      money: '',
+      isRed: '',
     };
   },
   components: {
@@ -182,6 +183,7 @@ export default {
     this.chanceId = chanceId;
     this.money = money;
     this.price = money/100;
+    this.isRed = money;
     if(!token) {
       backOff();
       return;

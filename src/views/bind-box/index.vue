@@ -427,7 +427,7 @@ export default {
       couponInviteId: null,
       clicked:false,
       storeNo: null,
-      isRed: 0,
+      isRed: '',
     };
   },
   components: {
@@ -1653,7 +1653,7 @@ export default {
           }
         }
         .red-detail {
-          margin-top: 74px;
+          margin-top: 94px;
           width: 100%;
           text-align: center;
           color: #FFE7C5;
