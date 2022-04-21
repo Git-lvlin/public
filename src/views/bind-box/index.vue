@@ -269,16 +269,18 @@
       <van-image id="light" class="light" :src="getImgUrl('publicMobile/bindbox/light.png')" />
       <!-- 结果 -->
       <div class="popup-content" id="last-popup">
-        <div class="img-bg-box">
+        <div class="img-bg-box" v-if="!isRed">
           <van-image v-if="popupType===1" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/no-chance-bg.png')" />
           <van-image v-else-if="popupType===2" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/sorry-bg.png')" />
           <van-image v-else-if="popupType===3" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/prize-bg.png')" />
-          <van-image v-else-if="popupType===4" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/red.png')" />
-          <div class="popup-prize-box" v-if="popupType===3">
+          <div class="popup-prize-box">
             <div class="popup-title van-ellipsis">{{openData.goodsName}}</div>
             <van-image class="popup-img" width="30%" :src="openData.imageUrl" />
             <div class="popup-price"><div class="text">价值</div>¥{{openData.salePrice/100}}</div>
           </div>
+        </div>
+        <div class="img-bg-box" v-else>
+          <van-image width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/red.png')" />
           <div class="popup-prize-red-box">
             <div class="red-title">
               <span class="price-head">¥</span>
@@ -287,8 +289,8 @@
             <div class="red-detail">恭喜您获得<span class="red-money">{{openData.salePrice/100}}</span>元红包</div>
           </div>
         </div>
-
         <div class="popup-btn"
+          v-if="!isRed"
           :style="{
             'background-image': `url('${getImgUrl('publicMobile/bindbox/btn-red.png')}')`
           }"
@@ -297,7 +299,15 @@
           <span v-if="popupType===1">查看任务</span>
           <span v-else-if="popupType===2">知道了</span>
           <span v-else-if="popupType===3">免费兑换</span>
-          <span v-else-if="popupType===4" @click="getMoney">知道了</span>
+        </div>
+        <div class="popup-btn"
+          v-else
+          :style="{
+            'background-image': `url('${getImgUrl('publicMobile/bindbox/btn-red.png')}')`
+          }"
+          @click="getMoney"
+        >
+          <span>去提现</span>
         </div>
         <!-- 关闭按钮 -->
         <div class="popup-x" v-if="animationEnd" @click="closePopup(1)">
@@ -404,7 +414,7 @@ export default {
       openFlag: true,
       selectFlag: true,
       openResult: false,
-      popupType: 2, // 1-没机会 2-没中奖 3-中奖
+      popupType: 2, // 1-没机会 2-没中奖 3-中奖 4-红包
       openData: {},
       hasSgin: false,
       win: false,
@@ -417,6 +427,7 @@ export default {
       couponInviteId: null,
       clicked:false,
       storeNo: null,
+      isRed: 0,
     };
   },
   components: {
@@ -782,6 +793,9 @@ export default {
               this.popupType = 3
             } else {
               this.popupType = 2
+            }
+            if (res.data.goodsType == 2) {
+              this.isRed = 1
             }
             this.openFlag = true
             setTimeout(() => {
