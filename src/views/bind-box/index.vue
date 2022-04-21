@@ -295,8 +295,9 @@
           @click="onPopup"
         >
           <span v-if="popupType===1">查看任务</span>
-          <span v-else-if="popupType===2 || popupType===4">知道了</span>
+          <span v-else-if="popupType===2">知道了</span>
           <span v-else-if="popupType===3">免费兑换</span>
+          <span v-else-if="popupType===4" @click="getMoney">知道了</span>
         </div>
         <!-- 关闭按钮 -->
         <div class="popup-x" v-if="animationEnd" @click="closePopup(1)">
@@ -463,6 +464,12 @@ export default {
   },
   methods: {
     getImgUrl,
+    getMoney() {
+      //跳转盲盒支付宝提现页面
+      const {activityId, id, chanceId, salePrice} = this.openData;
+      const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${activityId}&t=2&i=${id}&ci=${chanceId}&s=${salePrice}`
+      goToApp(meBaseUrl, path);
+    },
     getTask(num) {
       // if (this.clicked) {
       //   return
