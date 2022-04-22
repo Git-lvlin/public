@@ -797,6 +797,8 @@ export default {
             }
             if (res.data.goodsType == 2) {
               this.isRed = 1
+            } else {
+              this.isRed = 0
             }
             this.openFlag = true
             setTimeout(() => {
