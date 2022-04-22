@@ -95,6 +95,7 @@ export default {
 }
 .list-box {
   padding: 12px;
+  padding-bottom: 109px;
 }
 .null {
   position: absolute;
