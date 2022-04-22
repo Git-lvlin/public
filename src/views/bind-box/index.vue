@@ -536,6 +536,8 @@ export default {
       });
     },
     closePopup(type) {
+      // 初始化红包数据
+      this.isRed = 0
       this.interval();
       if (type) {
         this.init()
@@ -1639,8 +1641,8 @@ export default {
       position: relative;
       margin-bottom: 28px;
       .popup-prize-red-box {
-        position: absolute;
-        top: 229px;
+        // position: absolute;
+        // top: 229px;
         display: flex;
         width: 100%;
         flex-direction: column;
@@ -1648,6 +1650,8 @@ export default {
         align-items: center;
         text-align: center;
         .red-title {
+          position: absolute;
+          top: 229px;
           color: #FF0000;
           .price-head {
             font-size: 20px;
@@ -1657,6 +1661,8 @@ export default {
           }
         }
         .red-detail {
+          position: absolute;
+          bottom: 37px;
           margin-top: 94px;
           width: 100%;
           text-align: center;
