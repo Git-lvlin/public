@@ -451,6 +451,14 @@ const routes = [
       title: '打开约购APP',
     }
   },
+  {
+    path: '/web/atom',
+    name: 'Atom',
+    component: () => import('@/views/atom'),
+    meta: {
+      title: '约购健康',
+    }
+  }
   
 ];
 
