@@ -477,8 +477,8 @@ export default {
     getImgUrl,
     getMoney() {
       //跳转盲盒支付宝提现页面
-      const {activityId, id, chanceId, salePrice} = this.openData;
-      const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${activityId}&t=2&i=${id}&ci=${chanceId}&s=${salePrice}`
+      const {activityId, id, chanceId, salePrice, objectId} = this.openData;
+      const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${activityId}&t=2&i=${objectId}&ci=${chanceId}&s=${salePrice}`
       goToApp(meBaseUrl, path);
     },
     getTask(num) {
@@ -785,6 +785,7 @@ export default {
       if (this.openFlag&&!this.selectFlag) {
         this.openFlag = false
         teamApi.openBox({phone: this.phone}, {token: this.token}).then((res) => {
+          console.log('开盒返回数据', res)
           if (res.code === 0) {
             this.openData = res.data
             // 盲盒动画
