@@ -802,6 +802,7 @@ export default {
             setTimeout(() => {
               this.monitorUno();
             }, 0)
+            console.log('isRed', this.isRed)
           }
         })
       }
