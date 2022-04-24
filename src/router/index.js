@@ -210,7 +210,7 @@ const routes = [
     name: '404',
     component: () => import('@/views/404'),
     meta: {
-      title: '404',
+      title: '温馨提示',
     }
   },
   {
@@ -442,7 +442,24 @@ const routes = [
     meta: {
       title: '拼团规则',
     }
+  },
+  {
+    path: '/web/blind-box-between',
+    name: 'BlindBoxBetween',
+    component: () => import('@/views/blind-box-between'),
+    meta: {
+      title: '打开约购APP',
+    }
+  },
+  {
+    path: '/web/atom',
+    name: 'Atom',
+    component: () => import('@/views/atom'),
+    meta: {
+      title: '约购健康',
+    }
   }
+  
 ];
 
 const router = new VueRouter({

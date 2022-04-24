@@ -32,10 +32,11 @@
         <div class="withdrawal-title">提现金额</div>
         <div class="withdrawal-price">
           <span class="price-util">¥</span>
-          <input class="price-input" v-model="price" />
+          <input class="price-input" v-if="!money" v-model="price" />
+          <span class="price-input" v-else>{{price}}</span>
         </div>
         <div class="line"></div>
-        <div class="use-price">
+        <div class="use-price" v-if="!money">
           <span>当前余额</span>
           <span class="use-price-text">{{accountInfo.balanceText}}</span>
           <span>元</span>
@@ -46,7 +47,7 @@
         @click="onApply"
       >立即提现</div>
       <div class="withdrawal-history" @click="onToList">提现记录</div>
-      <div class="withdrawal-desc">
+      <div class="withdrawal-desc" v-if="!isRed">
         说明：
         <br />
         <!-- 1、支付宝账号与身份信息不一致将无法提现，请确认无误之后填写一个支付宝账号只能绑定一个约购APP进行提现。
@@ -81,15 +82,18 @@
         <span class="popup-price">¥{{price}}</span>
         <div class="info-item">
           <div class="info-item-title">提现服务费：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.fee || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-if="!isRed"><span class="info-item-bold">{{parseFloat((+withdrawInfo.fee || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-else><span class="info-item-bold">0</span>元</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">偶然所得税20%：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.tax || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-if="!isRed"><span class="info-item-bold">{{parseFloat((+withdrawInfo.tax || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-else><span class="info-item-bold">0</span>元</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">实际到账金额：</div>
-          <div class="info-item-text"><span class="info-item-bold">{{parseFloat((+withdrawInfo.realAmount || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-if="!isRed"><span class="info-item-bold">{{parseFloat((+withdrawInfo.realAmount || 0) / 100).toFixed(2)}}</span>元</div>
+          <div class="info-item-text" v-else><span class="info-item-bold">{{price}}</span>元</div>
         </div>
         <div class="withdrawal-ps ps-list">
           <PasswordInput
@@ -150,6 +154,11 @@ export default {
       timer: null,
       showTimeText: defTimeText,
       showReGetCode: false,
+      chanceId: '',
+      businessId: '',
+      goodsType: 1,
+      money: '',
+      isRed: '',
     };
   },
   components: {
@@ -162,9 +171,19 @@ export default {
     let {
       at: token,
       bid: activityId,
+      t: goodsType,
+      i: businessId,
+      ci: chanceId,
+      s: money,
     } = this.$router.history.current.query;
     this.token = token;
     this.activityId = activityId;
+    this.goodsType = goodsType;
+    this.businessId = businessId;
+    this.chanceId = chanceId;
+    this.money = money;
+    this.price = money/100;
+    this.isRed = money;
     if(!token) {
       backOff();
       return;
@@ -232,6 +251,11 @@ export default {
         Toast('您的可提现金额不足');
         return;
       }
+      if (this.goodsType == 2) {
+        // 红包不用校验金额
+        this.getWithdrawSms();
+        return
+      }
       // 检验金额
       gameApi.getWithdrawVerify({
         // activityId: this.activityId,
@@ -268,14 +292,22 @@ export default {
     },
     // 确认提现
     onConfrimApply() {
-      gameApi.getWithdrawApply({
+      let params = {
         // activityId: this.activityId,
         // amount: this.withdrawInfo.realAmount,
-        amount: this.withdrawInfo.amount,
+        amount: this.goodsType==2?this.money:this.withdrawInfo.amount,
         withdrawAccount: this.accountInfo.withdrawAccount,
         withdrawRealname: this.accountInfo.withdrawRealname,
         verifyCode: this.msgCode,
-      }, {
+      }
+      console.log('this.goodsType', this.goodsType)
+      if (this.goodsType == 2) {
+        params.businessId = this.businessId
+        params.chanceId = this.chanceId
+        params.activityType = 1 // 提现活动类型 0:盖楼活动 1：盲盒现金活动
+      }
+      console.log('提现请求参数', params)
+      gameApi.getWithdrawApply(params, {
         token: this.token,
       }).then(res => {
         if(res.code == 0) {
@@ -333,7 +365,7 @@ export default {
     },
     // 跳转提现列表
     onToList() {
-      const path = `/web/game-withdrawal-list?_immersive=0&at=${this.token}&bid=${this.activityId}`
+      const path = `/web/game-withdrawal-list?_immersive=0&at=${this.token}&bid=${this.activityId}&i=${this.money}`
       goToApp(meBaseUrl, path);
       // this.$router.push({
       //   path: '/web/game-withdrawal-list',

@@ -9,6 +9,7 @@
         v-for="item in prizeList"
         :key="item.id"
         :good="item"
+        :token="token"
       />
     </div>
     <div v-if="prizeList.length" class="null">没有更多了〜</div>
@@ -94,6 +95,7 @@ export default {
 }
 .list-box {
   padding: 12px;
+  padding-bottom: 109px;
 }
 .null {
   position: absolute;

@@ -40,9 +40,12 @@
       </p>
     </div>
 
-    <div class="title-one">开盲盒</div>
+    <!-- <div class="title-one">开盲盒</div>
     <div class="title-two">赢超级大奖</div>
-    <div class="subtitle">华为mate40手机、海信电视机等你来开</div>
+    <div class="subtitle">华为mate40手机、海信电视机等你来开</div> -->
+
+    <van-image class="title_img" width="258px" height="116px" :src="getImgUrl('publicMobile/bindbox/title_img.png')" />
+
 
     <div class="num">
       <p>剩余次数：<span class="chance">{{unuseNum}}</span>次</p>
@@ -171,16 +174,16 @@
         <div class="task-title">
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
-            <span>采购订单</span>
+            <span>集约订单</span>
           </div>
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
         </div>
         <div class="task-content">
           <div class="task-flex">
-            <p>每日采购<span class="span">{{storeConsume.storeConsumeNum}}</span>笔≥<span class="span">{{storeConsume.storeConsumePrice/100}}</span>元的集约订单，获得{{storeConsume.storeConsumeChanceNum}}次开盲盒机会，每天封顶获得{{storeConsume.storeConsumeDayMaxNum}}次开盲盒机会。</p>
+            <p>每采购<span class="span">{{storeConsume.storeConsumeNum}}</span>笔≥<span class="span">{{storeConsume.storeConsumePrice/100}}</span>元的集约订单，获得{{storeConsume.storeConsumeChanceNum}}次开盲盒机会，每天最多获得{{storeConsume.storeConsumeDayMaxNum}}次开盲盒机会。</p>
             <p v-if="!storeConsume.storeConsumeIsFinish">本次已消费<span class="span">{{blindboxStatus?storeConsume.storeConsumeFinishNum:'x'}}</span>笔订单，还差<span class="span">{{blindboxStatus?storeConsume.storeConsumeUnNum:'x'}}</span>笔。(已获取{{storeConsume.storeConsumeActivityChanceNum}}次机会)</p>
             <p v-else>今天已经圆满完成任务，明天再继续努力吧~</p>
-            <p class="new-p">完成消费任务后退款，将取消盲盒活动奖品发放。</p>
+            <p class="new-p">完成集约采购任务后退款，将取消盲盒活动奖品发放。</p>
           </div>
         </div>
         <div class="btn-yellow">
@@ -266,7 +269,7 @@
       <van-image id="light" class="light" :src="getImgUrl('publicMobile/bindbox/light.png')" />
       <!-- 结果 -->
       <div class="popup-content" id="last-popup">
-        <div class="img-bg-box">
+        <div class="img-bg-box" v-if="!isRed">
           <van-image v-if="popupType===1" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/no-chance-bg.png')" />
           <van-image v-else-if="popupType===2" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/sorry-bg.png')" />
           <van-image v-else-if="popupType===3" width="358px" height="432px" :src="getImgUrl('publicMobile/bindbox/prize-bg.png')" />
@@ -276,8 +279,18 @@
             <div class="popup-price"><div class="text">价值</div>¥{{openData.salePrice/100}}</div>
           </div>
         </div>
-
+        <div class="img-bg-box" v-else>
+          <van-image width="100%" height="439px" :src="getImgUrl('publicMobile/bindbox/red.png')" />
+          <div class="popup-prize-red-box">
+            <div class="red-title">
+              <span class="price-head">¥</span>
+              <span class="big-money">{{openData.salePrice/100}}</span>
+            </div>
+            <div class="red-detail">恭喜您获得<span class="red-money">{{openData.salePrice/100}}</span>元红包</div>
+          </div>
+        </div>
         <div class="popup-btn"
+          v-if="!isRed"
           :style="{
             'background-image': `url('${getImgUrl('publicMobile/bindbox/btn-red.png')}')`
           }"
@@ -286,6 +299,15 @@
           <span v-if="popupType===1">查看任务</span>
           <span v-else-if="popupType===2">知道了</span>
           <span v-else-if="popupType===3">免费兑换</span>
+        </div>
+        <div class="red-btn-new"
+          v-else
+          :style="{
+            'background-image': `url('${getImgUrl('publicMobile/bindbox/red-btn-new.png')}')`
+          }"
+          @click="getMoney"
+        >
+          <!-- <span>去提现</span> -->
         </div>
         <!-- 关闭按钮 -->
         <div class="popup-x" v-if="animationEnd" @click="closePopup(1)">
@@ -392,7 +414,7 @@ export default {
       openFlag: true,
       selectFlag: true,
       openResult: false,
-      popupType: 2, // 1-没机会 2-没中奖 3-中奖
+      popupType: 2, // 1-没机会 2-没中奖 3-中奖 4-红包
       openData: {},
       hasSgin: false,
       win: false,
@@ -405,6 +427,7 @@ export default {
       couponInviteId: null,
       clicked:false,
       storeNo: null,
+      isRed: '',
     };
   },
   components: {
@@ -452,6 +475,12 @@ export default {
   },
   methods: {
     getImgUrl,
+    getMoney() {
+      //跳转盲盒支付宝提现页面
+      const {activityId, id, chanceId, salePrice, objectId} = this.openData;
+      const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${activityId}&t=2&i=${objectId}&ci=${chanceId}&s=${salePrice}`
+      goToApp(meBaseUrl, path);
+    },
     getTask(num) {
       // if (this.clicked) {
       //   return
@@ -507,6 +536,8 @@ export default {
       });
     },
     closePopup(type) {
+      // 初始化红包数据
+      this.isRed = 0
       this.interval();
       if (type) {
         this.init()
@@ -756,6 +787,7 @@ export default {
       if (this.openFlag&&!this.selectFlag) {
         this.openFlag = false
         teamApi.openBox({phone: this.phone}, {token: this.token}).then((res) => {
+          console.log('开盒返回数据', res)
           if (res.code === 0) {
             this.openData = res.data
             // 盲盒动画
@@ -765,10 +797,16 @@ export default {
             } else {
               this.popupType = 2
             }
+            if (res.data.goodsType == 2) {
+              this.isRed = 1
+            } else {
+              this.isRed = 0
+            }
             this.openFlag = true
             setTimeout(() => {
               this.monitorUno();
             }, 0)
+            console.log('isRed', this.isRed)
           }
         })
       }
@@ -958,6 +996,15 @@ export default {
     z-index: 9;
     background-color: #c3331d;
     overflow: hidden;
+  }
+  .title_img {
+    position: absolute;
+    top: 60px;
+    width: 258px;
+    height: 116px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9;
   }
   .title-one {
     position: absolute;
@@ -1593,6 +1640,40 @@ export default {
     .img-bg-box {
       position: relative;
       margin-bottom: 28px;
+      .popup-prize-red-box {
+        // position: absolute;
+        // top: 229px;
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        .red-title {
+          position: absolute;
+          top: 229px;
+          color: #FF0000;
+          .price-head {
+            font-size: 20px;
+          }
+          .big-money {
+            font-size: 44px;            
+          }
+        }
+        .red-detail {
+          position: absolute;
+          bottom: 37px;
+          margin-top: 94px;
+          width: 100%;
+          text-align: center;
+          color: #FFE7C5;
+          font-size: 20px;
+          .red-money {
+            color: #FFDC00;
+            font-size: 26px;
+          }
+        }
+      }
       .popup-prize-box {
         position: absolute;
         top: 152px;
@@ -1644,6 +1725,14 @@ export default {
     font-family: PingFangSC-Medium, PingFang SC;
     font-weight: 500;
     color: #FFFFFF;
+  }
+  .red-btn-new {
+    position: relative;
+    margin: 0 auto;
+    width: 291px;
+    height: 48px;
+    margin-bottom: 17px;
+    background-size: 100% 100%;
   }
   .popup-x {
     text-align: center;

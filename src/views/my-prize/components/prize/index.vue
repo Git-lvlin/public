@@ -6,16 +6,23 @@
       <p class="time">获得时间：{{good.createTime}}</p>
       <p class="time">失效时间：{{good.expireTime}}</p>
     </div>
-    <div v-if="good.status===0" class="btn" @click="go">免费兑换</div>
-    <div v-else-if="good.status===1" class="ing">兑换中</div>
-    <div v-else-if="good.status===2" class="ed">已兑换</div>
-    <div v-else class="out">已失效</div>
+    <div v-if="good.goodsType == 1">
+      <div v-if="good.status===0" class="btn" @click="go">免费兑换</div>
+      <div v-else-if="good.status===1" class="ing">兑换中</div>
+      <div v-else-if="good.status===2" class="ed">已兑换</div>
+      <div v-else class="out">已失效</div>
+    </div>
+    <div v-else>
+      <div v-if="good.status===0" class="btn" @click="go('getMoney')">提现</div>
+      <div v-else-if="good.status===2" class="ed">已提现</div>
+      <div v-else-if="good.status===3" class="out">已失效</div>
+    </div>
   </div>
 </template>
 
 <script>
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl } from "@/constant/index";
+import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp } from '@/utils/userInfo';
 
 export default {
@@ -24,10 +31,21 @@ export default {
       type: Object,
       default: () => {},
     },
+    token: {
+      type: String,
+      default: '',
+    }
   },
   methods: {
     getImgUrl,
-    go() {
+    go(type) {
+      if (type == 'getMoney') {
+        //跳转盲盒支付宝提现页面
+        const {activityId, id, chanceId, salePrice} = this.good;
+        const path = `/web/game-withdrawal-application?_immersive=0&at=${this.token}&bid=${activityId}&t=2&i=${id}&ci=${chanceId}&s=${salePrice}`
+        goToApp(meBaseUrl, path);
+        return
+      }
       // 跳转到商品详情页面
       const { skuId, spuId, orderId, chanceId, memberId, orderType, activityId, objectId } = this.good;
       const param = `?skuId=${skuId}&spuId=${spuId}&orderId=${orderId}&chanceId=${chanceId}&memberId=${memberId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
