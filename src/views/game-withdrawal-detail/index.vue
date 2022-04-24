@@ -132,7 +132,9 @@ export default {
   methods: {
     getImgUrl,
     Dayjs,
-    getUrlParametersAll = (url) => !url.split('?')[1] ? null : url.split('?')[1].split('&').reduce((res, item) => ({...res, [item.split('=')[0]]: item.split('=')[1]}), {}),
+    getUrlParametersAll(url){
+      return !url.split('?')[1] ? null : url.split('?')[1].split('&').reduce((res, item) => ({...res, [item.split('=')[0]]: item.split('=')[1]}), {})
+    },
     getEncryption(account = '') {
       account = account.toString()
       let text = '';
