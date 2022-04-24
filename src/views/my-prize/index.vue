@@ -113,8 +113,7 @@ export default {
     margin-bottom: 12px;
   }
   .right-top-btn {
-    padding: 2px 6px;
-    width: 56px;
+    padding: 4px 8px;
     height: 20px;
     font-size: 14px;
     color: #999999;
