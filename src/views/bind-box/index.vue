@@ -55,6 +55,8 @@
 
     <div class="open" @click="open"></div>
 
+    <!-- <van-image class="transition" width="100%" height="40px" :src="getImgUrl('publicMobile/bindbox/transition.png')" /> -->
+
     <div class="goods-list">
       <div class="title-box">
         <van-image class="left-icon" width="45px" height="16px" :src="getImgUrl('publicMobile/bindbox/title-icon.png')" />
@@ -174,7 +176,7 @@
         <div class="task-title">
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-left.png')" />
           <div class="task-title-text">
-            <span>集约订单</span>
+            <span>集约采购</span>
           </div>
           <van-image width="27px" height="12px" :src="getImgUrl('publicMobile/bindbox/star-right.png')" />
         </div>
@@ -420,7 +422,7 @@ export default {
       win: false,
       animationEnd: false,
       opened: false,
-      bgImgUrl: getImgUrl('publicMobile/bindbox/head-bg.png'),
+      bgImgUrl: getImgUrl('publicMobile/bindbox/head-bg-new.png'),
       load: true,
       shareData: null,
       inviteCode: null,
@@ -1046,9 +1048,16 @@ export default {
     text-shadow: 0px 2px 2px #6F9BE5;
     text-align: center;
   }
+
+  // .transition {
+  //   position: absolute;
+  //   bottom: 0px;
+  //   width: 100%;
+  //   z-index: 99;
+  // }
   .goods-list {
     width: 100%;
-    background-color: #EA5737;
+    background-color: #FD4825;
     .list-box {
       padding: 19px 0 0 16px;
       overflow: hidden;
@@ -1060,6 +1069,8 @@ export default {
       }
     }
   }
+
+
 
   .title-box {
     padding: 0 16px;
@@ -1095,7 +1106,8 @@ export default {
   .list-box-text {
     width: 100%;
     height: 14px;
-    background-color: #EA5737;
+    // background-color: #EA5737;
+    background-color: #FD4825;
     font-size: 10px;
     font-weight: 400;
     color: #FBF0BB;
@@ -1125,7 +1137,8 @@ export default {
   .task-box {
     padding-top: 11px;
     padding-bottom: 12px;
-    background-color: #EA5737;
+    // background-color: #EA5737;
+    background-color: #FD4825;
     .item {
       position: relative;
       margin: 0 auto;
@@ -1431,6 +1444,7 @@ export default {
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid #EEEEEE;
+        margin-bottom: 8px;
         .left {
           width: 140px;
           display: flex;

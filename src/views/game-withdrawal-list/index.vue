@@ -139,9 +139,14 @@ export default {
         data.createTime = new Date(data.createTime.replace(/-/g, '/')).getTime();
       }
       const str = objToParamStr(data);
+      console.log('str', str)
+      const killStr = encodeURIComponent(str);
+      console.log('killStr', killStr)
       // const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
       // const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      const path = `/web/game-withdrawal-detail?_immersive=0&${str}`
+      const path = `/web/game-withdrawal-detail?_immersive=0&${killStr}`
+      console.log('path', path)
+      // return
       goToApp(meBaseUrl, path);
       // this.$router.push({
       //   path: '/web/game-withdrawal-detail',
