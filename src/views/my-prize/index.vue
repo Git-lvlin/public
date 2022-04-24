@@ -114,12 +114,11 @@ export default {
   }
   .right-top-btn {
     padding: 4px 8px;
-    height: 20px;
     font-size: 14px;
     color: #999999;
-    line-height: 20px;
     border: 1px solid #999999;
     text-align: center;
+    line-height: 100%;
     border-radius: 8px;
   }
 }
