@@ -97,7 +97,7 @@
         <div class="info-item">
           <div class="info-item-title">偶然所得税20%：</div>
           <div class="info-item-text" v-if="!isRed"><span class="info-item-bold">{{parseFloat((+withdrawInfo.tax || 0) / 100).toFixed(2)}}</span>元</div>
-          <div class="info-item-text" v-else>约购补贴用户无需支付</div>
+          <div class="info-item-text" v-else>平台承担</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">实际到账金额：</div>
