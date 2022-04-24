@@ -107,7 +107,7 @@ export default {
   },
   mounted () {
     console.log('this.$router.history', this.$router.history)
-    let url = decodeURIComponent(this.$router.history.current)
+    let url = decodeURIComponent(this.$router.history.current.fullPath)
     console.log('url', url)
     let options = this.getUrlParametersAll(url)
     console.log('options', options)
