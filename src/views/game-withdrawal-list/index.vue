@@ -146,7 +146,7 @@ export default {
       // const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
       const path = `/web/game-withdrawal-detail?_immersive=0&${killStr}`
       console.log('path', path)
-      return
+      // return
       goToApp(meBaseUrl, path);
       // this.$router.push({
       //   path: '/web/game-withdrawal-detail',
