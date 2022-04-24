@@ -121,7 +121,7 @@ export default {
     },
     getbanner() {
       const param = {
-        location: 8,
+        location: 9,
         verifyVersionId: 1
       }
       commonApi.getBannerList(param).then(res=>{

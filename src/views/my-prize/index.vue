@@ -107,18 +107,21 @@ export default {
   padding-bottom: 109px;
   .right-top-box {
     width: 100%;
-    background-color: #FFFFFF;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin: 12px 0;
+    margin-bottom: 12px;
   }
   .right-top-btn {
+    padding: 2px 6px;
     width: 56px;
     height: 20px;
     font-size: 14px;
     color: #999999;
     line-height: 20px;
+    border: 1px solid #999999;
+    text-align: center;
+    border-radius: 8px;
   }
 }
 .null {
