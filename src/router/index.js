@@ -448,7 +448,7 @@ const routes = [
     name: 'BlindBoxBetween',
     component: () => import('@/views/blind-box-between'),
     meta: {
-      title: '打开约购APP',
+      title: '开盲盒赢大奖',
     }
   },
   {

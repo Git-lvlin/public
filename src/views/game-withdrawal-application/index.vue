@@ -69,6 +69,15 @@
         <br />
         5、用户提现资格长期有效；
       </div>
+      <div class="withdrawal-desc" v-else-if="isRed && bindState == 1">
+        说明：
+        <br />
+        1、 支付宝账号与用户名不一致将无法提现，请确认无误之后填写；
+        <br />
+        2、 一个支付宝账号只能绑定一个约购app进行提现；
+        <br />
+        3、 支付宝账号设置后不能再修改，如需修改请联系客服；
+      </div>
     </div>
 
     <Popup
@@ -88,7 +97,7 @@
         <div class="info-item">
           <div class="info-item-title">偶然所得税20%：</div>
           <div class="info-item-text" v-if="!isRed"><span class="info-item-bold">{{parseFloat((+withdrawInfo.tax || 0) / 100).toFixed(2)}}</span>元</div>
-          <div class="info-item-text" v-else><span class="info-item-bold">0</span>元</div>
+          <div class="info-item-text" v-else>约购补贴用户无需支付</div>
         </div>
         <div class="info-item">
           <div class="info-item-title">实际到账金额：</div>
@@ -319,6 +328,7 @@ export default {
           let timer = setTimeout(() => {
             this.onShowMsg();
             this.getAccountInfo();
+            
             clearTimeout(timer);
           }, 1000)
         }
