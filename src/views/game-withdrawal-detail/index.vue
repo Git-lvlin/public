@@ -106,13 +106,12 @@ export default {
     Image,
   },
   mounted () {
-    console.log('this.$router.history.current',this.$router.history.current)
-    let options = decodeURIComponent(this.$router.history.current)
+    console.log('this.$router.history', this.$router.history)
+    let url = decodeURIComponent(this.$router.history.current)
+    console.log('url', url)
+    let options = this.getUrlParametersAll(url)
     console.log('options', options)
-    const {
-      query,
-    } = options;
-    this.detail = query;
+    this.detail = options;
     if(!query.sn) {
       Toast('未获取到数据');
       const timer = setTimeout(() => {
@@ -133,6 +132,7 @@ export default {
   methods: {
     getImgUrl,
     Dayjs,
+    getUrlParametersAll = (url) => !url.split('?')[1] ? null : url.split('?')[1].split('&').reduce((res, item) => ({...res, [item.split('=')[0]]: item.split('=')[1]}), {}),
     getEncryption(account = '') {
       account = account.toString()
       let text = '';
