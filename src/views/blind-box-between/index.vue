@@ -9,16 +9,16 @@
     <div class="box">
       <van-image
         class="go_btn"
-        width="225px"
-        height="41px"
-        :src="getImgUrl('publicMobile/between/in.png')"
+        width="241px"
+        height="59px"
+        :src="getImgUrl('publicMobile/between/in-new.png')"
         @click="outPage"
       />
       <van-image
         class="open_btn"
-        width="225px"
-        height="41px"
-        :src="getImgUrl('publicMobile/between/open.png')"
+        width="241px"
+        height="59px"
+        :src="getImgUrl('publicMobile/between/open-new.png')"
         @click="download"
       />
     </div>
@@ -87,9 +87,9 @@ export default {
   align-items: center;
 }
 .go_btn {
-  margin-top: 100px;
+  margin-top: 91px;
 }
 .open_btn {
-  margin-top: 25px;
+  margin-top: 7px;
 }
 </style>
