@@ -138,7 +138,7 @@ export default {
       if(data.createTime) {
         data.createTime = new Date(data.createTime.replace(/-/g, '/')).getTime();
       }
-      const str = objToParamStr(data);
+      let str = objToParamStr(data);
       str = str.replace(/\s*/g,"");
       // const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
       // const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
