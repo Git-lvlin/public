@@ -140,7 +140,7 @@ export default {
       }
       const str = objToParamStr(data);
       console.log('str', str)
-      const killStr = str.replace(/\s*/g,"");
+      const killStr = encodeURIComponent(str);
       console.log('killStr', killStr)
       // const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
       // const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端

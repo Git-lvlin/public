@@ -106,9 +106,12 @@ export default {
     Image,
   },
   mounted () {
+    console.log('this.$router.history.current',this.$router.history.current)
+    let options = decodeURIComponent(this.$router.history.current)
+    console.log('options', options)
     const {
       query,
-    } = this.$router.history.current;
+    } = options;
     this.detail = query;
     if(!query.sn) {
       Toast('未获取到数据');
