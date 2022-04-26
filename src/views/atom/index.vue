@@ -1,5 +1,6 @@
 <template>
-  <div class="atom">
+  <van-loading class="load" v-if="load" />
+  <div class="atom" v-else>
     <van-image class="banner" width="100%" height="332px" :src="getImgUrl('publicMobile/atom/banner.png')" />
     <van-image class="title" width="225px" height="35px" :src="getImgUrl('publicMobile/atom/title.png')" />
     <div class="list_box">
@@ -21,26 +22,47 @@
 
 <script>
 import Vue from "vue";
-import { Image as VanImage, Lazyload } from "vant";
+import { Image as VanImage, Lazyload, Loading } from "vant";
 import { getImgUrl } from "@/utils/tools";
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp } from "@/utils/userInfo";
 import teamApi from '@/apis/atom';
 Vue.use(VanImage);
 Vue.use(Lazyload);
+Vue.use(Loading);
 export default {
   data() {
     return {
       list: [],
+      load: true,
+      banner: getImgUrl('publicMobile/atom/banner.png'),
+      title: getImgUrl('publicMobile/atom/title.png'),
     };
   },
   components: {},
   created() {
     this.getList()
   },
-  mounted() {
+  async mounted() {
+    await this.loadImg()
   },
   methods: {
+    loadImg() {
+      return new Promise((resolve, reject) => {
+        let bgImg = new Image();
+        bgImg.src = this.banner; // 获取背景图片的url
+        bgImg.onerror = () => {
+          console.log('img onerror')
+          reject()
+        }
+        bgImg.onload = () => { // 等背景图片加载成功后 去除loading
+          setTimeout(() => {
+            this.load = false
+            resolve()
+          }, 200)
+        }
+      })
+    },
     getImgUrl,
     onToDetail(item) {
       console.log('item', item)
@@ -95,6 +117,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.load {
+  position: fixed;
+  padding-top: 200px;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #42A5FF;
+  margin: auto;
+  text-align: center;
+  z-index: 99999;
+}
 .atom {
   display: flex;
   flex-direction: column;
