@@ -37,6 +37,7 @@ export default {
       load: true,
       banner: getImgUrl('publicMobile/atom/banner.png'),
       title: getImgUrl('publicMobile/atom/title.png'),
+      clicked: false,
     };
   },
   components: {},
@@ -65,6 +66,14 @@ export default {
     },
     getImgUrl,
     onToDetail(item) {
+      if (this.clicked) {
+        return
+      }
+      this.clicked = true
+      let time = setTimeout(() => {
+        clearTimeout(time)
+        this.clicked = false
+      }, 1000)
       console.log('item', item)
       console.log('this.$store.state.appInfo', this.$store.state.appInfo)
       const {orderType, spuId, objectId, activityId, skuId, wsId} = item;
