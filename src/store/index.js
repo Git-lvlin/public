@@ -5,6 +5,7 @@ import { getQueryObj } from '@/utils/tools';
 // 设置是否在app内
 const {
   userAgent,
+  appVersion
 } = navigator;
 const appInfo = getQueryObj(userAgent);
 // if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
@@ -16,7 +17,9 @@ const appInfo = getQueryObj(userAgent);
 //     }
 //   }, false);
 // }
-
+if (!appInfo.appVersion && appVersion) {
+  appInfo.appVersion = appVersion
+}
 appInfo.isApp = appInfo.webViewClientTag ? true : false;
 
 // 设置安全区域
