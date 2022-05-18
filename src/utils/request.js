@@ -46,7 +46,7 @@ axios.interceptors.response.use(
 const request = async ({
   url, method, data, options = {},
 }) => {
-  const { showLoading = true, showError = true, token} = options;
+  const { showLoading = true, showError = true, token, appVersion} = options;
   if (showLoading && requestCount === 0) {
     Toast.loading({
       message: '加载中...',
@@ -75,6 +75,12 @@ const request = async ({
   if (token) {
     all.headers = {
       token: token
+    }
+  }
+  if (appVersion) {
+    all.headers = {
+      ...all.headers,
+      appVersion: appVersion
     }
   }
   return axios(all).then((res) => {
