@@ -3,16 +3,13 @@ import Vuex from 'vuex';
 import { getQueryObj } from '@/utils/tools';
 
 // 设置是否在app内
-const {
+let {
   userAgent,
-  appVersion
 } = navigator;
-console.log('userAgent', userAgent)
-console.log('appVersion', appVersion)
-if (!userAgent.includes('?')) {
+if (userAgent && !userAgent.includes('?')) {
   userAgent = '?' + userAgent
 }
-const appInfo = getQueryObj(userAgent);
+let appInfo = getQueryObj(userAgent);
 // if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
 //   document.addEventListener('WeixinJSBridgeReady', () => {
 //     if (window.__wxjs_environment === 'miniprogram') {
@@ -22,9 +19,6 @@ const appInfo = getQueryObj(userAgent);
 //     }
 //   }, false);
 // }
-if (!appInfo.appVersion && appVersion) {
-  appInfo.appVersion = appVersion
-}
 appInfo.isApp = appInfo.webViewClientTag ? true : false;
 
 // 设置安全区域

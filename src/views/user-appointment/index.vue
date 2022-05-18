@@ -85,10 +85,9 @@ export default {
     [Image.name]: Image,
     [List.name]: List,
   },
-  async created () {
+  created () {
     // 不推荐在这里调用 fetchItem
     // this.getUserList();
-    await this.getIndexVersion()
     this.getbanner()
     this.getResourceKey();
     // console.log('windows', window);
@@ -119,11 +118,6 @@ export default {
         // 默认跳转app
         goToApp(item.actionUrl)
       }
-    },
-    getIndexVersion() {
-      return new Promise((resolve) => {
-        this.$bridge.callHandler('indexVersion',{},(a) => {this.indexVersion = a;resolve()})
-      })
     },
     getbanner() {
       const param = {
@@ -166,7 +160,7 @@ export default {
       teamApi.getUserList({
         page,
         size,
-      }, {appVersion: this.indexVersion}).then((res) => {
+      }).then((res) => {
         const {
           data,
         } = res;
