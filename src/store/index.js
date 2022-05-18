@@ -7,6 +7,8 @@ const {
   userAgent,
   appVersion
 } = navigator;
+console.log('userAgent', userAgent)
+console.log('appVersion', appVersion)
 const appInfo = getQueryObj(userAgent);
 // if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
 //   document.addEventListener('WeixinJSBridgeReady', () => {
