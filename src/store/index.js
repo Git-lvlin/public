@@ -9,6 +9,9 @@ const {
 } = navigator;
 console.log('userAgent', userAgent)
 console.log('appVersion', appVersion)
+if (!userAgent.includes('?')) {
+  userAgent = '?' + userAgent
+}
 const appInfo = getQueryObj(userAgent);
 // if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
 //   document.addEventListener('WeixinJSBridgeReady', () => {
