@@ -13,7 +13,7 @@ let requestCount = 0;
 
 let appToken = '';
 axios.defaults.timeout = 10 * 1000;
-let v = store.state.appInfo.appVersion || "1.0.0";
+let v = store.state.appInfo.appVersion || "2.5.5";
 axios.interceptors.request.use((config) => {
   if (appToken) {
     config.headers.Authorization = `Bearer ${appToken}`;
