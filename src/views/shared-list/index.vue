@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 10px; font-size: 12px;">
+  <div class="content" style="">
     <h1>第三方共享清单</h1>
     <p>&nbsp;</p>
     <p>&nbsp;</p>
@@ -145,3 +145,13 @@
     <p>&nbsp;</p>
   </div>
 </template>
+<style lang="scss" scoped>
+.content {
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 12px;
+}
+p {
+  word-wrap:break-word;
+}
+</style>
