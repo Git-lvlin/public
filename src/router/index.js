@@ -18,7 +18,7 @@ const routes = [
     name: 'UserAppointment',
     component: () => import('@/views/user-appointment'),
     meta: {
-      title: '单约专享',
+      title: '',
     },
   },
   {
@@ -210,7 +210,7 @@ const routes = [
     name: '404',
     component: () => import('@/views/404'),
     meta: {
-      title: '404',
+      title: '温馨提示',
     }
   },
   {
@@ -436,6 +436,30 @@ const routes = [
     }
   },
   {
+    path: '/web/group-rule',
+    name: 'GroupRule',
+    component: () => import('@/views/group-rule'),
+    meta: {
+      title: '拼团规则',
+    }
+  },
+  {
+    path: '/web/blind-box-between',
+    name: 'BlindBoxBetween',
+    component: () => import('@/views/blind-box-between'),
+    meta: {
+      title: '开盲盒赢大奖',
+    }
+  },
+  {
+    path: '/web/atom',
+    name: 'Atom',
+    component: () => import('@/views/atom'),
+    meta: {
+      title: '约购健康',
+    }
+  },
+  {
     path: '/web/shared-list',
     name: 'SharedList',
     component: () => import('@/views/shared-list'),
@@ -450,7 +474,7 @@ const routes = [
     meta: {
       title: '个人信息收集清单',
     }
-  }
+  },
 ];
 
 const router = new VueRouter({
