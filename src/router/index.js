@@ -434,6 +434,22 @@ const routes = [
     meta: {
       title: '约购生鲜店主招募',
     }
+  },
+  {
+    path: '/web/shared-list',
+    name: 'SharedList',
+    component: () => import('@/views/shared-list'),
+    meta: {
+      title: '第三方共享清单',
+    }
+  },
+  {
+    path: '/web/personal-information-list',
+    name: 'PersonalInformationList',
+    component: () => import('@/views/personal-information-list'),
+    meta: {
+      title: '个人信息收集清单',
+    }
   }
 ];
 
