@@ -2,7 +2,7 @@
   <div class="page">
     <div id="demo"></div>
     <div class="bottom_confirm">
-      <div class="comfirm_btn" onClick="confirm">同意确认并支付电子合同款</div>
+      <div class="comfirm_btn" @click="confirm">同意确认并支付电子合同款</div>
     </div>
   </div>
 </template>
