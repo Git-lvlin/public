@@ -10,6 +10,7 @@
       <store2 v-if="index==2" />
       <store3 v-if="index==3" />
       <store4 v-if="index==4" />
+      <store5 v-if="index==5" />
     </div>
     <div v-if="reg==='business'">
       <business0 v-if="index==0" />
@@ -33,6 +34,8 @@ import store1 from './components/store/1.vue';
 import store2 from './components/store/2.vue';
 import store3 from './components/store/3.vue';
 import store4 from './components/store/4.vue';
+import store5 from './components/store/5.vue';
+
 
 import business0 from './components/business/0.vue';
 import business1 from './components/business/1.vue';
@@ -59,7 +62,8 @@ const pdfNameMap = {
     '约购平台集约模式规则说明1.0',
     '约购平台商品退换货规则-通用1.0',
     '约购平台社区店服务须知2.0',
-    '约购平台社区店承诺书1.0'
+    '约购平台社区店承诺书1.0',
+    '约购店铺注销协议1.0',
   ],
   user: [
     '约购平台个人信息保护及隐私权政策1.0',
@@ -81,6 +85,7 @@ export default {
     store2,
     store3,
     store4,
+    store5,
     business0,
     business1,
     business2,

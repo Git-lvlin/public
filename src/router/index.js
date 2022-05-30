@@ -18,7 +18,7 @@ const routes = [
     name: 'UserAppointment',
     component: () => import('@/views/user-appointment'),
     meta: {
-      title: '单约专享',
+      title: '',
     },
   },
   {
@@ -210,7 +210,7 @@ const routes = [
     name: '404',
     component: () => import('@/views/404'),
     meta: {
-      title: '404',
+      title: '温馨提示',
     }
   },
   {
@@ -380,6 +380,20 @@ const routes = [
     meta: {
       title: '新年盖高楼',
     }
+  }, {
+    path: '/web/service-page/good-detail',
+    name: 'ServiceGoodDetail',
+    component: () => import('@/views/service-page/good-detail'),
+    meta: {
+      title: '商品详情',
+    }
+  }, {
+    path: '/web/service-page/order-detail',
+    name: 'ServiceOrderDetail',
+    component: () => import('@/views/service-page/order-detail'),
+    meta: {
+      title: '订单详情',
+    }
   },
   {
     path: '/web/five-star-new',
@@ -389,6 +403,63 @@ const routes = [
       title: '新春到，升五星',
     }
   },
+  {
+    path: '/web/green-channel',
+    name: 'GreenChannel',
+    component: () => import('@/views/green-channel'),
+    meta: {
+      title: '约购平台 - 社区店入驻绿色通道',
+    }
+  },
+  {
+    path: '/web/special-offer-fresh',
+    name: 'SpecialOfferFresh',
+    component: () => import('@/views/special-offer-fresh'),
+    meta: {
+      title: '今日特价生鲜',
+    }
+  },
+  {
+    path: '/web/one',
+    name: 'One',
+    component: () => import('@/views/one'),
+    meta: {
+      title: '1分钱领生鲜活动',
+    }
+  },
+  {
+    path: '/web/store-recruit',
+    name: 'StoreRecruit',
+    component: () => import('@/views/store-recruit'),
+    meta: {
+      title: '约购生鲜店主招募',
+    }
+  },
+  {
+    path: '/web/group-rule',
+    name: 'GroupRule',
+    component: () => import('@/views/group-rule'),
+    meta: {
+      title: '拼团规则',
+    }
+  },
+  {
+    path: '/web/blind-box-between',
+    name: 'BlindBoxBetween',
+    component: () => import('@/views/blind-box-between'),
+    meta: {
+      title: '开盲盒赢大奖',
+    }
+  },
+  {
+    path: '/web/atom',
+    name: 'Atom',
+    component: () => import('@/views/atom'),
+    meta: {
+      title: '约购健康',
+    }
+  }
+  
 ];
 
 const router = new VueRouter({

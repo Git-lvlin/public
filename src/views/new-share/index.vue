@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="!isWeixin">
+  <div class="container">
     <div class="head"
       :style="{
         'background-image': `url('${type?edImg:img}')`,
@@ -15,7 +15,7 @@
       <div class="phone-err">{{phoneErr}}</div>
       <div class="code-box">
         <div class="code">
-          <input class="input code-input" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
+          <input class="input code-input" autocomplete="one-time-code" @focus="focus" v-model="code" oninput="value=value.replace(/[^\d]/g,'')" placeholder="请输入验证码" type="text">
         </div>
         <div class="code-btn" @click="getCode" v-if="countDown">{{codeText}}</div>
         <div class="code-btn" v-else v-html="time"></div>
@@ -23,7 +23,7 @@
       <div class="code-err">{{codeErr}}</div>
       <div class="button" @click="reg">提交</div>
     </div>
-    <div class="title"><span class="red">约购</span>APP 约着买 更便宜</div>
+    <div class="title"><span class="red">约购</span> 约着买 更便宜</div>
     <div class="subtitle">物美价廉有温度</div>
     <van-image
       class="border"
@@ -98,13 +98,13 @@
       </div>
     </van-popup>
   </div>
-  <div class="container2" v-else>
+  <!-- <div class="container2" v-else>
     <van-image
       class="wxtx"
       width="100%"
       :src="getImgUrl('publicMobile/common/transfer-wx.png')"
     />
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -153,14 +153,13 @@ export default {
     const {
       query,
     } = this.$router.history.current;
-    console.log('query', query)
     this.inviteCode = query.inviteCode
     this.url = query.url || ''
     this.type = query.type || 0
-    const ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
-      this.isWeixin = query.isWeixin || 0
-    }
+    // const ua = window.navigator.userAgent.toLowerCase();
+    // if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
+    //   this.isWeixin = query.isWeixin || 0
+    // }
   },
   methods: {
     onOpenApp() {
@@ -168,6 +167,7 @@ export default {
       if (this.$store.state.appInfo.isApp || this.$store.state.appInfo.isMiniprogram) {
         return;
       }
+      console.log('DOWNLOAD_ANDROID', DOWNLOAD_ANDROID);
       const options = {
         scheme: {
           //URL Scheme 的 scheme 字段，要打开的 APP 的标识
@@ -179,32 +179,34 @@ export default {
           package: 'com.hznt.yeahgo',
           scheme: 'yeahgo'
         },
-        timeout: '5000',
+        timeout: '3000',
         //APP 的 App Store
         appstore: DOWNLOAD_IOS,
         //APP 的应用宝地址，
         yingyongbao: DOWNLOAD_ANDROID,
+        fallback: DOWNLOAD_ANDROID,
       };
       const callLib = new CallApp(options);
-      const h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
+      // const h5Url = `${meBaseUrl}/web/polite-animation?_authorizationRequired=1`;
       callLib.open({
         path: "",
         //要传递的参数
         param: {
           parameter: `${this.url || ''}`,
-        },
+        }
       })
     },
     hasWx() {
-      this.show = 0;
-      const ua = window.navigator.userAgent.toLowerCase();
-      if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        window.location.href += `&type=${this.type}&isWeixin=${1}`
-        return
-      } else {
-        this.onOpenApp()
-      }
-      // window.location.href = `https://publicmobile.yeahgo.com/web/transfer`;
+      // this.show = 0;
+      // const ua = window.navigator.userAgent.toLowerCase();
+      // if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+      //   window.location.href += `&type=${this.type}&isWeixin=${1}`
+      //   return
+      // } else {
+      //   this.onOpenApp()
+      // }
+      // this.onOpenApp()
+      window.location.href = DOWNLOAD_ANDROID;
     },
     getInviteCode() {
       const {

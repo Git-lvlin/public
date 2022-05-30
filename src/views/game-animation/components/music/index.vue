@@ -2,8 +2,8 @@
   <div class="music-box">
     <audio
       id="bgMusic"
-      :src="indexUrl"
-      :loop="loop"
+      :src="getImgUrl('publicMobile/game/files/floor_game_music.mp3')"
+      :loop="true"
       preload="auto"
     />
     <div :class="state == 0 ? 'music-icon' : 'music-icon'">
@@ -35,8 +35,7 @@ export default {
       audio: null,
       // 0 暂停 1 播放
       state: 0,
-      loop: 0,
-      indexUrl: getImgUrl('publicMobile/game/files/floor_game_music.mp3'),
+      type: 1,
     };
   },
   components: {
@@ -50,30 +49,17 @@ export default {
       this.onPlayOrPaused();
     });
     this.audio = audio;
-    document.addEventListener("visibilitychange", function () {
+    document.addEventListener("visibilitychange", () => {
       if (document.visibilityState == "visible") {
-        document.title='页面可见';
         this.audio.play();
       }
       if (document.visibilityState == "hidden") {
-        document.title='页面不可见';
         this.audio.pause();
       }
     })
   },
   methods: {
     getImgUrl,
-    setUrl(url) {
-      if (url.includes('floor_game_music.mp3')) {
-        this.loop = 1
-      }
-      this.indexUrl = getImgUrl(url)
-      const audio = document.getElementById("bgMusic");
-      audio.addEventListener('loadeddata', () => {
-        console.log('加载第一帧');
-        this.onPlayOrPaused();
-      });
-    },
     onPlayOrPaused(play) {
       let {
         state,

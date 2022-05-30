@@ -59,7 +59,7 @@
         >
           <div class="red-desc-popup">
             <div class="red-desc-content">
-              <img class="red-desc-back" :src="getImgUrl('publicMobile/game/withdrawal/history_desc.png')" />
+              <img class="red-desc-back" :src="getImgUrl('publicMobile/game/withdrawal/history_desc.png?v=2022')" />
               <img class="red-desc-close" @click="showRankDesc = false" :src="getImgUrl('publicMobile/game/withdrawal/history_desc_close.png')" />
               <div class="red-desc-box">
                 <div class="red-desc-title">温馨提示</div>
@@ -90,7 +90,7 @@
           <div class="red-list">
             <div class="flex_between list-item" v-for="item in list">
               <div class="list-info">
-                <div>盖楼{{item.floor}}层抽奖</div>
+                <div>{{item.title}}</div>
                 <div class="list-info-time">{{item.timeText}}</div>
               </div>
               <div class="list-num">{{item.prizeText}}元</div>
@@ -522,8 +522,8 @@ export default {
     position: relative;
   }
   .red-desc-back {
-    width: 264px;
-    height: 230px;
+    width: 308px;
+    height: 229px;
   }
   .red-desc-close {
     position: absolute;

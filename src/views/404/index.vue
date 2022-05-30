@@ -2,11 +2,11 @@
   <div class="store-in">
     <van-image
       class="bg"
-      width="240px"
-      height="240px"
-      :src="getImgUrl('publicMobile/common/404@2x.png')"
+      width="160px"
+      height="160px"
+      :src="getImgUrl('publicMobile/common/404-new.png')"
     />
-    <div class="text">您访问的页面暂时没有哦~</div>
+    <div class="text">请到应用商店更新约购APP至最新版本</div>
     <div class="btn" @click="goHome">返回首页</div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    background-color:#F5F5F5;
+    background-color:#FFFFFF;
     position: relative;
   }
   .bg {
@@ -53,28 +53,19 @@ export default {
     margin-top: 8px;
     width: 100%;
     text-align: center;
-    height: 22px;
-    font-size: 16px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    font-weight: 400;
+    font-size: 14px;
     color: #999999;
-    line-height: 22px;
   }
   .btn {
-    position: fixed;
-    left: 50%;
-    bottom: 74px;
-    transform: translate(-50%);
-    width: 343px;
-    height: 48px;
-    background: #FF3333;
+    margin-top: 32px;
+    width: 118px;
+    height: 36px;
+    border: 1px solid #FF0000;
     box-shadow: 0px 3px 6px 0px rgba(229, 53, 47, 0.4);
-    border-radius: 8px;
+    border-radius: 18px;
     text-align: center;
-    line-height: 48px;
-    font-size: 16px;
-    font-family: PingFangSC-Medium, PingFang SC;
-    font-weight: 500;
-    color: #FFFFFF;
+    line-height: 36px;
+    font-size: 14px;
+    color: #FF0000;
   }
 </style>

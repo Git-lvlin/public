@@ -90,4 +90,3 @@ export default {
     return operation(a, b, 'divide');
   },
 };
-

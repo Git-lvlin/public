@@ -5,10 +5,14 @@
       <div>暂无相关记录</div>
     </div>
     <div class="list-box" v-else>
+      <div class="right-top-box" @click="look">
+        <div class="right-top-btn">提现记录</div>
+      </div>
       <prize
         v-for="item in prizeList"
         :key="item.id"
         :good="item"
+        :token="token"
       />
     </div>
     <div v-if="prizeList.length" class="null">没有更多了〜</div>
@@ -21,6 +25,8 @@ import { Image as VanImage, Dialog, Swipe, SwipeItem, Lazyload, Popup } from 'va
 import { getImgUrl } from '@/utils/tools';
 import prize from './components/prize';
 import teamApi from '@/apis/bindbox';
+import { appBaseUrl, meBaseUrl } from "@/constant/index";
+import { goToApp } from '@/utils/userInfo';
 Vue.use(VanImage);
 export default {
   data() {
@@ -37,6 +43,10 @@ export default {
     this.init()
   },
   methods: {
+    look() {
+      const path = `/web/game-withdrawal-list?_immersive=0&at=${this.token}&i=1`
+      goToApp(meBaseUrl, path);
+    },
     getImgUrl,
     timestampToTime(timestamp) {
       var date = new Date(timestamp*1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -94,6 +104,23 @@ export default {
 }
 .list-box {
   padding: 12px;
+  padding-bottom: 109px;
+  .right-top-box {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .right-top-btn {
+    padding: 4px 8px;
+    font-size: 14px;
+    color: #999999;
+    border: 1px solid #999999;
+    text-align: center;
+    line-height: 100%;
+    border-radius: 8px;
+  }
 }
 .null {
   position: absolute;

@@ -62,6 +62,7 @@ export default {
         ...defPage,
       },
       list: [],
+      isRed: '',
     };
   },
   components: {
@@ -69,12 +70,15 @@ export default {
     NoData,
   },
   mounted () {
+    console.log(this.$store.state);
     let {
       at: token,
       bid: activityId,
+      i: isRed,
     } = this.$router.history.current.query;
     this.token = token;
     this.activityId = activityId;
+    this.isRed = isRed;
     this.$bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res);
       this.userInfo = d.data;
@@ -90,12 +94,16 @@ export default {
     getImgUrl,
     // 获取提现列表
     getWithdrawList(frist) {
-      gameApi.getWithdrawList({
+      let params = {
         // activityId: this.activityId,
         date: '',
         next: this.pageData.next,
         size: this.pageData.size,
-      }, {
+      }
+      if (this.isRed) {
+        params.activityType = 1 // 盲盒现金活动
+      }
+      gameApi.getWithdrawList(params, {
         token: this.token,
         showLoading: false,
       }).then(res => {
@@ -120,11 +128,25 @@ export default {
       }
     },
     onToDetail(item) {
-      if(!item.sn) {
+      const data = { ...item };
+      if(!data.sn) {
         return ;
       }
-      const str = objToParamStr(item);
-      const path = `/web/game-withdrawal-detail?_immersive=0&${str}`
+      if(data.notifyTime) {
+        data.notifyTime = new Date(data.notifyTime.replace(/-/g, '/')).getTime();
+      }
+      if(data.createTime) {
+        data.createTime = new Date(data.createTime.replace(/-/g, '/')).getTime();
+      }
+      const str = objToParamStr(data);
+      console.log('str', str)
+      const killStr = encodeURIComponent(str);
+      console.log('killStr', killStr)
+      // const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+      // const isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      const path = `/web/game-withdrawal-detail?_immersive=0&${killStr}`
+      console.log('path', path)
+      // return
       goToApp(meBaseUrl, path);
       // this.$router.push({
       //   path: '/web/game-withdrawal-detail',

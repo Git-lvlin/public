@@ -28,7 +28,7 @@
           <div class="progress-info">
             <div class="progress-info-item">
               <div>发起提现</div>
-              <div class="progress-info-time">{{detail.createTime}}</div>
+              <div class="progress-info-time">{{Dayjs(+detail.createTime).format('YYYY-MM-DD HH:mm:ss')}}</div>
             </div>
             <div
               :class="`progress-info-item ${progress == 2 ? 'act-top act-bank' : ''}`"
@@ -39,7 +39,7 @@
               v-if="progress == 3"
             >
               <div>{{isOk ? '到账' : '提现失败'}}</div>
-              <div class="progress-info-time">{{!!detail.notifyTime && detail.notifyTime != 'null' ? detail.notifyTime : '-'}}</div>
+              <div class="progress-info-time">{{!!detail.notifyTime && detail.notifyTime != 'null' ? Dayjs(+detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
             </div>
           </div>
         </div>
@@ -63,11 +63,11 @@
           </div>
           <div class="detail-item">
             <div>申请时间</div>
-            <div class="detail-value">{{detail.createTime}}</div>
+            <div class="detail-value">{{Dayjs(+detail.createTime).format('YYYY-MM-DD HH:mm:ss')}}</div>
           </div>
           <div class="detail-item">
             <div>到账时间</div>
-            <div class="detail-value">{{!!detail.notifyTime && detail.notifyTime != 'null' ? detail.notifyTime : '-'}}</div>
+            <div class="detail-value">{{!!detail.notifyTime && detail.notifyTime != 'null' ? Dayjs(+detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
           </div>
           <!-- <div class="detail-item">
             <div>提现银行</div>
@@ -89,6 +89,7 @@
 
 <script>
 import Vue from 'vue';
+import Dayjs from 'dayjs';
 import { Image, Toast } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 
@@ -105,10 +106,12 @@ export default {
     Image,
   },
   mounted () {
-    const {
-      query,
-    } = this.$router.history.current;
-    this.detail = query;
+    console.log('this.$router.history', this.$router.history)
+    let url = decodeURIComponent(this.$router.history.current.fullPath)
+    console.log('url', url)
+    let options = this.getUrlParametersAll(url)
+    console.log('options', options)
+    this.detail = options;
     if(!query.sn) {
       Toast('未获取到数据');
       const timer = setTimeout(() => {
@@ -128,6 +131,10 @@ export default {
   },
   methods: {
     getImgUrl,
+    Dayjs,
+    getUrlParametersAll(url){
+      return !url.split('?')[1] ? null : url.split('?')[1].split('&').reduce((res, item) => ({...res, [item.split('=')[0]]: item.split('=')[1]}), {})
+    },
     getEncryption(account = '') {
       account = account.toString()
       let text = '';

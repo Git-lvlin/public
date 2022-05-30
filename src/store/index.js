@@ -3,10 +3,13 @@ import Vuex from 'vuex';
 import { getQueryObj } from '@/utils/tools';
 
 // 设置是否在app内
-const {
+let {
   userAgent,
 } = navigator;
-const appInfo = getQueryObj(userAgent);
+if (userAgent && !userAgent.includes('?')) {
+  userAgent = '?' + userAgent
+}
+let appInfo = getQueryObj(userAgent);
 // if (!window.WeixinJSBridge || !window.WeixinJSBridge.invoke) {
 //   document.addEventListener('WeixinJSBridgeReady', () => {
 //     if (window.__wxjs_environment === 'miniprogram') {
@@ -16,7 +19,6 @@ const appInfo = getQueryObj(userAgent);
 //     }
 //   }, false);
 // }
-
 appInfo.isApp = appInfo.webViewClientTag ? true : false;
 
 // 设置安全区域

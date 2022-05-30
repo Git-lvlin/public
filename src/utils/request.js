@@ -13,16 +13,17 @@ let requestCount = 0;
 
 let appToken = '';
 axios.defaults.timeout = 10 * 1000;
-
+let v = store.state.appInfo.appVersion || "2.5.5";
 axios.interceptors.request.use((config) => {
   if (appToken) {
     config.headers.Authorization = `Bearer ${appToken}`;
   }
   config.headers.p = "H5";
-  config.headers.v = "1.0.0";
-
+  config.headers.v = v;
   if (process.env.NODE_ENV === 'production') {
-    config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
+    if (!config.url.includes('-oss.yeahgo.com')) {
+      config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
+    }
   }
   return config;
 }, (error) => Promise.reject(error));
@@ -109,6 +110,7 @@ const request = async ({
         }
       }, 1000);
     }
+    return error;
   }).finally(() => {
     if (showLoading) {
       requestCount -= 1;
