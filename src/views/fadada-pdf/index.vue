@@ -26,7 +26,7 @@ export default {
   methods: {
     confirm() {
       wx.miniProgram.navigateTo({
-        url: `/subpages/fadada/cashier/index?contractId=${this.$route.query.contractId}`
+        url: `/subpages/fadada/cashier/index?contractId=${this.$route.query.contractId}&url=${this.$route.query.pactUrl}`
       })
     }
   }
