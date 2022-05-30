@@ -475,6 +475,14 @@ const routes = [
       title: '个人信息收集清单',
     }
   },
+  {
+    path: '/web/vip-qa',
+    name: 'VipQa',
+    component: () => import('@/views/vip-qa'),
+    meta: {
+      title: '约购平台服务协议',
+    }
+  },
 ];
 
 const router = new VueRouter({
