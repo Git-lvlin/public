@@ -10,7 +10,7 @@
 <script>
 import Vue from 'vue';
 import { Button } from 'vant';
-
+import fadadaApi from '@/apis/fadada';
 Vue.use(Button);
 export default {
   data() {
@@ -26,7 +26,32 @@ export default {
   },
   methods: {
     back() {
-      wx.miniProgram.navigateBack()
+      if (this.$route.query.type == 1) {
+        this.goTo()
+      } else {
+        wx.miniProgram.navigateBack()
+      }
+    },
+    goTo() {
+      let data = localStorage.getItem('pdfData')
+      console.log('goto-pdfData', data)
+      fadadaApi.genCompanyContract({
+        companyId: data.contractId,
+        businessId: data.contractId,
+        contractUrl: data.url
+      }).then(res => {
+        let signUrl = encodeURIComponent(res.signUrl);
+        wx.miniProgram.navigateTo({
+          url: `pages/webview/index?url=${signUrl}&encode=true`
+        })
+        // router.push({
+        //   name: "webview",
+        //   data: {
+        //     url: encodeURIComponent(res.signUrl),
+        //     encode: true
+        //   }
+        // });
+      })
     }
   }
 };

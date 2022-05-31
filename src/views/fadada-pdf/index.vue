@@ -25,6 +25,11 @@ export default {
   },
   methods: {
     confirm() {
+      let data = {
+        contractId: this.$route.query.contractId,
+        url: this.$route.query.url
+      }
+      localStorage.setItem('pdfData', JSON.stringify(data))
       wx.miniProgram.navigateTo({
         url: `/subpages/fadada/cashier/index?contractId=${this.$route.query.contractId}&url=${this.$route.query.url}`
       })
