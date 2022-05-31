@@ -58,7 +58,7 @@ const routes = [
     name: 'StoreIn',
     component: () => import('@/views/store-in'),
     meta: {
-      title: '社区店入驻',
+      title: 'VIP社区店入驻',
     }
   },
   {
@@ -473,6 +473,14 @@ const routes = [
     component: () => import('@/views/personal-information-list'),
     meta: {
       title: '个人信息收集清单',
+    }
+  },
+  {
+    path: '/web/vip-qa',
+    name: 'VipQa',
+    component: () => import('@/views/vip-qa'),
+    meta: {
+      title: '约购平台服务协议',
     }
   },
 ];
