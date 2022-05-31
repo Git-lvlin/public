@@ -95,7 +95,7 @@
 <p><strong><strong>九</strong></strong><strong><strong>、店主不得对发布的商品进行虚假、夸大宣传，否则因此造成一切后果，由店主本人承担，与平台无关。</strong></strong></p>
 <p><strong><strong>十</strong></strong><strong><strong>、</strong></strong>本规则及服务须知，自发布之日起生效。本次更新版本如与之前版本有冲突或增加和修改部分，以本次内容为准，其它内容不变并具有法律效力。</p>
 <p>十、本人已<strong><strong>完整阅读</strong></strong>本须知各项内容及<strong><strong>平台服务费</strong></strong>重要约定，承诺为本人自愿申请成为约购社区店店主及缴纳平台服务费（含平台优惠），并对本人的权利义务知悉。勾选即同意《约购平台社区店规则及服务须知3.0》，具有法律效力。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布日期：2022年5月 31&nbsp;日 &nbsp;</p>
+<p>发布日期：2022年5月31日</p>
 </div>
 </template>
 <style lang="scss" scoped>
