@@ -2,7 +2,7 @@
   <div>
     <div class="text">{{status[$route.query.type]}}</div>
     <div class="btn">
-      <van-button type="danger" block @click="back">返回</van-button>
+      <van-button type="danger" block @click="back">{{$route.query.type==1?'签约':'返回'}}</van-button>
     </div>
   </div>
 </template>
@@ -33,7 +33,8 @@ export default {
       }
     },
     goTo() {
-      let data = localStorage.getItem('pdfData')
+      let data = localStorage.getItem('pdfData');
+      data = JSON.parse(data);
       console.log('goto-pdfData', data)
       fadadaApi.genCompanyContract({
         companyId: data.contractId,
