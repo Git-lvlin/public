@@ -61,7 +61,7 @@ import DottedLine from '@/components/dotted-line';
 import teamApi from '@/apis/appointment';
 import commonApi from '@/apis/common';
 import jsBridge from '@/utils/jsBridge';
-import { goToApp } from '@/utils/userInfo';
+import { goToApp, setNavigationBar } from '@/utils/userInfo';
 Vue.use(Swipe);
 Vue.use(SwipeItem);
 export default {
@@ -86,6 +86,29 @@ export default {
     [List.name]: List,
   },
   created () {
+    const {
+      query,
+    } = this.$router.history.current;
+    // this.inviteCode = query.inviteCode;
+    this.couponInviteId = query.couponInviteId;
+    const rightButton = {
+      type: 'share',
+      object: {
+        contentType: 3,
+        paramId: 7,
+        shareType: 3,
+        sourceType: 3,
+      }
+    };
+    const titleLabel = {
+      titleLabelColor: '', // 暂时不会传
+      font: '', // 暂时不会传
+      text: '', // 默认documenttitle
+    };
+    if (this.couponInviteId) {
+      rightButton.object.shareObjectNo = this.couponInviteId
+    } 
+    setNavigationBar('#FFFFFF', rightButton, titleLabel);
     // 不推荐在这里调用 fetchItem
     // this.getUserList();
     this.getbanner()
