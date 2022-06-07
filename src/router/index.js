@@ -497,6 +497,14 @@ const routes = [
     component: () => import('@/views/fadada-pdf'),
     meta: {
       title: '预览入驻合同',
+    },
+  },
+  {
+    path: '/web/customize',
+    name: 'customize',
+    component: () => import('@/views/customize'),
+    meta: {
+      title: '专题活动',
     }
   },
 ];
