@@ -483,6 +483,14 @@ const routes = [
       title: '约购平台服务协议',
     }
   },
+  {
+    path: '/web/customize',
+    name: 'customize',
+    component: () => import('@/views/customize'),
+    meta: {
+      title: '专题活动',
+    }
+  },
 ];
 
 const router = new VueRouter({

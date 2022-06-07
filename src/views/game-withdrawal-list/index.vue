@@ -17,7 +17,10 @@
               <div class="info-title">账户提现-支付宝</div>
               <div class="item-time">{{Dayjs(item.createTime).format('MM月DD日 HH:mm')}}</div>
             </div>
-            <div class="price flex-fix">¥{{parseFloat(+item.amount / 100).toFixed(2)}}</div>
+            <div>
+              <div class="price flex-fix">¥{{parseFloat(+item.amount / 100).toFixed(2)}}</div>
+              <div>{{item.statusDesc}}</div>
+            </div>
           </div>
         </div>
         <!-- 空数据 -->
