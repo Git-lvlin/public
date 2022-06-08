@@ -3,6 +3,7 @@
     <div v-if="reg==='user'">
       <user0 v-if="index==0" />
       <user1 v-if="index==1" />
+      <user2 v-if="index==2" />
     </div>
     <div v-if="reg==='store'">
       <store0 v-if="index==0" />
@@ -28,6 +29,7 @@
 <script>
 import user0 from './components/user/0.vue';
 import user1 from './components/user/1.vue';
+import user2 from './components/user/2.vue';
 
 import store0 from './components/store/0.vue';
 import store1 from './components/store/1.vue';
@@ -80,6 +82,7 @@ export default {
   components: {
     user0,
     user1,
+    user2,
     store0,
     store1,
     store2,

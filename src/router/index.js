@@ -238,14 +238,6 @@ const routes = [
     }
   },
   {
-    path: '/web/bingous-old',
-    name: 'BinGous',
-    component: () => import('@/views/bingous-old'),
-    meta: {
-      title: '协议',
-    }
-  },
-  {
     path: '/web/limit-list',
     name: 'LimitList',
     component: () => import('@/views/limit-list'),
