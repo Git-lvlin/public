@@ -36,6 +36,10 @@ export default {
       let data = localStorage.getItem('pdfData');
       data = JSON.parse(data);
       console.log('goto-pdfData', data)
+      if (!data) {
+        wx.miniProgram.navigateBack()
+        return
+      }
       fadadaApi.genCompanyContract({
         companyId: data.contractId,
         businessId: data.contractId,
@@ -45,6 +49,7 @@ export default {
         wx.miniProgram.navigateTo({
           url: `pages/webview/index?url=${signUrl}&encode=true`
         })
+        localStorage.removeItem('pdfData')
         // router.push({
         //   name: "webview",
         //   data: {
