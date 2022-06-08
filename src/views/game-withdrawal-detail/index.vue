@@ -114,6 +114,7 @@ export default {
     let options = this.getUrlParametersAll(url)
     console.log('options', options)
     this.detail = options;
+    const { query } = this.$route
     if(!query.sn) {
       Toast('未获取到数据');
       const timer = setTimeout(() => {
