@@ -19,7 +19,7 @@
             </div>
             <div>
               <div class="price flex-fix">¥{{parseFloat(+item.amount / 100).toFixed(2)}}</div>
-              <div>{{item.statusDesc}}</div>
+              <div class="status-title">{{item.statusDesc}}</div>
             </div>
           </div>
         </div>
@@ -163,6 +163,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
   .withdrawal-list {
     height: 100vh;
     padding: 0 12px;
@@ -231,5 +232,9 @@ export default {
     font-size: 15px;
     line-height: 21px;
     margin: 20px 0 0 2px;
+  }
+
+  .status-title {
+    font-size: 12px;
   }
 </style>
