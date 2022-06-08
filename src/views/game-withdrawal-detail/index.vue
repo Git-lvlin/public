@@ -114,8 +114,8 @@ export default {
     let options = this.getUrlParametersAll(url)
     console.log('options', options)
     this.detail = options;
-    const { query } = this.$route
-    if(!query.sn) {
+    
+    if (!this.detail.sn) {
       Toast('未获取到数据');
       const timer = setTimeout(() => {
         this.$router.go(-1);
@@ -124,7 +124,7 @@ export default {
     }
     const {
       status
-    } = query;
+    } = this.detail;
     if(status == 'auditing' || status == 'waitPay' || status == 'paid') {
       this.progress = 2;
     } else if(status == 'arrived' || status == 'unPass' || status == 'failure') {
