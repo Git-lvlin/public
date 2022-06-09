@@ -507,6 +507,14 @@ const routes = [
       title: '专题活动',
     }
   },
+  {
+    path: '/web/security-deposit',
+    name: 'security-deposit',
+    component: () => import('@/views/security-deposit'),
+    meta: {
+      title: '升级成为VIP社区店',
+    }
+  },
 ];
 
 const router = new VueRouter({
