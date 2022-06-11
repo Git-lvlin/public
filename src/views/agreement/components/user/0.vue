@@ -219,7 +219,7 @@
       <div id="hdLxnAsD8n" class="block_tile">
         <p style="text-align:left;" textalign="left"><span class="font-size play-mode-fontSize-9"
             style="font-size: 13px"><span class="color_font other_color"
-              style="background-color:transparent;color:#EB5451;">您授权以微信账号登录约购后，我们将根据您的授权以间接方式获取相关账号的<strong><u>用户标识、登录名、昵称、头像以及登录状态信息</u></strong>，并将微信账号与约购账户进行绑定。您需要授权同意我们从微信获取您的昵称、头像、地区、性别。如您需解除约购账号与微信账号的绑定，您可通过点击“我的”，点击“用户头像”，点击“微信号绑定”,点击“确定”实现解除绑定功能。</span></span>
+              style="background-color:transparent;">您授权以微信账号登录约购后，我们将根据您的授权以间接方式获取相关账号的<strong><u>用户标识、登录名、昵称、头像以及登录状态信息</u></strong>，并将微信账号与约购账户进行绑定。您需要授权同意我们从微信获取您的昵称、头像、地区、性别。如您需解除约购账号与微信账号的绑定，您可通过点击“我的”，点击“用户头像”，点击“微信号绑定”,点击“确定”实现解除绑定功能。</span></span>
         </p>
       </div>
       <div id="jX1EjKpuqI" class="block_tile">
