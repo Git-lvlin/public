@@ -1,40 +1,224 @@
 <template>
 <div style="padding: 10px; font-size: 12px;">
-  <h1>个人信息收集清单</h1>
-  <p>&nbsp;</p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">为保障产品或服务能实现与安全稳定运行之目的，我们可能会收集您的以下个人信息：</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">1、用户基本信息</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">头像</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">昵称</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">姓名</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">职业</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">学历</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">生日</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">手机号</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">性别</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">地区</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">地址</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">个人简介</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="text-indent: 0; text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">2、设备信息&nbsp;</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">登录过的设备</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">操作系统版本</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">唯一设备标识符</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="text-indent: 0; text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">3、用户使用过程信息</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">位置</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">相册</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">多媒体文件</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="text-align: justify; text-justify: inter-ideograph; margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p style="margin: 5px 0 5px 0;"><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p><span style=";font-family: 宋体; font-size: 16px;">&nbsp;</span></p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
+<p>为保障产品或服务能实现与安全稳定运行之目的，我们可能会收集您的以下个人信息：</p>
+<p>1、 用户基本信息</p>
+<p>&nbsp;</p>
+<p>信息名称：昵称</p>
+<p>使用目的：完善账号信息</p>
+<p>使用场景：用户补充账号信息时</p>
+<p>收集情况：用户补充账号信息时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：第三方账号信息 （头像、昵称）</p>
+<p>使用目的：联合登录</p>
+<p>使用场景：用户使用第三方账号登录时</p>
+<p>收集情况：用户使用第三方账号登录时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：姓名</p>
+<p>使用目的：实名认证</p>
+<p>使用场景：用户首次进行实名认证时</p>
+<p>收集情况：用户首次进行实名认证时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：职业</p>
+<p>使用目的：完善账号信息</p>
+<p>使用场景：用户补充账号信息时</p>
+<p>收集情况：用户补充账号信息时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：学历</p>
+<p>使用目的：完善账号信息</p>
+<p>使用场景：用户补充账号信息时</p>
+<p>收集情况：用户补充账号信息时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：头像</p>
+<p>使用目的：完善账号信息</p>
+<p>使用场景：用户补充账号信息时</p>
+<p>收集情况：用户补充账号信息时收集1条</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>信息名称：性别</p>
+<p>使用目的：完善账号信息</p>
+<p>使用场景：用户补充账号信息时</p>
+<p>收集情况：用户补充账号信息时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：生日</p>
+<p>使用目的：完善账号信息</p>
+<p>使用场景：用户补充账号信息时</p>
+<p>收集情况：用户补充账号信息时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：手机号码</p>
+<p>使用目的：创建账号、联系用户交付商品或服务</p>
+<p>使用场景：用户首次注册时、首次进行实名认证时、用户新增地址时</p>
+<p>收集情况：用户首次注册时收集1条、首次进行实名认证时收集1条、用户新增地址时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：收货地址</p>
+<p>使用目的：完成收货</p>
+<p>使用场景：用户新增地址时、用户每次下单时</p>
+<p>收集情况：用户新增地址时收集1条，用户每次下单时收集1次</p>
+<p>&nbsp;</p>
+<p>2、 用户身份证明</p>
+<p>（1） 用户自然人身份信息</p>
+<p>信息名称：证件类型及证件号</p>
+<p>使用目的：实名认证</p>
+<p>使用场景：用户首次实名认证时</p>
+<p>收集情况：用户首次实名认证时收集1条</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>（2） 用户虚拟身份和鉴权信息</p>
+<p>信息名称：账号及密码</p>
+<p>使用目的：创建账号</p>
+<p>使用场景：用户首次创建账号时</p>
+<p>收集情况：用户首次创建账号时收集1条</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>3、 用户使用过程信息</p>
+<p>（1） 用户服务内容和资料数据</p>
+<p>信息名称：加购信息</p>
+<p>使用目的：提供购物车服务、个性化推荐</p>
+<p>使用场景：用户操作购物车时</p>
+<p>收集情况：用户操作购物车时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：购买的商品或服务信息</p>
+<p>使用目的：提供用户所购买的商品或服务、个性化推荐</p>
+<p>使用场景：用户下单时</p>
+<p>收集情况：用户下单时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：下单时间</p>
+<p>使用目的：记录用户下单时间、个性化推荐</p>
+<p>使用场景：用户下单时</p>
+<p>收集情况：用户下单时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：支付金额</p>
+<p>使用目的：向用户提供购物支付服务</p>
+<p>使用场景：用户支付时</p>
+<p>收集情况：用户支付时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：支付方式</p>
+<p>使用目的：向用户提供购物支付服务</p>
+<p>使用场景：用户支付时</p>
+<p>收集情况：用户支付时收集1条</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>（2） 用户服务衍生信息</p>
+<p>信息名称： Cookie内容</p>
+<p>使用目的：提供购物的偏好设置、判断登录状态以及账号或数据安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：用户使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：搜索记录</p>
+<p>使用目的：展示搜索记录、个性化推荐</p>
+<p>使用场景：用户使用搜索服务时</p>
+<p>收集情况：用户使用1次搜索服务时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：浏览记录</p>
+<p>使用目的：展示浏览记录、个性化推荐</p>
+<p>使用场景：用户使用浏览服务时</p>
+<p>收集情况：用户使用浏览1次商品服务时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：收藏、关注记录</p>
+<p>使用目的：展示收藏的商品或店铺、关注的店铺、个性化推荐</p>
+<p>使用场景：用户收藏、关注商品或店铺时</p>
+<p>收集情况：用户收藏、关注1个商品或1家店铺时收集1条</p>
+<p>&nbsp;</p>
+<p>4、 设备信息</p>
+<p>信息名称：设备名称</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面</p>
+<p>使用场景：用户使用APP查看商品或服务内容时、使用APP时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：设备型号</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面、保障交易安全</p>
+<p>使用场景：用户使用APP查看商品或服务内容时、用户使用APP时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：MAC地址</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面、保障交易安全</p>
+<p>使用场景：用户使用APP查看商品或服务内容时、用户使用APP时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：IMEI</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面</p>
+<p>使用场景：用户使用APP查看商品或服务内容时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：设备识别码</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面、保障交易安全</p>
+<p>使用场景：用户使用APP查看商品或服务内容时、用户使用APP时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：移动应用列表</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面</p>
+<p>使用场景：用户使用APP查看商品或服务内容时</p>
+<p>收集情况：使用APP时收集1次</p>
+<p>&nbsp;</p>
+<p>信息名称：操作系统</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面、保障交易安全</p>
+<p>使用场景：用户使用APP查看商品或服务内容时、用户使用APP时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：应用程序版本</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面</p>
+<p>使用场景：用户使用APP查看商品或服务内容时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：分辨率</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面</p>
+<p>使用场景：用户使用APP查看商品或服务内容时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：服务提供商网络ID（PLMN）</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面</p>
+<p>使用场景：用户使用APP查看商品或服务内容时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：设备所在位置相关信息（包括您授权的GPS位置信息以及WLAN接入点、蓝牙和基站传感器信息）</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面、保障交易安全</p>
+<p>使用场景：用户使用APP查看商品或服务内容时、用户使用APP时</p>
+<p>收集情况：第一次进入首页打开定位权限后收集1条，搜索页面点击&ldquo;获取定位&rdquo;按钮收集1条，进入地图时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：浏览器类型</p>
+<p>使用目的：对相应的商品或者服务内容进行排序以适应您的设备界面</p>
+<p>使用场景：用户使用APP查看商品或服务内容时</p>
+<p>收集情况：收集1条，进入浏览器时收集1次</p>
+<p>&nbsp;</p>
+<p>信息名称：应用进程列表</p>
+<p>使用目的：保障交易安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：用户使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：设备序列号</p>
+<p>使用目的：保障交易安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：设备状态</p>
+<p>使用目的：保障交易安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：用户使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：网络状况</p>
+<p>使用目的：保障交易安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：网络状态改变时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：历史上网记录</p>
+<p>使用目的： 保障交易安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：用户使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：日志信息</p>
+<p>使用目的： 保障交易安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：用户使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：IP地址</p>
+<p>使用目的： 保障交易安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：第一次使用APP时收集1条</p>
+<p>&nbsp;</p>
+<p>信息名称：浏览信息</p>
+<p>使用目的： 保障交易安全</p>
+<p>使用场景：用户使用APP时</p>
+<p>收集情况：用户使用APP时收集1条</p>
 </div>
 </template>
