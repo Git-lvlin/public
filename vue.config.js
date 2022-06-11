@@ -15,8 +15,8 @@ module.exports = {
       //   ws: true,
       //   changeOrigin: true,
       // },
-      '/member': {
-        target: 'http://dev-yeahgo-gateway.waiad.icu',
+      '/goods': {
+        target: 'https://api-dev.yeahgo.com',
         ws: true,
         changeOrigin: true,
       },
@@ -26,7 +26,7 @@ module.exports = {
         changeOrigin: true,
       },
       '/activity': {
-        target: 'http://local.yeahgo.com',
+        target: 'https://api-dev.yeahgo.com',
         ws: true,
         changeOrigin: true,
       },

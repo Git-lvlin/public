@@ -17,7 +17,8 @@
             </div>
             <div class="progress-item">
               <div class="tap" v-if="progress == 3" />
-              <img class="waiting-icon"  v-if="progress == 2" :src="getImgUrl('publicMobile/game/withdrawal/waiting.png')" />
+              <img class="waiting-icon" v-if="progress == 2"
+                :src="getImgUrl('publicMobile/game/withdrawal/waiting.png')" />
             </div>
             <div class="progress-item" v-if="progress == 3">
               <div class="line" />
@@ -30,21 +31,21 @@
               <div>发起提现</div>
               <div class="progress-info-time">{{Dayjs(+detail.createTime).format('YYYY-MM-DD HH:mm:ss')}}</div>
             </div>
-            <div
-              :class="`progress-info-item ${progress == 2 ? 'act-top act-bank' : ''}`"
-              v-if="progress == 2"
-            >银行处理中</div>
-            <div
-              :class="`progress-info-item act-top ${isOk ? 'success-text' : 'lose-text'}`"
-              v-if="progress == 3"
-            >
+            <div :class="`progress-info-item ${progress == 2 ? 'act-top act-bank' : ''}`" v-if="progress == 2">银行处理中
+            </div>
+            <div :class="`progress-info-item act-top ${isOk ? 'success-text' : 'lose-text'}`" v-if="progress == 3">
               <div>{{isOk ? '到账' : '提现失败'}}</div>
-              <div class="progress-info-time">{{!!detail.notifyTime && detail.notifyTime != 'null' ? Dayjs(+detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
+              <div class="progress-info-time">{{!!detail.notifyTime && detail.notifyTime != 'null' ?
+                Dayjs(+detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
             </div>
           </div>
         </div>
 
         <div class="info-detail">
+          <div class="detail-item">
+            <div>提现审核</div>
+            <div class="detail-value">{{detail.statusDesc}}</div>
+          </div>
           <div class="detail-item">
             <div>提现金额</div>
             <div class="detail-value">¥{{parseFloat((+detail.amount || 0) / 100).toFixed(2)}}</div>
@@ -67,7 +68,8 @@
           </div>
           <div class="detail-item">
             <div>到账时间</div>
-            <div class="detail-value">{{!!detail.notifyTime && detail.notifyTime != 'null' ? Dayjs(+detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
+            <div class="detail-value">{{!!detail.notifyTime && detail.notifyTime != 'null' ?
+              Dayjs(+detail.notifyTime).format('YYYY-MM-DD HH:mm:ss') : '-'}}</div>
           </div>
           <!-- <div class="detail-item">
             <div>提现银行</div>
@@ -112,7 +114,8 @@ export default {
     let options = this.getUrlParametersAll(url)
     console.log('options', options)
     this.detail = options;
-    if(!query.sn) {
+    
+    if (!this.detail.sn) {
       Toast('未获取到数据');
       const timer = setTimeout(() => {
         this.$router.go(-1);
@@ -121,7 +124,7 @@ export default {
     }
     const {
       status
-    } = query;
+    } = this.detail;
     if(status == 'auditing' || status == 'waitPay' || status == 'paid') {
       this.progress = 2;
     } else if(status == 'arrived' || status == 'unPass' || status == 'failure') {
