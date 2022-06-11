@@ -1,5 +1,10 @@
 <template>
-
+  <div v-if="customizeData">
+    <div class="banner">
+      <img :src="contentData.bannerImgUrl" />
+      <div class="count-down"></div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -15,37 +20,15 @@ Vue.use(Loading);
 export default {
   data() {
     return {
-      list: [],
-      load: true,
-      banner: getImgUrl('publicMobile/atom/banner.png'),
-      title: getImgUrl('publicMobile/atom/title.png'),
-      clicked: false,
+      customizeData: null,
+      contentData: {},
     };
   },
   components: {},
   created() {
     this.getList()
   },
-  async mounted() {
-    await this.loadImg()
-  },
   methods: {
-    loadImg() {
-      return new Promise((resolve, reject) => {
-        let bgImg = new Image();
-        bgImg.src = this.banner; // 获取背景图片的url
-        bgImg.onerror = () => {
-          console.log('img onerror')
-          reject()
-        }
-        bgImg.onload = () => { // 等背景图片加载成功后 去除loading
-          setTimeout(() => {
-            this.load = false
-            resolve()
-          }, 200)
-        }
-      })
-    },
     getImgUrl,
     onToDetail(item) {
       if (this.clicked) {
@@ -73,7 +56,8 @@ export default {
     },
     getList() {
       api.getSubjectActivityInfo({ size: 9999, id: this.$route.query.id }).then(res => {
-        this.list = res.data.records;
+        this.customizeData = res.data;
+        this.contentData = this.customizeData.content;
       })
     },
     getPrice(p) {
@@ -98,4 +82,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.banner {
+  position: relative;
+
+  img {
+    width: 100%;
+  }
+}
 </style>
