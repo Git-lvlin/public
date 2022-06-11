@@ -181,7 +181,14 @@ export default {
       }
       const { skuId, spuId, orderType, activityId, objectId } = item;
       const param = `?skuId=${skuId}&spuId=${spuId}&orderType=${orderType}&activityId=${activityId}&objectId=${objectId}`;
-      goToApp(appBaseUrl, '/shopping/detail', param)
+      if (this.$store.state.appInfo.isMiniprogram) {
+        wx.miniProgram.navigateTo({
+          url: `/subpages/cart/detail/index${param}`
+        })
+      }
+      if (this.$store.state.appInfo.isApp) {
+        goToApp(appBaseUrl, '/shopping/detail', param)
+      }
     },
     getListData() {
       const param = {
