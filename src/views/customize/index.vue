@@ -290,7 +290,7 @@ export default {
     height: 124px;
     width: 100%;
     padding: 12px;
-    background: #fff;
+    background-color: #fff;
     border-radius: 8px;
     margin-bottom: 8px;
     display: flex;
