@@ -25,7 +25,7 @@
 
     <div :class="`goods-list${contentData.goodsCards.showType}`">
       <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
-        :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.radius * scale}px;`">
+        :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px;`">
         <div class="img"
           :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth * scale}px solid ${goodsBorderLineColor}`">
           <img :src="g.imageUrl">
@@ -185,9 +185,21 @@ export default {
 <style>
 
 
+
+
 .MM {
   justify-content: center;
   align-items: center;
+}
+
+.MB {
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.MT {
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .LM {
