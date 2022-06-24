@@ -280,6 +280,9 @@ export default {
 .sub-image {
   margin-top: 20px;
   text-align: center;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
 }
 
 .goods-list1 {
@@ -360,7 +363,7 @@ export default {
 
   .goods-item {
     height: 294px;
-    width: 170px;
+    width: 49%;
     background: #fff;
     border-radius: 8px;
     margin-bottom: 8px;
@@ -370,7 +373,7 @@ export default {
     flex-direction: column;
 
     .img {
-      width: 170px;
+      width: 100%;
       height: 170px;
       overflow: hidden;
       margin-bottom: 12px;
