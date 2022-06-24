@@ -25,9 +25,9 @@
 
     <div :class="`goods-list${contentData.goodsCards.showType}`">
       <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
-        :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px;`">
+        :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
-          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth * scale}px solid ${goodsBorderLineColor}`">
+          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor}`">
           <img :src="g.imageUrl">
         </div>
         <div class="info">
@@ -101,6 +101,8 @@ export default {
       scale: window.innerWidth / 375,
       goodsBorderLineWidth: 0,
       goodsBorderLineColor: '#fff',
+      borderLineWidth: 0,
+      borderLineColor: '#fff',
     };
   },
   components: {
@@ -167,6 +169,11 @@ export default {
           }
         }
         const goodsBorder = this.contentData.goodsCards.goodsBorder
+        const border = this.contentData.goodsCards.border
+        if (border) {
+          this.borderLineWidth = border.lineWidth * this.scale
+          this.borderLineColor = border.color
+        }
         if (goodsBorder) {
           this.goodsBorderLineWidth = goodsBorder.lineWidth * this.scale
           this.goodsBorderLineColor = goodsBorder.color
@@ -183,10 +190,6 @@ export default {
 };
 </script>
 <style>
-
-
-
-
 .MM {
   justify-content: center;
   align-items: center;
@@ -221,6 +224,7 @@ export default {
   justify-content: flex-start;
   align-items: flex-end;
 }
+
 .RT {
   justify-content: flex-end;
   align-items: flex-start;
