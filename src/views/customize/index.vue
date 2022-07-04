@@ -85,7 +85,7 @@
 
 <script>
 import Vue from "vue";
-import { CountDown } from 'vant';
+import { CountDown, Dialog } from 'vant';
 import { getImgUrl } from "@/utils/tools";
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp } from "@/utils/userInfo";
@@ -161,6 +161,13 @@ export default {
         document.title = res.data.name
         this.customizeData = res.data
         this.contentData = this.customizeData.content
+        if (this.customizeData.time > this.customizeData.endTime) {
+          Dialog.alert({
+            message: '活动已结束',
+            showConfirmButton: false,
+          })
+        }
+
         if (this.contentData.bannerTime.switch) {
           if (this.customizeData.time < this.customizeData.startTime) {
             this.time = (this.customizeData.startTime - this.customizeData.time) * 1000
@@ -432,3 +439,4 @@ export default {
   }
 }
 </style>
+
