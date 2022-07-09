@@ -13,7 +13,14 @@
 
     <div class="p5">现在升级为VIP社区店</div>
     <div class="p4">技术服务费仅需：<span>¥{{ +$route.query.serviceAmount / 100
-    }}</span>{{ +$route.query.top > 0 ? `(仅限前${$route.query.top}名)` : '' }}</div>
+        }}</span>{{ +$route.query.top > 0 ? `(仅限前${$route.query.top}名)` : '' }}</div>
+    <van-divider />
+    <div class="p5">升级至VIP社区店技术服务费标准</div>
+    <div class="p6">
+      <div>1. 前500名：<span>¥1000</span></div>
+      <div>2. 501～1000名：<span>¥1500</span></div>
+      <div>3. 1001名及以后：<span>¥3000</span></div>
+    </div>
   </div>
 </template>
 
@@ -24,11 +31,12 @@ import { Divider } from "vant";
 export default {
   components: {
     [Divider.name]: Divider,
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+
 
 
 .page {
@@ -64,6 +72,7 @@ export default {
   font-weight: 400;
   color: #333333;
   padding-left: 10px;
+
   span {
     color: red;
   }
@@ -78,4 +87,11 @@ export default {
   margin-bottom: 5px;
 }
 
+.p6 {
+  background: #F5F5F5;
+  margin: 10px 10px 0;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 12px;
+}
 </style>
