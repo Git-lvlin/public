@@ -46,9 +46,10 @@ export default {
         contractUrl: data.url
       }).then(res => {
         let signUrl = encodeURIComponent(res.signUrl);
-        wx.miniProgram.navigateTo({
-          url: `pages/webview/index?url=${signUrl}&encode=true`
-        })
+        // wx.miniProgram.navigateTo({
+        //   url: `pages/webview/index?url=${signUrl}&encode=true`
+        // })
+        window.location.href = signUrl;
         localStorage.removeItem('pdfData')
         // router.push({
         //   name: "webview",
