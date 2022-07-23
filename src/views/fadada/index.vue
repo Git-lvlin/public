@@ -51,7 +51,7 @@ export default {
         // })
         console.log('res', res)
         // console.log('signUrl', signUrl)
-        window.location.href = res.data.signUrl;
+        window.location.href = res.data.url;
         localStorage.removeItem('pdfData')
         // router.push({
         //   name: "webview",
