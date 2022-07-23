@@ -51,9 +51,8 @@ export default {
         // })
         console.log('res', res)
         // console.log('signUrl', signUrl)
-        setTimeout(() => {
-          window.location.href = res.data.signUrl;
-        }, 10000);
+        window.location.href = res.data.signUrl;
+        
         localStorage.removeItem('pdfData')
         // router.push({
         //   name: "webview",
