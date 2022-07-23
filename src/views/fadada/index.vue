@@ -49,6 +49,7 @@ export default {
         // wx.miniProgram.navigateTo({
         //   url: `pages/webview/index?url=${signUrl}&encode=true`
         // })
+        console.log('res', res)
         console.log('signUrl', signUrl)
         // window.location.href = signUrl;
         localStorage.removeItem('pdfData')
