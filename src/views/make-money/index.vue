@@ -32,20 +32,16 @@ export default {
     return {};
   },
   created() {
-    this.$bridge.callHandler('share', {
-      contentType: 18,
-      paramId: 19,
-      sharePopup: false,
-    });
+    // this.$bridge.callHandler('share', {
+    //   contentType: 18,
+    //   paramId: 19,
+    //   sharePopup: false,
+    // });
   },
   methods: {
     getImgUrl,
     share() {
-      this.$bridge.callHandler('share', {
-        contentType: 18,
-        paramId: 19,
-        sharePopup: true,
-      });
+      this.$bridge.callHandler('share', { "code": 0, "msg": "success", "data": { "contentType": 18, "paramId": 19, "shareType": 1, "sourceType": 1 } });
     },
     go() {
       const skuId = {
