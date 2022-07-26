@@ -531,6 +531,14 @@ const routes = [
       title: '分享财富密码',
     }
   },
+  {
+    path: '/web/escrow-agreement',
+    name: 'escrow-agreement',
+    component: () => import('@/views/escrow-agreement'),
+    meta: {
+      title: '托管协议',
+    }
+  },
 ];
 
 const router = new VueRouter({
