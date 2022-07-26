@@ -9,7 +9,7 @@
         </li>
         <li :style="`background-image:url(${getImgUrl('publicMobile/make-money/icon.png')})`">
           <div class="title">2、分享商品给好友下单并签署在线合同</div>
-          <div class="btn">查看商品</div>
+          <div class="btn" @click="go">查看商品</div>
         </li>
         <li :style="`background-image:url(${getImgUrl('publicMobile/make-money/icon.png')})`">
           <div class="title">3、邀请好友开通VIP店铺</div>
@@ -25,6 +25,7 @@
 
 <script>
 import { getImgUrl } from '@/utils/tools';
+import { appBaseUrl } from "@/constant/index";
 
 export default {
   data() {
@@ -45,7 +46,24 @@ export default {
         paramId: 19,
         sharePopup: true,
       });
-    }
+    },
+    go() {
+      const skuId = {
+        dev: '218884',
+        uat: '6326',
+        pro: '6326',
+      }
+      const spuId = {
+        dev: '2760',
+        uat: '3587',
+        pro: '3587',
+      }
+      if (this.$store.state.appInfo.isApp) {
+        goToApp(appBaseUrl, '/shopping/detail', `?orderType=2&spuId=${spuId[process.env.VUE_APP_API_ENV]}&objectId=0&activityId=0&skuId=${skuId[process.env.VUE_APP_API_ENV]}`)
+      } else {
+        console.log('不是App内')
+      }
+    },
   },
 };
 </script>
