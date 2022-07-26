@@ -515,6 +515,22 @@ const routes = [
       title: '升级成为VIP社区店',
     }
   },
+  {
+    path: '/web/make-money',
+    name: 'make-money',
+    component: () => import('@/views/make-money'),
+    meta: {
+      title: '分享即可赚收益',
+    }
+  },
+  {
+    path: '/web/make-money-share',
+    name: 'make-money-share',
+    component: () => import('@/views/make-money-share'),
+    meta: {
+      title: '分享财富密码',
+    }
+  },
 ];
 
 const router = new VueRouter({
