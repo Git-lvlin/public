@@ -26,6 +26,7 @@
 <script>
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
+import { goToApp } from "@/utils/userInfo";
 
 export default {
   data() {
