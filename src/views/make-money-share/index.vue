@@ -1,5 +1,5 @@
 <template>
-  <div class="make-money" :style="`background-image:url(${getImgUrl('publicMobile/make-money-share/bg.png')})`">
+  <div class="make-money" :style="`background-image:url(${getImgUrl('publicMobile/make-money-share/bg.png?v=1')})`">
     <div class="box">
       <ul>
         <li>
@@ -11,7 +11,7 @@
         <li>
           <div class="unit">
             <span>2</span>
-            <div>下单商品并签署在线合同</div>
+            <div>下单购买商品并签署在线合同</div>
           </div>
         </li>
         <li>
