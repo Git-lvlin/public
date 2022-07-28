@@ -35,11 +35,9 @@ export default {
     return {};
   },
   created() {
-    this.$bridge.callHandler('share', {
-      contentType: 18,
-      paramId: 19,
-      sharePopup: false,
-    });
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+      WeixinJSBridge.call('hideOptionMenu');
+    }); 
   },
   methods: {
     getImgUrl,
