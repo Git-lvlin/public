@@ -34,11 +34,11 @@ export default {
   data() {
     return {};
   },
-  created() {
-    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-      WeixinJSBridge.call('hideOptionMenu');
-    }); 
-  },
+  // created() {
+  //   document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+  //     WeixinJSBridge.call('hideOptionMenu');
+  //   }); 
+  // },
   methods: {
     getImgUrl,
     go() {
