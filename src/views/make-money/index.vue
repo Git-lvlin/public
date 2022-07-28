@@ -47,12 +47,12 @@ export default {
     go() {
       const skuId = {
         dev: '218884',
-        uat: '6326',
+        uat: '6327',
         pro: '6326',
       }
       const spuId = {
         dev: '2760',
-        uat: '3587',
+        uat: '4490',
         pro: '3587',
       }
       if (this.$store.state.appInfo.isApp) {
