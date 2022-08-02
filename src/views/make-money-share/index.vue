@@ -11,7 +11,7 @@
         <li>
           <div class="unit">
             <span>2</span>
-            <div>下单购买商品并签署在线合同</div>
+            <div>下单购买氢原子商品并签署<br />在线合同</div>
           </div>
         </li>
         <li>
@@ -19,7 +19,7 @@
             <span>3</span>
             <div>开通VIP店铺 </div>
           </div>
-          <div class="sub">在"约购APP-我的-我的服务-店主入驻"处<br />申请入驻</div>
+          <div class="sub">在"约购APP-我的-我的服务-店主入驻"<br />处申请入驻</div>
         </li>
       </ul>
       <div class="btn" @click="go">立即注册参与</div>
@@ -75,9 +75,10 @@ export default {
 
     span {
       width: 24px;
+      height: 24px;
       line-height: 24px;
       background: #F76122;
-      border-radius: 50%;
+      border-radius: 100%;
       text-align: center;
       font-size: 18px;
       font-weight: 400;

@@ -8,7 +8,7 @@
           <div class="btn" @click="share">立即邀请</div>
         </li>
         <li :style="`background-image:url(${getImgUrl('publicMobile/make-money/icon.png')})`">
-          <div class="title">2、分享商品给好友下单并签署在线合同</div>
+          <div class="title">2、分享氢原子商品给好友下单并签署在线合同</div>
           <div class="btn" @click="go">查看商品</div>
         </li>
         <li :style="`background-image:url(${getImgUrl('publicMobile/make-money/icon.png')})`">
