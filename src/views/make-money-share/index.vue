@@ -17,7 +17,7 @@
               <span>2</span>
               <div>下单购买氢原子商品并签署<br />在线合同</div>
             </div>
-            <div v-if="link" class="buy" @click="go">立即购买</div>
+            <div v-if="link" class="btn" @click="buy">立即购买</div>
           </div>
 
         </li>
@@ -36,7 +36,7 @@
 
 <script>
 import { getImgUrl } from '@/utils/tools';
-import generateurllink from '@/apis/make-money-share';
+import api from '@/apis/make-money-share';
 
 export default {
   data() {
@@ -45,7 +45,7 @@ export default {
     };
   },
   created() {
-    generateurllink({ inviteCode: this.$route.query.inviteCode })
+    api.generateurllink({ inviteCode: this.$route.query.inviteCode })
       .then(res => {
         this.link = res.data.goodsdetail
       })
