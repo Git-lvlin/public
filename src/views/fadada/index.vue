@@ -45,10 +45,14 @@ export default {
         businessId: data.contractId,
         contractUrl: data.url
       }).then(res => {
-        let signUrl = encodeURIComponent(res.signUrl);
-        wx.miniProgram.navigateTo({
-          url: `pages/webview/index?url=${signUrl}&encode=true`
-        })
+        // let signUrl = encodeURIComponent(res.data.signUrl);
+        // wx.miniProgram.navigateTo({
+        //   url: `pages/webview/index?url=${signUrl}&encode=true`
+        // })
+        console.log('res', res)
+        // console.log('signUrl', signUrl)
+        window.location.href = res.data.signUrl;
+        
         localStorage.removeItem('pdfData')
         // router.push({
         //   name: "webview",
