@@ -48,12 +48,12 @@ export default {
       const skuId = {
         dev: '218884',
         uat: '6327',
-        pro: '6326',
+        pro: '224766',
       }
       const spuId = {
         dev: '2760',
         uat: '4490',
-        pro: '3587',
+        pro: '26457',
       }
       if (this.$store.state.appInfo.isApp) {
         goToApp(appBaseUrl, '/shopping/detail', `?orderType=2&spuId=${spuId[process.env.VUE_APP_API_ENV]}&objectId=0&activityId=0&skuId=${skuId[process.env.VUE_APP_API_ENV]}`)
