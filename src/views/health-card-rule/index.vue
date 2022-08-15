@@ -215,4 +215,7 @@ export default {
 
 <style lang="scss" scoped>
 
+.logic_block {
+  padding: 0 10px;
+}
 </style>
