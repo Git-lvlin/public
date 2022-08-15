@@ -46,7 +46,7 @@ export default {
   methods: {
     getImgUrl,
     toApp() {
-
+      goToApp(appBaseUrl, '/health/openMachinesBusiness"')
     },
     go() {
       const skuId = {
