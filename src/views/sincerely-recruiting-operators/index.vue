@@ -46,7 +46,7 @@ export default {
   methods: {
     getImgUrl,
     toApp() {
-      goToApp(appBaseUrl, '/health/openMachinesBusiness"')
+      goToApp(appBaseUrl, '/health/openMachinesBusiness')
     },
     go() {
       const skuId = {
@@ -60,7 +60,7 @@ export default {
         pro: '26457',
       }
       if (this.$store.state.appInfo.isApp) {
-        goToApp(appBaseUrl, '/health/openMachinesBusiness"')
+        goToApp(appBaseUrl, '/health/openMachinesBusiness')
       } else {
         console.log('不是App内')
       }
