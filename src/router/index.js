@@ -539,6 +539,30 @@ const routes = [
       title: '托管协议',
     }
   },
+  {
+    path: '/web/sincerely-recruiting-operators',
+    name: 'sincerely-recruiting-operators',
+    component: () => import('@/views/sincerely-recruiting-operators'),
+    meta: {
+      title: '全国诚招运营商',
+    }
+  },
+  {
+    path: '/web/sincerely-recruiting-operators-share',
+    name: 'sincerely-recruiting-operators-share',
+    component: () => import('@/views/sincerely-recruiting-operators-share'),
+    meta: {
+      title: '呼朋唤友分享财富密码',
+    }
+  },
+  {
+    path: '/web/health-card-rule',
+    name: 'health-card-rule',
+    component: () => import('@/views/health-card-rule'),
+    meta: {
+      title: '健康卡使用规则',
+    }
+  },
 ];
 
 const router = new VueRouter({
