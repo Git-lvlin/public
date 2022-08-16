@@ -14,7 +14,7 @@ export default {
   methods: {
     getImgUrl,
     share() {
-      this.$bridge.callHandler('share', { "code": 0, "msg": "success", "data": { "contentType": 18, "paramId": 19, "shareType": 1, "sourceType": 1 } });
+      this.$bridge.callHandler('share', { "code": 0, "msg": "success", "data": { "contentType": 20, "paramId": 21, "shareType": 1, "sourceType": 1 } });
     },
   },
 };
