@@ -49,7 +49,7 @@ export default {
   methods: {
     getImgUrl,
     open(){
-
+      window.location.href = this.link;
     },
     toApp() {
       goToApp(appBaseUrl, '/health/openMachinesBusiness')
