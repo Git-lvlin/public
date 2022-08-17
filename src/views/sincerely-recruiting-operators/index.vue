@@ -6,11 +6,11 @@
       <ul>
         <li>
           <div class="title">第一步：注册约购APP</div>
-          <div class="btn" v-if="!isApp">立即注册</div>
+          <div class="btn" @click="go" v-if="!isApp">立即注册</div>
         </li>
         <li>
           <div class="title">第二步：开通运营资质并签署运营合同</div>
-          <div class="btn" v-if="!isApp">立即开通</div>
+          <div class="btn" @click="open" v-if="!isApp && link">立即开通</div>
         </li>
         <li>
           <div class="title">第三步：开通VIP店铺</div>
@@ -29,41 +29,33 @@
 import { getImgUrl } from '@/utils/tools';
 import { appBaseUrl } from "@/constant/index";
 import { goToApp } from "@/utils/userInfo";
+import api from '@/apis/make-money-share';
 
 export default {
   data() {
     return {
-      isApp: this.$store.state.appInfo.isApp
+      isApp: this.$store.state.appInfo.isApp,
+      link: ''
     };
   },
   created() {
-    // this.$bridge.callHandler('share', {
-    //   contentType: 18,
-    //   paramId: 19,
-    //   sharePopup: false,
-    // });
+    if (!this.isApp) {
+      api.generateurllink({ inviteCode: this.$route.query.inviteCode, pagename:'devicemanagepay' })
+        .then(res => {
+          this.link = res.data.devicemanagepay
+        })
+    }
   },
   methods: {
     getImgUrl,
+    open(){
+
+    },
     toApp() {
       goToApp(appBaseUrl, '/health/openMachinesBusiness')
     },
     go() {
-      const skuId = {
-        dev: '218884',
-        uat: '6327',
-        pro: '224766',
-      }
-      const spuId = {
-        dev: '2760',
-        uat: '4490',
-        pro: '26457',
-      }
-      if (this.$store.state.appInfo.isApp) {
-        goToApp(appBaseUrl, '/health/openMachinesBusiness')
-      } else {
-        console.log('不是App内')
-      }
+      this.$router.push({ path: '/web/new-share', query: { ...this.$route.query } })
     },
   },
 };
