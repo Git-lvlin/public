@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="pox">
     <p><strong>宾购平台</strong><strong>用户服务协议</strong><strong>及隐私权政策
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
     </p>
@@ -417,7 +417,8 @@
 </template>
 
 <style lang="scss" scoped>
-.box {
+
+.pox {
   padding: 0 10px;
 }
 p {
@@ -429,6 +430,33 @@ p {
 p:nth-child(1) {
   text-align: center;
   text-indent: 0
+}
+
+.box {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #000000;
+  border-bottom: none;
+  border-right: none;
+  overflow: hidden;
+  text-align: center;
+  word-wrap: break-word;
+  font-size: 14px;
+
+  span {
+    width: 20%;
+    height: 100%;
+    border-right: 1px solid #000;
+  }
+
+  .s1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .bottom-last {
