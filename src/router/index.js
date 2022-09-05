@@ -563,6 +563,14 @@ const routes = [
       title: '健康卡使用规则',
     }
   },
+  {
+    path: '/web/pdf',
+    name: 'pdf',
+    component: () => import('@/views/pdf'),
+    meta: {
+      title: ' ',
+    }
+  },
 ];
 
 const router = new VueRouter({
