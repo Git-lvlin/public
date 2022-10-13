@@ -26,7 +26,7 @@ export default {
     if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
       this.isWeixin = 1
     } else {
-      window.location.href = 'http://hznt-live.oss-cn-shanghai.aliyuncs.com/hznt_v207_jiagu_sign.apk';
+      window.location.href = 'https://reslive.qhhznt.com/hznt_v207_jiagu_sign.apk';
     }
   },
   methods: {
