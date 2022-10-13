@@ -1,5 +1,5 @@
 <template>
-  <div class="container2" v-if="!isWeixin">
+  <div class="container2" v-if="isWeixin">
     <van-image
       class="wxtx"
       width="100%"
