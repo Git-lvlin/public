@@ -16,7 +16,7 @@ Vue.use(VanImage);
 export default {
   data() {
     return {
-      isWeixin: 1,
+      isWeixin: 0,
     };
   },
   created () {
