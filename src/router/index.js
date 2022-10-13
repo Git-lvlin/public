@@ -230,7 +230,7 @@ const routes = [
     }
   },
   {
-    path: '/web/download2',
+    path: '/web/download-hznt',
     name: 'DownLoad',
     component: () => import('@/views/download2'),
     meta: {
