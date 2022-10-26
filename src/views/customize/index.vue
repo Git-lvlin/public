@@ -1,5 +1,5 @@
 <template>
-  <div v-if="customizeData">
+  <div v-if="customizeData" :style="`background-color:${contentData.backgroundColor}`">
     <div :class="`banner ${contentData.bannerTime.xL}${contentData.bannerTime.yL}`">
       <img :src="contentData.bannerImgUrl" />
       <div class="count-down" v-if="contentData.bannerTime.switch && customizeData.time < customizeData.endTime"
@@ -162,10 +162,10 @@ export default {
         this.customizeData = res.data
         this.contentData = this.customizeData.content
         if (this.customizeData.time > this.customizeData.endTime) {
-          Dialog.alert({
-            message: '活动已结束',
-            showConfirmButton: false,
-          })
+          // Dialog.alert({
+          //   message: '活动已结束',
+          //   showConfirmButton: false,
+          // })
         }
 
         if (this.contentData.bannerTime.switch) {
