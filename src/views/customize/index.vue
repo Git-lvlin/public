@@ -27,7 +27,7 @@
       <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
         :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
-          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor}`">
+          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};border-image:url(${contentData.goodsCards.goodsBorder.lineWidth}) 30`">
           <img :src="g.imageUrl">
         </div>
         <div class="info">
@@ -162,10 +162,10 @@ export default {
         this.customizeData = res.data
         this.contentData = this.customizeData.content
         if (this.customizeData.time > this.customizeData.endTime) {
-          // Dialog.alert({
-          //   message: '活动已结束',
-          //   showConfirmButton: false,
-          // })
+          Dialog.alert({
+            message: '活动已结束',
+            showConfirmButton: false,
+          })
         }
 
         if (this.contentData.bannerTime.switch) {
@@ -182,7 +182,8 @@ export default {
           this.borderLineColor = border.color
         }
         if (goodsBorder) {
-          this.goodsBorderLineWidth = goodsBorder.lineWidth * this.scale
+          // this.goodsBorderLineWidth = goodsBorder.lineWidth * this.scale
+          this.goodsBorderLineWidth = border.lineWidth * this.scale
           this.goodsBorderLineColor = goodsBorder.color
         }
       })
