@@ -27,6 +27,8 @@ import { getImgUrl } from "@/utils/tools";
 import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp } from "@/utils/userInfo";
 import teamApi from '@/apis/atom';
+import jsBridge from '@/utils/jsBridge';
+
 Vue.use(VanImage);
 Vue.use(Lazyload);
 Vue.use(Loading);
@@ -43,6 +45,20 @@ export default {
   components: {},
   created() {
     this.getList()
+    const data = {
+      code: 0,
+      msg: 'success',
+      data: {
+        link: `/flutter/store/member/health/manager_page`,
+        color: '#ff2e23',
+        content: `设备管理＞`
+      }
+    }
+    const zero = JSON.stringify(data);
+    jsBridge.callHandler(
+      'setNavigationBarRightContent',
+      zero,
+    )
   },
   async mounted() {
     await this.loadImg()
