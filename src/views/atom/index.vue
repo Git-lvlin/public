@@ -49,7 +49,7 @@ export default {
       code: 0,
       msg: 'success',
       data: {
-        link: `/flutter/store/member/health/manager_page`,
+        link: `${appBaseUrl}/flutter/store/member/health/manager_page`,
         color: '#ff2e23',
         content: `设备管理＞`
       }
