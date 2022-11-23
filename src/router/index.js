@@ -579,6 +579,14 @@ const routes = [
       title: ' ',
     }
   },
+  {
+    path: '/web/word/HN-JSFW-2022-02',
+    name: 'HN-JSFW-2022-02',
+    component: () => import('@/views/word/HN-JSFW-2022-02'),
+    meta: {
+      title: '技术服务协议',
+    }
+  },
 ];
 
 const router = new VueRouter({
