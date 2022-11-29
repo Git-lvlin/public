@@ -857,7 +857,7 @@
       </div>
       <div id="NDiPx2qBJa" class="block_tile">
         <p style="text-align:left;" textalign="left"><span class="font-size play-mode-fontSize-9"
-            style="font-size: 13px">当您使用本APP的IM聊天功能（联系店主和联系客服），为保证客户回复的消息第一时间发送给您，我们需要使用自启动服务，以便能正常将消息发送给您，如您想关掉自启动功能，可能会导致无法接收到消息。您可以在设置——应用——自启动管理中关闭自启动功能。</span>
+            style="font-size: 13px">4、当您使用本APP的IM聊天功能（联系店主和联系客服），为保证客户回复的消息第一时间发送给您，我们需要使用自启动服务，以便能正常将消息发送给您，如您想关掉自启动功能，可能会导致无法接收到消息。您可以在设置——应用——自启动管理中关闭自启动功能。</span>
         </p>
       </div>
       <div id="z6WzpXiYJl" class="block_tile">
