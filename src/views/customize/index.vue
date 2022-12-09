@@ -23,7 +23,7 @@
       <img :src="contentData.subImage.imgUrl" :style="`width:${getSize(contentData.subImage.imgUrl).width}px`" />
     </div>
 
-    <div :class="`goods-list${contentData.goodsCards.showType}`">
+    <div v-if="(contentData.goodsCards.showType == 2)" :class="`goods-list1`">
       <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
         :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
@@ -37,26 +37,27 @@
               {{ g.goodsName }}
             </div>
             <div class="label">
-              即将恢复¥{{ g.salePrice / 100 }}
+              {{ g.goodsSaleNumStr }}
             </div>
           </div>
-          <div class="price">
-            <div class="price1">
-              活动价 <span>¥{{ g.actPrice / 100 }} </span>
-            </div>
+          <div class="price" :style="`background-image:url(${getImgUrl('/publicMobile/customize/line.png')})`">
             <div class="price2">
-              市场价: <span>¥{{ g.marketPrice / 100 }} </span>
+              <span>¥{{ g.marketPrice / 100 }} </span>
+              <div>市场价</div>
+            </div>
+            <div class="price1">
+              活动价 
+              <div>{{ g.actPrice / 100 }} </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- <div class="goods-list2">
-      <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId"
-        :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.radius * scale}px;`">
+    <div v-else :class="`goods-list2`">
+      <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
+        :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
-          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth * scale}px solid ${goodsBorderLineColor}`">
+          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};border-image:url(${contentData.goodsCards.goodsBorder.lineWidth}) 30`">
           <img :src="g.imageUrl">
         </div>
         <div class="info">
@@ -66,20 +67,21 @@
               {{ g.goodsName }}
             </div>
             <div class="label">
-              即将恢复¥{{ g.salePrice / 100 }}
+              {{ g.goodsSaleNumStr }}
             </div>
           </div>
           <div class="price">
+            <div class="price2">
+              <span>¥{{ g.marketPrice / 100 }} </span>
+            </div>
             <div class="price1">
               活动价 <span>¥{{ g.actPrice / 100 }} </span>
             </div>
-            <div class="price2">
-              市场价: <span>¥{{ g.marketPrice / 100 }} </span>
-            </div>
           </div>
+          <img class="arrow" :src="getImgUrl('/publicMobile/customize/arrow.png')" />
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -162,10 +164,10 @@ export default {
         this.customizeData = res.data
         this.contentData = this.customizeData.content
         if (this.customizeData.time > this.customizeData.endTime) {
-          Dialog.alert({
-            message: '活动已结束',
-            showConfirmButton: false,
-          })
+          // Dialog.alert({
+          //   message: '活动已结束',
+          //   showConfirmButton: false,
+          // })
         }
 
         if (this.contentData.bannerTime.switch) {
@@ -299,22 +301,25 @@ export default {
 
 .goods-list1 {
   margin-top: 20px;
-  padding: 0 12px;
+  padding: 0 12px 10px;
 
   .goods-item {
-    height: 124px;
+    // height: 124px;
     width: 100%;
-    padding: 12px;
+    padding: 6px;
     background-color: #fff;
     border-radius: 8px;
     margin-bottom: 8px;
     display: flex;
     box-sizing: border-box;
     background-repeat: no-repeat;
+    &:nth-last-of-type(1) {
+      margin-bottom: 0;
+    }
 
     .img {
-      width: 100px;
-      height: 100px;
+      width: 134px;
+      height: 134px;
       overflow: hidden;
       margin-right: 12px;
       flex-shrink: 0;
@@ -328,39 +333,69 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      flex: 1;
     }
 
     .label {
       font-size: 10px;
       font-weight: 400;
-      color: #FF3C3E;
-      background: #FEF5F6;
+      color: #FE915D;
+      // background: #FEF5F6;
       border-radius: 3px;
-      border: 1px solid #F9C9CA;
+      // border: 1px solid #F9C9CA;
       display: inline-block;
-      padding: 2px 4px;
       margin-top: 5px;
     }
 
-    .price1 {
-      font-size: 14px;
-      font-weight: 400;
-      color: #E7532C;
+    .price {
+      background-size: 100%;
+      position: relative;
+      top: -5px;
+      background-repeat: no-repeat;
+      height: 40px;
+    }
 
-      span {
-        font-size: 16px;
+    .price1 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #E7532C;
+      position: absolute;
+      left: 50%;
+      text-align: center;
+      transform: translate(-50%,0);
+      margin-top: -15px;
+
+      div {
+        font-size: 18px;
         font-weight: 600;
-        color: #FD0E01;
+        color: #fff;
+        background: linear-gradient(90deg, #EE552C 0%, #D92E1E 97%);
+        border-radius: 12px;
+        padding: 2px 10px;
+        &::before{
+          content: "¥";
+          font-size: 12px;
+        }
       }
     }
 
     .price2 {
       font-size: 12px;
       font-weight: 400;
-      color: #666666;
+      color: #999;
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
 
       span {
         text-decoration: line-through;
+      }
+
+      div {
+        // position: absolute;
+        // right: 0;
       }
     }
   }
@@ -402,17 +437,23 @@ export default {
       justify-content: space-between;
       padding: 0 8px 8px;
       flex: 1;
+      position: relative;
+    }
+
+    .arrow {
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      bottom: 10px;
+      right: 5px;
     }
 
     .label {
       font-size: 10px;
       font-weight: 400;
-      color: #FF3C3E;
-      background: #FEF5F6;
+      color: #FE915D;
       border-radius: 3px;
-      border: 1px solid #F9C9CA;
       display: inline-block;
-      padding: 2px 4px;
       margin-top: 5px;
     }
 
