@@ -119,7 +119,6 @@ export default {
         "msg": "success",
         "data": {
           "navigatorBar": {
-            "backgroundColor": "#FFFFFF",
             "rightButton": {
               "type": "share",
               "normalImageUrl": getImgUrl('/publicMobile/customize/share.png'),
@@ -139,7 +138,7 @@ export default {
         }
       });
       bridge.callHandler(
-        'setNavigationBarRightContent',
+        'setting',
         zero,
       )
     }
