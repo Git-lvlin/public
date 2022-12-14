@@ -93,6 +93,7 @@ import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp } from "@/utils/userInfo";
 import api from '@/apis/customize';
 import qs from 'qs';
+import bridge from '@/utils/jsBridge'
 
 export default {
   data() {
@@ -175,7 +176,6 @@ export default {
         clearTimeout(time)
         this.clicked = false
       }, 1000)
-      console.log('item', item)
       const { orderType, spuId, objectId, activityId, skuId, wsId } = item;
       const paramStr = `?orderType=${orderType || 3}&spuId=${spuId || ''}&objectId=${objectId || ''}&activityId=${activityId || ''}&skuId=${skuId || ''}&wsId=${wsId || ''}`
       if (this.$store.state.appInfo.isApp) {
