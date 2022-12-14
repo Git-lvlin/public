@@ -23,7 +23,7 @@
       <img :src="contentData.subImage.imgUrl" :style="`width:${getSize(contentData.subImage.imgUrl).width}px`" />
     </div>
 
-    <div v-if="(contentData.goodsCards.showType == 2)" :class="`goods-list1`">
+    <div v-if="contentData.goodsCards.showType == 1" :class="`goods-list1`">
       <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
         :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
@@ -46,7 +46,7 @@
               <div>市场价</div>
             </div>
             <div class="price1">
-              活动价 
+              活动价
               <div>{{ g.actPrice / 100 }} </div>
             </div>
           </div>
@@ -112,6 +112,36 @@ export default {
   },
   created() {
     this.getList()
+    if (this.$store.state.appInfo.isApp) {
+      const zero = JSON.stringify({
+        "code": 0,
+        "msg": "success",
+        "data": {
+          "navigatorBar": {
+            "backgroundColor": "#FFFFFF",
+            "rightButton": {
+              "type": "share",
+              "normalImageUrl": getImgUrl('/publicMobile/customize/share.png'),
+              "selectedImageUrl": getImgUrl('/publicMobile/customize/share.png'),
+              "title": "",
+              "data": {
+                shareType: 1,
+                contentType: 22,
+                shareObjectNo: "normal",
+                paramId: 23,
+                ext: {
+                  id: this.$route.query.id
+                }
+              }
+            },
+          }
+        }
+      });
+      bridge.callHandler(
+        'setNavigationBarRightContent',
+        zero,
+      )
+    }
   },
   methods: {
     getImgUrl,
@@ -164,10 +194,10 @@ export default {
         this.customizeData = res.data
         this.contentData = this.customizeData.content
         if (this.customizeData.time > this.customizeData.endTime) {
-          // Dialog.alert({
-          //   message: '活动已结束',
-          //   showConfirmButton: false,
-          // })
+          Dialog.alert({
+            message: '活动已结束',
+            showConfirmButton: false,
+          })
         }
 
         if (this.contentData.bannerTime.switch) {
@@ -313,6 +343,7 @@ export default {
     display: flex;
     box-sizing: border-box;
     background-repeat: no-repeat;
+
     &:nth-last-of-type(1) {
       margin-bottom: 0;
     }
@@ -362,7 +393,7 @@ export default {
       position: absolute;
       left: 50%;
       text-align: center;
-      transform: translate(-50%,0);
+      transform: translate(-50%, 0);
       margin-top: -15px;
 
       div {
@@ -372,7 +403,8 @@ export default {
         background: linear-gradient(90deg, #EE552C 0%, #D92E1E 97%);
         border-radius: 12px;
         padding: 2px 10px;
-        &::before{
+
+        &::before {
           content: "¥";
           font-size: 12px;
         }
