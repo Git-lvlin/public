@@ -122,7 +122,7 @@ export default {
             "rightButton": {
               "type": "share",
               "normalImageUrl": getImgUrl('/publicMobile/customize/share.png'),
-              "selectedImageUrl": getImgUrl('/publicMobile/customize/share.png'),
+              "selectedImageUrl": getImgUrl('/publicMobile/customize/share2.png'),
               "title": "",
               "data": {
                 shareType: 1,
