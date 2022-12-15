@@ -113,7 +113,8 @@ export default {
   },
   created() {
     this.getList()
-    if (this.$store.state.appInfo.isApp) {
+    const version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
+    if (this.$store.state.appInfo.isApp && version>=264) {
       const zero = JSON.stringify({
         "code": 0,
         "msg": "success",
