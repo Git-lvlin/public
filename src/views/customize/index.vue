@@ -29,7 +29,7 @@
         <div class="img"
           :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};`">
           <img :src="g.imageUrl">
-          <img :src="contentData.goodsCards.goodsBorder.lineWidth" style="position:absolute;top:0;left:0;bottom:0;" />
+          <img :src="contentData.goodsCards.goodsBorder.lineWidth" :style="`position:absolute;top:0;left:0; height:100%;`" />
         </div>
         <div class="info">
           <div>
@@ -60,7 +60,7 @@
         <div class="img"
           :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};`">
           <img :src="g.imageUrl">
-          <img :src="contentData.goodsCards.goodsBorder.lineWidth" style="position:absolute;top:0;left:0" />
+          <img :src="contentData.goodsCards.goodsBorder.lineWidth" :style="`position:absolute;top:0;left:0; height:100%;`" />
         </div>
         <div class="info">
           <div>
@@ -464,7 +464,6 @@ export default {
       flex-shrink: 0;
       position: relative;
       overflow: hidden;
-      box-sizing: content-box;
 
       img {
         width: 100%;
