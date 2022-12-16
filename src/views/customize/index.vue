@@ -27,8 +27,9 @@
       <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
         :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
-          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};border-image:url(${contentData.goodsCards.goodsBorder.lineWidth}) 30`">
+          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};`">
           <img :src="g.imageUrl">
+          <img :src="contentData.goodsCards.goodsBorder.lineWidth" style="position:absolute;top:0;left:0;bottom:0;" />
         </div>
         <div class="info">
           <div>
@@ -57,8 +58,9 @@
       <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
         :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
-          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};border-image:url(${contentData.goodsCards.goodsBorder.lineWidth}) 30`">
+          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};`">
           <img :src="g.imageUrl">
+          <img :src="contentData.goodsCards.goodsBorder.lineWidth" style="position:absolute;top:0;left:0" />
         </div>
         <div class="info">
           <div>
@@ -354,9 +356,12 @@ export default {
       overflow: hidden;
       margin-right: 12px;
       flex-shrink: 0;
+      position: relative;
+      box-sizing: content-box;
 
       img {
-        width: 100%;
+        width: 134px;
+        height: 134px;
       }
     }
 
@@ -457,9 +462,13 @@ export default {
       overflow: hidden;
       margin-bottom: 12px;
       flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      box-sizing: content-box;
 
       img {
         width: 100%;
+        height: 170px;
       }
     }
 
