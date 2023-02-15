@@ -29,7 +29,7 @@
         <div class="img"
           :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};`">
           <img :src="g.imageUrl">
-          <img :src="contentData.goodsCards.goodsBorder.lineWidth" :style="`position:absolute;top:0;left:0; height:100%;`" />
+          <img v-if="contentData.goodsCards.goodsBorder.lineWidth" :src="contentData.goodsCards.goodsBorder.lineWidth" :style="`position:absolute;top:0;left:0; height:100%;`" />
         </div>
         <div class="info">
           <div>
@@ -60,7 +60,7 @@
         <div class="img"
           :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};`">
           <img :src="g.imageUrl">
-          <img :src="contentData.goodsCards.goodsBorder.lineWidth" :style="`position:absolute;top:0;left:0; height:100%;`" />
+          <img v-if="contentData.goodsCards.goodsBorder.lineWidth" :src="contentData.goodsCards.goodsBorder.lineWidth" :style="`position:absolute;top:0;left:0; height:100%;`" />
         </div>
         <div class="info">
           <div>
@@ -321,6 +321,10 @@ export default {
       margin: 0 3px;
     }
   }
+}
+
+.title {
+  font-weight: bold;
 }
 
 .sub-image {
