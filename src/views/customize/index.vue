@@ -311,11 +311,11 @@ export default {
     .block {
       min-width: 21px;
       line-height: 20px;
-      background: #FFFFFF;
+      background: #000;
       border-radius: 2px;
       font-size: 15px;
       font-weight: 400;
-      color: #151515;
+      color: #fff;
       display: inline-block;
       text-align: center;
       margin: 0 3px;
