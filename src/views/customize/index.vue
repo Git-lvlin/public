@@ -304,12 +304,12 @@ export default {
     align-items: center;
     padding: 0 10px;
     color: #fff;
-    font-size: 18px;
+    font-size: 12px;
     white-space: nowrap;
 
     span {
       color: #fff;
-      font-size: 18px;
+      font-size: 12px;
       line-height: normal;
     }
 
@@ -318,7 +318,7 @@ export default {
       line-height: 20px;
       background: #000;
       border-radius: 2px;
-      font-size: 15px;
+      font-size: 10px;
       font-weight: 400;
       color: #fff;
       display: inline-block;
