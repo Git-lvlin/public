@@ -2,21 +2,23 @@
   <div v-if="customizeData" :style="`background-color:${contentData.backgroundColor}`">
     <div :class="`banner ${contentData.bannerTime.xL}${contentData.bannerTime.yL}`">
       <img :src="contentData.bannerImgUrl" />
-      <div class="count-down" v-if="contentData.bannerTime.switch && customizeData.time < customizeData.endTime"
-        :style="`margin-left:${contentData.bannerTime.edgeDistance.l * scale}px;margin-right:${contentData.bannerTime.edgeDistance.r * scale}px;margin-top:${contentData.bannerTime.edgeDistance.t * scale}px;margin-bottom:${contentData.bannerTime.edgeDistance.b * scale}px;background-color:rgba(${hslToRgb(contentData.bannerTime.alphaMasked)},0.2);`">
-        距{{ customizeData.time > customizeData.startTime ? '结束' : '开始' }}
-        <van-count-down :time="time" @finish="timeFinish">
-          <template #default="timeData">
-            <span class="block">{{ timeData.days }}</span>
-            <span class="colon">天</span>
-            <span class="block">{{ timeData.hours }}</span>
-            <span class="colon">时</span>
-            <span class="block">{{ timeData.minutes }}</span>
-            <span class="colon">分</span>
-            <span class="block">{{ timeData.seconds }}</span>
-            <span class="colon">秒</span>
-          </template>
-        </van-count-down>
+      <div style="position:absolute" v-if="contentData.bannerTime.switch && customizeData.time < customizeData.endTime">
+        <div class="count-down"
+          :style="`margin-left:${contentData.bannerTime.edgeDistance.l * scale}px;margin-right:${contentData.bannerTime.edgeDistance.r * scale}px;margin-top:${contentData.bannerTime.edgeDistance.t * scale}px;margin-bottom:${contentData.bannerTime.edgeDistance.b * scale}px;background-color:rgba(${hslToRgb(contentData.bannerTime.alphaMasked)},0.2);`">
+          距{{ customizeData.time > customizeData.startTime ? '结束' : '开始' }}
+          <van-count-down :time="time" @finish="timeFinish">
+            <template #default="timeData">
+              <span class="block">{{ timeData.days }}</span>
+              <span class="colon">天</span>
+              <span class="block">{{ timeData.hours }}</span>
+              <span class="colon">时</span>
+              <span class="block">{{ timeData.minutes }}</span>
+              <span class="colon">分</span>
+              <span class="block">{{ timeData.seconds }}</span>
+              <span class="colon">秒</span>
+            </template>
+          </van-count-down>
+        </div>
       </div>
     </div>
     <div class="sub-image" v-if="contentData.subImage.switch">
@@ -115,35 +117,38 @@ export default {
   },
   created() {
     this.getList()
-    const version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
-    if (this.$store.state.appInfo.isApp && version>=264) {
-      const zero = JSON.stringify({
-        "code": 0,
-        "msg": "success",
-        "data": {
-          "navigatorBar": {
-            "rightButton": {
-              "type": "share",
-              "normalImageUrl": getImgUrl('/publicMobile/customize/share.png'),
-              "selectedImageUrl": getImgUrl('/publicMobile/customize/share2.png'),
-              "title": "",
-              "data": {
-                shareType: 1,
-                contentType: 22,
-                shareObjectNo: "normal",
-                paramId: 23,
-                ext: {
-                  id: this.$route.query.id
+    
+    if (this.$store.state.appInfo.isApp) {
+      const version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
+      if (version >= 264) {
+        const zero = JSON.stringify({
+          "code": 0,
+          "msg": "success",
+          "data": {
+            "navigatorBar": {
+              "rightButton": {
+                "type": "share",
+                "normalImageUrl": getImgUrl('/publicMobile/customize/share.png'),
+                "selectedImageUrl": getImgUrl('/publicMobile/customize/share2.png'),
+                "title": "",
+                "data": {
+                  shareType: 1,
+                  contentType: 22,
+                  shareObjectNo: "normal",
+                  paramId: 23,
+                  ext: {
+                    id: this.$route.query.id
+                  }
                 }
-              }
-            },
+              },
+            }
           }
-        }
-      });
-      bridge.callHandler(
-        'setting',
-        zero,
-      )
+        });
+        bridge.callHandler(
+          'setting',
+          zero,
+        )
+      }
     }
   },
   methods: {
@@ -291,11 +296,11 @@ export default {
     height: 30px;
     background: rgba(#090909, 0.2);
     border-radius: 15px;
-    position: absolute;
+    // position: absolute;
     // top: 50%;
     // left: 50%;
     // transform: translate(-50%, -50%);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     padding: 0 10px;
     color: #fff;
