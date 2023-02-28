@@ -2,33 +2,36 @@
   <div v-if="customizeData" :style="`background-color:${contentData.backgroundColor}`">
     <div :class="`banner ${contentData.bannerTime.xL}${contentData.bannerTime.yL}`">
       <img :src="contentData.bannerImgUrl" />
-      <div class="count-down" v-if="contentData.bannerTime.switch && customizeData.time < customizeData.endTime"
-        :style="`margin-left:${contentData.bannerTime.edgeDistance.l * scale}px;margin-right:${contentData.bannerTime.edgeDistance.r * scale}px;margin-top:${contentData.bannerTime.edgeDistance.t * scale}px;margin-bottom:${contentData.bannerTime.edgeDistance.b * scale}px;background-color:rgba(${hslToRgb(contentData.bannerTime.alphaMasked)},0.2);`">
-        距{{ customizeData.time > customizeData.startTime ? '结束' : '开始' }}
-        <van-count-down :time="time" @finish="timeFinish">
-          <template #default="timeData">
-            <span class="block">{{ timeData.days }}</span>
-            <span class="colon">天</span>
-            <span class="block">{{ timeData.hours }}</span>
-            <span class="colon">时</span>
-            <span class="block">{{ timeData.minutes }}</span>
-            <span class="colon">分</span>
-            <span class="block">{{ timeData.seconds }}</span>
-            <span class="colon">秒</span>
-          </template>
-        </van-count-down>
+      <div style="position:absolute" v-if="contentData.bannerTime.switch && customizeData.time < customizeData.endTime">
+        <div class="count-down"
+          :style="`margin-left:${contentData.bannerTime.edgeDistance.l * scale}px;margin-right:${contentData.bannerTime.edgeDistance.r * scale}px;margin-top:${contentData.bannerTime.edgeDistance.t * scale}px;margin-bottom:${contentData.bannerTime.edgeDistance.b * scale}px;background-color:rgba(${hslToRgb(contentData.bannerTime.alphaMasked)},0.2);`">
+          距{{ customizeData.time > customizeData.startTime ? '结束' : '开始' }}
+          <van-count-down :time="time" @finish="timeFinish">
+            <template #default="timeData">
+              <span class="block">{{ timeData.days }}</span>
+              <span class="colon">天</span>
+              <span class="block">{{ timeData.hours }}</span>
+              <span class="colon">时</span>
+              <span class="block">{{ timeData.minutes }}</span>
+              <span class="colon">分</span>
+              <span class="block">{{ timeData.seconds }}</span>
+              <span class="colon">秒</span>
+            </template>
+          </van-count-down>
+        </div>
       </div>
     </div>
     <div class="sub-image" v-if="contentData.subImage.switch">
       <img :src="contentData.subImage.imgUrl" :style="`width:${getSize(contentData.subImage.imgUrl).width}px`" />
     </div>
 
-    <div :class="`goods-list${contentData.goodsCards.showType}`">
+    <div v-if="contentData.goodsCards.showType == 1" :class="`goods-list1`">
       <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
         :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
-          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};border-image:url(${contentData.goodsCards.goodsBorder.lineWidth}) 30`">
+          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};`">
           <img :src="g.imageUrl">
+          <img v-if="contentData.goodsCards.goodsBorder.lineWidth" :src="contentData.goodsCards.goodsBorder.lineWidth" :style="`position:absolute;top:0;left:0; height:100%;`" />
         </div>
         <div class="info">
           <div>
@@ -37,27 +40,29 @@
               {{ g.goodsName }}
             </div>
             <div class="label">
-              即将恢复¥{{ g.salePrice / 100 }}
+              {{ g.goodsSaleNumStr }}
             </div>
           </div>
-          <div class="price">
-            <div class="price1">
-              活动价 <span>¥{{ g.actPrice / 100 }} </span>
-            </div>
+          <div class="price" :style="`background-image:url(${getImgUrl('/publicMobile/customize/line.png')})`">
             <div class="price2">
-              市场价: <span>¥{{ g.marketPrice / 100 }} </span>
+              <span>¥{{ g.marketPrice / 100 }} </span>
+              <div>市场价</div>
+            </div>
+            <div class="price1">
+              活动价
+              <div>{{ g.actPrice / 100 }} </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- <div class="goods-list2">
-      <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId"
-        :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.radius * scale}px;`">
+    <div v-else :class="`goods-list2`">
+      <div class="goods-item" v-for="g in contentData.goods" :key="g.spuId" @click="onToDetail(g)"
+        :style="`background-color: ${contentData.goodsCards.background.color}; background-image:url(${contentData.goodsCards.background.imgUrl});background-size:${getSize(contentData.goodsCards.background.imgUrl).width}px ${getSize(contentData.goodsCards.background.imgUrl).height}px; border-radius: ${contentData.goodsCards.radius * scale}px; border: ${borderLineWidth}px solid ${borderLineColor}`">
         <div class="img"
-          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth * scale}px solid ${goodsBorderLineColor}`">
+          :style="`border-radius: ${contentData.goodsCards.goodsRadius * scale}px;border: ${goodsBorderLineWidth}px solid ${goodsBorderLineColor};`">
           <img :src="g.imageUrl">
+          <img v-if="contentData.goodsCards.goodsBorder.lineWidth" :src="contentData.goodsCards.goodsBorder.lineWidth" :style="`position:absolute;top:0;left:0; height:100%;`" />
         </div>
         <div class="info">
           <div>
@@ -66,20 +71,21 @@
               {{ g.goodsName }}
             </div>
             <div class="label">
-              即将恢复¥{{ g.salePrice / 100 }}
+              {{ g.goodsSaleNumStr }}
             </div>
           </div>
           <div class="price">
+            <div class="price2">
+              <span>¥{{ g.marketPrice / 100 }} </span>
+            </div>
             <div class="price1">
               活动价 <span>¥{{ g.actPrice / 100 }} </span>
             </div>
-            <div class="price2">
-              市场价: <span>¥{{ g.marketPrice / 100 }} </span>
-            </div>
           </div>
+          <img class="arrow" :src="getImgUrl('/publicMobile/customize/arrow.png')" />
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -91,6 +97,7 @@ import { appBaseUrl, meBaseUrl } from "@/constant/index";
 import { goToApp } from "@/utils/userInfo";
 import api from '@/apis/customize';
 import qs from 'qs';
+import bridge from '@/utils/jsBridge'
 
 export default {
   data() {
@@ -110,6 +117,39 @@ export default {
   },
   created() {
     this.getList()
+    
+    if (this.$store.state.appInfo.isApp) {
+      const version = this.$store.state.appInfo.appVersion.replace(/\./g, '')
+      if (version >= 264) {
+        const zero = JSON.stringify({
+          "code": 0,
+          "msg": "success",
+          "data": {
+            "navigatorBar": {
+              "rightButton": {
+                "type": "share",
+                "normalImageUrl": getImgUrl('/publicMobile/customize/share.png'),
+                "selectedImageUrl": getImgUrl('/publicMobile/customize/share2.png'),
+                "title": "",
+                "data": {
+                  shareType: 1,
+                  contentType: 22,
+                  shareObjectNo: "normal",
+                  paramId: 23,
+                  ext: {
+                    id: this.$route.query.id
+                  }
+                }
+              },
+            }
+          }
+        });
+        bridge.callHandler(
+          'setting',
+          zero,
+        )
+      }
+    }
   },
   methods: {
     getImgUrl,
@@ -143,7 +183,6 @@ export default {
         clearTimeout(time)
         this.clicked = false
       }, 1000)
-      console.log('item', item)
       const { orderType, spuId, objectId, activityId, skuId, wsId } = item;
       const paramStr = `?orderType=${orderType || 3}&spuId=${spuId || ''}&objectId=${objectId || ''}&activityId=${activityId || ''}&skuId=${skuId || ''}&wsId=${wsId || ''}`
       if (this.$store.state.appInfo.isApp) {
@@ -257,36 +296,40 @@ export default {
     height: 30px;
     background: rgba(#090909, 0.2);
     border-radius: 15px;
-    position: absolute;
+    // position: absolute;
     // top: 50%;
     // left: 50%;
     // transform: translate(-50%, -50%);
-    display: flex;
+    display: inline-flex;
     align-items: center;
     padding: 0 10px;
     color: #fff;
-    font-size: 18px;
+    font-size: 12px;
     white-space: nowrap;
 
     span {
       color: #fff;
-      font-size: 18px;
+      font-size: 12px;
       line-height: normal;
     }
 
     .block {
       min-width: 21px;
       line-height: 20px;
-      background: #FFFFFF;
+      background: #000;
       border-radius: 2px;
-      font-size: 15px;
+      font-size: 10px;
       font-weight: 400;
-      color: #151515;
+      color: #fff;
       display: inline-block;
       text-align: center;
       margin: 0 3px;
     }
   }
+}
+
+.title {
+  font-weight: bold;
 }
 
 .sub-image {
@@ -299,12 +342,12 @@ export default {
 
 .goods-list1 {
   margin-top: 20px;
-  padding: 0 12px;
+  padding: 0 12px 10px;
 
   .goods-item {
-    height: 124px;
+    // height: 124px;
     width: 100%;
-    padding: 12px;
+    padding: 6px;
     background-color: #fff;
     border-radius: 8px;
     margin-bottom: 8px;
@@ -312,15 +355,22 @@ export default {
     box-sizing: border-box;
     background-repeat: no-repeat;
 
+    &:nth-last-of-type(1) {
+      margin-bottom: 0;
+    }
+
     .img {
-      width: 100px;
-      height: 100px;
+      width: 134px;
+      height: 134px;
       overflow: hidden;
       margin-right: 12px;
       flex-shrink: 0;
+      position: relative;
+      box-sizing: content-box;
 
       img {
-        width: 100%;
+        width: 134px;
+        height: 134px;
       }
     }
 
@@ -328,39 +378,70 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      flex: 1;
     }
 
     .label {
       font-size: 10px;
       font-weight: 400;
-      color: #FF3C3E;
-      background: #FEF5F6;
+      color: #FE915D;
+      // background: #FEF5F6;
       border-radius: 3px;
-      border: 1px solid #F9C9CA;
+      // border: 1px solid #F9C9CA;
       display: inline-block;
-      padding: 2px 4px;
       margin-top: 5px;
     }
 
-    .price1 {
-      font-size: 14px;
-      font-weight: 400;
-      color: #E7532C;
+    .price {
+      background-size: 100%;
+      position: relative;
+      top: -5px;
+      background-repeat: no-repeat;
+      height: 40px;
+    }
 
-      span {
-        font-size: 16px;
+    .price1 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #E7532C;
+      position: absolute;
+      left: 50%;
+      text-align: center;
+      transform: translate(-50%, 0);
+      margin-top: -15px;
+
+      div {
+        font-size: 18px;
         font-weight: 600;
-        color: #FD0E01;
+        color: #fff;
+        background: linear-gradient(90deg, #EE552C 0%, #D92E1E 97%);
+        border-radius: 12px;
+        padding: 2px 10px;
+
+        &::before {
+          content: "¥";
+          font-size: 12px;
+        }
       }
     }
 
     .price2 {
       font-size: 12px;
       font-weight: 400;
-      color: #666666;
+      color: #999;
+      position: absolute;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
 
       span {
         text-decoration: line-through;
+      }
+
+      div {
+        // position: absolute;
+        // right: 0;
       }
     }
   }
@@ -390,9 +471,12 @@ export default {
       overflow: hidden;
       margin-bottom: 12px;
       flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
 
       img {
         width: 100%;
+        height: 170px;
       }
     }
 
@@ -402,17 +486,23 @@ export default {
       justify-content: space-between;
       padding: 0 8px 8px;
       flex: 1;
+      position: relative;
+    }
+
+    .arrow {
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      bottom: 10px;
+      right: 5px;
     }
 
     .label {
       font-size: 10px;
       font-weight: 400;
-      color: #FF3C3E;
-      background: #FEF5F6;
+      color: #FE915D;
       border-radius: 3px;
-      border: 1px solid #F9C9CA;
       display: inline-block;
-      padding: 2px 4px;
       margin-top: 5px;
     }
 
