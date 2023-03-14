@@ -587,6 +587,14 @@ const routes = [
       title: '技术服务协议',
     }
   },
+  {
+    path: '/web/health-products',
+    name: 'health-products',
+    component: () => import('@/views/health-products'),
+    meta: {
+      title: '健康好物推荐',
+    }
+  },
 ];
 
 const router = new VueRouter({
