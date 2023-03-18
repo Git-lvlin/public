@@ -123,6 +123,7 @@ export default {
   align-items: center;
   min-height: 100vh;
   background-color: #42A5FF;
+  padding-top: 20px;
 }
 
 .banner {
