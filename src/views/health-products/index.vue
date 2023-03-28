@@ -71,7 +71,7 @@ export default {
     },
     getList() {
       teamApi.getHealthProducts({
-        reportId: this.$route.query.reportId
+        ...this.$route.query
       }).then(res => {
         this.list = res.data.list;
         this.type = res.data.type
