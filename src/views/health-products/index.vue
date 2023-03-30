@@ -57,8 +57,8 @@ export default {
         clearTimeout(time)
         this.clicked = false
       }, 1000)
-      const { orderType, spuId, objectId, activityId, skuId, wsId } = item;
-      const paramStr = `?orderType=${orderType || 3}&spuId=${spuId || ''}&objectId=${objectId || ''}&activityId=${activityId || ''}&skuId=${skuId || ''}&wsId=${wsId || ''}`
+      const { orderType, spuId, objectId, activityId, skuId, wsId, actionUrl } = item;
+      const paramStr = actionUrl.substring(actionUrl.indexOf('?'))
       if (this.$store.state.appInfo.isApp) {
         goToApp(appBaseUrl, '/shopping/detail', paramStr)
       } else if (this.$store.state.appInfo.isMiniprogram) {
