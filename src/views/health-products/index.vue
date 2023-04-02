@@ -3,11 +3,11 @@
 
     <div class="list_box" v-for="(item, index) in list" :key="index">
       <div class="title_wrap" v-if="type===2">
-        <van-image class="title" width="225px" height="35px" :src="getImgUrl('publicMobile/atom/title_bg.png')" />
+        <van-image class="title" :src="getImgUrl('publicMobile/atom/title_bg.png')" />
         <div class="text">{{item.name}}</div>
       </div>
       <div class="list_item" v-for="(item, index) in item.goods" :key="index"  @click="onToDetail(item)">
-        <van-image lazy-load class="good_img" width="122px" height="122px" :src="item.imageUrl" />
+        <van-image lazy-load class="good_img" :src="item.imageUrl" />
         <div class="item_right_box">
           <div class="goods_name van-ellipsis">{{ item.goodsName }}</div>
           <div class="goods_detail van-multi-ellipsis--l2">{{ item.goodsDesc }}</div>
