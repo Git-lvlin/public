@@ -3,11 +3,11 @@
 
     <div class="list_box" v-for="(item, index) in list" :key="index">
       <div class="title_wrap" v-if="type===2">
-        <van-image class="title" width="225px" height="35px" :src="getImgUrl('publicMobile/atom/title_bg.png')" />
+        <van-image class="title" :src="getImgUrl('publicMobile/atom/title_bg.png')" />
         <div class="text">{{item.name}}</div>
       </div>
       <div class="list_item" v-for="(item, index) in item.goods" :key="index"  @click="onToDetail(item)">
-        <van-image lazy-load class="good_img" width="122px" height="122px" :src="item.imageUrl" />
+        <van-image lazy-load class="good_img" :src="item.imageUrl" />
         <div class="item_right_box">
           <div class="goods_name van-ellipsis">{{ item.goodsName }}</div>
           <div class="goods_detail van-multi-ellipsis--l2">{{ item.goodsDesc }}</div>
@@ -57,8 +57,8 @@ export default {
         clearTimeout(time)
         this.clicked = false
       }, 1000)
-      const { orderType, spuId, objectId, activityId, skuId, wsId } = item;
-      const paramStr = `?orderType=${orderType || 3}&spuId=${spuId || ''}&objectId=${objectId || ''}&activityId=${activityId || ''}&skuId=${skuId || ''}&wsId=${wsId || ''}`
+      const { orderType, spuId, objectId, activityId, skuId, wsId, actionUrl } = item;
+      const paramStr = actionUrl.substring(actionUrl.indexOf('?'))
       if (this.$store.state.appInfo.isApp) {
         goToApp(appBaseUrl, '/shopping/detail', paramStr)
       } else if (this.$store.state.appInfo.isMiniprogram) {
@@ -71,7 +71,7 @@ export default {
     },
     getList() {
       teamApi.getHealthProducts({
-        reportId: this.$route.query.reportId
+        ...this.$route.query
       }).then(res => {
         this.list = res.data.list;
         this.type = res.data.type
@@ -175,6 +175,7 @@ export default {
   height: 122px;
   border-radius: 8px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .item_right_box {
