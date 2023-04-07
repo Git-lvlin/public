@@ -180,7 +180,7 @@ export default {
     },
     computation(){
       if(this.topicArr[this.present].right_answers.sort().toString()==this.topicArr[this.present].current_selection.sort().toString()){
-         this.gross_score+=this.topicArr[this.present].grade
+         this.gross_score+=parseInt(this.topicArr[this.present].grade)
          this.topicArr[this.present].answer_state=1
       }else{
         this.topicArr[this.present].answer_state=0
