@@ -90,7 +90,7 @@ export default {
       data: {
         link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}&_immersive=0`,
         color: '#ff2e23',
-        content: ``
+        content: ` `
       }
     }
     const zero = JSON.stringify(data);
