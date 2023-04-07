@@ -608,7 +608,7 @@ const routes = [
     name: 'training-course',
     component: () => import('@/views/training-course'),
     meta: {
-      title: '区县服务商培训课程',
+      title: '培训课程',
     }
   },
   {

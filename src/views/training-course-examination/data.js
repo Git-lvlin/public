@@ -11,7 +11,7 @@ const topicArr=[
             status:''
            },
            {
-            name:'C:自动按摩椅',
+            name:'C：自动按摩椅',
             status:''
            },
            {
@@ -81,11 +81,11 @@ const topicArr=[
         title:'下列属于商业计划书范围的是？',
         topic_option:[ //选项
            {
-            name:'A:家庭成员',
+            name:'A：家庭成员',
             status:''
            },
            {
-            name:'B:创始人发型',
+            name:'B：创始人发型',
             status:''
            },
            {
@@ -111,7 +111,7 @@ const topicArr=[
             status:''
            },
            {
-            name:'B:买房',
+            name:'B：买房',
             status:''
            },
            {
@@ -133,11 +133,11 @@ const topicArr=[
         title:'下列能参与应急救援志愿者的人员是？',
         topic_option:[ //
            {
-            name:'A:18-59岁的健康男性',
+            name:'A：18-59岁的健康男性',
             status:''
            },
            {
-            name:'B:18-59岁的健康女性',
+            name:'B：18-59岁的健康女性',
             status:''
            },
            {
@@ -163,11 +163,11 @@ const topicArr=[
             status:''
            },
            {
-            name:'B:非医护人员也可使用',
+            name:'B：非医护人员也可使用',
             status:''
            },
            {
-            name:'C:用于抢救心脏骤停患者',
+            name:'C：用于抢救心脏骤停患者',
             status:''
            },
            {
@@ -185,15 +185,15 @@ const topicArr=[
         title:'关于心肺复苏说法正确的是？',
         topic_option:[ //
            {
-            name:'A:确认呼吸的时间是5-10秒 ',
+            name:'A：确认呼吸的时间是5-10秒 ',
             status:''
            },
            {
-            name:'B:救援过程中不用拨打120',
+            name:'B：救援过程中不用拨打120',
             status:''
            },
            {
-            name:'C:无法确认呼吸时开始胸外按压',
+            name:'C：无法确认呼吸时开始胸外按压',
             status:''
            },
            {
@@ -211,19 +211,19 @@ const topicArr=[
         title:'下列属于公司风险管理内容的是？',
         topic_option:[ //
            {
-            name:'A:合同管理',
+            name:'A：合同管理',
             status:''
            },
            {
-            name:'B、商标管理',
+            name:'B：商标管理',
             status:''
            },
            {
-            name:'C:版权管理',
+            name:'C：版权管理',
             status:''
            },
            {
-            name:'D:专利管理',
+            name:'D：专利管理',
             status:''
            }
         ],
@@ -237,15 +237,15 @@ const topicArr=[
         title:'下列属于公司管理范围的是？',
         topic_option:[ //
            {
-            name:'A:组织',
+            name:'A：组织',
             status:''
            },
            {
-            name:'B:财务',
+            name:'B：财务',
             status:''
            },
            {
-            name:'C:生产',
+            name:'C：生产',
             status:''
            },
            {
@@ -357,7 +357,7 @@ const topicArr=[
             status:''
            },
            {
-            name:'B:看情况再说，担心被讹',
+            name:'B：看情况再说，担心被讹',
             status:''
            },
         ],

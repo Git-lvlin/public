@@ -15,14 +15,9 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Icon, Dialog, Overlay  } from 'vant';
 import { getImgUrl } from '@/utils/tools';
 import { meBaseUrl } from "@/constant/index";
 import jsBridge from '@/utils/jsBridge';
-Vue.use(VanImage);
-Vue.use(Icon);
-Vue.use(Dialog);
-Vue.use(Overlay);
 export default {
   data() {
     return {
@@ -54,10 +49,12 @@ export default {
     }
     const zero = JSON.stringify(data);
     if(this.$route.query.type==1){
-      jsBridge.callHandler(
-        'setNavigationBarRightContent',
-        zero,
-      )
+      setTimeout(()=>{
+        jsBridge.callHandler(
+          'setNavigationBarRightContent',
+          zero,
+        )
+      })
     }
   },
   mounted() {
@@ -89,26 +86,26 @@ export default {
   padding: 20px;
   .training_course_list{
     .video_images{
-        width: 335px;
-        height: 160px;
-        box-shadow: 0px 4px 8px 0px rgba(245.00000059604645,245.00000059604645,245.00000059604645,1);
-        border-radius: 12px 12px 8px 8px;
-        opacity: 1;
-        background-size: 100%;
-        background-repeat: no-repeat;
-        margin: 20px auto;
-        text-align: center;
-        .play{
-          width: 48px;
-          height: 48px;
-          margin-top: 50px;
-        }
+      width: 335px;
+      height: 160px;
+      box-shadow: 0px 4px 8px 0px rgba(245.00000059604645,245.00000059604645,245.00000059604645,1);
+      border-radius: 12px 12px 8px 8px;
+      opacity: 1;
+      background-size: 100%;
+      background-repeat: no-repeat;
+      margin: 20px auto;
+      text-align: center;
+      .play{
+        width: 48px;
+        height: 48px;
+        margin-top: 50px;
+      }
     }
     .video_title{
-        font-size: 20px;
-        font-weight: 500;
-        color: #333333;
-        line-height: 29px;
+      font-size: 20px;
+      font-weight: 500;
+      color: #333333;
+      line-height: 29px;
     }
   }
 }

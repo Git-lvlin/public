@@ -58,7 +58,7 @@
 
 <script>
 import Vue from 'vue';
-import { Image as VanImage, Icon, Dialog, Overlay  } from 'vant';
+import { Image as VanImage, Icon, Dialog, Overlay, Toast  } from 'vant';
 import { getImgUrl, backOff } from '@/utils/tools';
 import { meBaseUrl } from "@/constant/index";
 import topicArr from './data'
@@ -92,10 +92,12 @@ export default {
     }
     const zero = JSON.stringify(data);
     if(this.$route.query.type==1){
-      jsBridge.callHandler(
-        'setNavigationBarRightContent',
-        zero,
-      )
+     setTimeout(()=>{
+        jsBridge.callHandler(
+          'setNavigationBarRightContent',
+          zero,
+        )
+      })
     }
   },
   mounted() {
@@ -191,6 +193,7 @@ export default {
       }
       this.lock=false
       if(this.topicArr[this.present].current_selection.length==0){
+        Toast('请选择答案');
         this.lock=true
         return 
       }

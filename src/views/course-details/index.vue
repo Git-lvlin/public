@@ -2,18 +2,19 @@
   <div class="container">
     <div class="course_details">
         <video
-            :id="`my-player-${asb}`"
-            controls
-            preload="auto"
-            webkit-playsinline="true"
-            playsinline="true"
-            class="video-js vjs-big-play-centered vjs-fluid"
-            autoplay
+          :id="`my-player-${asb}`"
+          controls
+          preload="auto"
+          webkit-playsinline="true"
+          playsinline="true"
+          class="video-js vjs-big-play-centered vjs-fluid"
+          autoplay
+          @click="JumpDetails"
         >
-            <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to a
-            web browser that supports HTML5 video
-            </p>
+          <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a
+          web browser that supports HTML5 video
+          </p>
         </video>
         <div class="course_introduction">
           <div class="course_name">
@@ -45,6 +46,7 @@ import Video from "video.js";
 import video_zhCN from "video.js/dist/lang/zh-CN.json";
 import video_en from "video.js/dist/lang/en.json";
 import "video.js/dist/video-js.css";
+import examResult from '@/apis/training-course-examination';
 
 Video.addLanguage("zh-CN", video_zhCN);
 Video.addLanguage("en", video_en);
@@ -93,7 +95,17 @@ export default {
       this.src(data);
       this.load(data);
       this.play();
+      this.on("play", function(){
+         examResult.examResultIsLearned({ subOrderType:25, orderId:this.$route.query.id,classType:1,classId:'' },{token:this.token}).then(res=>{
+
+          })
+      });
     });
+
+    this.$bridge.callHandler('getUserInfo',{},(res) => {
+      const d = JSON.parse(res)
+      this.token = d.data.accessToken
+    })
     
   },
   unmounted(){
@@ -101,8 +113,8 @@ export default {
   },
   methods: {
     getImgUrl,
-    JumpDetails(){
-        
+    JumpDetails(val){
+        console.log('val',val)
     },
     testNow(){
       this.Prototype.pause()
