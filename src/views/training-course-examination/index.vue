@@ -63,6 +63,7 @@ import { getImgUrl, backOff } from '@/utils/tools';
 import { meBaseUrl } from "@/constant/index";
 import topicArr from './data'
 import examResult from '@/apis/training-course-examination';
+import jsBridge from '@/utils/jsBridge';
 Vue.use(VanImage);
 Vue.use(Icon);
 Vue.use(Dialog);
@@ -85,7 +86,7 @@ export default {
       code: 0,
       msg: 'success',
       data: {
-        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}`,
+        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}&_immersive=0`,
         color: '#ff2e23',
         content: ``
       }

@@ -47,6 +47,8 @@ import video_zhCN from "video.js/dist/lang/zh-CN.json";
 import video_en from "video.js/dist/lang/en.json";
 import "video.js/dist/video-js.css";
 import examResult from '@/apis/training-course-examination';
+import { meBaseUrl } from "@/constant/index";
+import jsBridge from '@/utils/jsBridge';
 
 Video.addLanguage("zh-CN", video_zhCN);
 Video.addLanguage("en", video_en);
@@ -82,7 +84,22 @@ export default {
     };
   },
   created () {
-
+   const data = {
+      code: 0,
+      msg: 'success',
+      data: {
+        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}&_immersive=0`,
+        color: '#ff2e23',
+        content: ``
+      }
+    }
+    const zero = JSON.stringify(data);
+     setTimeout(()=>{
+        jsBridge.callHandler(
+          'setNavigationBarRightContent',
+          zero,
+        )
+      })
   },
   mounted() {
     var data = {
