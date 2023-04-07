@@ -595,6 +595,30 @@ const routes = [
       title: '健康好物推荐',
     }
   },
+  {
+    path: '/web/training-course-examination',
+    name: 'training-course-examination',
+    component: () => import('@/views/training-course-examination'),
+    meta: {
+      title: '培训课程考试',
+    }
+  },
+  {
+    path: '/web/training-course',
+    name: 'training-course',
+    component: () => import('@/views/training-course'),
+    meta: {
+      title: '区县服务商培训课程',
+    }
+  },
+  {
+    path: '/web/course-details',
+    name: 'course-details',
+    component: () => import('@/views/course-details'),
+    meta: {
+      title: '课程-详情',
+    }
+  },
 ];
 
 const router = new VueRouter({

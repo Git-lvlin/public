@@ -32,6 +32,7 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use(
   response => {
+    console.log('response.data',response)
     if (response.data) {
       return Promise.resolve(response.data);
     } else {
