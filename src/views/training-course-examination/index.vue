@@ -91,14 +91,12 @@ export default {
       }
     }
     const zero = JSON.stringify(data);
-    if(this.$route.query.type==1){
      setTimeout(()=>{
         jsBridge.callHandler(
           'setNavigationBarRightContent',
           zero,
         )
       })
-    }
   },
   mounted() {
     this.$bridge.callHandler('getUserInfo',{},(res) => {
