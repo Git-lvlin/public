@@ -103,7 +103,7 @@ export default {
     this.$bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res)
       this.token = d.data.accessToken
-      this.dialogAlert()
+      this.dialogAlert(1)
     })
   },
   methods: {
@@ -217,7 +217,7 @@ export default {
     },
 
 
-    dialogAlert(){
+    dialogAlert(val){
         examResult.examResultGet({ subOrderType:25, orderId:this.$route.query.id },{token:this.token}).then(res=>{
             if(res.data.resultStatus===1){
                Dialog.alert({
@@ -226,7 +226,9 @@ export default {
                 confirmButtonColor: '#19C018'
               });
             }else{
+              if(val!=1){
               this.examina=false
+              }
             }
           })
     }
