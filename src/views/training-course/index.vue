@@ -17,7 +17,7 @@
 import Vue from 'vue';
 import { Image as VanImage, Icon, Dialog, Overlay  } from 'vant';
 import { getImgUrl } from '@/utils/tools';
-import { appBaseUrl } from "@/constant/index";
+import { meBaseUrl } from "@/constant/index";
 import jsBridge from '@/utils/jsBridge';
 Vue.use(VanImage);
 Vue.use(Icon);
@@ -39,7 +39,7 @@ export default {
       code: 0,
       msg: 'success',
       data: {
-        link: `${appBaseUrl}/web/training-course-examination?id=${this.$route.query.id}`,
+        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}`,
         color: '#ff2e23',
         content: `立即考试`
       }

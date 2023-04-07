@@ -110,7 +110,6 @@ export default {
           cancelButtonText:'关闭',
           confirmButtonText:'马上学习',
         }).then(()=>{
-           console.log('asd')
             this.$router.push({
               path: '/web/training-course',
               query: {
@@ -178,7 +177,7 @@ export default {
       }
       this.computation()
       if(this.present===this.topicArr.length-1){
-          examResult.examResultSet({resultStatus:this.gross_score>=70?1:2, subOrderType:25, orderId:this.$route.query.id,score:this.gross_score,classType:1,classId:'' },{token:this.token}).then(res=>{ //this.$route.query.id
+          examResult.examResultSet({resultStatus:this.gross_score>=70?1:2, subOrderType:25, orderId:this.$route.query.id,score:this.gross_score,classType:1,classId:'' },{token:this.token}).then(res=>{
             if(res.data){
               this.show=true
               this.lock=true
