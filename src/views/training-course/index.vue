@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <div class="training_course_list">
+    <div class="training_course_list" v-for="(item,index) in listArr" :key="index">
         <div 
           class="video_images" 
-          :style="`backgroundImage:url(${getImgUrl('publicMobile/training-course-examination/tradition.png')})`"
-          @click="JumpDetails()"
+          :style="`backgroundImage:url(${item.img})`"
+          @click="JumpDetails(index)"
         >
           <img class="play" :src="getImgUrl('publicMobile/training-course-examination/play.png')"/>
         </div>
-        <p class="video_title">传统文化培训</p>
+        <p class="video_title">{{item.title}}</p>
     </div>
   </div>
 </template>
@@ -16,8 +16,8 @@
 <script>
 import Vue from 'vue';
 import { Image as VanImage, Icon, Dialog, Overlay  } from 'vant';
-import { getImgUrl, backOff } from '@/utils/tools';
-import { appBaseUrl, meBaseUrl } from "@/constant/index";
+import { getImgUrl } from '@/utils/tools';
+import { appBaseUrl } from "@/constant/index";
 import jsBridge from '@/utils/jsBridge';
 Vue.use(VanImage);
 Vue.use(Icon);
@@ -26,7 +26,12 @@ Vue.use(Overlay);
 export default {
   data() {
     return {
-
+      listArr: [
+        {
+          title: '传统文化培训',
+          img: `${getImgUrl('publicMobile/training-course-examination/tradition.png')}`,
+        }
+      ]
     };
   },
   created() {
@@ -52,12 +57,13 @@ export default {
   },
   methods: {
     getImgUrl,
-    JumpDetails(){
+    JumpDetails(index){
       this.$router.push({
         path: '/web/course-details',
         query: {
           id: this.$route.query.id,
-          type: this.$route.query.type
+          type: this.$route.query.type,
+          index: index
         },
       });
     }

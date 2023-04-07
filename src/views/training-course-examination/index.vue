@@ -92,7 +92,7 @@ export default {
     getImgUrl,
     testNow(){
       if(this.whether=== 1){
-        examResult.examResultGet({ subOrderType:25, orderId:this.$route.query.id },{token:this.token}).then(res=>{ //this.$route.query.id
+        examResult.examResultGet({ subOrderType:25, orderId:this.$route.query.id },{token:this.token}).then(res=>{
             if(res.data.resultStatus===1){
                Dialog.alert({
                 message: '您已经考试通过了！',
@@ -130,7 +130,6 @@ export default {
           cancelButtonText:'关闭',
           confirmButtonText:'马上学习',
         }).then(()=>{
-           console.log('asd')
             this.$router.push({
               path: '/web/training-course',
               query: {

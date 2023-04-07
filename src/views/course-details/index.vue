@@ -40,7 +40,7 @@
 
 <script>
 import Vue from 'vue';
-import { getImgUrl, backOff } from '@/utils/tools';
+import { getImgUrl } from '@/utils/tools';
 import Video from "video.js";
 import video_zhCN from "video.js/dist/lang/zh-CN.json";
 import video_en from "video.js/dist/lang/en.json";
@@ -52,7 +52,7 @@ Video.addLanguage("en", video_en);
 export default {
   data() {
     return {
-
+      
     };
   },
   created () {
@@ -70,7 +70,6 @@ export default {
       this.load(data);
       this.play();
     });
-    console.log('t',this.$route.query.type)
   },
   methods: {
     getImgUrl,
