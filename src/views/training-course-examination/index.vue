@@ -359,7 +359,7 @@ export default {
     position: relative;
       .item_number{
         display: flex;
-        
+        justify-content: space-between;
         .mark{
           width: 130px;
           height: 16px;
