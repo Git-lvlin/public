@@ -7,7 +7,7 @@
           preload="auto"
           webkit-playsinline="true"
           playsinline="true"
-          class="video-js vjs-big-play-centered vjs-fluid"
+          class="video-js vjs-big-play-centered vjs-fluid my-player"
           autoplay
           @click="JumpDetails"
         >
@@ -57,7 +57,30 @@ export default {
   data() {
     return {
       Prototype: '',
-      detailsArr: [
+      detailsArr1: [
+        {
+          title: '课程名称',
+          annotation: '公益职业化与商业职业化课程培训',
+          videoAddress: 'https://pro-yeahgo-oss.yeahgo.com/goods%2Fbase%2Frc-upload-1679879558079-19-y_g-%E5%A6%82%E4%BD%95%E4%B8%8B%E5%8D%95%E6%94%AF%E4%BB%98AED%E8%AE%BE%E5%A4%87%E4%BF%9D%E8%AF%81%E9%87%91%E5%8F%8A%E5%9F%B9%E8%AE%AD%E6%9C%8D%E5%8A%A1%E8%B4%B9.mp4',
+          courseDescription: '课程介绍',
+          introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
+        },
+        {
+          title: '课程名称',
+          annotation: '公益职业化与商业职业化课程培训',
+          videoAddress: 'https://pro-yeahgo-oss.yeahgo.com/goods%2Fbase%2Frc-upload-1679879558079-11-y_g-%E5%A6%82%E4%BD%95%E7%AD%BE%E7%BD%B2%E5%BF%97%E6%84%BF%E8%80%85%E5%8D%8F%E8%AE%AE%E4%BB%A5%E5%8F%8A%E5%A1%AB%E5%86%99%E6%94%B6%E6%AC%BE%E4%BF%A1%E6%81%AF.mp4',
+          courseDescription: '课程介绍',
+          introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
+        },
+        {
+          title: '课程名称',
+          annotation: '公益职业化与商业职业化课程培训',
+          videoAddress: 'https://pro-yeahgo-oss.yeahgo.com/goods%2Fbase%2Frc-upload-1678093590592-24-y_g-%E6%89%8B%E6%8C%87%E5%8C%BB%E7%94%9F%E6%A3%80%E6%B5%8B%E4%BB%AA%E6%93%8D%E4%BD%9C%E8%A7%86%E9%A2%91%E2%80%94%E2%80%94%E6%8B%86%E5%8C%85%E8%A3%85%E3%80%81%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E8%BF%9E%E6%8E%A5WIFI.mp4',
+          courseDescription: '课程介绍',
+          introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
+        },
+      ],
+      detailsArr2: [
         {
           title: '课程名称',
           annotation: '公益职业化与商业职业化课程培训',
@@ -80,6 +103,7 @@ export default {
           introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
         },
       ],
+      detailsArr: [],
       asb: `${Math.random()}`.substring(2)
     };
   },
@@ -100,6 +124,11 @@ export default {
           zero,
         )
       })
+    if(this.$route.query.type==1){
+      this.detailsArr=this.detailsArr1
+    }else{
+       this.detailsArr=this.detailsArr2
+    }
   },
   mounted() {
     var data = {
@@ -154,12 +183,12 @@ export default {
   min-height: 100vh;
   background-color: #F4F4F4;
   .course_details{
-    #my-player{
+    video{
       width: 375px;
       height: 256px;
       border-radius: 0px 0px 0px 0px;
       opacity: 1;
-      object-fit:fill;
+      // object-fit:fill;
     }
     .course_introduction{
       padding: 20px;

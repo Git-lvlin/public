@@ -98,6 +98,7 @@ export default {
           zero,
         )
       })
+    this.dialogAlert()
   },
   mounted() {
     this.$bridge.callHandler('getUserInfo',{},(res) => {
@@ -109,17 +110,7 @@ export default {
     getImgUrl,
     testNow(){
       if(this.whether=== 1){
-        examResult.examResultGet({ subOrderType:25, orderId:this.$route.query.id },{token:this.token}).then(res=>{
-            if(res.data.resultStatus===1){
-               Dialog.alert({
-                message: '您已经考试通过了！',
-                confirmButtonText:'知道了',
-                confirmButtonColor: '#19C018'
-              });
-            }else{
-              this.examina=false
-            }
-          })
+        this.dialogAlert()
       }else{
         Dialog.confirm({
           title: '提示',
@@ -223,6 +214,21 @@ export default {
       this.topicArr=JSON.parse(JSON.stringify(topicArr))
       this.gross_score=0
       this.lock=true
+    },
+
+
+    dialogAlert(){
+        examResult.examResultGet({ subOrderType:25, orderId:this.$route.query.id },{token:this.token}).then(res=>{
+            if(res.data.resultStatus===1){
+               Dialog.alert({
+                message: '您已经考试通过了！',
+                confirmButtonText:'知道了',
+                confirmButtonColor: '#19C018'
+              });
+            }else{
+              this.examina=false
+            }
+          })
     }
 
   },

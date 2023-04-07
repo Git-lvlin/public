@@ -21,7 +21,21 @@ import jsBridge from '@/utils/jsBridge';
 export default {
   data() {
     return {
-      listArr: [
+      listArr1: [
+        {
+          title: '素质教育和管理培训',
+          img: `${getImgUrl('publicMobile/training-course-examination/suzi.jpg')}`,
+        },
+        {
+          title: '就业创业培训',
+          img: `${getImgUrl('publicMobile/training-course-examination/jiuy.jpg')}`,
+        },
+        {
+          title: 'CPR&AED课程培训',
+          img: `${getImgUrl('publicMobile/training-course-examination/cpr.jpg')}`,
+        }
+      ],
+      listArr2: [
         {
           title: '创业就业培训及多维度指导',
           img: `${getImgUrl('publicMobile/training-course-examination/cjiu.jpg')}`,
@@ -34,7 +48,8 @@ export default {
           title: '公益职业化与商业职业化培训教育',
           img: `${getImgUrl('publicMobile/training-course-examination/goyi.jpg')}`,
         }
-      ]
+      ],
+      listArr: []
     };
   },
   created() {
@@ -55,6 +70,9 @@ export default {
           zero,
         )
       })
+      this.listArr=this.listArr1
+    }else{
+       this.listArr=this.listArr2
     }
   },
   mounted() {
