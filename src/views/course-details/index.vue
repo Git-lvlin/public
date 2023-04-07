@@ -7,7 +7,7 @@
           preload="auto"
           webkit-playsinline="true"
           playsinline="true"
-          class="video-js vjs-big-play-centered vjs-fluid my-player"
+          class="video-js vjs-big-play-centered vjs-fluid"
           autoplay
           @click="JumpDetails"
         >
@@ -114,7 +114,7 @@ export default {
       data: {
         link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}&_immersive=0`,
         color: '#ff2e23',
-        content: ` `
+        content: ``
       }
     }
     const zero = JSON.stringify(data);
@@ -183,7 +183,7 @@ export default {
   min-height: 100vh;
   background-color: #F4F4F4;
   .course_details{
-    video{
+    #my-player{
       width: 375px;
       height: 256px;
       border-radius: 0px 0px 0px 0px;

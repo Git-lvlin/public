@@ -98,12 +98,12 @@ export default {
           zero,
         )
       })
-    this.dialogAlert()
   },
   mounted() {
     this.$bridge.callHandler('getUserInfo',{},(res) => {
       const d = JSON.parse(res)
       this.token = d.data.accessToken
+      this.dialogAlert()
     })
   },
   methods: {
