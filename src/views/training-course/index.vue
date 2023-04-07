@@ -63,7 +63,8 @@ export default {
         query: {
           id: this.$route.query.id,
           type: this.$route.query.type,
-          index: index
+          index: index,
+          _immersive: 0
         },
       });
     }

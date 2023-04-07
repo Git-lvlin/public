@@ -60,6 +60,7 @@
 import Vue from 'vue';
 import { Image as VanImage, Icon, Dialog, Overlay  } from 'vant';
 import { getImgUrl, backOff } from '@/utils/tools';
+import { meBaseUrl } from "@/constant/index";
 import topicArr from './data'
 import examResult from '@/apis/training-course-examination';
 Vue.use(VanImage);
@@ -76,11 +77,26 @@ export default {
       gross_score:0,
       show:false,
       token: 'AQQAAAAAZC_rvxQGzuGNAHABhvc0XWUu7vkK4SmYpnrHv8mjsg1o8ooZrDRR33N2gPw=',
-      lock: true
+      lock: true,
     };
   },
   created () {
-
+    const data = {
+      code: 0,
+      msg: 'success',
+      data: {
+        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}`,
+        color: '#ff2e23',
+        content: ``
+      }
+    }
+    const zero = JSON.stringify(data);
+    if(this.$route.query.type==1){
+      jsBridge.callHandler(
+        'setNavigationBarRightContent',
+        zero,
+      )
+    }
   },
   mounted() {
     this.$bridge.callHandler('getUserInfo',{},(res) => {
@@ -140,6 +156,9 @@ export default {
       }
     },
     select(index){
+      if(this.lock==false){
+        return
+      }
      if( this.topicArr[this.present].type==1 ){
        this.topicArr[this.present].current_selection=[index]
      }else{
