@@ -42,7 +42,7 @@ export default {
       code: 0,
       msg: 'success',
       data: {
-        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}`,
+        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}&_immersive=0`,
         color: '#ff2e23',
         content: `立即考试`
       }
