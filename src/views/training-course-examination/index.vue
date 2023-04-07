@@ -44,8 +44,8 @@
              </div>
              <div 
               v-if="gross_score<70" 
-              class="back_continue" 
-              :style="`backgroundImage:url(${getImgUrl('publicMobile/training-course-examination/continue_exam.png')}), marginLift:'5px'`"
+              class="back_continue back_go" 
+              :style="`backgroundImage:url(${getImgUrl('publicMobile/training-course-examination/continue_exam.png')});`"
               @click="continueExam"
              >
              </div>
@@ -72,10 +72,11 @@ export default {
       whether: 0,
       examina: true,
       present: 0,
-      topicArr,
-      gross_score: 0,
+      topicArr:JSON.parse(JSON.stringify(topicArr)),
+      gross_score:0,
       show:false,
-      token: 'AQQAAAAAZC_rvxQGzuGNAHABhvc0XWUu7vkK4SmYpnrHv8mjsg1o8ooZrDRR33N2gPw='
+      token: 'AQQAAAAAZC_rvxQGzuGNAHABhvc0XWUu7vkK4SmYpnrHv8mjsg1o8ooZrDRR33N2gPw=',
+      lock: true
     };
   },
   created () {
@@ -168,7 +169,12 @@ export default {
     },
 
     affirm(){
+      if(this.lock==false){
+        return
+      }
+      this.lock=false
       if(this.topicArr[this.present].current_selection.length==0){
+        this.lock=true
         return 
       }
       this.computation()
@@ -176,14 +182,15 @@ export default {
           examResult.examResultSet({resultStatus:this.gross_score>=70?1:2, subOrderType:25, orderId:this.$route.query.id,score:this.gross_score,classType:1,classId:'' },{token:this.token}).then(res=>{ //this.$route.query.id
             if(res.data){
               this.show=true
+              this.lock=true
             }
           })
       }else{
         setTimeout(()=>{
           this.present+=1
-        },1500)
+          this.lock=true
+        },1000)
       }
-      console.log('gross_score',this.gross_score)
     },
 
     cancel(){
@@ -194,8 +201,9 @@ export default {
     continueExam(){
       this.show=false
       this.present=0
-      this.topicArr=topicArr
+      this.topicArr=JSON.parse(JSON.stringify(topicArr))
       this.gross_score=0
+      this.lock=true
     }
 
   },
@@ -434,6 +442,9 @@ export default {
       background-size: 100%;
       // margin: 20px;
       margin-bottom: 70px;
+    }
+    .back_go{
+      margin-left: 8px;
     }
     .test_score{
       position: absolute;
