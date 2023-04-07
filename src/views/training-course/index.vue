@@ -28,8 +28,16 @@ export default {
     return {
       listArr: [
         {
-          title: '传统文化培训',
-          img: `${getImgUrl('publicMobile/training-course-examination/tradition.png')}`,
+          title: '创业就业培训及多维度指导',
+          img: `${getImgUrl('publicMobile/training-course-examination/cjiu.jpg')}`,
+        },
+        {
+          title: '服务商营销管理培训',
+          img: `${getImgUrl('publicMobile/training-course-examination/fuwushang.jpg')}`,
+        },
+        {
+          title: '公益职业化与商业职业化培训教育',
+          img: `${getImgUrl('publicMobile/training-course-examination/goyi.jpg')}`,
         }
       ]
     };

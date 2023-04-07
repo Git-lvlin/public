@@ -2,7 +2,7 @@
   <div class="container">
     <div class="course_details">
         <video
-            id="my-player"
+            :id="`my-player-${asb}`"
             controls
             preload="auto"
             webkit-playsinline="true"
@@ -19,16 +19,16 @@
           <div class="course_name">
             <div class="hed">
               <span></span>
-              <h1>课程名称</h1>
+              <h1>{{detailsArr[$route.query.index].title}}</h1>
             </div>
-            <p>公益职业化与商业职业化课程培训</p>
+            <p>{{detailsArr[$route.query.index].annotation}}</p>
           </div>
           <div class="course_name">
             <div class="hed">
               <span></span>
-              <h1>课程介绍</h1>
+              <h1>{{detailsArr[$route.query.index].courseDescription}}</h1>
             </div>
-            <p>在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？</p>
+            <p>{{detailsArr[$route.query.index].introduce}}</p>
           </div>
         </div>
         <div class="examination"   @click="testNow" v-if="$route.query.type == 1">
@@ -52,7 +52,31 @@ Video.addLanguage("en", video_en);
 export default {
   data() {
     return {
-      
+      Prototype: '',
+      detailsArr: [
+        {
+          title: '课程名称',
+          annotation: '公益职业化与商业职业化课程培训',
+          videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/yeahgo_Trim.mp4',
+          courseDescription: '课程介绍',
+          introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
+        },
+        {
+          title: '课程名称',
+          annotation: '公益职业化与商业职业化课程培训',
+          videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/huineng.mp4',
+          courseDescription: '课程介绍',
+          introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
+        },
+        {
+          title: '课程名称',
+          annotation: '公益职业化与商业职业化课程培训',
+          videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/huineng.mp4',
+          courseDescription: '课程介绍',
+          introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
+        },
+      ],
+      asb: `${Math.random()}`.substring(2)
     };
   },
   created () {
@@ -60,16 +84,20 @@ export default {
   },
   mounted() {
     var data = {
-      src: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/yeahgo_Trim.mp4',
+      src: this.detailsArr[this.$route.query.index].videoAddress,
       type: "video/mp4",
       autoplay: true,
     };
-    Video("my-player", data, function () {
+    this.Prototype =Video(`my-player-${this.asb}`, data, function () {
       this.pause();
       this.src(data);
       this.load(data);
       this.play();
     });
+    
+  },
+  unmounted(){
+    this.Prototype.pause()
   },
   methods: {
     getImgUrl,
@@ -77,6 +105,7 @@ export default {
         
     },
     testNow(){
+      this.Prototype.pause()
       this.$router.push({
         path: '/web/training-course-examination',
         query: {
@@ -110,6 +139,7 @@ export default {
           display: flex;
           span{
             width: 4px;
+            height: 16px;
             background: #FF110D;
             border-radius: 2px 2px 2px 2px;
             opacity: 1;
@@ -130,6 +160,7 @@ export default {
           font-weight: 500;
           color: #666666;
           line-height: 24px;
+          margin-top: 5px;
         }
       }
     }
