@@ -158,7 +158,6 @@ export default {
             margin-top: 5px;
           }
           h1{
-            width: 80px;
             font-size: 20px;
             font-weight: 500;
             color: #333333;
@@ -167,7 +166,6 @@ export default {
           }
         }
         p{
-          width: 328px;
           font-size: 16px;
           font-weight: 500;
           color: #666666;
