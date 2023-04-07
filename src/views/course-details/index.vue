@@ -121,7 +121,8 @@ export default {
       this.$router.push({
         path: '/web/training-course-examination',
         query: {
-          id: this.$route.query.id
+          id: this.$route.query.id,
+          _immersive: 0
         },
       });
     },
