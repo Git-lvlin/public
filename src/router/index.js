@@ -614,7 +614,7 @@ const routes = [
   {
     path: '/web/county-training-course',
     name: 'county-training-course',
-    component: () => import('@/views/county-training-course'),
+    component: () => import('@/views/training-course'),
     meta: {
       title: '区县服务商培训课程',
     }
