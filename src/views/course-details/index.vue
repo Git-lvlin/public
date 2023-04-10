@@ -102,7 +102,8 @@ export default {
         },
       ],
       detailsArr: [],
-      asb: `${Math.random()}`.substring(2)
+      asb: `${Math.random()}`.substring(2),
+      token: '',
     };
   },
   created () {
@@ -113,6 +114,10 @@ export default {
     }
   },
   mounted() {
+    this.$bridge.callHandler('getUserInfo',{},(res) => {
+      const d = JSON.parse(res)
+      this.token = d.data.accessToken
+    })
     var data = {
       src: this.detailsArr[this.$route.query.index].videoAddress,
       type: "video/mp4",
@@ -130,12 +135,6 @@ export default {
           })
       });
     });
-
-    this.$bridge.callHandler('getUserInfo',{},(res) => {
-      const d = JSON.parse(res)
-      this.token = d.data.accessToken
-    })
-    
   },
   unmounted(){
     this.Prototype.pause()
