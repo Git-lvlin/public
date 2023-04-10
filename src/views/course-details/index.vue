@@ -118,13 +118,14 @@ export default {
       type: "video/mp4",
       autoplay: true,
     };
+    const that=this
     this.Prototype =Video(`my-player-${this.asb}`, data, function () {
       this.pause();
       this.src(data);
       this.load(data);
       this.play();
       this.on("play", ()=>{
-         examResult.examResultIsLearned({ subOrderType:25, orderId:this.$route.query.id,classType:1,classId:'' },{token:this.token}).then(res=>{
+         examResult.examResultIsLearned({ subOrderType:25, orderId:that.$route.query.id,classType:1,classId:'' },{token:that.token}).then(res=>{
 
           })
       });
