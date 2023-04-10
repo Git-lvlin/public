@@ -612,6 +612,14 @@ const routes = [
     }
   },
   {
+    path: '/web/county-training-course',
+    name: 'training-course',
+    component: () => import('@/views/training-course'),
+    meta: {
+      title: '区县服务商培训课程',
+    }
+  },
+  {
     path: '/web/course-details',
     name: 'course-details',
     component: () => import('@/views/course-details'),

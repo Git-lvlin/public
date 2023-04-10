@@ -19,8 +19,6 @@
 <script>
 import Vue from 'vue';
 import { getImgUrl } from '@/utils/tools';
-import { meBaseUrl } from "@/constant/index";
-import jsBridge from '@/utils/jsBridge';
 export default {
   data() {
     return {
@@ -63,7 +61,15 @@ export default {
     }
   },
   mounted() {
-
+    if(!this.$route.query.type){
+      this.$router.replace({
+        path: '/web/county-training-course',
+        query: {
+          id:this.$route.query.id,
+          type:1
+        },
+      });
+    }
   },
   methods: {
     getImgUrl,
@@ -95,9 +101,10 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
+  align-items: center;
   min-height: 100vh;
   background-color: #F4F4F4;
-  padding: 20px;
+  padding: 20px 20px 80px 20px;
   .training_course_list{
     .video_images{
       width: 335px;
@@ -133,7 +140,8 @@ export default {
     color: #FFFFFF;
     text-align: center;
     line-height: 45px;
-    margin: 15px auto;
+    position: fixed;
+    bottom: 10px;
     }
 }
 </style>

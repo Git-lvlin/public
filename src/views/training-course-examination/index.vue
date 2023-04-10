@@ -60,10 +60,8 @@
 import Vue from 'vue';
 import { Image as VanImage, Icon, Dialog, Overlay, Toast  } from 'vant';
 import { getImgUrl, backOff } from '@/utils/tools';
-import { meBaseUrl } from "@/constant/index";
 import topicArr from './data'
 import examResult from '@/apis/training-course-examination';
-import jsBridge from '@/utils/jsBridge';
 Vue.use(VanImage);
 Vue.use(Icon);
 Vue.use(Dialog);
@@ -90,11 +88,6 @@ export default {
       this.token = d.data.accessToken
       this.dialogAlert(1)
     })
-    if(this.$route.query.type === 1){
-      document.title='培训课程'
-    }else{
-      document.title='区县服务商培训课程'
-    }
   },
   methods: {
     getImgUrl,

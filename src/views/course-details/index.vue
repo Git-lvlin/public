@@ -47,8 +47,6 @@ import video_zhCN from "video.js/dist/lang/zh-CN.json";
 import video_en from "video.js/dist/lang/en.json";
 import "video.js/dist/video-js.css";
 import examResult from '@/apis/training-course-examination';
-import { meBaseUrl } from "@/constant/index";
-import jsBridge from '@/utils/jsBridge';
 
 Video.addLanguage("zh-CN", video_zhCN);
 Video.addLanguage("en", video_en);
@@ -125,7 +123,7 @@ export default {
       this.src(data);
       this.load(data);
       this.play();
-      this.on("play", function(){
+      this.on("play", ()=>{
          examResult.examResultIsLearned({ subOrderType:25, orderId:this.$route.query.id,classType:1,classId:'' },{token:this.token}).then(res=>{
 
           })
@@ -167,6 +165,10 @@ export default {
   min-height: 100vh;
   background-color: #F4F4F4;
   .course_details{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 40px;
     #my-player{
       width: 375px;
       height: 256px;
@@ -217,6 +219,8 @@ export default {
       text-align: center;
       line-height: 45px;
       margin: 0 auto;
+      position: fixed;
+      bottom: 10px;
     }
   }
 }
