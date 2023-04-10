@@ -77,27 +77,12 @@ export default {
       topicArr:JSON.parse(JSON.stringify(topicArr)),
       gross_score:0,
       show:false,
-      token: 'AQQAAAAAZC_rvxQGzuGNAHABhvc0XWUu7vkK4SmYpnrHv8mjsg1o8ooZrDRR33N2gPw=',
+      token: '',
       lock: true,
     };
   },
   created () {
-    const data = {
-      code: 0,
-      msg: 'success',
-      data: {
-        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}&_immersive=0`,
-        color: '#ff2e23',
-        content: ` `
-      }
-    }
-    const zero = JSON.stringify(data);
-     setTimeout(()=>{
-        jsBridge.callHandler(
-          'setNavigationBarRightContent',
-          zero,
-        )
-      })
+
   },
   mounted() {
     this.$bridge.callHandler('getUserInfo',{},(res) => {
@@ -105,6 +90,11 @@ export default {
       this.token = d.data.accessToken
       this.dialogAlert(1)
     })
+    if(this.$route.query.type === 1){
+      document.title='培训课程'
+    }else{
+      document.title='区县服务商培训课程'
+    }
   },
   methods: {
     getImgUrl,

@@ -10,6 +10,9 @@
         </div>
         <p class="video_title">{{item.title}}</p>
     </div>
+    <div class="examination"   @click="testNow" v-if="$route.query.type == 1">
+      立即考试
+    </div>
   </div>
 </template>
 
@@ -53,23 +56,7 @@ export default {
     };
   },
   created() {
-    const data = {
-      code: 0,
-      msg: 'success',
-      data: {
-        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}&_immersive=0`,
-        color: '#ff2e23',
-        content: `立即考试`
-      }
-    }
-    const zero = JSON.stringify(data);
     if(this.$route.query.type==1){
-      setTimeout(()=>{
-        jsBridge.callHandler(
-          'setNavigationBarRightContent',
-          zero,
-        )
-      })
       this.listArr=this.listArr1
     }else{
        this.listArr=this.listArr2
@@ -90,7 +77,16 @@ export default {
           _immersive: 0
         },
       });
-    }
+    },
+    testNow(){
+      this.$router.push({
+        path: '/web/training-course-examination',
+        query: {
+          id: this.$route.query.id,
+          _immersive: 0
+        },
+      });
+    },
   }
 };
 </script>
@@ -111,7 +107,7 @@ export default {
       opacity: 1;
       background-size: 100%;
       background-repeat: no-repeat;
-      margin: 20px auto;
+      margin: 15px auto;
       text-align: center;
       .play{
         width: 48px;
@@ -126,5 +122,18 @@ export default {
       line-height: 29px;
     }
   }
+  .examination{
+    width: 315px;
+    height: 45px;
+    background: linear-gradient(95deg, #FF6E53 0%, #FF0000 100%);
+    box-shadow: 0px 3px 6px 0px rgba(229.00000154972076,53.00000064074993,47.0000009983778,0.4000000059604645);
+    border-radius: 8px 8px 8px 8px;
+    opacity: 1;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 45px;
+    margin: 15px auto;
+    }
 }
 </style>

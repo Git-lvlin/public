@@ -108,22 +108,6 @@ export default {
     };
   },
   created () {
-   const data = {
-      code: 0,
-      msg: 'success',
-      data: {
-        link: `${meBaseUrl}/web/training-course-examination?id=${this.$route.query.id}&_immersive=0`,
-        color: '#ff2e23',
-        content: ``
-      }
-    }
-    const zero = JSON.stringify(data);
-     setTimeout(()=>{
-        jsBridge.callHandler(
-          'setNavigationBarRightContent',
-          zero,
-        )
-      })
     if(this.$route.query.type==1){
       this.detailsArr=this.detailsArr1
     }else{
