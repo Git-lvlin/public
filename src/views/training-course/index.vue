@@ -61,12 +61,11 @@ export default {
     }
   },
   mounted() {
-    if(!this.$route.query.type){
+    if(this.$route.query.type != 1){
       this.$router.replace({
         path: '/web/county-training-course',
         query: {
           id:this.$route.query.id,
-          type:1
         },
       });
     }
