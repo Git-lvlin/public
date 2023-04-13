@@ -177,9 +177,7 @@ export default {
 
 <style lang='scss'>
 .vjs-fullscreen-control{
-  .vjs-icon-placeholder{
-   display: none;
- }
+  display: none !important;
 }
  
 </style>
