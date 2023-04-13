@@ -595,6 +595,14 @@ const routes = [
       title: '健康好物推荐',
     }
   },
+  {
+    path: '/web/store-endowments',
+    name: 'store-endowments',
+    component: () => import('@/views/store-endowments'),
+    meta: {
+      title: '商家',
+    }
+  }
 ];
 
 const router = new VueRouter({
