@@ -34,6 +34,10 @@ export default {
         {
           title: 'CPR&AED课程培训',
           img: `${getImgUrl('publicMobile/training-course-examination/cpr.jpg')}`,
+        },
+        {
+          title: '传统文化培训',
+          img: `${getImgUrl('publicMobile/training-course-examination/4300-chuanto.jpg')}`,
         }
       ],
       listArr2: [
@@ -42,12 +46,16 @@ export default {
           img: `${getImgUrl('publicMobile/training-course-examination/cjiu.jpg')}`,
         },
         {
-          title: '服务商营销管理培训',
-          img: `${getImgUrl('publicMobile/training-course-examination/fuwushang.jpg')}`,
+          title: '如何成为优秀的营销人员',
+          img: `${getImgUrl('publicMobile/training-course-examination/4800-ruhe.jpg')}`,
         },
         {
-          title: '公益职业化与商业职业化培训教育',
-          img: `${getImgUrl('publicMobile/training-course-examination/goyi.jpg')}`,
+          title: '中华传统文化培训',
+          img: `${getImgUrl('publicMobile/training-course-examination/4800-chaunto.jpg')}`,
+        },
+        {
+          title: '素质教育培训',
+          img: `${getImgUrl('publicMobile/training-course-examination/4800-zhiy.jpg')}`,
         }
       ],
       listArr: []
