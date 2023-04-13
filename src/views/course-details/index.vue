@@ -175,6 +175,15 @@ export default {
 };
 </script>
 
+<style lang='scss'>
+.vjs-fullscreen-control{
+  .vjs-icon-placeholder{
+   display: none;
+ }
+}
+ 
+</style>
+
 <style lang='scss' scoped>
 .container {
   display: flex;
