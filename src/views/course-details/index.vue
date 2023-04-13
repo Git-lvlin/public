@@ -16,6 +16,9 @@
           web browser that supports HTML5 video
           </p>
         </video>
+        <div class="course_introduction">
+          <h1>{{detailsArr[$route.query.index].title}}</h1>
+        </div>
         <!-- <div class="course_introduction">
           <div class="course_name">
             <div class="hed">
@@ -57,28 +60,28 @@ export default {
       Prototype: '',
       detailsArr1: [
         {
-          title: '课程名称',
+          title: '素质教育和管理培训',
           annotation: '公益职业化与商业职业化课程培训',
           videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/4300-suzhi.mp4',
           courseDescription: '课程介绍',
           introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
         },
         {
-          title: '课程名称',
+          title: '就业创业培训',
           annotation: '公益职业化与商业职业化课程培训',
           videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/4300-jiuye.mp4',
           courseDescription: '课程介绍',
           introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
         },
         {
-          title: '课程名称',
+          title: 'CPR&AED课程培训',
           annotation: '公益职业化与商业职业化课程培训',
           videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/4300-cpr&aed.mp4',
           courseDescription: '课程介绍',
           introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
         },
         {
-          title: '课程名称',
+          title: '传统文化培训',
           annotation: '公益职业化与商业职业化课程培训',
           videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/4300-chuanto.mp4',
           courseDescription: '课程介绍',
@@ -87,28 +90,28 @@ export default {
       ],
       detailsArr2: [
         {
-          title: '课程名称',
+          title: '创业就业培训及多维度指导',
           annotation: '公益职业化与商业职业化课程培训',
           videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/4800-chuanye.mp4',
           courseDescription: '课程介绍',
           introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
         },
         {
-          title: '课程名称',
+          title: '如何成为优秀的营销人员',
           annotation: '公益职业化与商业职业化课程培训',
           videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/4800-ruhe.mp4',
           courseDescription: '课程介绍',
           introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
         },
         {
-          title: '课程名称',
+          title: '中华传统文化培训',
           annotation: '公益职业化与商业职业化课程培训',
           videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/4800-chaunto.mp4',
           courseDescription: '课程介绍',
           introduce: '在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？在您的感觉，工作或家庭中，您是否有“不想做但仍然要做”的经历？有没有人生活在别人的期望中？在您的感觉，工作或家庭中，您是否生活在别人的期望中？'
         },
         {
-          title: '课程名称',
+          title: '素质教育培训',
           annotation: '公益职业化与商业职业化课程培训',
           videoAddress: 'https://dev-yeahgo.oss-cn-shenzhen.aliyuncs.com/publicMobile/training-course-examination/4800-zhiy.mp4',
           courseDescription: '课程介绍',
@@ -177,7 +180,7 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #F4F4F4;
+  background-color:#000000;
   .course_details{
     display: flex;
     flex-direction: column;
@@ -191,35 +194,41 @@ export default {
       // object-fit:fill;
     }
     .course_introduction{
-      padding: 20px;
-      .course_name{
-        margin-bottom: 20px;
-        .hed{
-          display: flex;
-          span{
-            width: 4px;
-            height: 16px;
-            background: #FF110D;
-            border-radius: 2px 2px 2px 2px;
-            opacity: 1;
-            margin-top: 5px;
-          }
-          h1{
-            font-size: 20px;
-            font-weight: 500;
-            color: #333333;
-            line-height: 29px;
-            margin-left: 5px;
-          }
-        }
-        p{
-          font-size: 16px;
+      padding: 10px;
+      // .course_name{
+      //   margin-bottom: 20px;
+      //   .hed{
+      //     display: flex;
+      //     span{
+      //       width: 4px;
+      //       height: 16px;
+      //       background: #FF110D;
+      //       border-radius: 2px 2px 2px 2px;
+      //       opacity: 1;
+      //       margin-top: 5px;
+      //     }
+      //     h1{
+      //       font-size: 20px;
+      //       font-weight: 500;
+      //       color: #333333;
+      //       line-height: 29px;
+      //       margin-left: 5px;
+      //     }
+      //   }
+      //   p{
+      //     font-size: 16px;
+      //     font-weight: 500;
+      //     color: #666666;
+      //     line-height: 24px;
+      //     margin-top: 5px;
+      //   }
+      // }
+      h1{
+          font-size: 20px;
           font-weight: 500;
-          color: #666666;
-          line-height: 24px;
-          margin-top: 5px;
+          color: #FFFFFF;
+          line-height: 29px;
         }
-      }
     }
     .examination{
       width: 315px;
