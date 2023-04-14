@@ -38,7 +38,11 @@ export default {
         {
           title: '传统文化培训',
           img: `${getImgUrl('publicMobile/training-course-examination/4300-chuanto.jpg')}`,
-        }
+        },
+        {
+          title: '如何成为优秀的营销人员',
+          img: `${getImgUrl('publicMobile/training-course-examination/4800-ruhe.jpg')}`,
+        },
       ],
       listArr2: [
         {
