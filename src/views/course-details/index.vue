@@ -153,7 +153,7 @@ export default {
         that.$bridge.callHandler('getUserInfo',{},(res) => {
           const d = JSON.parse(res)
           examResult.examResultIsLearned({ subOrderType:25, orderId:that.$route.query.id,classType:1,classId:'' },{token:d.data.accessToken}).then(res=>{
-
+             console.log('sucee')
            })
         })
        
