@@ -33,6 +33,7 @@
   import Vue from "vue"
   import { PasswordInput, NumberKeyboard } from 'vant'  
   import api from '@/apis/getMaterial'
+  import utils from '@/utils/util'
   Vue.use(PasswordInput)
   Vue.use(NumberKeyboard)
   export default {
@@ -53,20 +54,19 @@
       this.getCode()
     },
     methods: {
-      getData () {
+       getData () {
         api.getMaterial({
           supplierId: this.$route.query.supplierId,
           uniCode: this.uniCode,
           verifyCode: this.value
-        }).then(res => {
+        }).then(async (res) => {
           if(res.code === 0) {
             this.flag = false
             this.supplier = res.data.companyName,
             this.licenseUrl = res.data.supplierImg
           } else {
-            setTimeout(()=>{
-              this.value = ''
-            }, 1100)
+            await utils.sleep(1100)
+            this.value = ''
           }
         })
       },
