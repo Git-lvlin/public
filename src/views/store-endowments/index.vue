@@ -53,7 +53,7 @@
       this.getCode()
     },
     methods: {
-      getData() {
+      getData () {
         api.getMaterial({
           supplierId: this.$route.query.supplierId,
           uniCode: this.uniCode,
@@ -63,6 +63,10 @@
             this.flag = false
             this.supplier = res.data.companyName,
             this.licenseUrl = res.data.supplierImg
+          } else {
+            setTimeout(()=>{
+              this.value = ''
+            }, 1100)
           }
         })
       },
