@@ -72,6 +72,11 @@ const operation = (a, b, op) => {
       return 0;
   }
 };
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export default {
   // 加
   add(a, b) {
@@ -89,4 +94,5 @@ export default {
   divide(a, b) {
     return operation(a, b, 'divide');
   },
+  sleep
 };
