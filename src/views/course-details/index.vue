@@ -138,10 +138,6 @@ export default {
     }
   },
   mounted() {
-    this.$bridge.callHandler('getUserInfo',{},(res) => {
-      const d = JSON.parse(res)
-      this.token = d.data.accessToken
-    })
     var data = {
       src: this.detailsArr[this.$route.query.index].videoAddress,
       type: "video/mp4",
@@ -154,9 +150,13 @@ export default {
       this.load(data);
       this.play();
       this.on("play", ()=>{
-         examResult.examResultIsLearned({ subOrderType:25, orderId:that.$route.query.id,classType:1,classId:'' },{token:that.token}).then(res=>{
+        that.$bridge.callHandler('getUserInfo',{},(res) => {
+          const d = JSON.parse(res)
+          examResult.examResultIsLearned({ subOrderType:25, orderId:that.$route.query.id,classType:1,classId:'' },{token:d.data.accessToken}).then(res=>{
 
-          })
+           })
+        })
+       
       });
     });
   },
