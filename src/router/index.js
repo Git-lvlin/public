@@ -627,6 +627,14 @@ const routes = [
       title: '课程-详情',
     }
   },
+  {
+    path: '/web/store-endowments',
+    name: 'store-endowments',
+    component: () => import('@/views/store-endowments'),
+    meta: {
+      title: '商家',
+    }
+  },
 ];
 
 const router = new VueRouter({
