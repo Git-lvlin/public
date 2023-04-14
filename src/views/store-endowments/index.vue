@@ -57,6 +57,7 @@
        getData () {
         api.getMaterial({
           supplierId: this.$route.query.supplierId,
+          spuId: this.$route.query.spuId,
           uniCode: this.uniCode,
           verifyCode: this.value
         }).then(async (res) => {
