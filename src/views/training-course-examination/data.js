@@ -133,11 +133,11 @@ const topicArr=[
         title:'下列能参与应急救援志愿者的人员是？',
         topic_option:[ //
            {
-            name:'A：18-59岁的健康男性',
+            name:'A：18-55岁的健康男性',
             status:''
            },
            {
-            name:'B：18-59岁的健康女性',
+            name:'B：18-55岁的健康女性',
             status:''
            },
            {
