@@ -204,7 +204,7 @@ const topicArr=[
         type: 2,//是否是多选 单选1 多选2
         grade: 5,//分数
         answer_state: '', //回答状态 1已回答，0未回答
-        right_answers: [0,1,2], //正确答案 0:A 1:B 2:C 3:D
+        right_answers: [0,2], //正确答案 0:A 1:B 2:C 3:D
         current_selection: [] //当前选择状态
     },
     {
