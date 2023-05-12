@@ -11,7 +11,7 @@
         <p class="video_title">{{item.title}}</p>
     </div>
     <div class="examination"   @click="testNow" v-if="$route.query.type == 1">
-      立即考试
+      立即学习
     </div>
   </div>
 </template>
@@ -97,9 +97,11 @@ export default {
     },
     testNow(){
       this.$router.push({
-        path: '/web/training-course-examination',
+        path: '/web/course-details',
         query: {
           id: this.$route.query.id,
+          type: this.$route.query.type,
+          index: 0,
           _immersive: 0
         },
       });
