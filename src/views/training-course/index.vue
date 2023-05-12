@@ -11,7 +11,7 @@
         <p class="video_title">{{item.title}}</p>
     </div>
     <div class="examination"   @click="testNow" v-if="$route.query.type == 1">
-      立即学习
+      立即考试
     </div>
   </div>
 </template>
