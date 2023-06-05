@@ -30,6 +30,11 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
+      '/healthy': {
+        target: 'https://api-dev.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
     },
     https: false,
     disableHostCheck: true
