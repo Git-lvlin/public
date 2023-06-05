@@ -200,7 +200,7 @@ export default {
         document.title = res.data.name
         this.customizeData = res.data
         this.contentData = this.customizeData.content
-        if (this.customizeData.time > this.customizeData.endTime) {
+        if (this.customizeData.time > this.customizeData.endTime || res.data.status == 0) {
           Dialog.alert({
             message: '活动已结束',
             showConfirmButton: false,
