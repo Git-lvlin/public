@@ -24,7 +24,10 @@
       <div v-for="(item, i) in licenseUrl" :key="i">
         <img :src="item" class="license"/>
       </div>
-      <div>注：以上营业执照信息来源于商家自行申报或工商系统数据，具体以工商部门登记为准。经营者需确保信息真实有效，平台也将定期检查。如与实际不符，为了避免违规，请联系当地工商部门或平台客服更新。</div>
+      <div>
+        <span class="tips">注：以上营业执照信息来源于商家自行申报或工商系统数据，具体以工商部门登记为准。</span>
+        经营者需确保信息真实有效，平台也将定期检查。如与实际不符，为了避免违规，请联系当地工商部门或平台客服更新。
+      </div>
     </div>
   </div>
 </template>
@@ -114,6 +117,9 @@
     }
     .supplier {
       margin-bottom: 10px;
+    }
+    .tips {
+      font-weight: 700;
     }
   }
 </style>
