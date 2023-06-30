@@ -33,6 +33,16 @@ export default {
       }
     },
     goTo() {
+      if (this.$route.query.businessId) {
+        fadadaApi.genContractH5({
+        businessType: this.$route.query.businessType,
+        businessId: this.$route.query.businessId,
+      }).then(res => {
+        window.location.href = res.data.signUrl;
+      })
+        return;
+      }
+
       let data = localStorage.getItem('pdfData');
       data = JSON.parse(data);
       console.log('goto-pdfData', data)
