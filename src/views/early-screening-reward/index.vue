@@ -74,6 +74,8 @@
   import { getImgUrl } from '@/utils/tools';
   import teamApi from '@/apis/early-screening-reward';
   import jsBridge from '@/utils/jsBridge';
+  import { Toast } from 'vant';
+
 
   Vue.use(Field);
   Vue.use(Loading);
@@ -94,7 +96,7 @@
     },
     data() {
       return {
-        token: 'AQIAAAAAZe8TMRN-drSOgGABB5kPrGUPH-OnzFv1DlOldGdqr1xxn2FErmBDdWxHVmY=',
+        token: 'AQQAAAAAZe3CXBOGBxXwKYAC71eh9gFz8g8WS3uG-oK7ZvAMoa3fO3b0dCzKLkPIQZQ=',
         searchTime: '',
         show: 0,
         columns: [],
@@ -136,9 +138,21 @@
               zero,
             )
         }else if(item.type=='ipo'){
-          this.findCompanyCert(item)
+          console.log('this.$store.state.appInfo.appVersion',this.$store.state.appInfo.appVersion)
+          const appVersion=this.$store.state.appInfo.appVersion || '2.7.10'
+          if(parseInt(appVersion.replace(/\./g, ""))<2712){
+            Toast('请升级app');
+          }else{
+            this.findCompanyCert(item)
+          }
         }else if(item.type=='vip'){
-
+          let that=this
+          teamApi.awardStoreVip({ objectId: item.businessId },{ token:this.token }).then(res=>{
+            if(res.code==0){
+              that.init()
+              Toast('领取成功');
+            }
+          })
         }
       },
       init(){

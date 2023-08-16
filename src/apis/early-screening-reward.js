@@ -6,6 +6,7 @@ const url = {
   getVerifyUrl: '/public/auth/contract/getVerifyUrl',
   getReward: '/healthy/auth/ipo/reward',
   rewardList: '/healthy/auth/ipo/rewardList',
+  awardStoreVip: '/healthy/auth/ipo/awardStoreVip',
 };
 
 export default {
@@ -40,6 +41,13 @@ export default {
   rewardList(params = {}, options = {}) {
     return post({
       url: url.rewardList,
+      data: params,
+      options,
+    });
+  },
+  awardStoreVip(params = {}, options = {}) {
+    return post({
+      url: url.awardStoreVip,
       data: params,
       options,
     });
