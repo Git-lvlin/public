@@ -59,7 +59,7 @@
     methods: {
       getImgUrl,
       receiveAward(item){
-
+        window.location.href=item.actionUrl
       },
     },
   }
