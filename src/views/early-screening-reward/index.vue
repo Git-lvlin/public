@@ -94,7 +94,7 @@
     },
     data() {
       return {
-        token: 'AQQAAAAAZe3CXBOGBxXwKYAC71eh9gFz8g8WS3uG-oK7ZvAMoa3fO3b0dCzKLkPIQZQ=',
+        token: 'AQIAAAAAZe8TMRN-drSOgGABB5kPrGUPH-OnzFv1DlOldGdqr1xxn2FErmBDdWxHVmY=',
         searchTime: '',
         show: 0,
         columns: [],
@@ -109,11 +109,10 @@
     },
     mounted() {
       this.$bridge.callHandler('getUserInfo',{},(res) => {
-            const d = JSON.parse(res)
-            this.token = d.data.accessToken
-            this.init()
-        })
-      
+        const d = JSON.parse(res)
+        this.token = d.data.accessToken
+        this.init()
+      }) 
     },
     methods: {
       getImgUrl,
@@ -164,7 +163,7 @@
             if (res.data) {
               teamApi.genContract({
                 businessId: item.businessId,
-                businessType: 'earlyScreen',
+                businessType: 'aedIpo',
                 params: {
                   ipoNum: item.ipoNum,
                   ipoAmount: item.ipoAmount
