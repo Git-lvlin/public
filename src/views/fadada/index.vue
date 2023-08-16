@@ -29,7 +29,14 @@ export default {
       if (this.$route.query.type == 1) {
         this.goTo()
       } else {
-        wx.miniProgram.navigateBack()
+        const ua = window.navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
+          if (this.$route.query.businessType === 'aedIpo') {
+            window.location.href = ''
+          }
+        } else {
+          wx.miniProgram.navigateBack()
+        }
       }
     },
     goTo() {
