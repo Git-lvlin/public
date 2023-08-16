@@ -111,8 +111,9 @@
       this.$bridge.callHandler('getUserInfo',{},(res) => {
             const d = JSON.parse(res)
             this.token = d.data.accessToken
+            this.init()
         })
-      this.init()
+      
     },
     methods: {
       getImgUrl,
