@@ -635,6 +635,22 @@ const routes = [
       title: '商家',
     }
   },
+  {
+    path: '/web/early-screening-reward',
+    name: 'early-screening-reward',
+    component: () => import('@/views/early-screening-reward'),
+    meta: {
+      title: '泛癌早筛孝爱活动奖励',
+    }
+  },
+  {
+    path: '/web/draw-record',
+    name: 'draw-record',
+    component: () => import('@/views/draw-record'),
+    meta: {
+      title: '领取记录',
+    }
+  },
 ];
 
 const router = new VueRouter({

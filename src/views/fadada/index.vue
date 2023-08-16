@@ -32,7 +32,7 @@ export default {
         const ua = window.navigator.userAgent.toLowerCase();
         if (ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_') {
           if (this.$route.query.businessType === 'aedIpo') {
-            window.location.href = ''
+            window.location.href = './early-screening-reward'
           }
         } else {
           wx.miniProgram.navigateBack()
