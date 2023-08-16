@@ -468,6 +468,22 @@ const routes = [
     }
   },
   {
+    path: '/web/fadada',
+    name: 'fadada',
+    component: () => import('@/views/fadada'),
+    meta: {
+      title: '法大大',
+    }
+  },
+  {
+    path: '/web/fadada-pdf',
+    name: 'fadada-pdf',
+    component: () => import('@/views/fadada-pdf'),
+    meta: {
+      title: '预览入驻合同',
+    }
+  },
+  {
     path: '/web/shared-list',
     name: 'SharedList',
     component: () => import('@/views/shared-list'),
