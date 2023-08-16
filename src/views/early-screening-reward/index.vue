@@ -173,26 +173,38 @@
       },
       findCompanyCert(item){
         if(this.token){
-        teamApi.getFindCert({ businessId: item.businessId },{token:this.token}).then(res=>{
-            if (res.data) {
-              teamApi.genContract({
-                businessId: item.businessId,
-                businessType: 'aedIpo',
-                params: {
-                  ipoNum: item.ipoNum,
-                  ipoAmount: item.ipoAmount
-                }
-              }).then(res => {
-                window.location.href=res.data.signUrl
-              })  
-            } else {
-              teamApi.getVerifyUrl({
-                businessId: item.businessId,
-              },{token:this.token}).then(res => {
-                window.location.href=res.data.verifyUrl
-              })
+          const data = {
+              code: 0,
+              msg: 'success',
+              data: {
+                url: `https://www.yeahgo.com/business/loading?type=2&orderId=${item.businessId}&ext=${JSON.stringify({"businessType": "aedIpo","ipoNum": 0,"ipoAmount": 0})}`,
+              }
             }
-          })
+            const zero = JSON.stringify(data);
+            jsBridge.callHandler(
+              'router',
+              zero,
+            )
+        // teamApi.getFindCert({ businessId: item.businessId },{token:this.token}).then(res=>{
+        //     if (res.data) {
+        //       teamApi.genContract({
+        //         businessId: item.businessId,
+        //         businessType: 'aedIpo',
+        //         params: {
+        //           ipoNum: item.ipoNum,
+        //           ipoAmount: item.ipoAmount
+        //         }
+        //       }).then(res => {
+        //         window.location.href=res.data.signUrl
+        //       })  
+        //     } else {
+        //       teamApi.getVerifyUrl({
+        //         businessId: item.businessId,
+        //       },{token:this.token}).then(res => {
+        //         window.location.href=res.data.verifyUrl
+        //       })
+        //     }
+        //   })
         }
       }
     },
