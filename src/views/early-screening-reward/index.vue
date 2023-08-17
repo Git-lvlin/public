@@ -116,7 +116,8 @@
         this.token = d.data.accessToken
         this.init()
       })
-      window.addEventListener('visibilityChange', this.handleUnload);
+      this.init()
+      document.addEventListener('visibilitychange', this.handleUnload);
     },
     methods: {
       getImgUrl,
@@ -154,17 +155,16 @@
               this.findCompanyCert(item);
           }
         }else if(item.type=='vip'){
-          let that=this
           teamApi.awardStoreVip({ objectId: item.businessId },{ token:this.token }).then(res=>{
             if(res.code==0){
-              that.init()
+              this.init()
               Toast('领取成功');
             }
           })
         }
       },
       init(){
-        teamApi.getReward({ months: this.searchTime },{ token:this.token }).then(res=>{
+        teamApi.getReward({ months: parseInt(this.searchTime.replace('-', '')) },{ token:this.token }).then(res=>{
           console.log('res',res)
           this.columns=res.data.map(item=>`${item.months}`.slice(0, 4) + '-' + `${item.months}`.slice(4))
           this.searchTime=this.columns[res.data.length-1]
@@ -176,7 +176,7 @@
         this.show = 1
       },
       onConfirmTime(date) {
-        this.searchTime = parseInt(date.replace('-', ''))
+        this.searchTime = date
         this.show = 0;
         this.init()
       },
