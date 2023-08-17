@@ -115,8 +115,8 @@
         const d = JSON.parse(res)
         this.token = d.data.accessToken
         this.init()
-      }) 
-      window.addEventListener('unload', this.handleUnload);
+      })
+      window.addEventListener(visibilityChange, this.handleUnload);
     },
     methods: {
       getImgUrl,
