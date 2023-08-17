@@ -116,7 +116,7 @@
         this.token = d.data.accessToken
         this.init()
       })
-      window.addEventListener(visibilityChange, this.handleUnload);
+      window.addEventListener('visibilityChange', this.handleUnload);
     },
     methods: {
       getImgUrl,
