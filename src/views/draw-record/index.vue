@@ -10,6 +10,14 @@
             </div>
             <div class="divider"></div>
         </div>
+        <div class="no_reward" v-if="rewardList.length==0">
+          <van-image
+          width="300px"
+          height="300px"
+          :src="getImgUrl('publicMobile/early-screening-reward/backup_slices.png')"
+          />
+          <p>没有查到领取记录</p>
+        </div>
     </div>
   </template>
   
@@ -35,7 +43,6 @@
     },
     data() {
       return {
-        token: 'AQQAAAAAZe3CXBOGBxXwKYAC71eh9gFz8g8WS3uG-oK7ZvAMoa3fO3b0dCzKLkPIQZQ=',
         rewardList:[]
       }
     },
@@ -48,12 +55,11 @@
     mounted() {
       this.$bridge.callHandler('getUserInfo',{},(res) => {
         const d = JSON.parse(res)
-        this.token = d.data.accessToken
-      })
-      teamApi.rewardList({},{ token:this.token }).then(res=>{
-        if(res.code==0){
-          this.rewardList=res.data.records
-        }
+        teamApi.rewardList({},{ token:d.data.accessToken }).then(res=>{
+          if(res.code==0){
+            this.rewardList=res.data.records
+          }
+        })
       })
     },
     methods: {
@@ -120,4 +126,14 @@
         border: 1px solid #D8D8D8;
       }
   }
+  .no_reward{
+       margin: 0 30px 200px 30px;
+       position: relative;
+       p{
+        position: absolute;
+        left: 85px;
+        bottom: 10px;
+        color: #6F6F6F;
+       }
+    }
   </style>

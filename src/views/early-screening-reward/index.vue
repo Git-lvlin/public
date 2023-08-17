@@ -96,7 +96,7 @@
     },
     data() {
       return {
-        token: 'AQQAAAAAZe3CXBOGBxXwKYAC71eh9gFz8g8WS3uG-oK7ZvAMoa3fO3b0dCzKLkPIQZQ=',
+        token: 'AQIAAAAAZfBgiRN-drSOgGABwCbaNseRaiBtOg4uLlpLbKX71tfbWihLgy08NWqQCJM=',
         searchTime: '',
         show: 0,
         columns: [],
@@ -116,7 +116,6 @@
         this.token = d.data.accessToken
         this.init()
       }) 
-      this.init()
       window.addEventListener('unload', this.handleUnload);
     },
     methods: {
