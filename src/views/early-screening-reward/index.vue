@@ -34,7 +34,7 @@
                 @cancel="show = 0"
               />
             </van-popup>
-            <p class="sum" v-if="rewardList.length">完成单数：18</p>
+            <p class="sum" v-if="rewardList.length">完成单数：{{finishNum}}</p>
         </div>
         <div class="award_list"  v-for="(item,index) in rewardList" :key="item.id">
           <div class="award_list_item">
@@ -100,7 +100,8 @@
         searchTime: '',
         show: 0,
         columns: [],
-        rewardList: []
+        rewardList: [],
+        finishNum: 0
       }
     },
     components: {
@@ -115,9 +116,14 @@
         this.token = d.data.accessToken
         this.init()
       }) 
+      this.init()
+      window.addEventListener('unload', this.handleUnload);
     },
     methods: {
       getImgUrl,
+      handleUnload(event) {
+        this.init()
+      },
       DrawRecord(){
         this.$router.push({
           path: '/web/draw-record',
@@ -138,12 +144,12 @@
               zero,
             )
         }else if(item.type=='ipo'){
-          console.log('this.$store.state.appInfo.appVersion',this.$store.state.appInfo.appVersion)
-          const appVersion=this.$store.state.appInfo.appVersion || '2.7.10'
-          if(parseInt(appVersion.replace(/\./g, ""))<2712){
-            Toast('请升级app');
-          }else{
-            this.findCompanyCert(item)
+          const appVersion = this.$store.state.appInfo.appVersion || '2.7.10';
+          const [major, minor, patch] = appVersion.split('.').map(Number);
+          if (major < 2 || (major === 2 && minor < 7) || (major === 2 && minor === 7 && patch < 12)) {
+              Toast('请升级app');
+          } else {
+              this.findCompanyCert(item);
           }
         }else if(item.type=='vip'){
           let that=this
@@ -161,6 +167,7 @@
           this.columns=res.data.map(item=>`${item.months}`.slice(0, 4) + '-' + `${item.months}`.slice(4))
           this.searchTime=this.columns[res.data.length-1]
           this.rewardList=res.data[res.data.length-1].records
+          this.finishNum=res.data.finishNum
         })
       },
       showPicker(){
@@ -185,26 +192,6 @@
               'router',
               zero,
             )
-        // teamApi.getFindCert({ businessId: item.businessId },{token:this.token}).then(res=>{
-        //     if (res.data) {
-        //       teamApi.genContract({
-        //         businessId: item.businessId,
-        //         businessType: 'aedIpo',
-        //         params: {
-        //           ipoNum: item.ipoNum,
-        //           ipoAmount: item.ipoAmount
-        //         }
-        //       }).then(res => {
-        //         window.location.href=res.data.signUrl
-        //       })  
-        //     } else {
-        //       teamApi.getVerifyUrl({
-        //         businessId: item.businessId,
-        //       },{token:this.token}).then(res => {
-        //         window.location.href=res.data.verifyUrl
-        //       })
-        //     }
-        //   })
         }
       }
     },
