@@ -96,7 +96,7 @@
     },
     data() {
       return {
-        token: 'AQIAAAAAZfBgiRN-drSOgGABwCbaNseRaiBtOg4uLlpLbKX71tfbWihLgy08NWqQCJM=',
+        token: 'AQQAAAAAZe3CXBOGBxXwKYAC71eh9gFz8g8WS3uG-oK7ZvAMoa3fO3b0dCzKLkPIQZQ=',
         searchTime: '',
         show: 0,
         columns: [],
@@ -169,7 +169,7 @@
           this.columns=res.data.map(item=>`${item.months}`.slice(0, 4) + '-' + `${item.months}`.slice(4))
           this.searchTime=this.columns[res.data.length-1]
           this.rewardList=res.data[res.data.length-1].records
-          this.finishNum=res.data.finishNum
+          this.finishNum=res.data[res.data.length-1].finishNum
         })
       },
       showPicker(){
