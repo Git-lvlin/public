@@ -116,7 +116,6 @@
         this.token = d.data.accessToken
         this.init()
       })
-      this.init()
       document.addEventListener('visibilitychange', this.handleUnload);
     },
     methods: {
