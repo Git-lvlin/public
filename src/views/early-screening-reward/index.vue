@@ -144,7 +144,7 @@
               zero,
             )
         }else if(item.type=='ipo'){
-          const appVersion = this.$store.state.appInfo.appVersion || '2.7.10';
+          const appVersion = this.$store.state.appInfo.appVersion;
           const [major, minor, patch] = appVersion.split('.').map(Number);
           if (major < 2 || (major === 2 && minor < 7) || (major === 2 && minor === 7 && patch < 12)) {
               Toast('请升级app');
