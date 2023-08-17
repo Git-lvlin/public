@@ -126,6 +126,9 @@
       DrawRecord(){
         this.$router.push({
           path: '/web/draw-record',
+          query: {
+            _immersive: 0
+          },
         });
       },
       receiveAward(item){
