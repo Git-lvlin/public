@@ -58,7 +58,7 @@
             <div class="explain">
               <p>1.在活动期间：2023年8月10日-2023年12月12日，每个自然月分享2个家庭/用户，并完成6人泛癌早筛下单及采血送检服务，即可获赠活动奖励大礼包；</p> 
               <p>2.奖励礼包属于自愿行为，可自愿选择和领取；</p> 
-              <p>3.免费奖励红酒和《你来我网》书籍，运费自负。红酒仅限2338箱，《你来我网》仅限12120本，送完即止。</p>
+              <p>3.免费奖励红酒和《你来我网》书籍，运费自付。红酒仅限2338箱，《你来我网》仅限12120本，送完即止。</p>
             </div>
         </div>
       </div>
@@ -96,7 +96,7 @@
     },
     data() {
       return {
-        token: 'AQQAAAAAZe3CXBOGBxXwKYAC71eh9gFz8g8WS3uG-oK7ZvAMoa3fO3b0dCzKLkPIQZQ=',
+        token: 'AQIAAAAAZfBhhBQYvhNtHTAChOtiGIH6QuRBBVTXAAjNm4k_9qhdziUE4P8dziQSe7o=',
         searchTime: '',
         show: 0,
         columns: [],
@@ -280,7 +280,6 @@
                 line-height: 25px;
             }
             .draw{
-                width: 72px;
                 height: 38px;
                 background: linear-gradient(138deg, #FF9C79 0%, #FF6F35 100%);
                 border-radius: 6px 6px 6px 6px;
@@ -295,7 +294,6 @@
                 flex-shrink: 0;
             }
             .drawSent{
-                // width: 72px;
                 height: 38px;
                 background: linear-gradient(138deg, #C1C1C1 0%, #969696 100%);
                 border-radius: 6px 6px 6px 6px;
