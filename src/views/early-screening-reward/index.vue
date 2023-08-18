@@ -116,6 +116,10 @@
         this.token = d.data.accessToken
         this.init()
       })
+      if(!this.$store.state.appInfo.isApp){
+        this.init()
+      }
+
       document.addEventListener('visibilitychange', this.handleUnload);
     },
     methods: {
@@ -185,7 +189,7 @@
               code: 0,
               msg: 'success',
               data: {
-                url: `https://www.yeahgo.com/business/loading?type=2&orderId=${item.businessId}&ext=${JSON.stringify({"businessType": "aedIpo","ipoNum": item.ipoNum,"ipoAmount": item.ipoAmount})}`,
+                url: `https://www.yeahgo.com/business/loading?type=2&orderId=${item.businessId}&ext=${JSON.stringify({"businessType": "aedIpo","ipoNum": item.ipoNum,"ipoAmount": item.ipoAmount,"contractNo":item.id})}`,
               }
             }
             const zero = JSON.stringify(data);
