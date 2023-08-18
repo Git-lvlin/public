@@ -189,7 +189,7 @@
               code: 0,
               msg: 'success',
               data: {
-                url: `https://www.yeahgo.com/business/loading?type=2&orderId=${item.businessId}&ext=${JSON.stringify({"businessType": "aedIpo","ipoNum": item.ipoNum,"ipoAmount": item.ipoAmount,"contractNo":item.id})}`,
+                url: `https://www.yeahgo.com/business/loading?type=2&orderId=${item.businessId}&ext=${JSON.stringify({"businessType": "aedIpo","ipoNum": item.ipoNum,"ipoAmount": item.ipoAmount,"contractNo":item.contractNo})}`,
               }
             }
             const zero = JSON.stringify(data);
