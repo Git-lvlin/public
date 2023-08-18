@@ -114,10 +114,10 @@
       this.$bridge.callHandler('getUserInfo',{},(res) => {
         const d = JSON.parse(res)
         this.token = d.data.accessToken
-        this.init()
+        this.init(true)
       })
       if(!this.$store.state.appInfo.isApp){
-        this.init()
+        this.init(true)
       }
 
       document.addEventListener('visibilitychange', this.handleUnload);
@@ -166,13 +166,19 @@
           })
         }
       },
-      init(){
+      init(e){
         teamApi.getReward({ months: parseInt(this.searchTime.replace('-', '')) },{ token:this.token }).then(res=>{
-          console.log('res',res)
-          this.columns=res.data.map(item=>`${item.months}`.slice(0, 4) + '-' + `${item.months}`.slice(4))
-          this.searchTime=this.columns[res.data.length-1]
-          this.rewardList=res.data[res.data.length-1].records
-          this.finishNum=res.data[res.data.length-1].finishNum
+          if(e){
+            this.columns=res.data.map(item=>`${item.months}`.slice(0, 4) + '-' + `${item.months}`.slice(4))
+            this.searchTime=this.columns[res.data.length-1]
+          }
+          if(res.data.length){
+            this.rewardList=res.data[res.data.length-1].records
+            this.finishNum=res.data[res.data.length-1].finishNum
+          }else{
+            this.rewardList=[]
+            this.finishNum=0
+          }
         })
       },
       showPicker(){
