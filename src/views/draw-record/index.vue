@@ -6,7 +6,7 @@
                   <p class="award_name">{{item.goodsName}}</p>
                   <p class="award_time">奖励所属月份:{{`${item.months}`.slice(0, 4) + '-' + `${item.months}`.slice(4)}}</p>
                 </div>
-                <van-button v-if="item.businessId" class="draw"  @click="receiveAward(item)">查看合同</van-button>
+                <van-button v-if="item.contractUrl" class="draw"  @click="receiveAward(item)">查看合同</van-button>
             </div>
             <div class="divider"></div>
         </div>
@@ -65,7 +65,7 @@
     methods: {
       getImgUrl,
       receiveAward(item){
-        window.location.href=item.actionUrl
+        window.location.href=item.contractUrl
       },
     },
   }
@@ -105,7 +105,6 @@
       }
       .draw{
         height: 38px;
-        width: 72px;
         text-align: center;
         background: linear-gradient(138deg, #FF9C79 0%, #FF6F35 100%);
         border-radius: 6px 6px 6px 6px;
