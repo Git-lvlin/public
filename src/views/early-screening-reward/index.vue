@@ -254,13 +254,12 @@
             display: flex;
             align-items: center;
             width: 355px;
-            height: 96px;
             background: #FFF8EE;
             border-radius: 5px 5px 5px 5px;
             opacity: 1;
             border: 1px solid #FFCEBA;
             margin: 11px 0;
-            padding: 0 8px;
+            padding: 10px 8px;
             >div{
               width: 254px;
             }
