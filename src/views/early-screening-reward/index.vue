@@ -65,16 +65,37 @@
       <div class="footer" @click="DrawRecord()">
         查看领取记录
       </div>
+      <van-overlay :show="vipShow" @click="show = false">
+        <div class="equity">
+          <van-image
+            width="359px"
+            height="306px"
+            style="display: block;"
+            :src="getImgUrl('publicMobile/early-screening-reward/slicess.png')"
+            @click="skipVip()"
+          />
+          <van-image
+            width="33px"
+            height="33px"
+            style="margin-top: 17px;"
+            :src="getImgUrl('publicMobile/early-screening-reward/clonex.png')"
+            @click="cloneVip()"
+          />
+        </div>
+      </van-overlay>
     </div>
   </template>
   
   <script>
   import Vue from 'vue';
-  import { Image as VanImage, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, List, Dialog, Button, DatetimePicker, Picker } from 'vant';
+  import { Image as VanImage, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, List, Dialog, Button, DatetimePicker, Picker, Overlay, Toast } from 'vant';
   import { getImgUrl } from '@/utils/tools';
   import teamApi from '@/apis/early-screening-reward';
   import jsBridge from '@/utils/jsBridge';
-  import { Toast } from 'vant';
+  import {
+  goToApp,
+} from '@/utils/userInfo';
+import { appBaseUrl } from "@/constant/index";
 
 
   Vue.use(Field);
@@ -88,6 +109,7 @@
   Vue.use(Button);
   Vue.use(DatetimePicker);
   Vue.use(Picker);
+  Vue.use(Overlay);
 
   
   export default {
@@ -101,7 +123,8 @@
         show: 0,
         columns: [],
         rewardList: [],
-        finishNum: 0
+        finishNum: 0,
+        vipShow: 0
       }
     },
     components: {
@@ -162,6 +185,7 @@
             if(res.code==0){
               this.init()
               Toast('领取成功');
+              this.vipShow=1
             }
           })
         }
@@ -204,6 +228,13 @@
               zero,
             )
         }
+      },
+      skipVip(){
+        goToApp(appBaseUrl, '/flutter/store/member/index', '','')
+        this.vipShow=0
+      },
+      cloneVip(){
+        this.vipShow=0
       }
     },
   }
@@ -363,6 +394,13 @@
     // position: fixed;
     // bottom: 0;
     // left: 0;
+  }
+
+  .equity{
+    margin: 200px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   </style>

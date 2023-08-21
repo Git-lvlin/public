@@ -116,6 +116,7 @@
         line-height: 38px;
         flex-shrink: 0;
         margin: 10px 20px 0 0;
+        padding: 0 10px;
       }
     }
     .divider{
