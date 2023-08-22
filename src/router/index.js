@@ -468,6 +468,22 @@ const routes = [
     }
   },
   {
+    path: '/web/fadada',
+    name: 'fadada',
+    component: () => import('@/views/fadada'),
+    meta: {
+      title: '法大大',
+    }
+  },
+  {
+    path: '/web/fadada-pdf',
+    name: 'fadada-pdf',
+    component: () => import('@/views/fadada-pdf'),
+    meta: {
+      title: '预览入驻合同',
+    }
+  },
+  {
     path: '/web/shared-list',
     name: 'SharedList',
     component: () => import('@/views/shared-list'),
@@ -633,6 +649,22 @@ const routes = [
     component: () => import('@/views/store-endowments'),
     meta: {
       title: '商家',
+    }
+  },
+  {
+    path: '/web/early-screening-reward',
+    name: 'early-screening-reward',
+    component: () => import('@/views/early-screening-reward'),
+    meta: {
+      title: '泛癌早筛孝爱活动奖励',
+    }
+  },
+  {
+    path: '/web/draw-record',
+    name: 'draw-record',
+    component: () => import('@/views/draw-record'),
+    meta: {
+      title: '领取记录',
     }
   },
 ];
