@@ -65,7 +65,7 @@
       <div class="footer" @click="DrawRecord()">
         查看领取记录
       </div>
-      <van-overlay :show="vipShow" @click="show = false">
+      <van-overlay :show="vipShow" @click="vipShow = 0">
         <div class="equity">
           <van-image
             width="359px"
