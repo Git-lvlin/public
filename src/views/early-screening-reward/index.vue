@@ -160,7 +160,12 @@ import { appBaseUrl } from "@/constant/index";
       },
       receiveAward(item){
         if(item.type=='book'||item.type=='wine'){
-          const data = {
+          const appVersion = this.$store.state.appInfo.appVersion;
+          const [major, minor, patch] = appVersion.split('.').map(Number);
+          if (major < 2 || (major === 2 && minor < 7) || (major === 2 && minor === 7 && patch < 12)) {
+              Toast('请升级app');
+          } else {
+            const data = {
               code: 0,
               msg: 'success',
               data: {
@@ -172,6 +177,8 @@ import { appBaseUrl } from "@/constant/index";
               'router',
               zero,
             )
+          }
+ 
         }else if(item.type=='ipo'){
           const appVersion = this.$store.state.appInfo.appVersion;
           const [major, minor, patch] = appVersion.split('.').map(Number);
@@ -181,13 +188,20 @@ import { appBaseUrl } from "@/constant/index";
               this.findCompanyCert(item);
           }
         }else if(item.type=='vip'){
-          teamApi.awardStoreVip({ objectId: item.businessId },{ token:this.token }).then(res=>{
+          const appVersion = this.$store.state.appInfo.appVersion;
+          const [major, minor, patch] = appVersion.split('.').map(Number);
+          if (major < 2 || (major === 2 && minor < 7) || (major === 2 && minor === 7 && patch < 12)) {
+              Toast('请升级app');
+          } else {
+            teamApi.awardStoreVip({ objectId: item.businessId },{ token:this.token }).then(res=>{
             if(res.code==0){
               this.init()
               Toast('领取成功');
               this.vipShow=1
             }
           })
+          }
+       
         }
       },
       init(e){
