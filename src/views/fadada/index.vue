@@ -42,8 +42,7 @@ export default {
     goTo() {
       if (this.$route.query.businessId) {
         fadadaApi.genContractH5({
-        businessType: this.$route.query.businessType,
-        businessId: this.$route.query.businessId,
+        ...this.$route.query
       }).then(res => {
         window.location.href = res.data.signUrl;
       })
