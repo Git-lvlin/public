@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text">{{ status[$route.query.type] }}</div>
-    <div v-if="$route.query.businessType == 'areaShopPartner' && $route.query.type == 2">
+    <div v-if="$route.query.type == 5">
       <van-overlay :show="show" @click="show = false">
         <div class="wrap">
           <img :src="getImgUrl('publicMobile/share/sys.png')" />
