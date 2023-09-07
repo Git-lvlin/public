@@ -1,13 +1,6 @@
 <template>
   <div>
     <div class="text">{{ status[$route.query.type] }}</div>
-    <div v-if="$route.query.type == 5">
-      <van-overlay :show="show" @click="show = false">
-        <div class="wrap">
-          <img :src="getImgUrl('publicMobile/share/sys.png')" />
-        </div>
-      </van-overlay>
-    </div>
     <div class="btn">
       <van-button type="danger" block @click="back">{{ $route.query.type == 1 ? '签约' : '返回' }}</van-button>
     </div>
@@ -16,9 +9,8 @@
 
 <script>
 import Vue from 'vue';
-import { Button, Overlay } from 'vant';
+import { Button } from 'vant';
 import fadadaApi from '@/apis/fadada';
-import { getImgUrl } from '@/utils/tools';
 
 Vue.use(Button);
 export default {
@@ -33,7 +25,6 @@ export default {
   },
   components: {
     [Button.name]: Button,
-    [Overlay.name]: Overlay,
   },
   methods: {
     getImgUrl,
