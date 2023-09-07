@@ -20,14 +20,12 @@ export default {
         1: '认证成功',
         2: '签约成功'
       },
-      show: true,
     }
   },
   components: {
     [Button.name]: Button,
   },
   methods: {
-    getImgUrl,
     back() {
       if (this.$route.query.type == 1) {
         this.goTo()
