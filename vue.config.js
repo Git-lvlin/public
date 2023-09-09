@@ -35,6 +35,11 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
+      '/public': {
+        target: 'https://api-dev.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
     },
     https: false,
     disableHostCheck: true
