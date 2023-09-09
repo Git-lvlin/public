@@ -2,7 +2,7 @@ import { post, get } from '@/utils/request';
 
 const url = {
   genCompanyContract: "/public/open/contract/genCompanyContract",
-  genContractH5: "/open/contract/genContractH5",
+  genContractH5: "/public/open/contract/genContractH5",
 };
 
 export default {
