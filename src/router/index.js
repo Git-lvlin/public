@@ -667,6 +667,38 @@ const routes = [
       title: '领取记录',
     }
   },
+  {
+    path: '/web/live-pull-stream',
+    name: 'live-pull-stream',
+    component: () => import('@/views/live-pull-stream'),
+    meta: {
+      title: '直播拉流',
+    }
+  },
+  {
+    path: '/web/guidance-app',
+    name: 'guidance-app',
+    component: () => import('@/views/guidance-app'),
+    meta: {
+      title: '打开约购APP',
+    }
+  },
+  {
+    path: '/web/general-health-service',
+    name: 'general-health-service',
+    component: () => import('@/views/general-health-service'),
+    meta: {
+      title: '大健康领取IPO',
+    }
+  },
+  {
+    path: '/web/general-draw-record',
+    name: 'general-draw-record',
+    component: () => import('@/views/general-draw-record'),
+    meta: {
+      title: '领取记录',
+    }
+  },
 ];
 
 const router = new VueRouter({
