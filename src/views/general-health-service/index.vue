@@ -14,35 +14,14 @@
          class="free_gift"
          :src="getImgUrl('publicMobile/early-screening-reward/free_gift.png')"
         />
-        <div class="time_sum">
-            <p class="time" @click="showPicker">获奖月份：{{searchTime}} <van-image
-            width="6px"
-            height="10px"
-            :src="getImgUrl('publicMobile/early-screening-reward/slices.png')"
-            /></p>
-            <van-popup
-              v-model="show"
-              :lazy-render="false"
-              position="bottom"
-              round
-            >
-              <van-picker
-                title="选择年月"
-                show-toolbar
-                :columns="columns"
-                @confirm="onConfirmTime"
-                @cancel="show = 0"
-              />
-            </van-popup>
-            <p class="sum" v-if="rewardList.length">待领取数：{{finishNum}}</p>
-        </div>
-        <div class="award_list"  v-for="(item,index) in rewardList" :key="item.id">
+        <div class="award_list"  v-for="(item) in rewardList" :key="item.id">
           <div class="award_list_item">
             <div>
-                <p class="award_serial">奖励{{{1:'一',2:'二',3:'三',4:'四',5:'五',6:'六',7:'七',8:'八'}[index+1]}}</p>
-                <p class="award_name">{{item.goodsName}}</p>
+                <p class="award_serial">{{item.awardType}}：</p>
+                <p class="award_name">{{item.awardAmountDesc}}人民币的IPO股权</p>
+                <p class="award_month">{{item.awardMonth}}</p>
             </div>
-            <van-button :class="item.status?'drawSent':'draw'" :disabled="item.status?true:false" @click="receiveAward(item)">{{ {0:'领取',1:'已领取',2:'已过期'}[item.status] }}</van-button>
+            <van-button :class="item.status?'draw':'drawSent'" :disabled="item.status?false:true" @click="receiveAward(item)">{{ item.statusDesc }}</van-button>
           </div>
         </div>
         <div class="no_reward" v-if="rewardList.length==0">
@@ -53,19 +32,11 @@
           />
           <p>没有查到活动奖励</p>
         </div>
-        <div class="activity_description" v-if="rewardList.length">
-            <div class="title">活动说明：</div>
-            <div class="explain">
-              <p>1.在活动期间：2023年8月10日-2023年12月12日，每个自然月分享2个家庭/用户，并完成6人泛癌早筛下单及采血送检服务，即可获赠活动奖励大礼包；</p> 
-              <p>2.奖励礼包属于自愿行为，可自愿选择和领取；</p> 
-              <p>3.免费奖励红酒和《你来我网》书籍，运费自付。红酒仅限2338箱，《你来我网》仅限12120本，送完即止。</p>
-            </div>
-        </div>
       </div>
       <div class="footer" @click="DrawRecord()">
         查看领取记录
       </div>
-      <van-overlay :show="vipShow" @click="vipShow = 0">
+      <!-- <van-overlay :show="vipShow" @click="vipShow = false">
         <div class="equity">
           <van-image
             width="359px"
@@ -82,7 +53,7 @@
             @click="cloneVip()"
           />
         </div>
-      </van-overlay>
+      </van-overlay> -->
     </div>
   </template>
   
@@ -90,7 +61,7 @@
   import Vue from 'vue';
   import { Image as VanImage, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, List, Dialog, Button, DatetimePicker, Picker, Overlay, Toast } from 'vant';
   import { getImgUrl } from '@/utils/tools';
-  import teamApi from '@/apis/early-screening-reward';
+  import teamApi from '@/apis/general-health-service';
   import jsBridge from '@/utils/jsBridge';
   import {
   goToApp,
@@ -118,13 +89,9 @@ import { appBaseUrl } from "@/constant/index";
     },
     data() {
       return {
-        token: 'AQIAAAAAZfBhhBQYvhNtHTAChOtiGIH6QuRBBVTXAAjNm4k_9qhdziUE4P8dziQSe7o=',
-        searchTime: '',
-        show: 0,
-        columns: [],
+        token: 'AQAAAAAAZhe81hN_mR9XMzAC9RRuYCmU7ASc0B8_ZfRIbTI9uI0anJ4S7PfvOk3Yefk=',
         rewardList: [],
-        finishNum: 0,
-        vipShow: 0
+        // vipShow: false
       }
     },
     components: {
@@ -137,10 +104,10 @@ import { appBaseUrl } from "@/constant/index";
       this.$bridge.callHandler('getUserInfo',{},(res) => {
         const d = JSON.parse(res)
         this.token = d.data.accessToken
-        this.init(true)
+        this.init()
       })
       if(!this.$store.state.appInfo.isApp){
-        this.init(true)
+        this.init()
       }
 
       document.addEventListener('visibilitychange', this.handleUnload);
@@ -155,102 +122,81 @@ import { appBaseUrl } from "@/constant/index";
         this.$router.push({
           path: '/web/general-draw-record',
           query: {
-            _immersive: 0
+
           },
         });
       },
-      receiveAward(item){
-        if(item.type=='book'||item.type=='wine'){
-          const appVersion = this.$store.state.appInfo.appVersion;
-          const [major, minor, patch] = appVersion.split('.').map(Number);
-          if (major < 2 || (major === 2 && minor < 7) || (major === 2 && minor === 7 && patch < 12)) {
-              Toast('请升级app');
-          } else {
-            const data = {
-              code: 0,
-              msg: 'success',
-              data: {
-                url: item.actionUrl,
-              }
-            }
-            const zero = JSON.stringify(data);
-            jsBridge.callHandler(
-              'router',
-              zero,
-            )
-          }
- 
-        }else if(item.type=='ipo'){
-          const appVersion = this.$store.state.appInfo.appVersion;
-          const [major, minor, patch] = appVersion.split('.').map(Number);
-          if (major < 2 || (major === 2 && minor < 7) || (major === 2 && minor === 7 && patch < 12)) {
-              Toast('请升级app');
-          } else {
-              this.findCompanyCert(item);
-          }
-        }else if(item.type=='vip'){
-          const appVersion = this.$store.state.appInfo.appVersion;
-          const [major, minor, patch] = appVersion.split('.').map(Number);
-          if (major < 2 || (major === 2 && minor < 7) || (major === 2 && minor === 7 && patch < 12)) {
-              Toast('请升级app');
-          } else {
-            teamApi.awardStoreVip({ objectId: item.businessId },{ token:this.token }).then(res=>{
-            if(res.code==0){
-              this.init()
-              Toast('领取成功');
-              this.vipShow=1
-            }
-          })
-          }
-       
-        }
-      },
-      init(e){
-        teamApi.getReward({ months: parseInt(this.searchTime.replace('-', '')) },{ token:this.token }).then(res=>{
-          if(e){
-            this.columns=res.data.map(item=>`${item.months}`.slice(0, 4) + '-' + `${item.months}`.slice(4))
-            this.searchTime=this.columns[res.data.length-1]
-          }
-          if(res.data.length){
-            this.rewardList=res.data[res.data.length-1].records
-            this.finishNum=res.data[res.data.length-1].finishNum
+      init(value){
+        teamApi.receivePage({  },{ token:this.token }).then(res=>{
+          if(res.data.records.length){
+            this.rewardList=res.data.records
           }else{
             this.rewardList=[]
-            this.finishNum=0
           }
         })
       },
-      showPicker(){
-        this.show = 1
+      appVersion(){
+        const appVersion = this.$store.state.appInfo.appVersion;
+        if(appVersion){
+          const [major, minor, patch] = appVersion.split('.').map(Number);
+          if (major < 2 || (major === 2 && minor < 7) || (major === 2 && minor === 7 && patch < 12)) {
+            return  Toast('请升级app');
+          }
+        }
       },
-      onConfirmTime(date) {
-        this.searchTime = date
-        this.show = 0;
-        this.init()
+      receiveAward(item){
+        if(item.status==2){ //领取
+            this.appVersion()
+            teamApi.createPayOrder({ id: item.id },{ token:this.token }).then(res=>{
+            if(res.code==0){
+              console.log('res',res)
+              const data = {
+                code: 0,
+                msg: 'success',
+                data: {
+                  url: `https://www.yeahgo.com/shopping/cashier?type=6&orderId=${res.data.orderId}&orderType=${res.data.orderType}`,
+                }
+              }
+              const zero = JSON.stringify(data);
+              jsBridge.callHandler(
+                'router',
+                zero,
+              )
+            }
+          })
+        }else if(item.status==3){ //签署合同
+          this.appVersion()
+          this.findCompanyCert(item);
+        }
       },
       findCompanyCert(item){
         if(this.token){
-          const data = {
-              code: 0,
-              msg: 'success',
-              data: {
-                url: `https://www.yeahgo.com/business/loading?type=2&orderId=${item.businessId}&ext=${JSON.stringify({"businessType": "aedIpo","ipoNum": item.ipoNum,"ipoAmount": item.ipoAmount,"contractNo":item.contractNo})}`,
+          teamApi.getFindCert({ businessId: item.businessId },{token:this.token}).then(res=>{
+              if (res.data) {
+                teamApi.genContract({
+                  businessId: item.businessId,
+                  ext: item.ext
+                },{token:this.token}).then(res => {
+                  window.location.href=res.data.signUrl
+                })  
+              } else {
+                teamApi.getVerifyUrl({
+                  businessId: item.businessId,
+                  ext: item.ext
+                },{token:this.token}).then(res => {
+                  window.location.href=res.data.verifyUrl
+                })
               }
-            }
-            const zero = JSON.stringify(data);
-            jsBridge.callHandler(
-              'router',
-              zero,
-            )
-        }
+            })
+          }
       },
-      skipVip(){
-        goToApp(appBaseUrl, '/flutter/store/member/index', '','')
-        this.vipShow=0
-      },
-      cloneVip(){
-        this.vipShow=0
-      }
+      // skipVip(){
+      //   goToApp(appBaseUrl, '/flutter/store/member/index', '','')
+      //   this.vipShow=false
+      // },
+      // cloneVip(){
+      //   this.vipShow=false
+      // }
     },
   }
   
@@ -273,6 +219,7 @@ import { appBaseUrl } from "@/constant/index";
     position: relative;
     width: 100%;
     // height: 756px;
+    min-height: 520px;
     padding: 0 11px;
     background-position: 0 0;
     background-repeat:no-repeat;
@@ -306,6 +253,8 @@ import { appBaseUrl } from "@/constant/index";
         }
     }
     .award_list{
+        margin-top: 48px;
+        padding-bottom: 40px;
         .award_list_item{
             display: flex;
             align-items: center;
@@ -320,18 +269,25 @@ import { appBaseUrl } from "@/constant/index";
               width: 254px;
             }
             .award_serial{
-                font-size: 18px;
-                font-family: Source Han Sans CN-Medium, Source Han Sans CN;
-                font-weight: 500;
-                color: #5B5B5B;
-                line-height: 25px;
+              font-size: 18px;
+              font-family: Source Han Sans CN-Medium, Source Han Sans CN;
+              font-weight: 500;
+              color: #5B5B5B;
+              line-height: 25px;
             }
             .award_name{
-                font-size: 18px;
-                font-family: Source Han Sans CN-Medium, Source Han Sans CN;
-                font-weight: 500;
-                color: #A14A3D;
-                line-height: 25px;
+              font-size: 18px;
+              font-family: Source Han Sans CN-Medium, Source Han Sans CN;
+              font-weight: 500;
+              color: #A14A3D;
+              line-height: 25px;
+            }
+            .award_month{
+              font-size: 12px;
+              font-family: Source Han Sans CN-Regular, Source Han Sans CN;
+              font-weight: 400;
+              color: #3D3D3D;
+              line-height: 25px;
             }
             .draw{
                 height: 38px;
@@ -406,9 +362,9 @@ import { appBaseUrl } from "@/constant/index";
     color: #3D3D3D;
     line-height: 64px;
     text-align: center;
-    // position: fixed;
-    // bottom: 0;
-    // left: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
   }
 
   .equity{
