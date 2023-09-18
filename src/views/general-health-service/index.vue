@@ -66,7 +66,7 @@
   import {
   goToApp,
 } from '@/utils/userInfo';
-import { appBaseUrl } from "@/constant/index";
+import { meBaseUrl } from "@/constant/index";
 
 
   Vue.use(Field);
@@ -89,7 +89,7 @@ import { appBaseUrl } from "@/constant/index";
     },
     data() {
       return {
-        token: 'AQAAAAAAZhe81hN_mR9XMzAC9RRuYCmU7ASc0B8_ZfRIbTI9uI0anJ4S7PfvOk3Yefk=',
+        token: 'AQAAAAAAZhqVZhN_mR9XMzACmeOQDC7IUtu923C4e8vwmmbggUBbjvbzg17A1YjJMg0=',
         rewardList: [],
         // vipShow: false
       }
@@ -118,7 +118,7 @@ import { appBaseUrl } from "@/constant/index";
         this.init()
       },
       DrawRecord(){
-        goToApp(appBaseUrl, '/web/general-draw-record', '','')
+        goToApp(meBaseUrl, '/web/general-draw-record', '','')
         // this.$router.push({
         //   path: '/web/general-draw-record',
         //   query: {

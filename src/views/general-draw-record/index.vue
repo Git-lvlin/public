@@ -11,7 +11,7 @@
             <div class="award_list_item">
                 <div>
                   <p class="award_name">{{item.awardAmountDesc}}人民币的IPO股权</p>
-                  <p class="award_time">成为区县服务商奖励，领取时间：{{item.awardMonth}}</p>
+                  <p class="award_time">{{item.awardType}}奖励，领取时间：{{item.receiveTime}}</p>
                 </div>
                 <van-button v-if="item.contractUrl" class="draw"  @click="receiveAward(item)">查看合同</van-button>
             </div>
@@ -74,13 +74,11 @@
         ],
         option: [
           { text: '全部', value: '' },
-          { text: '区县服务商', value: 1 },
-          { text: '区县服务商的推荐人', value: 2 },
-          { text: '门店合作商的直推人', value: 3 },
-          { text: '早筛孝爱活动直推', value: 4 },
+          { text: '泛癌早筛', value: 1 },
+          { text: '大健康服务', value: 2 },
         ],
         value: '',
-        token: 'AQAAAAAAZhe81hN_mR9XMzAC9RRuYCmU7ASc0B8_ZfRIbTI9uI0anJ4S7PfvOk3Yefk=',
+        token: 'AQAAAAAAZhqVZhN_mR9XMzACmeOQDC7IUtu923C4e8vwmmbggUBbjvbzg17A1YjJMg0=',
         totalAwardAmount: 0
       }
     },
