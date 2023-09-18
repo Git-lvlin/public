@@ -171,23 +171,18 @@ import { appBaseUrl } from "@/constant/index";
       },
       findCompanyCert(item){
         if(this.token){
-          teamApi.getFindCert({ businessId: item.businessId },{token:this.token}).then(res=>{
-              if (res.data) {
-                teamApi.genContract({
-                  businessId: item.businessId,
-                  ext: item.ext
-                },{token:this.token}).then(res => {
-                  window.location.href=res.data.signUrl
-                })  
-              } else {
-                teamApi.getVerifyUrl({
-                  businessId: item.businessId,
-                  ext: item.ext
-                },{token:this.token}).then(res => {
-                  window.location.href=res.data.verifyUrl
-                })
-              }
-            })
+          const data = {
+            code: 0,
+            msg: 'success',
+            data: {
+              url: `https://www.yeahgo.com/business/loading?type=2&orderId=${item.businessId}&ext=${item.ext}`,
+            }
+          }
+          const zero = JSON.stringify(data);
+          jsBridge.callHandler(
+            'router',
+            zero,
+          )
           }
       },
       // skipVip(){
