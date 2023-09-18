@@ -89,7 +89,7 @@ import { meBaseUrl } from "@/constant/index";
     },
     data() {
       return {
-        token: 'AQAAAAAAZhqVZhN_mR9XMzACmeOQDC7IUtu923C4e8vwmmbggUBbjvbzg17A1YjJMg0=',
+        token: 'AQAAAAAAZhqsiRN-dYTcAGABfF88aeFFcPtXrQjv6BGHdrVWuj7nv_qkMFe3cJ3kd7k=',
         rewardList: [],
         // vipShow: false
       }
@@ -118,13 +118,13 @@ import { meBaseUrl } from "@/constant/index";
         this.init()
       },
       DrawRecord(){
-        goToApp(meBaseUrl, '/web/general-draw-record', '','')
-        // this.$router.push({
-        //   path: '/web/general-draw-record',
-        //   query: {
+        // goToApp(meBaseUrl, '/web/general-draw-record', '','')
+        this.$router.push({
+          path: '/web/general-draw-record',
+          query: {
 
-        //   },
-        // });
+          },
+        });
       },
       init(value){
         teamApi.receivePage({  },{ token:this.token }).then(res=>{

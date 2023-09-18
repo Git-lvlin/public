@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="award_head">
-            <div class="cost">IPO累计价值：<span>{{ totalAwardAmount }}元</span></div>
+            <div class="cost">IPO累计价值：<span>{{ totalAwardAmount/100 }}元</span></div>
             <van-dropdown-menu>
               <van-dropdown-item v-model="value" :options="option" />
             </van-dropdown-menu>
@@ -11,7 +11,7 @@
             <div class="award_list_item">
                 <div>
                   <p class="award_name">{{item.awardAmountDesc}}人民币的IPO股权</p>
-                  <p class="award_time">{{item.awardType}}奖励，领取时间：{{item.receiveTime}}</p>
+                  <p class="award_time">{{item.awardType}}奖励，领取时间：{{item.receiveTime.split(" ")[0]}}</p>
                 </div>
                 <van-button v-if="item.contractUrl" class="draw"  @click="receiveAward(item)">查看合同</van-button>
             </div>
@@ -78,7 +78,7 @@
           { text: '大健康服务', value: 2 },
         ],
         value: '',
-        token: 'AQAAAAAAZhqVZhN_mR9XMzACmeOQDC7IUtu923C4e8vwmmbggUBbjvbzg17A1YjJMg0=',
+        token: 'AQAAAAAAZhqsiRN-dYTcAGABfF88aeFFcPtXrQjv6BGHdrVWuj7nv_qkMFe3cJ3kd7k=',
         totalAwardAmount: 0
       }
     },
