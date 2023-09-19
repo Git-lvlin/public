@@ -10,10 +10,10 @@
         <div class="award_list" v-for="item in rewardList" :key="item.id">
             <div class="award_list_item">
                 <div>
-                  <p class="award_name">{{item.awardAmountDesc}}人民币的IPO股权</p>
-                  <p class="award_time">{{item.awardType}}奖励，领取时间：{{item.receiveTime.split(" ")[0]}}</p>
+                  <p class="award_name">{{item.title}}</p>
+                  <p class="award_time">{{item.subTitle}}</p>
                 </div>
-                <van-button v-if="item.contractUrl" class="draw"  @click="receiveAward(item)">查看合同</van-button>
+                <van-button v-if="item.contractId" class="draw"  @click="receiveAward(item)">查看合同</van-button>
             </div>
             <div class="divider"></div>
         </div>
@@ -74,11 +74,11 @@
         ],
         option: [
           { text: '全部', value: '' },
-          { text: '泛癌早筛', value: 1 },
-          { text: '大健康服务', value: 2 },
+          { text: '泛癌早筛', value: 'screen' },
+          { text: '大健康服务', value: 'provider' },
         ],
         value: '',
-        token: 'AQAAAAAAZhqsiRN-dYTcAGABfF88aeFFcPtXrQjv6BGHdrVWuj7nv_qkMFe3cJ3kd7k=',
+        token: 'AQIAAAAAZhwBTxQYvhNtHTACrV2NeFd7-qG3Tddqt7VKTbohgZ9g026MCA6eNNwZyo8=',
         totalAwardAmount: 0
       }
     },
@@ -104,10 +104,14 @@
         window.location.href=item.contractUrl
       },
       init(value){
-        teamApi.receivedPage({ awardType: value },{ token:this.token }).then(res=>{
+        teamApi.awardList({ businessType: value },{ token:this.token }).then(res=>{
           if(res.code==0){
             this.rewardList=res.data.records
-            this.totalAwardAmount=res.data.totalAwardAmount
+          }
+        })
+        teamApi.awardCounts({ businessType: value },{ token:this.token }).then(res=>{
+          if(res.code==0){
+            this.totalAwardAmount=res.data.amount
           }
         })
       }

@@ -5,8 +5,9 @@ const url = {
   genContract: '/public/auth/contract/genContract',
   getVerifyUrl: '/public/auth/contract/getVerifyUrl',
   receivePage: '/healthy/auth/ipoAward/receivePage',
-  receivedPage: '/healthy/auth/ipoAward/receivedPage',
   createPayOrder: '/healthy/auth/ipoAward/createPayOrder',
+  awardList: '/healthy/auth/ipo/awardList',
+  awardCounts: '/healthy/auth/ipo/awardCounts',
 };
 
 export default {
@@ -38,16 +39,23 @@ export default {
       options,
     });
   },
-  receivedPage(params = {}, options = {}) {
+  createPayOrder(params = {}, options = {}) {
     return post({
-      url: url.receivedPage,
+      url: url.createPayOrder,
       data: params,
       options,
     });
   },
-  createPayOrder(params = {}, options = {}) {
+  awardList(params = {}, options = {}) {
     return post({
-      url: url.createPayOrder,
+      url: url.awardList,
+      data: params,
+      options,
+    });
+  },
+  awardCounts(params = {}, options = {}) {
+    return post({
+      url: url.awardCounts,
       data: params,
       options,
     });
