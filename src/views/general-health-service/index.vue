@@ -118,13 +118,13 @@ import { meBaseUrl } from "@/constant/index";
         this.init()
       },
       DrawRecord(){
-        // goToApp(meBaseUrl, '/web/general-draw-record', '','')
-        this.$router.push({
-          path: '/web/general-draw-record',
-          query: {
+        goToApp(meBaseUrl, '/web/general-draw-record', '','')
+        // this.$router.push({
+        //   path: '/web/general-draw-record',
+        //   query: {
 
-          },
-        });
+        //   },
+        // });
       },
       init(value){
         teamApi.receivePage({  },{ token:this.token }).then(res=>{
