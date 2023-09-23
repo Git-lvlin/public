@@ -118,7 +118,7 @@ import { meBaseUrl } from "@/constant/index";
         this.init()
       },
       DrawRecord(){
-        goToApp(meBaseUrl, '/web/general-draw-record', '','')
+        goToApp(meBaseUrl, '/web/general-draw-record?_immersive=0', '','')
         // this.$router.push({
         //   path: '/web/general-draw-record',
         //   query: {

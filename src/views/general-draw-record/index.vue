@@ -52,26 +52,7 @@
     },
     data() {
       return {
-        rewardList:[
-          // {
-          //     id: 1,
-          //     goodsName: "价值200元人民币的IPO股权",
-          //     months: "202301",
-          //     contractUrl: "http://example.com/contract1"
-          // },
-          // {
-          //     id: 2,
-          //     goodsName: "价值200元人民币的IPO股权",
-          //     months: "202302",
-          //     contractUrl: "http://example.com/contract2"
-          // },
-          // {
-          //     id: 3,
-          //     goodsName: "价值200元人民币的IPO股权",
-          //     months: "202303",
-          //     contractUrl: null
-          // }
-        ],
+        rewardList:[],
         option: [
           { text: '全部', value: '' },
           { text: '泛癌早筛', value: 'screen' },
