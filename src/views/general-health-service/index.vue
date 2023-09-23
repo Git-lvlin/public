@@ -14,8 +14,8 @@
          class="free_gift"
          :src="getImgUrl('publicMobile/early-screening-reward/free_gift.png')"
         />
-        <div class="award_list"  v-for="(item) in rewardList" :key="item.id">
-          <div class="award_list_item">
+        <div class="award_list">
+          <div class="award_list_item" v-for="(item) in rewardList" :key="item.id">
             <div>
                 <p class="award_serial">{{item.awardType}}：</p>
                 <p class="award_name">{{item.awardAmountDesc}}人民币的IPO股权</p>
@@ -36,24 +36,6 @@
       <div class="footer" @click="DrawRecord()">
         查看领取记录
       </div>
-      <!-- <van-overlay :show="vipShow" @click="vipShow = false">
-        <div class="equity">
-          <van-image
-            width="359px"
-            height="306px"
-            style="display: block;"
-            :src="getImgUrl('publicMobile/early-screening-reward/slicess.png')"
-            @click="skipVip()"
-          />
-          <van-image
-            width="33px"
-            height="33px"
-            style="margin-top: 17px;"
-            :src="getImgUrl('publicMobile/early-screening-reward/clonex.png')"
-            @click="cloneVip()"
-          />
-        </div>
-      </van-overlay> -->
     </div>
   </template>
   
@@ -89,9 +71,8 @@ import { meBaseUrl } from "@/constant/index";
     },
     data() {
       return {
-        token: 'AQIAAAAAZhwBTxQYvhNtHTACrV2NeFd7-qG3Tddqt7VKTbohgZ9g026MCA6eNNwZyo8=',
+        token: 'AQIAAAAAZh_9nBQYvhNtHTACSlcqswhJLP9My1C4GpHbh34Zff6IuMEcPf6evju7JEU=',
         rewardList: [],
-        // vipShow: false
       }
     },
     components: {
@@ -119,12 +100,14 @@ import { meBaseUrl } from "@/constant/index";
       },
       DrawRecord(){
         goToApp(meBaseUrl, '/web/general-draw-record?_immersive=0', '','')
-        // this.$router.push({
-        //   path: '/web/general-draw-record',
-        //   query: {
+        if(!this.$store.state.appInfo.isApp){
+            this.$router.push({
+              path: '/web/general-draw-record',
+              query: {
 
-        //   },
-        // });
+              },
+            });
+        }
       },
       init(value){
         teamApi.receivePage({  },{ token:this.token }).then(res=>{
@@ -185,13 +168,6 @@ import { meBaseUrl } from "@/constant/index";
           )
           }
       },
-      // skipVip(){
-      //   goToApp(appBaseUrl, '/flutter/store/member/index', '','')
-      //   this.vipShow=false
-      // },
-      // cloneVip(){
-      //   this.vipShow=false
-      // }
     },
   }
   
@@ -249,7 +225,7 @@ import { meBaseUrl } from "@/constant/index";
     }
     .award_list{
         margin-top: 48px;
-        padding-bottom: 40px;
+        padding-bottom: 80px;
         .award_list_item{
             display: flex;
             align-items: center;

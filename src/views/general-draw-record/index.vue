@@ -9,11 +9,12 @@
         <div class="divider"></div>
         <div class="award_list" v-for="item in rewardList" :key="item.id">
             <div class="award_list_item">
-                <div>
+                <div class="award_list_title">
                   <p class="award_name">{{item.title}}</p>
-                  <p class="award_time">{{item.subTitle}}</p>
+                  <van-button v-if="item.contractId" class="draw"  @click="receiveAward(item)">查看合同</van-button>
                 </div>
-                <van-button v-if="item.contractId" class="draw"  @click="receiveAward(item)">查看合同</van-button>
+                <p class="award_time">{{item.subTitle}}</p>
+              
             </div>
             <div class="divider"></div>
         </div>
@@ -59,7 +60,7 @@
           { text: '大健康服务', value: 'provider' },
         ],
         value: '',
-        token: 'AQIAAAAAZhwBTxQYvhNtHTACrV2NeFd7-qG3Tddqt7VKTbohgZ9g026MCA6eNNwZyo8=',
+        token: 'AQIAAAAAZh_9nBQYvhNtHTACSlcqswhJLP9My1C4GpHbh34Zff6IuMEcPf6evju7JEU=',
         totalAwardAmount: 0
       }
     },
@@ -139,9 +140,11 @@
   .award_list{
     .award_list_item{
       // padding: 13px 17px 13px 17px;
-      display: flex;
+      .award_list_title{
+        display: flex;
       justify-content: space-between;
       // align-items: center;
+      }
       .award_name{
         padding: 13px 17px 5px 17px;
         font-size: 18px;
