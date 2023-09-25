@@ -184,6 +184,7 @@
   .no_reward{
        margin: 0 30px 200px 30px;
        position: relative;
+       text-align: center;
        p{
         position: absolute;
         left: 85px;
