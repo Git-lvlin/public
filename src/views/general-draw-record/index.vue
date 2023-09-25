@@ -34,6 +34,7 @@
   import { Image as VanImage, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, List, Dialog, Divider,DropdownMenu, DropdownItem } from 'vant';
   import { getImgUrl } from '@/utils/tools';
   import teamApi from '@/apis/general-health-service';
+  import { Toast } from 'vant';
   Vue.use(Field);
   Vue.use(Loading);
   Vue.use(VanImage);
@@ -49,7 +50,7 @@
   
   export default {
     props: {
-
+      
     },
     data() {
       return {
@@ -61,34 +62,68 @@
         ],
         value: '',
         token: 'AQIAAAAAZh_9nBQYvhNtHTACSlcqswhJLP9My1C4GpHbh34Zff6IuMEcPf6evju7JEU=',
-        totalAwardAmount: 0
+        totalAwardAmount: 0,
+        _loading: '',
+        rewardListLength: 0,
+        time: '',
       }
     },
     components: {
       [Dialog.Component.name]: Dialog.Component,
     },
     async created () {
-
+      this._loading=this.$route.query._loading
+      if (this._loading) {
+        Toast.loading({
+          message: '加载中...',
+          duration: 0,
+        });
+       }
     },
     mounted() {
       this.$bridge.callHandler('getUserInfo',{},(res) => {
         const d = JSON.parse(res)
         this.token = d.data.accessToken
-        this.init()
+        this.init('',true)
+        if(this._loading){
+          this.time=setInterval(()=>{
+              this.init('',false)
+            },2000)
+        }
       })
+
+
+      if(!this.$store.state.appInfo.isApp){
+        this.init('',true)
+        if(this._loading){
+          this.time=setInterval(()=>{
+              this.init('',false)
+            },2000)
+          }
+      }
     },
     methods: {
       getImgUrl,
       receiveAward(item){
         window.location.href=item.contractUrl
       },
-      init(value){
-        teamApi.awardList({ size:9999, businessType: value },{ token:this.token }).then(res=>{
+      init(value,ble){
+        teamApi.awardList({ size:9999, businessType: value },{ token:this.token, showLoading:!this._loading }, ).then(res=>{
           if(res.code==0){
             this.rewardList=res.data.records
+            if(this._loading){
+              if(ble){
+                this.rewardListLength=res.data.records.length
+              }else{
+                if(this.rewardListLength!=res.data.records.length){
+                  clearInterval(this.time);
+                  Toast.clear();
+                }
+              }
+            }
           }
         })
-        teamApi.awardCounts({ businessType: value },{ token:this.token }).then(res=>{
+        teamApi.awardCounts({ businessType: value },{ token:this.token, showLoading:!this._loading }).then(res=>{
           if(res.code==0){
             this.totalAwardAmount=res.data.amount
           }

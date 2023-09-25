@@ -116,7 +116,7 @@ const request = async ({
       requestCount -= 1;
     }
 
-    if (requestCount <= 0) {
+    if (requestCount <= 0&&showLoading) {
       requestCount = 0;
       Toast.clear();
     }
