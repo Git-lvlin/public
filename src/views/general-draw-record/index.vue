@@ -76,7 +76,6 @@
         this.token = d.data.accessToken
         this.init()
       })
-      this.init()
     },
     methods: {
       getImgUrl,
