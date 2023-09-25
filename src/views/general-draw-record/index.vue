@@ -110,7 +110,7 @@
       init(value,ble){
         teamApi.awardList({ size:9999, businessType: value },{ token:this.token, showLoading:!this._loading }, ).then(res=>{
           if(res.code==0){
-            this.rewardList=res.data.records
+
             if(this._loading){
               if(ble){
                 this.rewardListLength=res.data.records.length
@@ -118,8 +118,11 @@
                 if(this.rewardListLength!=res.data.records.length){
                   clearInterval(this.time);
                   Toast.clear();
+                  this.rewardList=res.data.records
                 }
               }
+            }else{
+              this.rewardList=res.data.records
             }
           }
         })
