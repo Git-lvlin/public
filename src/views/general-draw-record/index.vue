@@ -76,16 +76,10 @@
         this.token = d.data.accessToken
         this.init()
       })
-      if(!this.$store.state.appInfo.isApp){
-        this.init()
-      }
-      document.addEventListener('visibilitychange', this.handleUnload);
+      this.init()
     },
     methods: {
       getImgUrl,
-      handleUnload(event) {
-        this.init()
-      },
       receiveAward(item){
         window.location.href=item.contractUrl
       },
