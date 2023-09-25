@@ -79,10 +79,13 @@
       if(!this.$store.state.appInfo.isApp){
         this.init()
       }
-      document.addEventListener('visibilitychange', this.init);
+      document.addEventListener('visibilitychange', this.handleUnload);
     },
     methods: {
       getImgUrl,
+      handleUnload(event) {
+        this.init()
+      },
       receiveAward(item){
         window.location.href=item.contractUrl
       },
