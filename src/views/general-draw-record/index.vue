@@ -86,7 +86,7 @@
         window.location.href=item.contractUrl
       },
       init(value){
-        teamApi.awardList({ businessType: value },{ token:this.token }).then(res=>{
+        teamApi.awardList({ size:9999, businessType: value },{ token:this.token }).then(res=>{
           if(res.code==0){
             this.rewardList=res.data.records
           }
