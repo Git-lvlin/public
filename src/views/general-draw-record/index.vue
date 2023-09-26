@@ -66,6 +66,7 @@
         _loading: '',
         rewardListLength: 0,
         time: '',
+        stop: false
       }
     },
     components: {
@@ -88,8 +89,11 @@
         if(this._loading){
           this.time=setInterval(()=>{
               this.init('',false)
-            },2000)
+            },4000)
         }
+        setTimeout(()=>{
+          this.stop=true
+        },15000)
       })
 
 
@@ -98,8 +102,11 @@
         if(this._loading){
           this.time=setInterval(()=>{
               this.init('',false)
-            },2000)
+            },4000)
           }
+        setTimeout(()=>{
+          this.stop=true
+        },15000)
       }
     },
     methods: {
@@ -115,7 +122,7 @@
               if(ble){
                 this.rewardListLength=res.data.records.length
               }else{
-                if(this.rewardListLength!=res.data.records.length){
+                if(this.rewardListLength!=res.data.records.length || this.stop){
                   clearInterval(this.time);
                   Toast.clear();
                   this.rewardList=res.data.records
