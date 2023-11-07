@@ -699,6 +699,14 @@ const routes = [
       title: '领取记录',
     }
   },
+  {
+    path: '/web/check-registration-form',
+    name: 'check-registration-form',
+    component: () => import('@/views/check-registration-form'),
+    meta: {
+      title: '大健康检测报名表',
+    }
+  },
 ];
 
 const router = new VueRouter({

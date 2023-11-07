@@ -40,6 +40,11 @@ module.exports = {
         ws: true,
         changeOrigin: true,
       },
+      '/open': {
+        target: 'https://live-dev.yeahgo.com',
+        ws: true,
+        changeOrigin: true,
+      },
     },
     https: false,
     disableHostCheck: true

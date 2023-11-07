@@ -4,7 +4,7 @@
             <div class="head_name">
                 <van-image
                 class="head_portrait"
-                :src="getImgUrl(1?'publicMobile/live-pull-stream/expression.png':'publicMobile/live-pull-stream/yeahgo.png')"
+                :src="getImgUrl(0?'publicMobile/live-pull-stream/expression.png':'publicMobile/live-pull-stream/yeahgo.png')"
                 />
                 <span>{{ 1?'范先生':'约购APP' }}</span>
             </div>
@@ -12,8 +12,8 @@
                 打开约购
             </div>
         </div>
-		<video id="video" width="100%" height="100%" controls autoplay></video>
-        <!-- <div class="encryption">
+		<video id="videoPlayer" ref="videoPlayer" muted :controls="false" autoplay></video>
+        <div class="encryption">
             <van-image
               class="encryption_logo"
               :src="getImgUrl('publicMobile/live-pull-stream/LOGO.png')"
@@ -37,7 +37,7 @@
                   :error-info="value.length==4&&value!='1234'?'密码错误':''"
                 />
             </van-dialog>
-        </div> -->
+        </div>
         <!-- <div class="liveStreamingEnd">
             <div class="tis">
                 直播已结束
@@ -49,10 +49,10 @@
                 />
                 <p>范先生</p>
             </div>
-            <div class="open_yeahgo">打开约购，和主播打个招呼</div>
+            <div class="open_yeahgo" @click="openYeahgo">打开约购，和主播打个招呼</div>
         </div> -->
-        <div class="footer" @click="openYeahgo">
-            <div class="function">
+        <div class="footer">
+            <div class="function"  @click="openYeahgo">
                 <div class="comment">
                     说点什么...
                     <van-image
@@ -86,29 +86,18 @@
   
   <script>
   import Vue from 'vue';
-  import { Image as VanImage, Swipe, SwipeItem, Lazyload, Popup, Loading, Field, List, Dialog, Button, DatetimePicker, Picker, Overlay, PasswordInput, NumberKeyboard } from 'vant';
+  import { Image as VanImage, PasswordInput, Dialog, NumberKeyboard } from 'vant';
   import { getImgUrl } from '@/utils/tools';
-  import teamApi from '@/apis/early-screening-reward';
+  import teamApi from '@/apis/live-pull-stream';
   import Hls from 'hls.js';
   import CallApp from 'callapp-lib';
   import { DOWNLOAD_ANDROID, DOWNLOAD_IOS } from '@/constant/common';
 
 
-  Vue.use(Field);
-  Vue.use(Loading);
   Vue.use(VanImage);
-  Vue.use(Swipe);
-  Vue.use(SwipeItem);
-  Vue.use(Lazyload);
-  Vue.use(Popup);
-  Vue.use(List);
-  Vue.use(Button);
-  Vue.use(DatetimePicker);
-  Vue.use(Picker);
-  Vue.use(Overlay);
-  Vue.use(Dialog);
   Vue.use(PasswordInput);
   Vue.use(NumberKeyboard);
+  Vue.use(Dialog);
 
   
   export default {
@@ -120,8 +109,9 @@
         show: false,
         value: '',
         showKeyboard: false,
-        url: '',
         isInWechat: false,
+        hls: null,
+        liveStreamingInfo: {}
       }
     },
     components: {
@@ -131,27 +121,33 @@
 
     },
     mounted() {
-      const { query } = this.$router.history.current;
-      this.url = query.url || ''
-
-      const ua = window.navigator.userAgent.toLowerCase();
-      if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        this.isInWechat = true;
+      this.init()
+    },
+    beforeDestroy() {
+      if (this.hls) {
+        this.hls.destroy();
       }
-      
-      if (Hls.isSupported()) {
-        const video = this.$el.querySelector('#video');
-        const hls = new Hls();
-        hls.loadSource('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8');
-        hls.attachMedia(video);
-        hls.on(Hls.Events.MANIFEST_PARSED, function() {
-            video.play();
-        });
-       }
     },
     methods: {
         getImgUrl,
-        openYeahgo(){
+        init(){
+          const { query } = this.$router.history.current;
+          const params={
+            liveId: query.liveId || '1719965863410225200'
+          }
+          teamApi.getLiveInfo(params,{ token:this.token }).then(res=>{
+            if(res.code==0){
+                this.liveStreamingInfo=res.data
+                let url = res.data.hlsPlayUrl || 'http://pili-live-hls.yeahgo.com/yeahgo/1721438431472848897.m3u8'
+                const ua = window.navigator.userAgent.toLowerCase();
+                if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
+                this.isInWechat = true;
+                }
+                this.createPlayer(url); // 例如: 'http://pili-live-hls.yeahgo.com/yeahgo/1721438431472848897.m3u8'
+            }
+          })
+        },
+        openYeahgo(){ //打开约购
             console.log("🚀 ~ this.$store.state.appInfo", this.$store.state.appInfo)
             if(this.isInWechat) {
                 this.$router.push({
@@ -192,6 +188,24 @@
                 }
             })
         },
+        createPlayer(source) {
+            const video = this.$refs.videoPlayer;
+
+            if(Hls.isSupported()) {
+                this.hls = new Hls();
+                this.hls.loadSource(source);
+                this.hls.attachMedia(video);
+                this.hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                video.play();
+                });
+            }
+            else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = source;
+                video.addEventListener('loadedmetadata', function() {
+                video.play();
+                });
+            }
+        },
         enterPassword(){
            this.show=true
         },
@@ -213,9 +227,12 @@
   
   <style lang="scss" scoped>
   .main {
-    min-height: 100vh;
+    height: 100vh;
     background-color:#504d4d;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
+    position: relative;
     .head{
         display: flex;
         justify-content: space-between;
@@ -260,8 +277,10 @@
         border-radius: 0px 0px 0px 0px;
         opacity: 1;
     }
-    #video {
-      object-fit: fill;
+    #videoPlayer {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
     }
     // video::-webkit-media-controls-enclosure {
     //  display: none;
@@ -269,8 +288,10 @@
     .encryption{
        display: flex;
        flex-direction: column;
-       margin-top: 194px;
-       align-items: center;
+       position: absolute;
+       top: 30%;
+       left: 50%;
+       transform: translate(-50%, -30%);
        .encryption_logo{
           width: 166px;
           height: 139px;
@@ -314,7 +335,10 @@
        }
     }
     .liveStreamingEnd{
-        margin-top: 180px;
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -30%);
         display: flex;
         flex-direction: column;
         align-items: center;

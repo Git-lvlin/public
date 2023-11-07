@@ -15,6 +15,7 @@ let appToken = '';
 axios.defaults.timeout = 10 * 1000;
 let v = store.state.appInfo.appVersion || "2.5.5";
 axios.interceptors.request.use((config) => {
+  console.log('config',config)
   if (appToken) {
     config.headers.Authorization = `Bearer ${appToken}`;
   }
@@ -22,7 +23,13 @@ axios.interceptors.request.use((config) => {
   config.headers.v = v;
   if (process.env.NODE_ENV === 'production') {
     if (!config.url.includes('-oss.yeahgo.com')) {
-      config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
+      const data={...JSON.parse(config.data),live:1}
+      if(data.live){
+        config.url = `${process.env.VUE_APP_JAVA_Live_API_URL}${config.url}`;
+      }else{
+        config.url = `${process.env.VUE_APP_JAVA_API_URL}${config.url}`;
+      }
+    
     }
   }
   return config;
